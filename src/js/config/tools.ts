@@ -30,6 +30,7 @@ export const categories = [
             { id: 'remove-annotations', name: 'Remove Annotations', icon: 'eraser', subtitle: 'Strip comments, highlights, and links.' },
             { id: 'cropper', name: 'Crop PDF', icon: 'crop', subtitle: 'Trim the margins of every page in your PDF.' },
             { id: 'form-filler', name: 'PDF Form Filler', icon: 'square-pen', subtitle: 'Fill in forms directly in the browser.' },
+            { id: 'remove-blank-pages', name: 'Remove Blank Pages', icon: 'file-minus-2', subtitle: 'Automatically detect and delete blank pages.' },
         ]
     },
     {
@@ -66,6 +67,7 @@ export const categories = [
         tools: [
             { id: 'ocr-pdf', name: 'OCR PDF', icon: 'scan-text', subtitle: 'Make a PDF searchable and copyable.' },
             { id: 'merge', name: 'Merge PDF', icon: 'combine', subtitle: 'Combine multiple PDFs into one file.' },
+            { id: 'alternate-merge', name: 'Alternate & Mix Pages', icon: 'shuffle', subtitle: 'Combine PDFs by alternating pages from each.' },
             { id: 'organize', name: 'Organize PDF', icon: 'grip', subtitle: 'Reorder pages by dragging and dropping.' },
             { id: 'duplicate-organize', name: 'Duplicate & Organize', icon: 'files', subtitle: 'Duplicate, reorder, and delete pages.' },
             { id: 'split', name: 'Split PDF', icon: 'scissors', subtitle: 'Extract a range of pages into a new PDF.' },
@@ -81,6 +83,7 @@ export const categories = [
             { id: 'edit-metadata', name: 'Edit Metadata', icon: 'file-cog', subtitle: 'Change the author, title, and other properties.' },
             { id: 'pdf-to-zip', name: 'PDFs to ZIP', icon: 'stretch-horizontal', subtitle: 'Package multiple PDF files into a ZIP archive.' },
             { id: 'compare-pdfs', name: 'Compare PDFs', icon: 'git-compare', subtitle: 'Compare two PDFs side by side.' },
+            { id: 'posterize', name: 'Posterize PDF', icon: 'layout-grid', subtitle: 'Split a large page into multiple smaller pages.' },
         ]
     },
     {
