@@ -130,6 +130,42 @@ docker-compose up -d
 
 The application will be available at `http://localhost:3000`.
 
+### 🏢 Simple Mode for Internal Use
+
+For organizations that want a clean, distraction-free interface focused solely on PDF tools, BentoPDF supports a **Simple Mode** that hides all branding and marketing content.
+
+**What Simple Mode does:**
+
+- Hides navigation, hero section, features, FAQ, testimonials, and footer
+- Shows only the essential PDF tools
+- Updates page title to "PDF Tools"
+- Perfect for internal company tools and educational institutions
+
+For more details, see [SIMPLE_MODE.md](SIMPLE_MODE.md).
+
+### 📦 Version Management
+
+BentoPDF supports semantic versioning with multiple Docker tags:
+
+- **Latest**: `bentopdf/bentopdf:latest`
+- **Specific Version**: `bentopdf/bentopdf:1.0.0`
+- **Version with Prefix**: `bentopdf/bentopdf:v1.0.0`
+
+#### Quick Release
+
+```bash
+# Release a patch version (0.0.1 → 0.0.2)
+npm run release
+
+# Release a minor version (0.0.1 → 0.1.0)
+npm run release:minor
+
+# Release a major version (0.0.1 → 1.0.0)
+npm run release:major
+```
+
+````
+For detailed release instructions, see [RELEASE.md](RELEASE.md).
 ### 🚀 Development Setup
 
 #### Option 1: Run with npm
@@ -139,7 +175,7 @@ The application will be available at `http://localhost:3000`.
    ```bash
    git clone https://github.com/alam00000/bentopdf.git
    cd bentopdf
-   ```
+````
 
 2. **Install Dependencies**:
 

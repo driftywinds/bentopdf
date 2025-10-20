@@ -1,7 +1,7 @@
 {
   "name": "bento-pdf",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
@@ -15,7 +15,10 @@
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest watch",
     "build:docker": "vite build",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "release": "node scripts/release.js patch",
+    "release:minor": "node scripts/release.js minor",
+    "release:major": "node scripts/release.js major"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
