@@ -1,7 +1,7 @@
 {
   "name": "bento-pdf",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.1.1",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
@@ -39,6 +39,13 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@fontsource/cedarville-cursive": "^5.2.7",
+    "@fontsource/dancing-script": "^5.2.8",
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/great-vibes": "^5.2.8",
+    "@fontsource/kalam": "^5.2.8",
+    "@fontsource/lato": "^5.2.7",
+    "@fontsource/merriweather": "^5.2.11",
     "@neslinesli93/qpdf-wasm": "^0.3.0",
     "@tailwindcss/vite": "^4.1.15",
     "blob-stream": "^0.1.3",
