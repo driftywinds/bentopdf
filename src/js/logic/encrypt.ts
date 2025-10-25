@@ -1,86 +1,113 @@
 import { showLoader, hideLoader, showAlert } from '../ui.js';
-import { downloadFile, readFileAsArrayBuffer } from '../utils/helpers.js';
+import {
+  downloadFile,
+  initializeQpdf,
+  readFileAsArrayBuffer,
+} from '../utils/helpers.js';
 import { state } from '../state.js';
-import PDFDocument from 'pdfkit/js/pdfkit.standalone';
-import blobStream from 'blob-stream';
-import * as pdfjsLib from 'pdfjs-dist';
 
 export async function encrypt() {
   const file = state.files[0];
-  const password = (
-    document.getElementById('password-input') as HTMLInputElement
-  ).value;
-  if (!password.trim()) {
-    showAlert('Input Required', 'Please enter a password.');
+  const userPassword =
+    (document.getElementById('user-password-input') as HTMLInputElement)
+      ?.value || '';
+  const ownerPasswordInput =
+    (document.getElementById('owner-password-input') as HTMLInputElement)
+      ?.value || '';
+
+  if (!userPassword) {
+    showAlert('Input Required', 'Please enter a user password.');
     return;
   }
 
+  const ownerPassword = ownerPasswordInput || userPassword;
+  const hasDistinctOwnerPassword = ownerPasswordInput !== '';
+
+  const inputPath = '/input.pdf';
+  const outputPath = '/output.pdf';
+  let qpdf: any;
+
   try {
-    showLoader('Preparing to process...');
-    const pdfData = await readFileAsArrayBuffer(file);
-    const pdf = await pdfjsLib.getDocument({ data: pdfData as ArrayBuffer })
-      .promise;
-    const numPages = pdf.numPages;
-    const pageImages = [];
+    showLoader('Initializing encryption...');
+    qpdf = await initializeQpdf();
 
-    for (let i = 1; i <= numPages; i++) {
-      document.getElementById('loader-text').textContent =
-        `Processing page ${i} of ${numPages}...`;
-      const page = await pdf.getPage(i);
-      const viewport = page.getViewport({ scale: 2.0 });
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-      await page.render({
-        canvasContext: context,
-        viewport: viewport,
-        canvas: canvas,
-      }).promise;
-      pageImages.push({
-        data: canvas.toDataURL('image/jpeg', 0.8),
-        width: viewport.width,
-        height: viewport.height,
-      });
+    showLoader('Reading PDF...');
+    const fileBuffer = await readFileAsArrayBuffer(file);
+    const uint8Array = new Uint8Array(fileBuffer as ArrayBuffer);
+
+    qpdf.FS.writeFile(inputPath, uint8Array);
+
+    showLoader('Encrypting PDF with 256-bit AES...');
+
+    const args = [inputPath, '--encrypt', userPassword, ownerPassword, '256'];
+
+    // Only add restrictions if a distinct owner password was provided
+    if (hasDistinctOwnerPassword) {
+      args.push(
+        '--modify=none',
+        '--extract=n',
+        '--print=none',
+        '--accessibility=n',
+        '--annotate=n',
+        '--assemble=n',
+        '--form=n',
+        '--modify-other=n'
+      );
     }
 
-    document.getElementById('loader-text').textContent =
-      'Encrypting and building PDF...';
-    const doc = new PDFDocument({
-      size: [pageImages[0].width, pageImages[0].height],
-      pdfVersion: '1.7ext3', // Use 256-bit AES encryption
-      userPassword: password,
-      ownerPassword: password,
-      permissions: {
-        printing: 'highResolution',
-        modifying: false,
-        copying: false,
-        annotating: false,
-        fillingForms: false,
-        contentAccessibility: true,
-        documentAssembly: false,
-      },
-    });
-    const stream = doc.pipe(blobStream());
-    for (let i = 0; i < pageImages.length; i++) {
-      if (i > 0)
-        doc.addPage({ size: [pageImages[i].width, pageImages[i].height] });
-      doc.image(pageImages[i].data, 0, 0, {
-        width: pageImages[i].width,
-        height: pageImages[i].height,
-      });
-    }
-    doc.end();
+    args.push('--', outputPath);
 
-    stream.on('finish', function () {
-      const blob = stream.toBlob('application/pdf');
-      downloadFile(blob, `encrypted-${file.name}`);
-      hideLoader();
-      showAlert('Success', 'Encryption complete! Your download has started.');
-    });
-  } catch (error) {
+    try {
+      qpdf.callMain(args);
+    } catch (qpdfError: any) {
+      console.error('qpdf execution error:', qpdfError);
+      throw new Error(
+        'Encryption failed: ' + (qpdfError.message || 'Unknown error')
+      );
+    }
+
+    showLoader('Preparing download...');
+    const outputFile = qpdf.FS.readFile(outputPath, { encoding: 'binary' });
+
+    if (!outputFile || outputFile.length === 0) {
+      throw new Error('Encryption resulted in an empty file.');
+    }
+
+    const blob = new Blob([outputFile], { type: 'application/pdf' });
+    downloadFile(blob, `encrypted-${file.name}`);
+
+    hideLoader();
+
+    let successMessage = 'PDF encrypted successfully with 256-bit AES!';
+    if (!hasDistinctOwnerPassword) {
+      successMessage +=
+        ' Note: Without a separate owner password, the PDF has no usage restrictions.';
+    }
+
+    showAlert('Success', successMessage);
+  } catch (error: any) {
     console.error('Error during PDF encryption:', error);
     hideLoader();
-    showAlert('Error', 'An error occurred. The PDF might be corrupted.');
+    showAlert(
+      'Encryption Failed',
+      `An error occurred: ${error.message || 'The PDF might be corrupted.'}`
+    );
+  } finally {
+    try {
+      if (qpdf?.FS) {
+        try {
+          qpdf.FS.unlink(inputPath);
+        } catch (e) {
+          console.warn('Failed to unlink input file:', e);
+        }
+        try {
+          qpdf.FS.unlink(outputPath);
+        } catch (e) {
+          console.warn('Failed to unlink output file:', e);
+        }
+      }
+    } catch (cleanupError) {
+      console.warn('Failed to cleanup WASM FS:', cleanupError);
+    }
   }
 }

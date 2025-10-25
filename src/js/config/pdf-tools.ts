@@ -39,6 +39,7 @@ export const singlePdfLoadTools = [
   'remove-blank-pages',
   'add-attachments',
   'sanitize-pdf',
+  'remove-restrictions',
 ];
 
 export const simpleTools = [

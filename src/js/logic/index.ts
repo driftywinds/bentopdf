@@ -64,12 +64,14 @@ import { alternateMerge, setupAlternateMergeTool } from './alternate-merge.js';
 import { linearizePdf } from './linearize.js';
 import { addAttachments, setupAddAttachmentsTool } from './add-attachments.js';
 import { sanitizePdf } from './sanitize-pdf.js';
+import { removeRestrictions } from './remove-restrictions.js';
 
 export const toolLogic = {
   merge: { process: merge, setup: setupMergeTool },
   split: { process: split, setup: setupSplitTool },
   encrypt,
   decrypt,
+  'remove-restrictions': removeRestrictions,
   organize,
   rotate,
   'add-page-numbers': addPageNumbers,

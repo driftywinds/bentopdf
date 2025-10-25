@@ -6,84 +6,78 @@ import {
 } from '../utils/helpers.js';
 import { state } from '../state.js';
 
-export async function decrypt() {
+export async function removeRestrictions() {
   const file = state.files[0];
-  const password = (
-    document.getElementById('password-input') as HTMLInputElement
-  )?.value;
-
-  if (!password) {
-    showAlert('Input Required', 'Please enter the PDF password.');
-    return;
-  }
+  const password =
+    (document.getElementById('owner-password-remove') as HTMLInputElement)
+      ?.value || '';
 
   const inputPath = '/input.pdf';
   const outputPath = '/output.pdf';
   let qpdf: any;
 
   try {
-    showLoader('Initializing decryption...');
+    showLoader('Initializing...');
     qpdf = await initializeQpdf();
 
-    showLoader('Reading encrypted PDF...');
+    showLoader('Reading PDF...');
     const fileBuffer = await readFileAsArrayBuffer(file);
     const uint8Array = new Uint8Array(fileBuffer as ArrayBuffer);
 
     qpdf.FS.writeFile(inputPath, uint8Array);
 
-    showLoader('Decrypting PDF...');
+    showLoader('Removing restrictions...');
 
-    const args = [inputPath, '--password=' + password, '--decrypt', outputPath];
+    const args = [inputPath];
+
+    if (password) {
+      args.push(`--password=${password}`);
+    }
+
+    args.push('--decrypt', '--remove-restrictions', '--', outputPath);
 
     try {
       qpdf.callMain(args);
     } catch (qpdfError: any) {
       console.error('qpdf execution error:', qpdfError);
-
       if (
-        qpdfError.message?.includes('invalid password') ||
-        qpdfError.message?.includes('password')
+        qpdfError.message?.includes('password') ||
+        qpdfError.message?.includes('encrypt')
       ) {
-        throw new Error('INVALID_PASSWORD');
+        throw new Error(
+          'Failed to remove restrictions. The PDF may require the correct owner password.'
+        );
       }
-      throw qpdfError;
+
+      throw new Error(
+        'Failed to remove restrictions: ' +
+          (qpdfError.message || 'Unknown error')
+      );
     }
 
     showLoader('Preparing download...');
     const outputFile = qpdf.FS.readFile(outputPath, { encoding: 'binary' });
 
-    if (outputFile.length === 0) {
-      throw new Error('Decryption resulted in an empty file.');
+    if (!outputFile || outputFile.length === 0) {
+      throw new Error('Operation resulted in an empty file.');
     }
 
     const blob = new Blob([outputFile], { type: 'application/pdf' });
-    downloadFile(blob, `unlocked-${file.name}`);
+    downloadFile(blob, `unrestricted-${file.name}`);
 
     hideLoader();
+
     showAlert(
       'Success',
-      'PDF decrypted successfully! Your download has started.'
+      'PDF restrictions removed successfully! The file is now fully editable and printable.'
     );
   } catch (error: any) {
-    console.error('Error during PDF decryption:', error);
+    console.error('Error during restriction removal:', error);
     hideLoader();
-
-    if (error.message === 'INVALID_PASSWORD') {
-      showAlert(
-        'Incorrect Password',
-        'The password you entered is incorrect. Please try again.'
-      );
-    } else if (error.message?.includes('password')) {
-      showAlert(
-        'Password Error',
-        'Unable to decrypt the PDF with the provided password.'
-      );
-    } else {
-      showAlert(
-        'Decryption Failed',
-        `An error occurred: ${error.message || 'The password you entered is wrong or the file is corrupted.'}`
-      );
-    }
+    showAlert(
+      'Operation Failed',
+      `An error occurred: ${error.message || 'The PDF might be corrupted or password-protected.'}`
+    );
   } finally {
     try {
       if (qpdf?.FS) {

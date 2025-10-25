@@ -401,6 +401,13 @@ export const categories = [
         icon: 'ruler',
         subtitle: 'Analyze page size, orientation, and units.',
       },
+      {
+        id: 'remove-restrictions',
+        name: 'Remove Restrictions',
+        icon: 'unlink',
+        subtitle:
+          'Remove password protection and security restrictions associated with digitally signed PDF files.',
+      },
     ],
   },
   {
@@ -410,7 +417,7 @@ export const categories = [
         id: 'encrypt',
         name: 'Encrypt PDF',
         icon: 'lock',
-        subtitle: 'Add a password to protect your PDF.',
+        subtitle: 'Lock your PDF by adding a password.',
       },
       {
         id: 'sanitize-pdf',
@@ -422,7 +429,7 @@ export const categories = [
         id: 'decrypt',
         name: 'Decrypt PDF',
         icon: 'unlock',
-        subtitle: 'Remove password protection from a PDF.',
+        subtitle: 'Unlock PDF by removing password protection.',
       },
       {
         id: 'flatten',

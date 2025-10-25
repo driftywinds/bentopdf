@@ -1,3 +1,6 @@
+import createModule from '@neslinesli93/qpdf-wasm';
+import { showLoader, hideLoader, showAlert } from '../ui';
+
 const STANDARD_SIZES = {
   A4: { width: 595.28, height: 841.89 },
   Letter: { width: 612, height: 792 },
@@ -145,4 +148,32 @@ export function formatIsoDate(isoDateString) {
     console.error('Could not parse ISO date:', e);
     return isoDateString; // Return original string on any error
   }
+}
+
+let qpdfInstance: any = null;
+
+/**
+ * Initialize qpdf-wasm singleton.
+ * Subsequent calls return the same instance.
+ */
+export async function initializeQpdf() {
+  if (qpdfInstance) return qpdfInstance;
+
+  showLoader('Initializing PDF engine...');
+  try {
+    qpdfInstance = await createModule({
+      locateFile: () => '/qpdf.wasm',
+    });
+  } catch (error) {
+    console.error('Failed to initialize qpdf-wasm:', error);
+    showAlert(
+      'Initialization Error',
+      'Could not load the PDF engine. Please refresh the page and try again.'
+    );
+    throw error;
+  } finally {
+    hideLoader();
+  }
+
+  return qpdfInstance;
 }

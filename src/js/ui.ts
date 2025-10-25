@@ -379,23 +379,73 @@ export const toolTemplates = {
     </div>
 `,
   encrypt: () => `
-        <h2 class="text-2xl font-bold text-white mb-4">Encrypt PDF</h2>
-        <p class="mb-6 text-gray-400">Upload a PDF to create a new, password-protected version.</p>
-        ${createFileInputHTML()}
-        <div id="file-display-area" class="mt-4 space-y-2"></div>
-        <div id="encrypt-options" class="hidden space-y-4 mt-6">
-            <div>
-                <label for="password-input" class="block mb-2 text-sm font-medium text-gray-300">Set Encryption Password</label>
-                <input type="password" id="password-input" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Enter a strong password">
-            </div>
-            <div class="p-4 bg-gray-900 border border-yellow-500/30 text-yellow-200 rounded-lg">
-                <h3 class="font-semibold text-base mb-2">Important Note</h3>
-                <p class="text-sm text-gray-400">To create the secure file, each page is converted into an image. This means you won't be able to select text or click links in the final encrypted PDF.</p>
-            </div>
-            <button id="process-btn" class="btn-gradient w-full mt-6">Encrypt & Download</button>
+  <h2 class="text-2xl font-bold text-white mb-4">Encrypt PDF</h2>
+  <p class="mb-6 text-gray-400">Add 256-bit AES password protection to your PDF.</p>
+  ${createFileInputHTML()}
+  <div id="file-display-area" class="mt-4 space-y-2"></div>
+  <div id="encrypt-options" class="hidden space-y-4 mt-6">
+      <div>
+          <label for="user-password-input" class="block mb-2 text-sm font-medium text-gray-300">User Password</label>
+          <input required type="password" id="user-password-input" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Password to open the PDF">
+          <p class="text-xs text-gray-500 mt-1">Required to open and view the PDF</p>
+      </div>
+      <div>
+          <label for="owner-password-input" class="block mb-2 text-sm font-medium text-gray-300">Owner Password (Optional)</label>
+          <input type="password" id="owner-password-input" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Password for full permissions (recommended)">
+          <p class="text-xs text-gray-500 mt-1">Allows changing permissions and removing encryption</p>
+      </div>
+
+      <!-- Restriction checkboxes (shown when owner password is entered) -->
+      <div id="restriction-options" class="hidden p-4 bg-gray-800 border border-gray-700 rounded-lg">
+        <h3 class="font-semibold text-base mb-2 text-white">🔒 Restrict PDF Permissions</h3>
+        <p class="text-sm text-gray-400 mb-3">Select which actions to disable:</p>
+        <div class="space-y-2">
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-modify" checked>
+            <span>Disable all modifications (--modify=none)</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-extract" checked>
+            <span>Disable text and image extraction (--extract=n)</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-print" checked>
+            <span>Disable all printing (--print=none)</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-accessibility">
+            <span>Disable accessibility text copying (--accessibility=n)</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-annotate">
+            <span>Disable annotations (--annotate=n)</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-assemble">
+            <span>Disable page assembly (--assemble=n)</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-form">
+            <span>Disable form filling (--form=n)</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="restrict-modify-other">
+            <span>Disable other modifications (--modify-other=n)</span>
+          </label>
         </div>
-        <canvas id="pdf-canvas" class="hidden"></canvas>
-    `,
+      </div>
+
+      <div class="p-4 bg-yellow-900/20 border border-yellow-500/30 text-yellow-200 rounded-lg">
+          <h3 class="font-semibold text-base mb-2">⚠️ Security Recommendation</h3>
+          <p class="text-sm text-gray-300">For strong security, set both passwords. Without an owner password, the security restrictions (printing, copying, etc.) can be easily bypassed.</p>
+      </div>
+      <div class="p-4 bg-green-900/20 border border-green-500/30 text-green-200 rounded-lg">
+          <h3 class="font-semibold text-base mb-2">✓ High-Quality Encryption</h3>
+          <p class="text-sm text-gray-300">256-bit AES encryption without quality loss. Text remains selectable and searchable.</p>
+      </div>
+      <button id="process-btn" class="btn-gradient w-full mt-6">Encrypt & Download</button>
+  </div>
+`,
   decrypt: () => `
         <h2 class="text-2xl font-bold text-white mb-4">Decrypt PDF</h2>
         <p class="mb-6 text-gray-400">Upload an encrypted PDF and provide its password to create an unlocked version.</p>
@@ -865,50 +915,71 @@ export const toolTemplates = {
 
   'change-permissions': () => `
     <h2 class="text-2xl font-bold text-white mb-4">Change PDF Permissions</h2>
-    <p class="mb-6 text-gray-400">Unlock a PDF and re-save it with new passwords and permissions.</p>
+    <p class="mb-6 text-gray-400">Modify passwords and permissions without losing quality.</p>
     ${createFileInputHTML()}
     <div id="file-display-area" class="mt-4 space-y-2"></div>
     <div id="permissions-options" class="hidden mt-6 space-y-4">
         <div>
-            <label for="current-password" class="block mb-2 text-sm font-medium text-gray-300">Current Password (to unlock)</label>
-            <input type="password" id="current-password" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Enter current password to open file">
+            <label for="current-password" class="block mb-2 text-sm font-medium text-gray-300">Current Password (if encrypted)</label>
+            <input type="password" id="current-password" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Leave blank if PDF is not password-protected">
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <label for="new-user-password" class="block mb-2 text-sm font-medium text-gray-300">New User Password (optional)</label>
-                <input type="password" id="new-user-password" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Password to open file">
+                <input type="password" id="new-user-password" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Password to open PDF">
             </div>
             <div>
                 <label for="new-owner-password" class="block mb-2 text-sm font-medium text-gray-300">New Owner Password (optional)</label>
-                <input type="password" id="new-owner-password" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Admin password for permissions">
+                <input type="password" id="new-owner-password" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Password for full permissions">
             </div>
         </div>
 
-        <div class="p-4 bg-gray-900 border border-blue-500/30 text-blue-200 rounded-lg">
-            <h3 class="font-semibold text-base mb-2">How Passwords Work</h3>
-            <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
-                <li>The <strong>User Password</strong> is required to open and decrypt the PDF.</li>
-                <li>The <strong>Owner Password</strong> is an admin key that bypasses all permissions.</li>
-                <li>Leave both blank to create an unprotected PDF.</li>
-                <li>Set an Owner Password to enforce the permissions you select below.</li>
+        <div class="p-4 bg-blue-900/20 border border-blue-500/30 text-blue-200 rounded-lg">
+            <h3 class="font-semibold text-base mb-2">How It Works</h3>
+            <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+                <li><strong>User Password:</strong> Required to open the PDF</li>
+                <li><strong>Owner Password:</strong> Required to enforce the permissions below</li>
+                <li>Leave both blank to remove all encryption and restrictions</li>
+                <li>Check boxes below to ALLOW specific actions (unchecked = disabled)</li>
             </ul>
         </div>
         
         <fieldset class="border border-gray-600 p-4 rounded-lg">
-            <legend class="px-2 text-sm font-medium text-gray-300">Allow User to:</legend>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                <label class="flex items-center gap-2"><input type="checkbox" id="allow-printing" checked class="checkbox-style"> Print Document</label>
-                <label class="flex items-center gap-2"><input type="checkbox" id="allow-copying" checked class="checkbox-style"> Copy Content</label>
-                <label class="flex items-center gap-2"><input type="checkbox" id="allow-modifying" checked class="checkbox-style"> Modify Document</label>
-                <label class="flex items-center gap-2"><input type="checkbox" id="allow-annotating" checked class="checkbox-style"> Annotate & Comment</label>
-                <label class="flex items-center gap-2"><input type="checkbox" id="allow-filling-forms" checked class="checkbox-style"> Fill in Forms</label>
-                <label class="flex items-center gap-2"><input type="checkbox" id="allow-content-accessibility" checked class="checkbox-style"> Enable Content Accessibility</label>
-                <label class="flex items-center gap-2"><input type="checkbox" id="allow-document-assembly" checked class="checkbox-style"> Assemble Document</label>
+            <legend class="px-2 text-sm font-medium text-gray-300">Permissions (only enforced with Owner Password):</legend>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                <label class="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white">
+                    <input type="checkbox" id="allow-printing" checked class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"> 
+                    Allow Printing
+                </label>
+                <label class="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white">
+                    <input type="checkbox" id="allow-copying" checked class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"> 
+                    Allow Text/Image Extraction
+                </label>
+                <label class="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white">
+                    <input type="checkbox" id="allow-modifying" checked class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"> 
+                    Allow Modifications
+                </label>
+                <label class="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white">
+                    <input type="checkbox" id="allow-annotating" checked class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"> 
+                    Allow Annotations
+                </label>
+                <label class="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white">
+                    <input type="checkbox" id="allow-filling-forms" checked class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"> 
+                    Allow Form Filling
+                </label>
+                <label class="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white">
+                    <input type="checkbox" id="allow-document-assembly" checked class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"> 
+                    Allow Page Assembly
+                </label>
+                <label class="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white">
+                    <input type="checkbox" id="allow-page-extraction" checked class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"> 
+                    Allow Page Extraction
+                </label>
             </div>
         </fieldset>
     </div>
-    <button id="process-btn" class="hidden btn-gradient w-full mt-6">Save New Permissions</button>
+    <button id="process-btn" class="hidden btn-gradient w-full mt-6">Apply Changes</button>
 `,
 
   'pdf-to-markdown': () => `
@@ -1977,5 +2048,47 @@ export const toolTemplates = {
 
         <button id="process-btn" class="btn-gradient w-full mt-6">Sanitize PDF & Download</button>
     </div>
+`,
+
+  'remove-restrictions': () => `
+  <h2 class="text-2xl font-bold text-white mb-4">Remove PDF Restrictions</h2>
+  <p class="mb-6 text-gray-400">Remove security restrictions and unlock PDF permissions for editing and printing.</p>
+  ${createFileInputHTML()}
+  <div id="file-display-area" class="mt-4 space-y-2"></div>
+  <div id="remove-restrictions-options" class="hidden space-y-4 mt-6">
+        <div class="p-4 bg-blue-900/20 border border-blue-500/30 text-blue-200 rounded-lg">
+          <h3 class="font-semibold text-base mb-2"> How it Works </h3>
+          <p class="text-sm text-gray-300 mb-2">This operation will:</p>
+          <ul class="text-sm text-gray-300 list-disc list-inside space-y-1 ml-2">
+            <li>Remove all permission restrictions (printing, copying, editing)</li>
+            <li>Remove encryption even if the file is encrypted</li>
+            <li>Remove security restrictions associated with digitally signed PDF files (will make signature invalid)</li>
+            <li>Create a fully editable, unrestricted PDF</li>
+          </ul>
+      </div>
+
+      <div>
+          <label for="owner-password-remove" class="block mb-2 text-sm font-medium text-gray-300">Owner Password (if required)</label>
+          <input type="password" id="owner-password-remove" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5" placeholder="Leave empty if PDF has no password">
+          <p class="text-xs text-gray-500 mt-1">Enter the owner password if the PDF is password-protected</p>
+      </div>
+
+<div class="p-4 bg-red-900/20 border border-red-500/30 text-red-200 rounded-lg">
+  <h3 class="font-semibold text-base mb-2">Notice</h3>
+  <p class="text-sm text-gray-300 mb-2">This tool is intended for legitimate purposes only, such as:</p>
+  <ul class="text-sm text-gray-300 list-disc list-inside space-y-1 ml-2">
+    <li>Removing restrictions from PDFs you own or have permission to modify</li>
+    <li>Recovering access to a PDF when you legitimately forgot the password</li>
+    <li>Accessing content you legally purchased or created</li>
+    <li>Editing documents for authorized business purposes</li>
+    <li>Opening documents for legitimate archival, compliance, or recovery workflows</li>
+    <li class="font-semibold">Limitations: this tool can only remove restrictions from weakly protected PDFs or PDFs that do not have an owner password set. It cannot remove or bypass properly applied AES‑256 (256‑bit) encryption.</li>
+  </ul>
+  <p class="text-sm text-gray-300 mt-3 font-semibold">
+    Using this tool to bypass copyright protections, violate intellectual property rights, or access documents without authorization may be illegal in your jurisdiction. We are not liable for any misuse of this tool — if you're unsure, consult legal counsel or the document owner before proceeding.
+  </p>
+</div>
+      <button id="process-btn" class="btn-gradient w-full mt-6">Remove Restrictions & Download</button>
+  </div>
 `,
 };

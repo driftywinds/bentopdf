@@ -33,7 +33,8 @@ async function handleSinglePdfUpload(toolId, file) {
     if (
       state.pdfDoc.isEncrypted &&
       toolId !== 'decrypt' &&
-      toolId !== 'change-permissions'
+      toolId !== 'change-permissions' &&
+      toolId !== 'remove-restrictions'
     ) {
       showAlert(
         'Protected PDF',

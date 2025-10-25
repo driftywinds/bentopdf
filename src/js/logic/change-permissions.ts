@@ -1,146 +1,169 @@
 import { showLoader, hideLoader, showAlert } from '../ui.js';
-import { downloadFile, readFileAsArrayBuffer } from '../utils/helpers.js';
+import {
+  downloadFile,
+  initializeQpdf,
+  readFileAsArrayBuffer,
+} from '../utils/helpers.js';
 import { state } from '../state.js';
-import PDFDocument from 'pdfkit/js/pdfkit.standalone';
-import blobStream from 'blob-stream';
-import * as pdfjsLib from 'pdfjs-dist';
 
 export async function changePermissions() {
-  const currentPassword = (
-    document.getElementById('current-password') as HTMLInputElement
-  ).value;
-  const newUserPassword = (
-    document.getElementById('new-user-password') as HTMLInputElement
-  ).value;
-  const newOwnerPassword = (
-    document.getElementById('new-owner-password') as HTMLInputElement
-  ).value;
+  const file = state.files[0];
+  const currentPassword =
+    (document.getElementById('current-password') as HTMLInputElement)?.value ||
+    '';
+  const newUserPassword =
+    (document.getElementById('new-user-password') as HTMLInputElement)?.value ||
+    '';
+  const newOwnerPassword =
+    (document.getElementById('new-owner-password') as HTMLInputElement)
+      ?.value || '';
 
-  // An owner password is required to enforce any permissions.
-  if (
-    !newOwnerPassword &&
-    (newUserPassword ||
-      document.querySelectorAll('input[type="checkbox"]:not(:checked)').length >
-        0)
-  ) {
-    showAlert(
-      'Input Required',
-      'You must set a "New Owner Password" to enforce specific permissions or to set a user password.'
-    );
-    return;
-  }
-
-  showLoader('Preparing to process...');
+  const inputPath = '/input.pdf';
+  const outputPath = '/output.pdf';
+  let qpdf: any;
 
   try {
-    const file = state.files[0];
-    const pdfData = await readFileAsArrayBuffer(file);
+    showLoader('Initializing...');
+    qpdf = await initializeQpdf();
 
-    let pdf;
-    try {
-      pdf = await pdfjsLib.getDocument({
-        data: pdfData as ArrayBuffer,
-        password: currentPassword,
-      }).promise;
-    } catch (e) {
-      // This catch is specific to password errors in pdf.js
-      if (e.name === 'PasswordException') {
-        hideLoader();
-        showAlert(
-          'Incorrect Password',
-          'The current password you entered is incorrect.'
-        );
-        return;
+    showLoader('Reading PDF...');
+    const fileBuffer = await readFileAsArrayBuffer(file);
+    const uint8Array = new Uint8Array(fileBuffer as ArrayBuffer);
+    qpdf.FS.writeFile(inputPath, uint8Array);
+
+    showLoader('Processing PDF permissions...');
+
+    const args = [inputPath];
+
+    // Add password if provided
+    if (currentPassword) {
+      args.push('--password=' + currentPassword);
+    }
+
+    const shouldEncrypt = newUserPassword || newOwnerPassword;
+
+    if (shouldEncrypt) {
+      const finalUserPassword = newUserPassword;
+      const finalOwnerPassword = newOwnerPassword;
+
+      args.push('--encrypt', finalUserPassword, finalOwnerPassword, '256');
+
+      const allowPrinting = (
+        document.getElementById('allow-printing') as HTMLInputElement
+      )?.checked;
+      const allowCopying = (
+        document.getElementById('allow-copying') as HTMLInputElement
+      )?.checked;
+      const allowModifying = (
+        document.getElementById('allow-modifying') as HTMLInputElement
+      )?.checked;
+      const allowAnnotating = (
+        document.getElementById('allow-annotating') as HTMLInputElement
+      )?.checked;
+      const allowFillingForms = (
+        document.getElementById('allow-filling-forms') as HTMLInputElement
+      )?.checked;
+      const allowDocumentAssembly = (
+        document.getElementById('allow-document-assembly') as HTMLInputElement
+      )?.checked;
+      const allowPageExtraction = (
+        document.getElementById('allow-page-extraction') as HTMLInputElement
+      )?.checked;
+
+      if (finalOwnerPassword) {
+        if (!allowModifying) args.push('--modify=none');
+        if (!allowCopying) args.push('--extract=n');
+        if (!allowPrinting) args.push('--print=none');
+        if (!allowAnnotating) args.push('--annotate=n');
+        if (!allowDocumentAssembly) args.push('--assemble=n');
+        if (!allowFillingForms) args.push('--form=n');
+        if (!allowPageExtraction) args.push('--extract=n');
+        // --modify-other is not directly mapped, apply if modifying is disabled
+        if (!allowModifying) args.push('--modify-other=n');
+      } else if (finalUserPassword) {
+        args.push('--allow-insecure');
       }
-      throw e;
+    } else {
+      args.push('--decrypt');
     }
 
-    const numPages = pdf.numPages;
-    const pageImages = [];
+    args.push('--', outputPath);
+    try {
+      qpdf.callMain(args);
+    } catch (qpdfError: any) {
+      console.error('qpdf execution error:', qpdfError);
 
-    for (let i = 1; i <= numPages; i++) {
-      document.getElementById('loader-text').textContent =
-        `Processing page ${i} of ${numPages}...`;
-      const page = await pdf.getPage(i);
-      const viewport = page.getViewport({ scale: 2.0 });
-      const canvas = document.createElement('canvas');
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-      const context = canvas.getContext('2d');
-      await page.render({ canvasContext: context, viewport: viewport }).promise;
-      pageImages.push({
-        data: canvas.toDataURL('image/jpeg', 0.8),
-        width: viewport.width,
-        height: viewport.height,
-      });
+      const errorMsg = qpdfError.message || '';
+
+      if (
+        errorMsg.includes('invalid password') ||
+        errorMsg.includes('incorrect password') ||
+        errorMsg.includes('password')
+      ) {
+        throw new Error('INVALID_PASSWORD');
+      }
+
+      if (
+        errorMsg.includes('encrypted') ||
+        errorMsg.includes('password required')
+      ) {
+        throw new Error('PASSWORD_REQUIRED');
+      }
+
+      throw new Error('Processing failed: ' + errorMsg || 'Unknown error');
     }
 
-    document.getElementById('loader-text').textContent =
-      'Applying new permissions...';
+    showLoader('Preparing download...');
+    const outputFile = qpdf.FS.readFile(outputPath, { encoding: 'binary' });
 
-    const allowPrinting = (
-      document.getElementById('allow-printing') as HTMLInputElement
-    ).checked;
-    const allowCopying = (
-      document.getElementById('allow-copying') as HTMLInputElement
-    ).checked;
-    const allowModifying = (
-      document.getElementById('allow-modifying') as HTMLInputElement
-    ).checked;
-    const allowAnnotating = (
-      document.getElementById('allow-annotating') as HTMLInputElement
-    ).checked;
-    const allowFillingForms = (
-      document.getElementById('allow-filling-forms') as HTMLInputElement
-    ).checked;
-    const allowContentAccessibility = (
-      document.getElementById('allow-content-accessibility') as HTMLInputElement
-    ).checked;
-    const allowDocumentAssembly = (
-      document.getElementById('allow-document-assembly') as HTMLInputElement
-    ).checked;
-
-    const doc = new PDFDocument({
-      size: [pageImages[0].width, pageImages[0].height],
-      pdfVersion: '1.7ext3', // Uses 256-bit AES encryption
-
-      // Apply the new, separate user and owner passwords
-      userPassword: newUserPassword,
-      ownerPassword: newOwnerPassword,
-
-      // Apply all seven permissions from the checkboxes
-      permissions: {
-        printing: allowPrinting ? 'highResolution' : false,
-        modifying: allowModifying,
-        copying: allowCopying,
-        annotating: allowAnnotating,
-        fillingForms: allowFillingForms,
-        contentAccessibility: allowContentAccessibility,
-        documentAssembly: allowDocumentAssembly,
-      },
-    });
-
-    const stream = doc.pipe(blobStream());
-
-    for (let i = 0; i < pageImages.length; i++) {
-      if (i > 0)
-        doc.addPage({ size: [pageImages[i].width, pageImages[i].height] });
-      doc.image(pageImages[i].data, 0, 0, {
-        width: pageImages[i].width,
-        height: pageImages[i].height,
-      });
+    if (!outputFile || outputFile.length === 0) {
+      throw new Error('Processing resulted in an empty file.');
     }
 
-    doc.end();
-    stream.on('finish', function () {
-      const blob = stream.toBlob('application/pdf');
-      downloadFile(blob, `permissions-changed-${file.name}`);
-      hideLoader();
-      showAlert('Success', 'Permissions changed successfully!');
-    });
-  } catch (e) {
-    console.error(e);
+    const blob = new Blob([outputFile], { type: 'application/pdf' });
+    downloadFile(blob, `permissions-changed-${file.name}`);
+
     hideLoader();
-    showAlert('Error', `An unexpected error occurred: ${e.message}`);
+
+    let successMessage = 'PDF permissions changed successfully!';
+    if (!shouldEncrypt) {
+      successMessage =
+        'PDF decrypted successfully! All encryption and restrictions removed.';
+    }
+
+    showAlert('Success', successMessage);
+  } catch (error: any) {
+    console.error('Error during PDF permission change:', error);
+    hideLoader();
+
+    if (error.message === 'INVALID_PASSWORD') {
+      showAlert(
+        'Incorrect Password',
+        'The current password you entered is incorrect. Please try again.'
+      );
+    } else if (error.message === 'PASSWORD_REQUIRED') {
+      showAlert(
+        'Password Required',
+        'This PDF is password-protected. Please enter the current password to proceed.'
+      );
+    } else {
+      showAlert(
+        'Processing Failed',
+        `An error occurred: ${error.message || 'The PDF might be corrupted or password protected.'}`
+      );
+    }
+  } finally {
+    try {
+      if (qpdf?.FS) {
+        try {
+          qpdf.FS.unlink(inputPath);
+        } catch (e) {}
+        try {
+          qpdf.FS.unlink(outputPath);
+        } catch (e) {}
+      }
+    } catch (cleanupError) {
+      console.warn('Failed to cleanup WASM FS:', cleanupError);
+    }
   }
 }
