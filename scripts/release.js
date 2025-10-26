@@ -91,7 +91,7 @@ function main() {
   console.log(`🎉 Release v${newVersion} complete!`);
   console.log(`📦 Docker image: bentopdf/bentopdf:${newVersion}`);
   console.log(
-    `🏷️  GitHub release: https://github.com/AltuisticIsopod/bentopdf/releases/tag/${tagName}`
+    `🏷️  GitHub release: https://github.com/alam00000/bentopdf/releases/tag/${tagName}`
   );
 }
 

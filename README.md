@@ -104,8 +104,11 @@ You can run BentoPDF locally for development or personal use.
 
 You can run BentoPDF directly from Docker Hub without cloning the repository:
 
+You can also watch the video on how to set it up 👉
+[BentoPDF Docker Setup](https://drive.google.com/file/d/1C4eJ2nqeaH__1Tlad-xuBHaF2Ha4fSBf/view?usp=drive_link)
+
 ```bash
-docker run -p 3000:80 bentopdf/bentopdf:latest
+docker run -p 3000:8080 bentopdf/bentopdf:latest
 ```
 
 Open your browser at: http://localhost:3000
@@ -124,7 +127,7 @@ services:
     image: bentopdf/bentopdf:latest
     container_name: bentopdf
     ports:
-      - '3000:80'
+      - '3000:8080'
     restart: unless-stopped
 ```
 
@@ -148,6 +151,23 @@ For organizations that want a clean, distraction-free interface focused solely o
 - Perfect for internal company tools and educational institutions
 
 For more details, see [SIMPLE_MODE.md](SIMPLE_MODE.md).
+
+### 🔒 Security Features
+
+BentoPDF runs as a non-root user using nginx-unprivileged for enhanced security:
+
+- **Non-Root Execution**: Container runs with minimal privileges using nginx-unprivileged
+- **Port 8080**: Uses high port number to avoid requiring root privileges
+- **Security Best Practices**: Follows Principle of Least Privilege
+
+#### Basic Usage
+
+```bash
+docker build -t bentopdf .
+docker run -p 8080:8080 bentopdf
+```
+
+For detailed security configuration, see [SECURITY.md](SECURITY.md).
 
 ### 📦 Version Management
 
@@ -279,4 +299,4 @@ Your work inspires and empowers developers everywhere. Thank you for making open
 
 ## 📜 License
 
-This project is licensed under the **Apache 2.0**. See the [LICENSE](https://github.com/alam00000/bentopdf/blob/main/LICENSE) file for details.
+This project is licensed under the **GNU AGPLv3**. See the [LICENSE](https://github.com/alam00000/bentopdf/blob/main/LICENSE) file for details.
