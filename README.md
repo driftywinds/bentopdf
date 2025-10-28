@@ -102,13 +102,19 @@ You can run BentoPDF locally for development or personal use.
 
 ### 🚀 Quick Start with Docker
 
-You can run BentoPDF directly from Docker Hub without cloning the repository:
+You can run BentoPDF directly from Docker Hub or GitHub Container Registry without cloning the repository:
 
 You can also watch the video on how to set it up 👉
 [BentoPDF Docker Setup](https://drive.google.com/file/d/1C4eJ2nqeaH__1Tlad-xuBHaF2Ha4fSBf/view?usp=drive_link)
 
+**Using Docker Hub:**
 ```bash
 docker run -p 3000:8080 bentopdf/bentopdf:latest
+```
+
+**Using GitHub Container Registry:**
+```bash
+docker run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
 ```
 
 Open your browser at: http://localhost:3000
@@ -171,11 +177,17 @@ For detailed security configuration, see [SECURITY.md](SECURITY.md).
 
 ### 📦 Version Management
 
-BentoPDF supports semantic versioning with multiple Docker tags:
+BentoPDF supports semantic versioning with multiple Docker tags available on both Docker Hub and GitHub Container Registry:
 
+**Docker Hub:**
 - **Latest**: `bentopdf/bentopdf:latest`
 - **Specific Version**: `bentopdf/bentopdf:1.0.0`
 - **Version with Prefix**: `bentopdf/bentopdf:v1.0.0`
+
+**GitHub Container Registry:**
+- **Latest**: `ghcr.io/alam00000/bentopdf:latest`
+- **Specific Version**: `ghcr.io/alam00000/bentopdf:1.0.0`
+- **Version with Prefix**: `ghcr.io/alam00000/bentopdf:v1.0.0`
 
 #### Quick Release
 

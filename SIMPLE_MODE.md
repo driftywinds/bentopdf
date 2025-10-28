@@ -23,16 +23,24 @@ When enabled, Simple Mode will:
 
 Use the pre-built Simple Mode image directly:
 
+**Using Docker Hub:**
 ```bash
 docker run -p 3000:80 bentopdf/bentopdf-simple:latest
 ```
 
+**Using GitHub Container Registry:**
+```bash
+docker run -p 3000:80 ghcr.io/alam00000/bentopdf-simple:latest
+```
 Or with Docker Compose:
 
 ```yaml
 services:
   bentopdf:
+    # Using Docker Hub
     image: bentopdf/bentopdf-simple:latest
+    # Or using GitHub Container Registry
+    # image: ghcr.io/alam00000/bentopdf-simple:latest
     container_name: bentopdf
     restart: unless-stopped
     ports:
@@ -142,13 +150,23 @@ When Simple Mode is working correctly, you should see:
 
 ### Normal Mode (Full Branding)
 
+**Docker Hub:**
 - `bentopdf/bentopdf:latest`
 - `bentopdf/bentopdf:v1.0.0` (versioned)
 
+**GitHub Container Registry:**
+- `ghcr.io/alam00000/bentopdf:latest`
+- `ghcr.io/alam00000/bentopdf:v1.0.0` (versioned)
+
 ### Simple Mode (Clean Interface)
 
+**Docker Hub:**
 - `bentopdf/bentopdf-simple:latest`
 - `bentopdf/bentopdf-simple:v1.0.0` (versioned)
+
+**GitHub Container Registry:**
+- `ghcr.io/alam00000/bentopdf-simple:latest`
+- `ghcr.io/alam00000/bentopdf-simple:v1.0.0` (versioned)
 
 ## 🚀 Production Deployment Examples
 
