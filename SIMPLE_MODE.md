@@ -25,12 +25,12 @@ Use the pre-built Simple Mode image directly:
 
 **Using Docker Hub:**
 ```bash
-docker run -p 3000:80 bentopdf/bentopdf-simple:latest
+docker run -p 3000:8080 bentopdf/bentopdf-simple:latest
 ```
 
 **Using GitHub Container Registry:**
 ```bash
-docker run -p 3000:80 ghcr.io/alam00000/bentopdf-simple:latest
+docker run -p 3000:8080 ghcr.io/alam00000/bentopdf-simple:latest
 ```
 Or with Docker Compose:
 
@@ -44,7 +44,7 @@ services:
     container_name: bentopdf
     restart: unless-stopped
     ports:
-      - '3000:80'
+      - '3000:8080'
 ```
 
 ### Method 2: Using Docker Compose with Build
@@ -62,7 +62,7 @@ Build the image with the SIMPLE_MODE build argument:
 
 ```bash
 docker build --build-arg SIMPLE_MODE=true -t bentopdf-simple .
-docker run -p 3000:80 bentopdf-simple
+docker run -p 3000:8080 bentopdf-simple
 ```
 
 ### Method 4: Using npm Script (Easiest for Local Development)
@@ -104,7 +104,7 @@ This automatically builds and serves Simple Mode on `http://localhost:3000`.
 ```bash
 # Pull and run the Simple Mode image
 docker pull bentopdf/bentopdf-simple:latest
-docker run -p 3000:80 bentopdf/bentopdf-simple:latest
+docker run -p 3000:8080 bentopdf/bentopdf-simple:latest
 ```
 
 Open `http://localhost:3000` in your browser.
@@ -125,10 +125,10 @@ Open `http://localhost:3000` in your browser.
 
 ```bash
 # Test Normal Mode
-docker run -p 3000:80 bentopdf/bentopdf:latest
+docker run -p 3000:8080 bentopdf/bentopdf:latest
 
 # Test Simple Mode
-docker run -p 3001:80 bentopdf/bentopdf-simple:latest
+docker run -p 3001:8080 bentopdf/bentopdf-simple:latest
 ```
 
 - Normal Mode: `http://localhost:3000`
