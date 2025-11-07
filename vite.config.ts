@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => ({
         faq: resolve(__dirname, 'faq.html'),
         privacy: resolve(__dirname, 'privacy.html'),
         terms: resolve(__dirname, 'terms.html'),
+        bookmark: resolve(__dirname, 'src/pages/bookmark.html'),
       },
     },
   },

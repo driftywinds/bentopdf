@@ -76,7 +76,13 @@ export const categories = [
         subtitle:
           'Annotate, highlight, redact, comment, add shapes/images, search, and view PDFs.',
       },
-      // { id: 'crop', name: 'Crop PDF', icon: 'crop', subtitle: 'Trim the margins of every page in your PDF.' },
+      {
+        // id: 'bookmark-pdf',
+        href: '/src/pages/bookmark.html',
+        name: 'Edit Bookmarks',
+        icon: 'bookmark',
+        subtitle: 'Add, edit, import, delete and extract PDF bookmarks.',
+      },
       {
         id: 'add-page-numbers',
         name: 'Page Numbers',
