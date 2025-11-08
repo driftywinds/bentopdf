@@ -5,6 +5,7 @@ import { PDFDocument, PDFName, PDFString, PDFNumber, PDFArray } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
 import Sortable from 'sortablejs';
 import { createIcons, icons } from 'lucide';
+import '../../css/bookmark.css';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
