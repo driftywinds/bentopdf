@@ -246,10 +246,10 @@ function showInputModal(title, fields = [], defaultValues = {}) {
         // Store modal references
         savedModalOverlay = overlay;
         savedModal = modal;
-        
+
         // Hide modal completely
         overlay.style.display = 'none';
-        
+
         startDestinationPicking((page, pdfX, pdfY) => {
           const destPageInput = modal.querySelector('#modal-dest-page');
           const destXInput = modal.querySelector('#modal-dest-x');
@@ -258,10 +258,10 @@ function showInputModal(title, fields = [], defaultValues = {}) {
           if (destPageInput) destPageInput.value = page;
           if (destXInput) destXInput.value = Math.round(pdfX);
           if (destYInput) destYInput.value = Math.round(pdfY);
-          
+
           // Restore modal
           overlay.style.display = '';
-          
+
           // Update preview to show the destination after a short delay to ensure modal is visible
           setTimeout(() => {
             updateDestinationPreview();
@@ -269,7 +269,7 @@ function showInputModal(title, fields = [], defaultValues = {}) {
         });
       });
     }
-    
+
     // Add validation for page input
     const destPageInput = modal.querySelector('#modal-dest-page');
     if (destPageInput) {
@@ -285,7 +285,7 @@ function showInputModal(title, fields = [], defaultValues = {}) {
         }
         updateDestinationPreview();
       });
-      
+
       destPageInput.addEventListener('blur', (e) => {
         const value = parseInt(e.target.value);
         const maxPages = parseInt(e.target.max) || 1;
@@ -299,32 +299,34 @@ function showInputModal(title, fields = [], defaultValues = {}) {
         updateDestinationPreview();
       });
     }
-    
+
     // Function to update destination preview
     function updateDestinationPreview() {
       if (!pdfJsDoc) return;
-      
+
       const destPageInput = modal.querySelector('#modal-dest-page');
       const destXInput = modal.querySelector('#modal-dest-x');
       const destYInput = modal.querySelector('#modal-dest-y');
       const destZoomSelect = modal.querySelector('#modal-dest-zoom');
-      
-      const pageNum = destPageInput ? parseInt(destPageInput.value) : currentPage;
+
+      const pageNum = destPageInput
+        ? parseInt(destPageInput.value)
+        : currentPage;
       const x = destXInput ? parseFloat(destXInput.value) : null;
       const y = destYInput ? parseFloat(destYInput.value) : null;
       const zoom = destZoomSelect ? destZoomSelect.value : null;
-      
+
       if (pageNum >= 1 && pageNum <= pdfJsDoc.numPages) {
         // Render the page with zoom if specified
         renderPageWithDestination(pageNum, x, y, zoom);
       }
     }
-    
+
     // Add listeners for X, Y, and zoom changes
     const destXInput = modal.querySelector('#modal-dest-x');
     const destYInput = modal.querySelector('#modal-dest-y');
     const destZoomSelect = modal.querySelector('#modal-dest-zoom');
-    
+
     if (destXInput) {
       destXInput.addEventListener('input', updateDestinationPreview);
     }
@@ -434,7 +436,7 @@ function cancelDestinationPicking() {
     destinationMarker.remove();
     destinationMarker = null;
   }
-  
+
   // Remove coordinate display
   const coordDisplay = document.getElementById('destination-coord-display');
   if (coordDisplay) {
@@ -497,20 +499,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const page = await pdfJsDoc.getPage(currentPage);
       viewport = page.getViewport({ scale: currentZoom });
     }
-    
+
     // Convert canvas pixel coordinates to PDF coordinates
     // The canvas CSS size matches viewport dimensions, so coordinates map directly
     // PDF uses bottom-left origin, canvas uses top-left
     const scaleX = viewport.width / rect.width;
     const scaleY = viewport.height / rect.height;
     const pdfX = canvasX * scaleX;
-    const pdfY = viewport.height - (canvasY * scaleY);
+    const pdfY = viewport.height - canvasY * scaleY;
 
     // Remove old marker and coordinate display
     if (destinationMarker) {
       destinationMarker.remove();
     }
-    const oldCoordDisplay = document.getElementById('destination-coord-display');
+    const oldCoordDisplay = document.getElementById(
+      'destination-coord-display'
+    );
     if (oldCoordDisplay) {
       oldCoordDisplay.remove();
     }
@@ -528,16 +532,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasRect = canvas.getBoundingClientRect();
     const wrapperRect = canvasWrapper.getBoundingClientRect();
     destinationMarker.style.position = 'absolute';
-    destinationMarker.style.left = (canvasX + canvasRect.left - wrapperRect.left) + 'px';
-    destinationMarker.style.top = (canvasY + canvasRect.top - wrapperRect.top) + 'px';
+    destinationMarker.style.left =
+      canvasX + canvasRect.left - wrapperRect.left + 'px';
+    destinationMarker.style.top =
+      canvasY + canvasRect.top - wrapperRect.top + 'px';
     canvasWrapper.appendChild(destinationMarker);
-    
+
     // Create persistent coordinate display
     const coordDisplay = document.createElement('div');
     coordDisplay.id = 'destination-coord-display';
-    coordDisplay.className = 'absolute bg-blue-500 text-white px-2 py-1 rounded text-xs font-mono z-50 pointer-events-none';
-    coordDisplay.style.left = (canvasX + canvasRect.left - wrapperRect.left + 20) + 'px';
-    coordDisplay.style.top = (canvasY + canvasRect.top - wrapperRect.top - 30) + 'px';
+    coordDisplay.className =
+      'absolute bg-blue-500 text-white px-2 py-1 rounded text-xs font-mono z-50 pointer-events-none';
+    coordDisplay.style.left =
+      canvasX + canvasRect.left - wrapperRect.left + 20 + 'px';
+    coordDisplay.style.top =
+      canvasY + canvasRect.top - wrapperRect.top - 30 + 'px';
     coordDisplay.textContent = `X: ${Math.round(pdfX)}, Y: ${Math.round(pdfY)}`;
     canvasWrapper.appendChild(coordDisplay);
 
@@ -639,6 +648,12 @@ const jsonInput = document.getElementById('json-input');
 const autoExtractCheckbox = document.getElementById('auto-extract-checkbox');
 const appEl = document.getElementById('app');
 const uploaderEl = document.getElementById('uploader');
+const fileDisplayArea = document.getElementById(
+  'file-display-area'
+) as HTMLElement;
+const backToToolsBtn = document.getElementById(
+  'back-to-tools'
+) as HTMLButtonElement;
 const canvas = document.getElementById('pdf-canvas');
 const ctx = canvas.getContext('2d');
 const pageIndicator = document.getElementById('page-indicator');
@@ -974,6 +989,37 @@ collapseAllBtn.addEventListener('click', () => {
   renderBookmarkTree();
 });
 
+// Format bytes helper
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+}
+
+// Render file display
+function renderFileDisplay(file: File) {
+  if (!fileDisplayArea) return;
+  fileDisplayArea.innerHTML = '';
+  fileDisplayArea.classList.remove('hidden');
+
+  const fileDiv = document.createElement('div');
+  fileDiv.className =
+    'flex items-center justify-between bg-gray-700 p-3 rounded-lg text-sm';
+
+  const nameSpan = document.createElement('span');
+  nameSpan.className = 'truncate font-medium text-gray-200';
+  nameSpan.textContent = file.name;
+
+  const sizeSpan = document.createElement('span');
+  sizeSpan.className = 'flex-shrink-0 ml-4 text-gray-400';
+  sizeSpan.textContent = formatBytes(file.size);
+
+  fileDiv.append(nameSpan, sizeSpan);
+  fileDisplayArea.appendChild(fileDiv);
+}
+
 fileInput.addEventListener('change', loadPDF);
 
 async function loadPDF(e) {
@@ -982,6 +1028,7 @@ async function loadPDF(e) {
 
   originalFileName = file.name.replace('.pdf', '');
   filenameDisplay.textContent = originalFileName;
+  renderFileDisplay(file);
   const arrayBuffer = await file.arrayBuffer();
 
   currentPage = 1;
@@ -1057,47 +1104,47 @@ async function renderPage(num, zoom = null, destX = null, destY = null) {
   if (!pdfJsDoc) return;
 
   const page = await pdfJsDoc.getPage(num);
-  
+
   let zoomScale = currentZoom;
   if (zoom !== null && zoom !== '' && zoom !== '0') {
     zoomScale = parseFloat(zoom) / 100;
   }
-  
+
   const dpr = window.devicePixelRatio || 1;
-  
+
   let viewport = page.getViewport({ scale: zoomScale });
   currentViewport = viewport;
 
   canvas.height = viewport.height * dpr;
   canvas.width = viewport.width * dpr;
-  
+
   // Set CSS size to maintain aspect ratio (this is what the browser displays)
   canvas.style.width = viewport.width + 'px';
   canvas.style.height = viewport.height + 'px';
-  
+
   // Scale the canvas context to match device pixel ratio
   ctx.scale(dpr, dpr);
 
   await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-  
+
   // Draw destination marker if coordinates are provided
   if (destX !== null && destY !== null) {
     const canvasX = destX;
     const canvasY = viewport.height - destY; // Flip Y axis (PDF bottom-left, canvas top-left)
-    
+
     // Draw marker on canvas with animation effect
     ctx.save();
     ctx.strokeStyle = '#3b82f6';
     ctx.fillStyle = '#3b82f6';
     ctx.lineWidth = 3;
-    
+
     ctx.shadowBlur = 10;
     ctx.shadowColor = 'rgba(59, 130, 246, 0.5)';
     ctx.beginPath();
     ctx.arc(canvasX, canvasY, 12, 0, 2 * Math.PI);
     ctx.fill();
     ctx.shadowBlur = 0;
-    
+
     // Draw crosshair
     ctx.beginPath();
     ctx.moveTo(canvasX - 15, canvasY);
@@ -1105,26 +1152,26 @@ async function renderPage(num, zoom = null, destX = null, destY = null) {
     ctx.moveTo(canvasX, canvasY - 15);
     ctx.lineTo(canvasX, canvasY + 15);
     ctx.stroke();
-    
+
     // Draw inner circle
     ctx.beginPath();
     ctx.arc(canvasX, canvasY, 6, 0, 2 * Math.PI);
     ctx.fill();
     ctx.stroke();
-    
+
     // Draw coordinate text background
     const text = `X: ${Math.round(destX)}, Y: ${Math.round(destY)}`;
     ctx.font = 'bold 12px monospace';
     const textMetrics = ctx.measureText(text);
     const textWidth = textMetrics.width;
     const textHeight = 18;
-    
+
     ctx.fillStyle = 'rgba(59, 130, 246, 0.95)';
     ctx.fillRect(canvasX + 18, canvasY - 25, textWidth + 10, textHeight);
-    
+
     ctx.fillStyle = 'white';
     ctx.fillText(text, canvasX + 23, canvasY - 10);
-    
+
     ctx.restore();
   }
 
@@ -1424,8 +1471,13 @@ function createNodeElement(node, level = 0) {
     // Check if bookmark has a custom destination
     if (node.destX !== null || node.destY !== null || node.zoom !== null) {
       // Render page with destination highlighted and zoom applied
-      await renderPageWithDestination(node.page, node.destX, node.destY, node.zoom);
-      
+      await renderPageWithDestination(
+        node.page,
+        node.destX,
+        node.destY,
+        node.zoom
+      );
+
       // Highlight the destination briefly (2 seconds)
       setTimeout(() => {
         // Re-render without highlight but keep the zoom if it was set
@@ -1769,7 +1821,6 @@ extractExistingBtn.addEventListener('click', async () => {
   }
 });
 
-
 async function extractExistingBookmarks(doc) {
   try {
     const outlines = doc.catalog.lookup(PDFName.of('Outlines'));
@@ -1792,7 +1843,9 @@ async function extractExistingBookmarks(doc) {
     try {
       function addNamePair(nameObj, destObj) {
         try {
-          const key = nameObj.decodeText ? nameObj.decodeText() : String(nameObj);
+          const key = nameObj.decodeText
+            ? nameObj.decodeText()
+            : String(nameObj);
           namedDests.set(key, resolveRef(destObj));
         } catch (_) {
           // ignore malformed entry
@@ -1804,7 +1857,9 @@ async function extractExistingBookmarks(doc) {
         node = resolveRef(node);
         if (!node) return;
 
-        const namesArray = node.lookup ? node.lookup(PDFName.of('Names')) : null;
+        const namesArray = node.lookup
+          ? node.lookup(PDFName.of('Names'))
+          : null;
         if (namesArray && namesArray.array) {
           for (let i = 0; i < namesArray.array.length; i += 2) {
             const n = namesArray.array[i];
@@ -1848,7 +1903,8 @@ async function extractExistingBookmarks(doc) {
 
         if (pageRef.numberValue !== undefined) {
           const numericIndex = pageRef.numberValue | 0;
-          if (numericIndex >= 0 && numericIndex < pages.length) return numericIndex;
+          if (numericIndex >= 0 && numericIndex < pages.length)
+            return numericIndex;
         }
 
         if (pageRef.objectNumber !== undefined) {
@@ -1860,7 +1916,9 @@ async function extractExistingBookmarks(doc) {
 
         if (pageRef.toString) {
           const target = pageRef.toString();
-          const idxByString = pages.findIndex((p) => p.ref.toString() === target);
+          const idxByString = pages.findIndex(
+            (p) => p.ref.toString() === target
+          );
           if (idxByString !== -1) return idxByString;
         }
 
@@ -1884,7 +1942,7 @@ async function extractExistingBookmarks(doc) {
 
       // Try Dest entry first
       let dest = item.lookup(PDFName.of('Dest'));
-      
+
       // If no Dest, try Action/D
       if (!dest) {
         const action = resolveRef(item.lookup(PDFName.of('A')));
@@ -1902,7 +1960,10 @@ async function extractExistingBookmarks(doc) {
           } else if (dest.lookup) {
             // Some named destinations resolve to a dictionary with 'D' entry
             const maybeDict = resolveRef(dest);
-            const dictD = maybeDict && maybeDict.lookup ? maybeDict.lookup(PDFName.of('D')) : null;
+            const dictD =
+              maybeDict && maybeDict.lookup
+                ? maybeDict.lookup(PDFName.of('D'))
+                : null;
             if (dictD) dest = resolveRef(dictD);
           }
         } catch (_) {
@@ -1975,7 +2036,7 @@ async function extractExistingBookmarks(doc) {
         style,
         destX,
         destY,
-        zoom
+        zoom,
       };
 
       // Process children (make sure to resolve refs)
@@ -1985,7 +2046,6 @@ async function extractExistingBookmarks(doc) {
         if (childBookmark) bookmark.children.push(childBookmark);
         child = resolveRef(child.lookup(PDFName.of('Next')));
       }
-
 
       if (pageIndex === 0 && bookmark.children.length > 0) {
         const firstChild = bookmark.children[0];
@@ -2013,6 +2073,13 @@ async function extractExistingBookmarks(doc) {
     console.error('Error extracting bookmarks:', err);
     return [];
   }
+}
+
+// Back to tools button
+if (backToToolsBtn) {
+  backToToolsBtn.addEventListener('click', () => {
+    window.location.href = '../../index.html#tools-header';
+  });
 }
 
 downloadBtn.addEventListener('click', async () => {

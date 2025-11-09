@@ -26,6 +26,13 @@ export default defineConfig(({ mode }) => ({
   },
   optimizeDeps: {
     include: ['pdfkit', 'blob-stream'],
+    exclude: ['coherentpdf'],
+  },
+  server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+    },
   },
   build: {
     rollupOptions: {
@@ -37,6 +44,12 @@ export default defineConfig(({ mode }) => ({
         privacy: resolve(__dirname, 'privacy.html'),
         terms: resolve(__dirname, 'terms.html'),
         bookmark: resolve(__dirname, 'src/pages/bookmark.html'),
+        'table-of-contents': resolve(
+          __dirname,
+          'src/pages/table-of-contents.html'
+        ),
+        'pdf-to-json': resolve(__dirname, 'src/pages/pdf-to-json.html'),
+        'json-to-pdf': resolve(__dirname, 'src/pages/json-to-pdf.html'),
       },
     },
   },

@@ -84,6 +84,12 @@ export const categories = [
         subtitle: 'Add, edit, import, delete and extract PDF bookmarks.',
       },
       {
+        href: '/src/pages/table-of-contents.html',
+        name: 'Table of Contents',
+        icon: 'list',
+        subtitle: 'Generate a table of contents page from PDF bookmarks.',
+      },
+      {
         id: 'add-page-numbers',
         name: 'Page Numbers',
         icon: 'list-ordered',
@@ -208,6 +214,12 @@ export const categories = [
         icon: 'file-pen',
         subtitle: 'Convert a plain text file into a PDF.',
       },
+      {
+        href: '/src/pages/json-to-pdf.html',
+        name: 'JSON to PDF',
+        icon: 'file-code',
+        subtitle: 'Convert JSON files to PDF format.',
+      },
       // { id: 'md-to-pdf', name: 'Markdown to PDF', icon: 'file-text', subtitle: 'Convert a Markdown file into a PDF.' },
       // { id: 'scan-to-pdf', name: 'Scan to PDF', icon: 'camera', subtitle: 'Use your camera to create a scanned PDF.' },
       // { id: 'word-to-pdf', name: 'Word to PDF', icon: 'file-text', subtitle: 'Convert .docx documents to PDF.' },
@@ -251,6 +263,12 @@ export const categories = [
         name: 'PDF to Greyscale',
         icon: 'palette',
         subtitle: 'Convert all colors to black and white.',
+      },
+      {
+        href: '/src/pages/pdf-to-json.html',
+        name: 'PDF to JSON',
+        icon: 'file-code',
+        subtitle: 'Convert PDF files to JSON format.',
       },
       // { id: 'pdf-to-markdown', name: 'PDF to Markdown', icon: 'file-pen', subtitle: 'Extract text into a Markdown file.' },
     ],
