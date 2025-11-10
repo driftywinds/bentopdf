@@ -4,6 +4,7 @@ import { setupToolInterface } from './handlers/toolSelectionHandler.js';
 import { createIcons, icons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
 import '../css/styles.css';
+import { formatStars } from './utils/helpers.js';
 
 const init = () => {
   pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -40,6 +41,11 @@ const init = () => {
       const heroSection = document.getElementById('hero-section');
       if (heroSection) {
         heroSection.style.display = 'none';
+      }
+
+      const githubLink = document.querySelector('a[href*="github.com/alam00000/bentopdf"]');
+      if (githubLink) {
+        (githubLink as HTMLElement).style.display = 'none';
       }
 
       const featuresSection = document.getElementById('features-section');
@@ -86,6 +92,9 @@ const init = () => {
             </div>
             <p class="text-gray-400 text-sm">
               &copy; 2025 BentoPDF. All rights reserved.
+            </p>
+            <p class="text-gray-500 text-xs mt-2">
+              Version <span id="app-version-simple">1.5.0</span>
             </p>
           </div>
         `;
@@ -259,6 +268,20 @@ const init = () => {
 
   createIcons({ icons });
   console.log('Please share our tool and share the love!');
+
+  const githubStarsElement = document.getElementById('github-stars');
+  if (githubStarsElement && !__SIMPLE_MODE__) {
+    fetch('https://api.github.com/repos/alam00000/bentopdf')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.stargazers_count !== undefined) {
+          githubStarsElement.textContent = formatStars(data.stargazers_count);
+        }
+      })
+      .catch(() => {
+        githubStarsElement.textContent = '-';
+      });
+  }
 };
 
 document.addEventListener('DOMContentLoaded', init);

@@ -6,7 +6,6 @@ export const singlePdfLoadTools = [
   'pdf-to-jpg',
   'pdf-to-png',
   'pdf-to-webp',
-  'compress',
   'pdf-to-greyscale',
   'edit-metadata',
   'remove-metadata',
@@ -38,6 +37,7 @@ export const singlePdfLoadTools = [
   'posterize',
   'remove-blank-pages',
   'add-attachments',
+  'edit-attachments',
   'sanitize-pdf',
   'remove-restrictions',
   'bookmark-pdf',
@@ -65,4 +65,7 @@ export const multiFileTools = [
   'alternate-merge',
   'linearize',
   'reverse-pages',
+  'txt-to-pdf',
+  'compress',
+  'extract-attachments',
 ];

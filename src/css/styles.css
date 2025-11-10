@@ -510,3 +510,14 @@ details > summary .icon {
 details[open] > summary .icon {
   transform: rotate(45deg);
 }
+
+button,
+.btn,
+.btn-gradient {
+  cursor: pointer;
+}
+
+button:disabled,
+.btn:disabled {
+  cursor: not-allowed;
+}

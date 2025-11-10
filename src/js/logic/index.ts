@@ -26,7 +26,7 @@ import { addHeaderFooter } from './add-header-footer.js';
 import { imageToPdf } from './image-to-pdf.js';
 import { changePermissions } from './change-permissions.js';
 import { pdfToMarkdown } from './pdf-to-markdown.js';
-import { txtToPdf } from './txt-to-pdf.js';
+import { txtToPdf, setupTxtToPdfTool } from './txt-to-pdf.js';
 import { invertColors } from './invert-colors.js';
 // import { viewMetadata } from './view-metadata.js';
 import { reversePages } from './reverse-pages.js';
@@ -63,6 +63,8 @@ import {
 import { alternateMerge, setupAlternateMergeTool } from './alternate-merge.js';
 import { linearizePdf } from './linearize.js';
 import { addAttachments, setupAddAttachmentsTool } from './add-attachments.js';
+// import { extractAttachments } from './extract-attachments.js';
+// import { editAttachments, setupEditAttachmentsTool } from './edit-attachments.js';
 import { sanitizePdf } from './sanitize-pdf.js';
 import { removeRestrictions } from './remove-restrictions.js';
 
@@ -96,7 +98,7 @@ export const toolLogic = {
   'image-to-pdf': imageToPdf,
   'change-permissions': changePermissions,
   'pdf-to-markdown': pdfToMarkdown,
-  'txt-to-pdf': txtToPdf,
+  'txt-to-pdf': { process: txtToPdf, setup: setupTxtToPdfTool },
   'invert-colors': invertColors,
   'reverse-pages': reversePages,
   // 'md-to-pdf': mdToPdf,
@@ -138,5 +140,10 @@ export const toolLogic = {
     process: addAttachments,
     setup: setupAddAttachmentsTool,
   },
+  // 'extract-attachments': extractAttachments,
+  // 'edit-attachments': {
+  //   process: editAttachments,
+  //   setup: setupEditAttachmentsTool,
+  // },
   'sanitize-pdf': sanitizePdf,
 };
