@@ -1,88 +1,130 @@
-// TODO@ALAM - USE CPDF HERE
+import { downloadFile, formatBytes } from '../utils/helpers.js';
+import { state } from '../state.js';
+import JSZip from 'jszip';
 
-// import { showLoader, hideLoader, showAlert } from '../ui.js';
-// import { downloadFile, readFileAsArrayBuffer } from '../utils/helpers.js';
-// import { state } from '../state.js';
-// import { PDFDocument as PDFLibDocument } from 'pdf-lib';
-// import JSZip from 'jszip';
+const worker = new Worker('/workers/extract-attachments.worker.js');
 
-// export async function extractAttachments() {
-//   if (state.files.length === 0) {
-//     showAlert('No Files', 'Please select at least one PDF file.');
-//     return;
-//   }
+interface ExtractAttachmentSuccessResponse {
+  status: 'success';
+  attachments: Array<{ name: string; data: ArrayBuffer }>;
+}
 
-//   showLoader('Extracting attachments...');
-//   try {
-//     const zip = new JSZip();
-//     let totalAttachments = 0;
+interface ExtractAttachmentErrorResponse {
+  status: 'error';
+  message: string;
+}
 
-//     for (const file of state.files) {
-//       const pdfBytes = await readFileAsArrayBuffer(file);
-//       const pdfDoc = await PDFLibDocument.load(pdfBytes as ArrayBuffer, {
-//         ignoreEncryption: true,
-//       });
+type ExtractAttachmentResponse = ExtractAttachmentSuccessResponse | ExtractAttachmentErrorResponse;
 
-//       const embeddedFiles = pdfDoc.context.enumerateIndirectObjects()
-//         .filter(([ref, obj]: any) => {
-//           // obj must be a PDFDict
-//           if (obj && typeof obj.get === 'function') {
-//             const type = obj.get('Type');
-//             return type && type.toString() === '/Filespec';
-//           }
-//           return false;
-//         });
+export async function extractAttachments() {
+  if (state.files.length === 0) {
+    showStatus('No Files', 'error');
+    return;
+  }
 
-//       if (embeddedFiles.length === 0) {
-//         console.warn(`No attachments found in ${file.name}`);
-//         continue;
-//       }
+  document.getElementById('process-btn')?.classList.add('opacity-50', 'cursor-not-allowed');
+  document.getElementById('process-btn')?.setAttribute('disabled', 'true');
+  
+  showStatus('Reading files (Main Thread)...', 'info');
 
-//       // Extract attachments
-//       const baseName = file.name.replace(/\.pdf$/i, '');
-//       for (let i = 0; i < embeddedFiles.length; i++) {
-//         try {
-//           const [ref, fileSpec] = embeddedFiles[i];
-//           const fileSpecDict = fileSpec as any;
-          
-//           // Get attachment name
-//           const fileName = fileSpecDict.get('UF')?.decodeText() || 
-//                          fileSpecDict.get('F')?.decodeText() || 
-//                          `attachment-${i + 1}`;
-          
-//           // Get embedded file stream
-//           const ef = fileSpecDict.get('EF');
-//           if (ef) {
-//             const fRef = ef.get('F') || ef.get('UF');
-//             if (fRef) {
-//               const fileStream = pdfDoc.context.lookup(fRef);
-//               if (fileStream) {
-//                 const fileData = (fileStream as any).getContents();
-//                 zip.file(`${baseName}_${fileName}`, fileData);
-//                 totalAttachments++;
-//               }
-//             }
-//           }
-//         } catch (e) {
-//           console.warn(`Failed to extract attachment ${i} from ${file.name}:`, e);
-//         }
-//       }
-//     }
+  try {
+    const fileBuffers: ArrayBuffer[] = [];
+    const fileNames: string[] = [];
 
-//     if (totalAttachments === 0) {
-//       showAlert('No Attachments', 'No attachments were found in the selected PDF(s).');
-//       hideLoader();
-//       return;
-//     }
+    for (const file of state.files) {
+      const buffer = await file.arrayBuffer();
+      fileBuffers.push(buffer);
+      fileNames.push(file.name);
+    }
 
-//     const zipBlob = await zip.generateAsync({ type: 'blob' });
-//     downloadFile(zipBlob, 'extracted-attachments.zip');
-//     showAlert('Success', `Extracted ${totalAttachments} attachment(s) successfully!`);
-//   } catch (e) {
-//     console.error(e);
-//     showAlert('Error', 'Failed to extract attachments. The PDF may not contain attachments or may be corrupted.');
-//   } finally {
-//     hideLoader();
-//   }
-// }
+    showStatus(`Extracting attachments from ${state.files.length} file(s)...`, 'info');
 
+    const message: ExtractAttachmentsMessage = {
+      command: 'extract-attachments',
+      fileBuffers,
+      fileNames,
+    };
+
+    const transferables = fileBuffers.map(buf => buf);
+    worker.postMessage(message, transferables);
+
+  } catch (error) {
+    console.error('Error reading files:', error);
+    showStatus(
+      `Error reading files: ${error instanceof Error ? error.message : 'Unknown error occurred'}`,
+      'error'
+    );
+    document.getElementById('process-btn')?.classList.remove('opacity-50', 'cursor-not-allowed');
+    document.getElementById('process-btn')?.removeAttribute('disabled');
+  }
+}
+
+worker.onmessage = (e: MessageEvent<ExtractAttachmentResponse>) => {
+  document.getElementById('process-btn')?.classList.remove('opacity-50', 'cursor-not-allowed');
+  document.getElementById('process-btn')?.removeAttribute('disabled');
+
+  if (e.data.status === 'success') {
+    const attachments = e.data.attachments;
+
+    const zip = new JSZip();
+    let totalSize = 0;
+    
+    for (const attachment of attachments) {
+      zip.file(attachment.name, new Uint8Array(attachment.data));
+      totalSize += attachment.data.byteLength;
+    }
+
+    zip.generateAsync({ type: 'blob' }).then((zipBlob) => {
+      downloadFile(zipBlob, 'extracted-attachments.zip');
+      showStatus(
+        `Extraction completed! ${attachments.length} attachment(s) in zip file (${formatBytes(totalSize)}). Download started.`,
+        'success'
+      );
+
+      state.files = [];
+      const fileDisplayArea = document.getElementById('file-display-area');
+      if (fileDisplayArea) {
+        fileDisplayArea.innerHTML = '';
+        fileDisplayArea.classList.add('hidden');
+      }
+      const fileInput = document.getElementById('file-input') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
+      document.getElementById('process-btn')?.classList.add('opacity-50', 'cursor-not-allowed');
+      document.getElementById('process-btn')?.setAttribute('disabled', 'true');
+    });
+  } else if (e.data.status === 'error') {
+    const errorMessage = e.data.message || 'Unknown error occurred in worker.';
+    console.error('Worker Error:', errorMessage);
+    showStatus(`Error: ${errorMessage}`, 'error');
+  }
+};
+
+worker.onerror = (error) => {
+  console.error('Worker error:', error);
+  showStatus('Worker error occurred. Check console for details.', 'error');
+  document.getElementById('process-btn')?.classList.remove('opacity-50', 'cursor-not-allowed');
+  document.getElementById('process-btn')?.removeAttribute('disabled');
+};
+
+function showStatus(message: string, type: 'success' | 'error' | 'info' = 'info') {
+  const statusMessage = document.getElementById('status-message') as HTMLElement;
+  if (!statusMessage) return;
+  
+  statusMessage.textContent = message;
+  statusMessage.className = `mt-4 p-3 rounded-lg text-sm ${
+    type === 'success'
+      ? 'bg-green-900 text-green-200'
+      : type === 'error'
+        ? 'bg-red-900 text-red-200'
+        : 'bg-blue-900 text-blue-200'
+  }`;
+  statusMessage.classList.remove('hidden');
+}
+
+interface ExtractAttachmentsMessage {
+  command: 'extract-attachments';
+  fileBuffers: ArrayBuffer[];
+  fileNames: string[];
+}

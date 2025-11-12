@@ -94,7 +94,7 @@ const init = () => {
               &copy; 2025 BentoPDF. All rights reserved.
             </p>
             <p class="text-gray-500 text-xs mt-2">
-              Version <span id="app-version-simple">1.5.0</span>
+              Version <span id="app-version-simple">1.6.0</span>
             </p>
           </div>
         `;

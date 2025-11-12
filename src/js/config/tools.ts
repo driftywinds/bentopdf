@@ -318,19 +318,18 @@ export const categories = [
         icon: 'paperclip',
         subtitle: 'Embed one or more files into your PDF.',
       },
-      // TODO@ALAM - MAKE THIS LATER, ONCE INTEGERATED WITH CPDF
-      // {
-      //   id: 'extract-attachments',
-      //   name: 'Extract Attachments',
-      //   icon: 'download',
-      //   subtitle: 'Extract all embedded files from PDF(s) as a ZIP.',
-      // },
-      // {
-      //   id: 'edit-attachments',
-      //   name: 'Edit Attachments',
-      //   icon: 'file-edit',
-      //   subtitle: 'View, remove, or replace attachments in your PDF.',
-      // },
+      {
+        id: 'extract-attachments',
+        name: 'Extract Attachments',
+        icon: 'download',
+        subtitle: 'Extract all embedded files from PDF(s) as a ZIP.',
+      },
+      {
+        id: 'edit-attachments',
+        name: 'Edit Attachments',
+        icon: 'file-edit',
+        subtitle: 'View or remove attachments in your PDF.',
+      },
       {
         href: '/src/pages/pdf-multi-tool.html',
         name: 'PDF Multi Tool',
