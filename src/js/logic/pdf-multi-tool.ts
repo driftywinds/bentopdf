@@ -29,6 +29,7 @@ let currentPdfDocs: PDFLibDocument[] = [];
 let splitMarkers: Set<number> = new Set();
 let isRendering = false;
 let renderCancelled = false;
+let sortableInstance: Sortable | null = null;
 
 const pageCanvasCache = new Map<string, HTMLCanvasElement>();
 
@@ -114,7 +115,7 @@ function initializeTool() {
   createIcons({ icons });
 
   document.getElementById('close-tool-btn')?.addEventListener('click', () => {
-    window.location.href = '../../index.html';
+    window.location.href = '/';
   });
 
   document.getElementById('upload-pdfs-btn')?.addEventListener('click', () => {
@@ -247,6 +248,13 @@ function resetAll() {
   pageCanvasCache.clear();
   renderCancelled = false;
   isRendering = false;
+
+  // Destroy sortable instance
+  if (sortableInstance) {
+    sortableInstance.destroy();
+    sortableInstance = null;
+  }
+
   updatePageDisplay();
   document.getElementById('upload-area')?.classList.remove('hidden');
 }
@@ -492,9 +500,18 @@ function setupSortable() {
   const pagesContainer = document.getElementById('pages-container');
   if (!pagesContainer) return;
 
-  Sortable.create(pagesContainer, {
+  // Destroy existing instance before creating new one
+  if (sortableInstance) {
+    sortableInstance.destroy();
+  }
+
+  sortableInstance = Sortable.create(pagesContainer, {
     animation: 150,
-    handle: '.cursor-move',
+    forceFallback: true,
+    touchStartThreshold: 3,
+    fallbackTolerance: 3,
+    delay: 200,
+    delayOnTouchOnly: true,
     onEnd: (evt) => {
       const oldIndex = evt.oldIndex!;
       const newIndex = evt.newIndex!;
