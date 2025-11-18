@@ -1676,93 +1676,16 @@ export const toolTemplates = {
 
   'sign-pdf': () => `
     <h2 class="text-2xl font-bold text-white mb-4">Sign PDF</h2>
-    <p class="mb-6 text-gray-400">Create your signature, select it, then click on the document to place. You can drag to move placed signatures.</p>
+    <p class="mb-6 text-gray-400">Upload a PDF to sign it using the built-in PDF.js viewer. Look for the <strong>signature/pen tool</strong> in the toolbar to add your signature.</p>
     ${createFileInputHTML()}
+    <div id="file-display-area" class="mt-4 space-y-2"></div>
     
     <div id="signature-editor" class="hidden mt-6">
-        <div class="bg-gray-900 p-4 rounded-lg border border-gray-700 mb-4">
-            <div class="flex border-b border-gray-700 mb-4">
-                <button id="draw-tab-btn" class="flex-1 p-2 text-sm font-semibold border-b-2 border-indigo-500 text-white">Draw</button>
-                <button id="type-tab-btn" class="flex-1 p-2 text-sm font-semibold border-b-2 border-transparent text-gray-400">Type</button>
-                <button id="upload-tab-btn" class="flex-1 p-2 text-sm font-semibold border-b-2 border-transparent text-gray-400">Upload</button>
-            </div>
-            
-            <div id="draw-panel">
-                <canvas id="signature-draw-canvas" class="bg-white rounded-md cursor-crosshair w-full" height="150"></canvas>
-                
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-2 gap-4 sm:gap-2">
-                    <div class="flex items-center gap-2">
-                        <label for="signature-color" class="text-sm font-medium text-gray-300">Color:</label>
-                        <input type="color" id="signature-color" value="#22c55e" class="w-10 h-10 bg-gray-700 border border-gray-600 rounded-lg p-1 cursor-pointer">
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button id="clear-draw-btn" class="btn hover:bg-gray-600 text-sm flex-grow sm:flex-grow-0">Clear</button>
-                        <button id="save-draw-btn" class="btn-gradient px-4 py-2 text-sm rounded-lg flex-grow sm:flex-grow-0">Save Signature</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="type-panel" class="hidden">
-                <input type="text" id="signature-text-input" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5 mb-4" placeholder="Type your name here">
-                
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                    <div>
-                        <label for="font-family-select" class="block mb-1 text-xs font-medium text-gray-400">Font Style</label>
-                        <select id="font-family-select" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2 text-sm">
-                            <option value="'Great Vibes', cursive">Signature</option>
-                            <option value="'Kalam', cursive">Handwritten</option>
-                            <option value="'Dancing Script', cursive">Script</option>
-                            <option value="'Lato', sans-serif">Regular</option>
-                            <option value="'Merriweather', serif">Formal</option>
-                        </select>
-                    </div>
-                     <div>
-                        <label for="font-size-slider" class="block mb-1 text-xs font-medium text-gray-400">Font Size (<span id="font-size-value">48</span>px)</label>
-                        <input type="range" id="font-size-slider" min="24" max="72" value="32" class="w-full">
-                    </div>
-                    <div>
-                        <label for="font-color-picker" class="block mb-1 text-xs font-medium text-gray-400">Color</label>
-                        <input type="color" id="font-color-picker" value="#22c55e" class="w-full h-[38px] bg-gray-700 border border-gray-600 rounded-lg p-1 cursor-pointer">
-                    </div>
-                </div>
-
-                <div id="font-preview" class="p-4 h-[80px] bg-transparent rounded-md flex items-center justify-center text-4xl" style="font-family: 'Great Vibes', cursive; font-size: 32px; color: #22c55e;">Your Name</div>
-                 
-                <div class="flex justify-end mt-4">
-                    <button id="save-type-btn" class="btn-gradient px-4 py-2 text-sm rounded-lg">Save Signature</button>
-                </div>
-            </div>
-
-            <div id="upload-panel" class="hidden">
-                <input type="file" id="signature-upload-input" accept="image/png" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700">
-                *png files only
-            </div>
-            
-            <hr class="border-gray-700 my-4">
-            <h4 class="text-md font-semibold text-white mb-2">Your Saved Signatures</h4>
-            <div id="saved-signatures-container" class="flex flex-wrap gap-2 bg-gray-800 p-2 rounded-md min-h-[50px]">
-                <p class="text-xs text-gray-500 text-center w-full">Your saved signatures will appear here. Click one to select it.</p>
-            </div>
+        <div id="canvas-container-sign" class="relative w-full overflow-auto bg-gray-900 rounded-lg border border-gray-600" style="height: 85vh;">
+            <!-- PDF.js viewer iframe will be loaded here -->
         </div>
-
-        <div class="flex flex-wrap items-center justify-center gap-4 mb-4 p-3 bg-gray-900 rounded-lg border border-gray-700">
-            <button id="prev-page-sign" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600 disabled:opacity-50"><i data-lucide="chevron-left"></i></button>
-            <span class="text-white font-medium">Page <span id="current-page-display-sign">1</span> of <span id="total-pages-display-sign">1</span></span>
-            <button id="next-page-sign" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600 disabled:opacity-50"><i data-lucide="chevron-right"></i></button>
-            <div class="border-l border-gray-600 h-6 mx-2 hidden sm:block"></div>
-            <button id="zoom-out-btn" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600"><i data-lucide="zoom-out"></i></button>
-            <button id="fit-width-btn" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600"><i data-lucide="minimize"></i></button>
-            <button id="zoom-in-btn" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600"><i data-lucide="zoom-in"></i></button>
-            <div class="border-l border-gray-600 h-6 mx-2 hidden sm:block"></div>
-            <button id="undo-btn" class="btn p-2 rounded-full" title="Undo Last Placement"><i data-lucide="undo-2"></i></button>
-        </div>
-
-        <div id="canvas-container-sign" class="relative w-full overflow-auto bg-gray-900 rounded-lg border border-gray-600 h-[60vh] md:h-[80vh]">
-            <canvas id="canvas-sign" class="mx-auto"></canvas>
-        </div>
-
+        <button id="process-btn" class="btn-gradient w-full mt-4" style="display:none;">Save & Download Signed PDF</button>
     </div>
-    <button id="process-btn" class="hidden btn-gradient w-full mt-6">Apply Signatures & Download PDF</button>
 `,
 
   'remove-annotations': () => `
@@ -1870,48 +1793,23 @@ export const toolTemplates = {
 
   'form-filler': () => `
     <h2 class="text-2xl font-bold text-white mb-4">PDF Form Filler</h2>
-    <p class="mb-6 text-gray-400">Upload a PDF to fill in existing form fields. The PDF view on the right will update as you type.</p>
+    <p class="mb-6 text-gray-400">Upload a PDF with form fields. Fill them directly in the viewer below, then click the button to save and download the filled form. Also supports XFA forms.</p>
+    
+    <div class="mb-4 p-3 bg-blue-900/20 border border-blue-700/50 rounded-lg">
+      <p class="text-sm text-blue-300">
+        <strong>Note on XFA Forms:</strong> XFA (XML Forms Architecture) is a legacy format that's only supported by certain PDF viewers like BentoPDF and Firefox. 
+        If you open an XFA PDF in other software and see blank pages or no form fields, it means that viewer doesn't support XFA. 
+        To view and fill XFA forms properly, use Firefox or BentoPDF's Form Filler.
+      </p>
+    </div>
+    
     ${createFileInputHTML()}
     <div id="file-display-area" class="mt-4 space-y-2"></div>
     <div id="form-filler-options" class="hidden mt-6">
-        <div class="flex flex-col lg:flex-row gap-4 h-[80vh]">
-            
-            <!-- Sidebar for form fields -->
-            <div class="w-full lg:w-1/3 bg-gray-900 rounded-lg p-4 overflow-y-auto border border-gray-700 flex-shrink-0">
-                <div id="form-fields-container" class="space-y-4">
-                    <div class="p-4 text-center text-gray-400">
-                        <p>Upload a file to see form fields here.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PDF Viewer -->
-            <div class="w-full lg:w-2/3 flex flex-col items-center gap-4">
-                <div class="flex flex-nowrap items-center justify-center gap-4 p-3 bg-gray-900 rounded-lg border border-gray-700">
-                    <button id="prev-page" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600 disabled:opacity-50">
-                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                    </button>
-                    <span class="text-white font-medium">
-                        Page <span id="current-page-display">1</span> of <span id="total-pages-display">1</span>
-                    </span>
-                    <button id="next-page" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600 disabled:opacity-50">
-                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                    </button>
-                    <button id="zoom-out-btn" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600">
-                        <i data-lucide="zoom-out"></i>
-                    </button>
-                    <button id="zoom-in-btn" class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600">
-                        <i data-lucide="zoom-in"></i>
-                    </button>
-                </div>
-
-                <div id="pdf-viewer-container" class="relative w-full overflow-auto bg-gray-900 rounded-lg border border-gray-600 flex-grow">
-                    <canvas id="pdf-canvas" class="mx-auto max-w-full h-full"></canvas>
-                </div>
-            </div>
+        <div id="pdf-viewer-container" class="relative w-full overflow-auto bg-gray-900 rounded-lg border border-gray-600" style="height: 80vh;">
+            <!-- PDF.js viewer iframe will be loaded here -->
         </div>
-        
-        <button id="process-btn" class="btn-gradient w-full mt-6 hidden">Save & Download</button>
+        <button id="process-btn" class="btn-gradient w-full mt-4">Save & Download Filled Form</button>
     </div>
 `,
 

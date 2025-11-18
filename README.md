@@ -1,9 +1,16 @@
-# BentoPDF
+<p align="center"><img src="public/images/favicon.svg" width="80"></p>
+<h1 align="center">BentoPDF</h1>
 
-**BentoPDF** is a powerful, privacy-first, client-side PDF toolkit that allows you to manipulate, edit, merge, and process PDF files directly in your browser. No server-side processing is required, ensuring your files remain secure and private.
+<hr>
+
+**BentoPDF** is a powerful, privacy-first, client-side PDF toolkit that is self hostable and allows you to manipulate, edit, merge, and process PDF files directly in your browser. No server-side processing is required, ensuring your files remain secure and private.
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/bentopdf/bentopdf) [![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?logo=kofi&style=flat-square)](https://ko-fi.com/alio0) ![GitHub Stars](https://img.shields.io/github/stars/alam00000/bentopdf?style=social)
 [![Sponsor me on GitHub](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4)](https://github.com/sponsors/alam00000)
+
+![BentoPDF Tools](public/images/bentopdf-tools.png)
+
+<hr>
 
 ## ⭐ Stargazers over time
 
@@ -38,6 +45,17 @@ BentoPDF offers a comprehensive suite of tools to handle all your PDF needs.
 | **View PDF**              | A powerful, integrated PDF viewer.                                         |
 | **Alternate & Mix pages** | Merge pages by alternating pages from each PDF.                            |
 | **Posterize PDF**         | Split a PDF into multiple smaller pages for print.                         |
+| **PDF Multi Tool**        | Merge, Split, Organize, Delete, Rotate, Add Blank Pages, Extract and Duplicate in an unified interface. |
+| **Add Attachments**       | Embed one or more files into your PDF.                                     |
+| **Extract Attachments**   | Extract all embedded files from PDF(s) as a ZIP.                           |
+| **Edit Attachments**      | View or remove attachments in your PDF.                                    |
+| **Divide Pages**          | Divide pages horizontally or vertically.                                   |
+| **Combine to Single Page**| Stitch all pages into one continuous scroll.                               |
+| **Add Blank Page**        | Insert an empty page anywhere in your PDF.                                 |
+| **Reverse Pages**         | Flip the order of all pages in your document.                              |
+| **View Metadata**         | Inspect the hidden properties of your PDF.                                 |
+| **PDFs to ZIP**           | Package multiple PDF files into a ZIP archive.                             |
+| **Compare PDFs**          | Compare two PDFs side by side.                                             |
 
 ### Edit & Modify PDFs
 
@@ -56,24 +74,39 @@ BentoPDF offers a comprehensive suite of tools to handle all your PDF needs.
 | **Remove Annotations** | Remove comments, highlights, and other annotations.         |
 | **Remove Blank Pages** | Auto detect and remove blank pages in a PDF.                |
 | **Edit Bookmarks** | Add, Edit, Create, Import and Export PDF Bookmarks.                |
+| **Add Stamps**         | Add image stamps to your PDF using the annotation toolbar.    |
+| **Table of Contents**  | Generate a table of contents page from PDF bookmarks.         |
+| **Redact Content**     | Permanently remove sensitive content from your PDFs.        |
 
 ### Convert to PDF
 
 | Tool Name           | Description                                                     |
 | :------------------ | :-------------------------------------------------------------- |
 | **Image to PDF**    | Convert JPG, PNG, WebP, SVG, BMP, HEIC, and TIFF images to PDF. |
+| **JPG to PDF**      | Convert JPG images to PDF.                                        |
+| **PNG to PDF**      | Convert PNG images to PDF.                                        |
+| **WebP to PDF**     | Convert WebP images to PDF.                                       |
+| **SVG to PDF**      | Convert SVG images to PDF.                                        |
+| **BMP to PDF**      | Convert BMP images to PDF.                                        |
+| **HEIC to PDF**     | Convert HEIC images to PDF.                                       |
+| **TIFF to PDF**     | Convert TIFF images to PDF.                                       |
 | **Markdown to PDF** | Convert `.md` files into professional PDF documents.            |
 | **Text to PDF**     | Convert plain text files into a PDF.                            |
-| **JSON to PDF**     | Convert JSON to PDF.                            |
+| **JSON to PDF**     | Convert JSON to PDF.                                             |
 
 ### Convert from PDF
 
 | Tool Name            | Description                                                                    |
 | :------------------- | :----------------------------------------------------------------------------- |
 | **PDF to Image**     | Convert PDF pages to JPG, PNG, WebP, BMP, or TIFF formats.                     |
+| **PDF to JPG**       | Convert each PDF page into a JPG image.                                        |
+| **PDF to PNG**       | Convert each PDF page into a PNG image.                                        |
+| **PDF to WebP**      | Convert each PDF page into a WebP image.                                       |
+| **PDF to BMP**       | Convert each PDF page into a BMP image.                                        |
+| **PDF to TIFF**      | Convert each PDF page into a TIFF image.                                       |
 | **PDF to Greyscale** | Convert a color PDF into a black-and-white version.                            |
 | **OCR PDF**          | Make scanned PDFs searchable and copyable using Optical Character Recognition. |
-| **PDF to JSON**          | Convert JSON to PDFs. |
+| **PDF to JSON**      | Convert PDF files to JSON format.                                              |
 
 ### Secure & Optimize PDFs
 
@@ -90,6 +123,9 @@ BentoPDF offers a comprehensive suite of tools to handle all your PDF needs.
 | **Remove Metadata**    | Strip all metadata from your PDF for privacy.                      |
 | **Linearize PDF**      | Optimize PDF for fast web view.                                    |
 | **Sanitize PDF**       | Remove potentially unwanted or malicous files from PDF.            |
+| **Fix Page Size**      | Standardize all pages to a uniform size.                           |
+| **Page Dimensions**    | Analyze page size, orientation, and units.                         |
+| **Remove Restrictions**| Remove password protection and security restrictions associated with digitally signed PDF files. |
 
 ---
 
@@ -127,6 +163,87 @@ docker run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
 Open your browser at: http://localhost:3000
 
 This is the fastest way to try BentoPDF without setting up a development environment.
+
+### 🏠 Self-Hosting
+
+Since BentoPDF is fully client-side, all processing happens in the user's browser and no server-side processing is required. This means you can host BentoPDF as simple static files on any web server or hosting platform.
+
+**Download from Releases (Recommended):**
+
+The easiest way to self-host is to download the pre-built distribution file from our [GitHub releases](https://github.com/alam00000/bentopdf/releases). Each release includes a `dist-{version}.zip` file that contains all necessary files for self-hosting.
+
+1. Go to [BentoPDF Releases](https://github.com/alam00000/bentopdf/releases)
+2. Download the latest `dist-{version}.zip` file
+3. Extract the zip file
+4. Serve the extracted folder with your preferred web server
+   
+**Navigate to the extracted Folder:**
+```bash
+# Navigate to the extracted folder
+cd dist-1.6.2  # Replace with your version
+```
+
+**Serve with Python:**
+
+```bash
+# For Python 3
+python -m http.server 8000
+```
+
+The website can be accessible at: ```http://[::1]:8000/```
+
+**Serve with Node.js:**
+
+```bash
+# Install a simple server
+npx serve .
+
+# Or if you have serve installed globally
+npm install -g serve
+serve .
+```
+
+The website can be accessible at: ```http://localhost:3000/```
+
+**Serve with other tools:**
+
+You can also use other static file servers like:
+- Go: `go run main.go` with a simple Go server
+- PHP: `php -S localhost:8000`
+- Ruby: `ruby -run -e httpd . -p 8000`
+
+The website can be accessible at:
+- Go: ```http://localhost:8080/``` (default) or as specified
+- PHP: ```http://localhost:8000/```
+- Ruby: ```http://localhost:8000/``` (default port can be changed)
+
+Simply serve the extracted folder using any static file server, and BentoPDF will work completely client-side without any server-side dependencies.
+
+**Build from Source (Advanced):**
+
+If you prefer to build from source:
+
+```bash
+# Clone the repository
+git clone https://github.com/alam00000/bentopdf.git
+cd bentopdf
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Package the distribution for hosting (optional)
+npm run package
+
+# Serve the dist folder
+npx serve dist
+```
+
+The website can be accessible at: ```http://localhost:3000/```
+
+The `npm run package` command creates a `dist-{version}.zip` file that you can use for self-hosting.
 
 ### 🚀 Run with Docker Compose (Recommended)
 

@@ -83,15 +83,24 @@ function main() {
   // 3. Create git tag
   const tagName = createGitTag(newVersion);
 
-  // 4. Push everything to main
+  // 4. Build and package the distribution files
+  console.log(`📦 Building and packaging distribution files...`);
+  execSync('npm run package', { stdio: 'inherit' });
+  console.log(`📦 Distribution files packaged successfully`);
+
+  // 5. Push everything to main
   console.log(`📤 Pushing to main...`);
   execSync('git push origin main', { stdio: 'inherit' });
   execSync(`git push origin ${tagName}`, { stdio: 'inherit' });
 
   console.log(`🎉 Release v${newVersion} complete!`);
   console.log(`📦 Docker image: bentopdf/bentopdf:${newVersion}`);
+  console.log(`📦 Distribution: dist-${newVersion}.zip`);
   console.log(
     `🏷️  GitHub release: https://github.com/alam00000/bentopdf/releases/tag/${tagName}`
+  );
+  console.log(
+    `💡 Download dist-${newVersion}.zip from the release page for self-hosting.`
   );
 }
 

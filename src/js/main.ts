@@ -138,7 +138,7 @@ const init = () => {
     categoryGroup.className = 'category-group col-span-full';
 
     const title = document.createElement('h2');
-    title.className = 'text-xl font-bold text-indigo-400 mb-4 mt-8 first:mt-0';
+    title.className = 'text-xl font-bold text-indigo-400 mb-4 mt-8 first:mt-0 text-white';
     title.textContent = category.name;
 
     const toolsContainer = document.createElement('div');

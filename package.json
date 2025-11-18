@@ -1,7 +1,7 @@
 {
   "name": "bento-pdf",
   "private": true,
-  "version": "1.6.2",
+  "version": "1.7.1",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
@@ -19,7 +19,8 @@
     "release": "node scripts/release.js patch",
     "release:minor": "node scripts/release.js minor",
     "release:major": "node scripts/release.js major",
-    "serve:simple": "SIMPLE_MODE=true npm run build && npx serve dist -p 3000"
+    "serve:simple": "SIMPLE_MODE=true npm run build && npx serve dist -p 3000",
+    "package": "node scripts/package-dist.js"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
@@ -48,6 +49,7 @@
     "@fontsource/merriweather": "^5.2.11",
     "@neslinesli93/qpdf-wasm": "^0.3.0",
     "@tailwindcss/vite": "^4.1.15",
+    "archiver": "^7.0.1",
     "blob-stream": "^0.1.3",
     "cropperjs": "^1.6.1",
     "heic2any": "^0.0.4",

@@ -138,6 +138,12 @@ export const categories = [
         subtitle: 'Draw, type, or upload your signature.',
       },
       {
+        href: '/src/pages/add-stamps.html',
+        name: 'Add Stamps',
+        icon: 'stamp',
+        subtitle: 'Add image stamps to your PDF using the annotation toolbar.',
+      },
+      {
         id: 'remove-annotations',
         name: 'Remove Annotations',
         icon: 'eraser',
@@ -153,7 +159,7 @@ export const categories = [
         id: 'form-filler',
         name: 'PDF Form Filler',
         icon: 'square-pen',
-        subtitle: 'Fill in forms directly in the browser.',
+        subtitle: 'Fill in forms directly in the browser. Also supports XFA forms.',
       },
       {
         id: 'remove-blank-pages',
