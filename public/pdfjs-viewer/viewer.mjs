@@ -1512,7 +1512,7 @@ class BaseExternalServices {
 class BasePreferences {
   #defaults = Object.freeze({
     altTextLearnMoreUrl: "",
-    annotationEditorMode: 0,
+    annotationEditorMode: 1,
     annotationMode: 2,
     capCanvasAreaFactor: 200,
     commentLearnMoreUrl: "",
@@ -16429,7 +16429,10 @@ const PDFViewerApplication = {
     let file;
     const queryString = document.location.search.substring(1);
     const params = parseQueryString(queryString);
-    file = params.get("file") ?? AppOptions.get("defaultUrl");
+    file = params.get("file");
+    if (!file) {
+      file = "";
+    }
     try {
       file = new URL(decodeURIComponent(file)).href;
     } catch {

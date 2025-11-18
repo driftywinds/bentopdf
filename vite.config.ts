@@ -34,6 +34,12 @@ export default defineConfig(({ mode }) => ({
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
   },
+  preview: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+    },
+  },
   build: {
     rollupOptions: {
       input: {
@@ -51,6 +57,7 @@ export default defineConfig(({ mode }) => ({
         'pdf-to-json': resolve(__dirname, 'src/pages/pdf-to-json.html'),
         'json-to-pdf': resolve(__dirname, 'src/pages/json-to-pdf.html'),
         'pdf-multi-tool': resolve(__dirname, 'src/pages/pdf-multi-tool.html'),
+        'add-stamps': resolve(__dirname, 'src/pages/add-stamps.html'),
       },
     },
   },

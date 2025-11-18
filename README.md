@@ -180,7 +180,7 @@ The easiest way to self-host is to download the pre-built distribution file from
 **Navigate to the extracted Folder:**
 ```bash
 # Navigate to the extracted folder
-cd dist-1.6.2  # Replace with your version
+cd dist-1.7.3  # Replace with your version
 ```
 
 **Serve with Python:**

@@ -12372,7 +12372,10 @@ const PDFViewerApplication = {
     let file;
     const queryString = document.location.search.substring(1);
     const params = parseQueryString(queryString);
-    file = params.get("file") ?? AppOptions.get("defaultUrl");
+    file = params.get("file");
+    if (!file) {
+      file = "";
+    }
     validateFileURL(file);
     const fileInput = this._openFileInput = document.createElement("input");
     fileInput.id = "fileInput";

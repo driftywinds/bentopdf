@@ -40,9 +40,21 @@ export async function setupSignTool() {
   const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' });
   const blobUrl = URL.createObjectURL(blob);
 
-  const viewerBase = '/pdfjs-viewer/viewer.html';
+  try {
+    const existingPrefsRaw = localStorage.getItem('pdfjs.preferences');
+    const existingPrefs = existingPrefsRaw ? JSON.parse(existingPrefsRaw) : {};
+    delete (existingPrefs as any).annotationEditorMode;
+    const newPrefs = {
+      ...existingPrefs,
+      enableSignatureEditor: true,
+      enablePermissions: false,
+    };
+    localStorage.setItem('pdfjs.preferences', JSON.stringify(newPrefs));
+  } catch {}
+
+  const viewerUrl = new URL('/pdfjs-viewer/viewer.html', window.location.origin);
   const query = new URLSearchParams({ file: blobUrl });
-  iframe.src = `${viewerBase}?${query.toString()}`;
+  iframe.src = `${viewerUrl.toString()}?${query.toString()}`;
 
   iframe.onload = () => {
     hideLoader();
@@ -52,23 +64,27 @@ export async function setupSignTool() {
       if (viewerWindow && viewerWindow.PDFViewerApplication) {
         const app = viewerWindow.PDFViewerApplication;
         const doc = viewerWindow.document;
-
-        const editorModeButtons = doc.getElementById('editorModeButtons');
-        editorModeButtons?.classList.remove('hidden');
-
-        const editorSignature = doc.getElementById('editorSignature');
-        editorSignature?.removeAttribute('hidden');
-        const editorSignatureButton = doc.getElementById('editorSignatureButton') as HTMLButtonElement | null;
-        if (editorSignatureButton) {
-          editorSignatureButton.disabled = false;
-        }
-
-        const editorStamp = doc.getElementById('editorStamp');
-        editorStamp?.removeAttribute('hidden');
-        const editorStampButton = doc.getElementById('editorStampButton') as HTMLButtonElement | null;
-        if (editorStampButton) {
-          editorStampButton.disabled = false;
-        }
+        const eventBus = app.eventBus;
+        eventBus?._on('annotationeditoruimanager', () => {
+          const editorModeButtons = doc.getElementById('editorModeButtons');
+          editorModeButtons?.classList.remove('hidden');
+          const editorSignature = doc.getElementById('editorSignature');
+          editorSignature?.removeAttribute('hidden');
+          const editorSignatureButton = doc.getElementById('editorSignatureButton') as HTMLButtonElement | null;
+          if (editorSignatureButton) {
+            editorSignatureButton.disabled = false;
+          }
+          const editorStamp = doc.getElementById('editorStamp');
+          editorStamp?.removeAttribute('hidden');
+          const editorStampButton = doc.getElementById('editorStampButton') as HTMLButtonElement | null;
+          if (editorStampButton) {
+            editorStampButton.disabled = false;
+          }
+          try {
+            const highlightBtn = doc.getElementById('editorHighlightButton') as HTMLButtonElement | null;
+            highlightBtn?.click();
+          } catch {}
+        });
       }
     } catch (e) {
       console.error('Could not initialize base PDF.js viewer for signing:', e);

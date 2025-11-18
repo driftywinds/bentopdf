@@ -1,7 +1,7 @@
 {
   "name": "bento-pdf",
   "private": true,
-  "version": "1.7.1",
+  "version": "1.7.4",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
@@ -16,10 +16,12 @@
     "test:watch": "vitest watch",
     "build:docker": "vite build",
     "format": "prettier --write .",
+    "update-version": "node scripts/update-version.js",
     "release": "node scripts/release.js patch",
     "release:minor": "node scripts/release.js minor",
     "release:major": "node scripts/release.js major",
-    "serve:simple": "SIMPLE_MODE=true npm run build && npx serve dist -p 3000",
+    "serve:simple": "SIMPLE_MODE=true npm run build && npm run preview -- --port 3000",
+    "serve": "npm run build && npm run preview -- --port 3000",
     "package": "node scripts/package-dist.js"
   },
   "devDependencies": {

@@ -54,6 +54,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
 
     /* Path aliases (optional but helpful) */
     "baseUrl": ".",

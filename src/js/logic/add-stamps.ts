@@ -58,11 +58,23 @@ async function loadPdfInViewer(file: File) {
   const blob = new Blob([arrayBuffer as BlobPart], { type: 'application/pdf' })
   currentBlobUrl = URL.createObjectURL(blob)
 
+  try {
+    const existingPrefsRaw = localStorage.getItem('pdfjs.preferences')
+    const existingPrefs = existingPrefsRaw ? JSON.parse(existingPrefsRaw) : {}
+    delete (existingPrefs as any).annotationEditorMode
+    const newPrefs = {
+      ...existingPrefs,
+      enablePermissions: false,
+    }
+    localStorage.setItem('pdfjs.preferences', JSON.stringify(newPrefs))
+  } catch {}
+
   const iframe = document.createElement('iframe')
   iframe.className = 'w-full h-full border-0'
   iframe.allowFullscreen = true
 
-  iframe.src = `/pdfjs-annotation-viewer/web/viewer.html?file=${encodeURIComponent(currentBlobUrl)}`
+  const viewerUrl = new URL('/pdfjs-annotation-viewer/web/viewer.html', window.location.origin)
+  iframe.src = `${viewerUrl.toString()}?file=${encodeURIComponent(currentBlobUrl)}`
 
   iframe.addEventListener('load', () => {
     setupAnnotationViewer(iframe)
@@ -85,10 +97,14 @@ function setupAnnotationViewer(iframe: HTMLIFrameElement) {
           await app.initializedPromise
         }
 
-        const stampBtn = doc.getElementById('editorStamp') as HTMLButtonElement | null
-        if (stampBtn) {
-          stampBtn.classList.remove('hidden')
-          stampBtn.disabled = false
+        const eventBus = app?.eventBus
+        if (eventBus && typeof eventBus._on === 'function') {
+          eventBus._on('annotationeditoruimanager', () => {
+            try {
+              const stampBtn = doc.getElementById('editorStampButton') as HTMLButtonElement | null
+              stampBtn?.click()
+            } catch {}
+          })
         }
 
         const root = doc.querySelector('.PdfjsAnnotationExtension') as HTMLElement | null

@@ -1,10 +1,40 @@
 import { showLoader, hideLoader, showAlert } from '../ui';
 import { readFileAsArrayBuffer, downloadFile } from '../utils/helpers';
 import { state } from '../state';
+
+const worker = new Worker('/workers/add-attachments.worker.js');
+
 let attachments: File[] = [];
 
+worker.onmessage = (e) => {
+  const data = e.data;
+
+  if (data.status === 'success' && data.modifiedPDF !== undefined) {
+    hideLoader();
+
+    downloadFile(
+      new Blob([new Uint8Array(data.modifiedPDF)], { type: 'application/pdf' }),
+      `attached-${state.files[0].name}`
+    );
+
+    showAlert('Success', `${attachments.length} file(s) attached successfully.`);
+    clearAttachments();
+  } else if (data.status === 'error') {
+    hideLoader();
+    showAlert('Error', data.message || 'Unknown error occurred.');
+    clearAttachments();
+  }
+};
+
+worker.onerror = (error) => {
+  hideLoader();
+  console.error('Worker error:', error);
+  showAlert('Error', 'Worker error occurred. Check console for details.');
+  clearAttachments();
+};
+
 export async function addAttachments() {
-  if (!state.pdfDoc) {
+  if (!state.files || state.files.length === 0) {
     showAlert('Error', 'Main PDF is not loaded.');
     return;
   }
@@ -15,37 +45,37 @@ export async function addAttachments() {
 
   showLoader('Embedding files into PDF...');
   try {
-    const pdfDoc = state.pdfDoc;
+    const pdfFile = state.files[0];
+    const pdfBuffer = (await readFileAsArrayBuffer(pdfFile)) as ArrayBuffer;
+
+    const attachmentBuffers: ArrayBuffer[] = [];
+    const attachmentNames: string[] = [];
 
     for (let i = 0; i < attachments.length; i++) {
       const file = attachments[i];
-      showLoader(`Attaching ${file.name} (${i + 1}/${attachments.length})...`);
-
-      const fileBytes = await readFileAsArrayBuffer(file);
-
-      await pdfDoc.attach(fileBytes as ArrayBuffer, file.name, {
-        mimeType: file.type || 'application/octet-stream',
-        description: `Attached file: ${file.name}`,
-        creationDate: new Date(),
-        modificationDate: new Date(file.lastModified),
-      });
+      showLoader(`Reading ${file.name} (${i + 1}/${attachments.length})...`);
+      
+      const fileBuffer = (await readFileAsArrayBuffer(file)) as ArrayBuffer;
+      attachmentBuffers.push(fileBuffer);
+      attachmentNames.push(file.name);
     }
 
-    const pdfBytes = await pdfDoc.save();
-    downloadFile(
-      new Blob([pdfBytes], { type: 'application/pdf' }),
-      `attached-${state.files[0].name}`
-    );
+    showLoader('Attaching files to PDF...');
 
-    showAlert(
-      'Success',
-      `${attachments.length} file(s) attached successfully.`
-    );
+    const message = {
+      command: 'add-attachments',
+      pdfBuffer: pdfBuffer,
+      attachmentBuffers: attachmentBuffers,
+      attachmentNames: attachmentNames
+    };
+
+    const transferables = [pdfBuffer, ...attachmentBuffers];
+    worker.postMessage(message, transferables);
+
   } catch (error: any) {
     console.error('Error attaching files:', error);
-    showAlert('Error', `Failed to attach files: ${error.message}`);
-  } finally {
     hideLoader();
+    showAlert('Error', `Failed to attach files: ${error.message}`);
     clearAttachments();
   }
 }
@@ -85,6 +115,11 @@ export function setupAddAttachmentsTool() {
 
   if (!optionsDiv || !attachmentInput || !fileListDiv || !processBtn) {
     console.error('Attachment tool UI elements not found.');
+    return;
+  }
+
+  if (!state.files || state.files.length === 0) {
+    console.error('No PDF file loaded for adding attachments.');
     return;
   }
 
