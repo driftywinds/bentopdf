@@ -43,6 +43,22 @@ export async function addAttachments() {
     return;
   }
 
+  const attachmentLevel = (
+    document.querySelector('input[name="attachment-level"]:checked') as HTMLInputElement
+  )?.value || 'document';
+
+  let pageRange: string = '';
+
+  if (attachmentLevel === 'page') {
+    const pageRangeInput = document.getElementById('attachment-page-range') as HTMLInputElement;
+    pageRange = pageRangeInput?.value?.trim() || '';
+
+    if (!pageRange) {
+      showAlert('Error', 'Please specify a page range for page-level attachments.');
+      return;
+    }
+  }
+
   showLoader('Embedding files into PDF...');
   try {
     const pdfFile = state.files[0];
@@ -54,7 +70,7 @@ export async function addAttachments() {
     for (let i = 0; i < attachments.length; i++) {
       const file = attachments[i];
       showLoader(`Reading ${file.name} (${i + 1}/${attachments.length})...`);
-      
+
       const fileBuffer = (await readFileAsArrayBuffer(file)) as ArrayBuffer;
       attachmentBuffers.push(fileBuffer);
       attachmentNames.push(file.name);
@@ -66,7 +82,9 @@ export async function addAttachments() {
       command: 'add-attachments',
       pdfBuffer: pdfBuffer,
       attachmentBuffers: attachmentBuffers,
-      attachmentNames: attachmentNames
+      attachmentNames: attachmentNames,
+      attachmentLevel: attachmentLevel,
+      pageRange: pageRange
     };
 
     const transferables = [pdfBuffer, ...attachmentBuffers];
@@ -89,6 +107,8 @@ function clearAttachments() {
   const processBtn = document.getElementById(
     'process-btn'
   ) as HTMLButtonElement;
+  const attachmentLevelOptions = document.getElementById('attachment-level-options');
+  const pageRangeWrapper = document.getElementById('page-range-wrapper');
 
   if (fileListDiv) fileListDiv.innerHTML = '';
   if (attachmentInput) attachmentInput.value = '';
@@ -96,14 +116,20 @@ function clearAttachments() {
     processBtn.disabled = true;
     processBtn.classList.add('hidden');
   }
+  if (attachmentLevelOptions) {
+    attachmentLevelOptions.classList.add('hidden');
+  }
+  if (pageRangeWrapper) {
+    pageRangeWrapper.classList.add('hidden');
+  }
+
+  const documentRadio = document.querySelector('input[name="attachment-level"][value="document"]') as HTMLInputElement;
+  if (documentRadio) {
+    documentRadio.checked = true;
+  }
 }
 
-let isSetup = false; // Prevent duplicate setup
-
 export function setupAddAttachmentsTool() {
-  if (isSetup) return; // Already set up
-  isSetup = true;
-
   const optionsDiv = document.getElementById('attachment-options');
   const attachmentInput = document.getElementById(
     'attachment-files-input'
@@ -112,6 +138,9 @@ export function setupAddAttachmentsTool() {
   const processBtn = document.getElementById(
     'process-btn'
   ) as HTMLButtonElement;
+  const attachmentLevelOptions = document.getElementById('attachment-level-options');
+  const pageRangeWrapper = document.getElementById('page-range-wrapper');
+  const totalPagesSpan = document.getElementById('attachment-total-pages');
 
   if (!optionsDiv || !attachmentInput || !fileListDiv || !processBtn) {
     console.error('Attachment tool UI elements not found.');
@@ -124,6 +153,13 @@ export function setupAddAttachmentsTool() {
   }
 
   optionsDiv.classList.remove('hidden');
+
+  if (totalPagesSpan && state.pdfDoc) {
+    totalPagesSpan.textContent = state.pdfDoc.getPageCount().toString();
+  }
+
+  if (attachmentInput.dataset.listenerAttached) return;
+  attachmentInput.dataset.listenerAttached = 'true';
 
   attachmentInput.addEventListener('change', (e) => {
     const files = (e.target as HTMLInputElement).files;
@@ -149,11 +185,27 @@ export function setupAddAttachmentsTool() {
         fileListDiv.appendChild(div);
       });
 
+      if (attachmentLevelOptions) {
+        attachmentLevelOptions.classList.remove('hidden');
+      }
+
       processBtn.disabled = false;
       processBtn.classList.remove('hidden');
     } else {
       clearAttachments();
     }
+  });
+
+  const attachmentLevelRadios = document.querySelectorAll('input[name="attachment-level"]');
+  attachmentLevelRadios.forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      const value = (e.target as HTMLInputElement).value;
+      if (value === 'page' && pageRangeWrapper) {
+        pageRangeWrapper.classList.remove('hidden');
+      } else if (pageRangeWrapper) {
+        pageRangeWrapper.classList.add('hidden');
+      }
+    });
   });
 
   processBtn.onclick = addAttachments;

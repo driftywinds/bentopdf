@@ -1,5 +1,6 @@
 import { downloadFile, formatBytes } from '../utils/helpers.js';
 import { state } from '../state.js';
+import { showAlert } from '../ui.js';
 import JSZip from 'jszip';
 
 const worker = new Worker('/workers/extract-attachments.worker.js');
@@ -24,7 +25,7 @@ export async function extractAttachments() {
 
   document.getElementById('process-btn')?.classList.add('opacity-50', 'cursor-not-allowed');
   document.getElementById('process-btn')?.setAttribute('disabled', 'true');
-  
+
   showStatus('Reading files (Main Thread)...', 'info');
 
   try {
@@ -66,9 +67,33 @@ worker.onmessage = (e: MessageEvent<ExtractAttachmentResponse>) => {
   if (e.data.status === 'success') {
     const attachments = e.data.attachments;
 
+    if (attachments.length === 0) {
+      showAlert('No Attachments', 'The PDF file(s) do not contain any attachments to extract.');
+
+      state.files = [];
+      state.pdfDoc = null;
+
+      const fileDisplayArea = document.getElementById('file-display-area');
+      if (fileDisplayArea) {
+        fileDisplayArea.innerHTML = '';
+      }
+
+      const fileInput = document.getElementById('file-input') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
+
+      const fileControls = document.getElementById('file-controls');
+      if (fileControls) {
+        fileControls.classList.add('hidden');
+      }
+
+      return;
+    }
+
     const zip = new JSZip();
     let totalSize = 0;
-    
+
     for (const attachment of attachments) {
       zip.file(attachment.name, new Uint8Array(attachment.data));
       totalSize += attachment.data.byteLength;
@@ -76,28 +101,59 @@ worker.onmessage = (e: MessageEvent<ExtractAttachmentResponse>) => {
 
     zip.generateAsync({ type: 'blob' }).then((zipBlob) => {
       downloadFile(zipBlob, 'extracted-attachments.zip');
+
+      showAlert('Success', `${attachments.length} attachment(s) extracted successfully!`);
+
       showStatus(
         `Extraction completed! ${attachments.length} attachment(s) in zip file (${formatBytes(totalSize)}). Download started.`,
         'success'
       );
 
       state.files = [];
+      state.pdfDoc = null;
+
       const fileDisplayArea = document.getElementById('file-display-area');
       if (fileDisplayArea) {
         fileDisplayArea.innerHTML = '';
-        fileDisplayArea.classList.add('hidden');
       }
+
       const fileInput = document.getElementById('file-input') as HTMLInputElement;
       if (fileInput) {
         fileInput.value = '';
       }
-      document.getElementById('process-btn')?.classList.add('opacity-50', 'cursor-not-allowed');
-      document.getElementById('process-btn')?.setAttribute('disabled', 'true');
+
+      const fileControls = document.getElementById('file-controls');
+      if (fileControls) {
+        fileControls.classList.add('hidden');
+      }
     });
   } else if (e.data.status === 'error') {
     const errorMessage = e.data.message || 'Unknown error occurred in worker.';
     console.error('Worker Error:', errorMessage);
-    showStatus(`Error: ${errorMessage}`, 'error');
+
+    if (errorMessage.includes('No attachments were found')) {
+      showAlert('No Attachments', 'The PDF file(s) do not contain any attachments to extract.');
+
+      state.files = [];
+      state.pdfDoc = null;
+
+      const fileDisplayArea = document.getElementById('file-display-area');
+      if (fileDisplayArea) {
+        fileDisplayArea.innerHTML = '';
+      }
+
+      const fileInput = document.getElementById('file-input') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
+
+      const fileControls = document.getElementById('file-controls');
+      if (fileControls) {
+        fileControls.classList.add('hidden');
+      }
+    } else {
+      showStatus(`Error: ${errorMessage}`, 'error');
+    }
   }
 };
 
@@ -111,15 +167,14 @@ worker.onerror = (error) => {
 function showStatus(message: string, type: 'success' | 'error' | 'info' = 'info') {
   const statusMessage = document.getElementById('status-message') as HTMLElement;
   if (!statusMessage) return;
-  
+
   statusMessage.textContent = message;
-  statusMessage.className = `mt-4 p-3 rounded-lg text-sm ${
-    type === 'success'
-      ? 'bg-green-900 text-green-200'
-      : type === 'error'
-        ? 'bg-red-900 text-red-200'
-        : 'bg-blue-900 text-blue-200'
-  }`;
+  statusMessage.className = `mt-4 p-3 rounded-lg text-sm ${type === 'success'
+    ? 'bg-green-900 text-green-200'
+    : type === 'error'
+      ? 'bg-red-900 text-red-200'
+      : 'bg-blue-900 text-blue-200'
+    }`;
   statusMessage.classList.remove('hidden');
 }
 
