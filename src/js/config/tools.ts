@@ -176,7 +176,7 @@ export const categories = [
         id: 'image-to-pdf',
         name: 'Image to PDF',
         icon: 'images',
-        subtitle: 'Combine various images into one PDF.',
+        subtitle: 'Convert JPG, PNG, WebP, BMP, TIFF, SVG, HEIC to PDF.',
       },
       {
         id: 'jpg-to-pdf',

@@ -1,8 +1,10 @@
 import { resetState } from './state.js';
 import { formatBytes } from './utils/helpers.js';
 import { tesseractLanguages } from './config/tesseract-languages.js';
+import { renderPagesProgressively, cleanupLazyRendering } from './utils/render-utils.js';
 import { icons, createIcons } from 'lucide';
 import Sortable from 'sortablejs';
+import { getRotationState } from './handlers/fileHandler.js';
 
 // Centralizing DOM element selection
 export const dom = {
@@ -111,25 +113,21 @@ export const renderPageThumbnails = async (toolId: any, pdfDoc: any) => {
     if (!container) return;
 
     container.innerHTML = '';
+
+    // Cleanup any previous lazy loading observers
+    cleanupLazyRendering();
+
     showLoader('Rendering page previews...');
 
     const pdfData = await pdfDoc.save();
     // @ts-expect-error TS(2304) FIXME: Cannot find name 'pdfjsLib'.
     const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
 
-    for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 0.5 });
-        const canvas = document.createElement('canvas');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        const context = canvas.getContext('2d');
-        await page.render({ canvasContext: context, viewport: viewport }).promise;
-
+    // Function to create wrapper element for each page
+    const createWrapper = (canvas: HTMLCanvasElement, pageNumber: number) => {
         const wrapper = document.createElement('div');
-        wrapper.className = 'page-thumbnail relative group';
         // @ts-expect-error TS(2322) FIXME: Type 'number' is not assignable to type 'string'.
-        wrapper.dataset.pageIndex = i - 1;
+        wrapper.dataset.pageIndex = pageNumber - 1;
 
         const imgContainer = document.createElement('div');
         imgContainer.className =
@@ -148,7 +146,7 @@ export const renderPageThumbnails = async (toolId: any, pdfDoc: any) => {
             const pageNumSpan = document.createElement('span');
             pageNumSpan.className =
                 'absolute top-1 left-1 bg-gray-900 bg-opacity-75 text-white text-xs rounded-full px-2 py-1';
-            pageNumSpan.textContent = i.toString();
+            pageNumSpan.textContent = pageNumber.toString();
 
             const deleteBtn = document.createElement('button');
             deleteBtn.className =
@@ -156,14 +154,36 @@ export const renderPageThumbnails = async (toolId: any, pdfDoc: any) => {
             deleteBtn.innerHTML = '&times;';
             deleteBtn.addEventListener('click', (e) => {
                 (e.currentTarget as HTMLElement).parentElement.remove();
+
+                // Renumber remaining pages
+                const pages = container.querySelectorAll('.page-thumbnail');
+                pages.forEach((page, index) => {
+                    const numSpan = page.querySelector('span');
+                    if (numSpan) {
+                        numSpan.textContent = (index + 1).toString();
+                    }
+                });
+
                 initializeOrganizeSortable(containerId);
             });
 
             wrapper.append(pageNumSpan, deleteBtn);
         } else if (toolId === 'rotate') {
             wrapper.className = 'page-rotator-item flex flex-col items-center gap-2';
-            wrapper.dataset.rotation = '0';
+
+            // Read rotation from state (handles "Rotate All" on lazy-loaded pages)
+            const rotationStateArray = getRotationState();
+            const pageIndex = pageNumber - 1;
+            const initialRotation = rotationStateArray[pageIndex] || 0;
+
+            wrapper.dataset.rotation = initialRotation.toString();
             img.classList.add('transition-transform', 'duration-300');
+
+            // Apply initial rotation if any
+            if (initialRotation !== 0) {
+                img.style.transform = `rotate(${initialRotation}deg)`;
+            }
+
             wrapper.appendChild(imgContainer);
 
             const controlsDiv = document.createElement('div');
@@ -171,7 +191,7 @@ export const renderPageThumbnails = async (toolId: any, pdfDoc: any) => {
 
             const pageNumSpan = document.createElement('span');
             pageNumSpan.className = 'font-medium text-sm text-white';
-            pageNumSpan.textContent = i.toString();
+            pageNumSpan.textContent = pageNumber.toString();
 
             const rotateBtn = document.createElement('button');
             rotateBtn.className =
@@ -194,15 +214,40 @@ export const renderPageThumbnails = async (toolId: any, pdfDoc: any) => {
             wrapper.appendChild(controlsDiv);
         }
 
-        container.appendChild(wrapper);
+        return wrapper;
+    };
+
+    try {
+        // Render pages progressively with lazy loading
+        await renderPagesProgressively(
+            pdf,
+            container,
+            createWrapper,
+            {
+                batchSize: 6,
+                useLazyLoading: true,
+                lazyLoadMargin: '300px',
+                onProgress: (current, total) => {
+                    showLoader(`Rendering page previews: ${current}/${total}`);
+                },
+                onBatchComplete: () => {
+                    createIcons({ icons });
+                }
+            }
+        );
+
+        if (toolId === 'organize') {
+            initializeOrganizeSortable(containerId);
+        }
+
+        // Reinitialize lucide icons for dynamically added elements
         createIcons({ icons });
+    } catch (error) {
+        console.error('Error rendering page thumbnails:', error);
+        showAlert('Error', 'Failed to render page thumbnails');
+    } finally {
+        hideLoader();
     }
-
-    if (toolId === 'organize') {
-        initializeOrganizeSortable(containerId);
-    }
-
-    hideLoader();
 };
 
 /**
@@ -987,8 +1032,14 @@ export const toolTemplates = {
 
     'image-to-pdf': () => `
         <h2 class="text-2xl font-bold text-white mb-4">Image to PDF Converter</h2>
-        <p class="mb-6 text-gray-400">Combine multiple images into a single PDF. Drag and drop to reorder.</p>
-        ${createFileInputHTML({ multiple: true, accept: 'image/jpeg,image/png,image/webp', showControls: true })}
+        <p class="mb-4 text-gray-400">Combine multiple images into a single PDF. Drag and drop to reorder.</p>
+        
+        <div class="mb-6 p-3 bg-gray-900/50 border border-gray-700 rounded-lg">
+          <p class="text-sm text-gray-300 mb-2"><strong class="text-white">Supported Formats:</strong></p>
+          <p class="text-xs text-gray-400">JPG, PNG, WebP, BMP, TIFF, SVG, HEIC/HEIF</p>
+        </div>
+        
+        ${createFileInputHTML({ multiple: true, accept: 'image/jpeg,image/png,image/webp,image/bmp,image/tiff,image/svg+xml', showControls: true })}
         <ul id="image-list" class="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
         </ul>
         <div id="image-to-pdf-options" class="hidden mt-6">

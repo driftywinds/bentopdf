@@ -1,6 +1,7 @@
 import { showLoader, hideLoader, showAlert } from '../ui.js';
 import { downloadFile } from '../utils/helpers.js';
 import { state } from '../state.js';
+import { getRotationState } from '../handlers/fileHandler.js';
 
 import { degrees } from 'pdf-lib';
 
@@ -8,12 +9,11 @@ export async function rotate() {
   showLoader('Applying rotations...');
   try {
     const pages = state.pdfDoc.getPages();
-    document.querySelectorAll('.page-rotator-item').forEach((item) => {
-      // @ts-expect-error TS(2339) FIXME: Property 'dataset' does not exist on type 'Element... Remove this comment to see the full error message
-      const pageIndex = parseInt(item.dataset.pageIndex);
-      // @ts-expect-error TS(2339) FIXME: Property 'dataset' does not exist on type 'Element... Remove this comment to see the full error message
-      const rotation = parseInt(item.dataset.rotation || '0');
-      if (rotation !== 0) {
+    const rotationStateArray = getRotationState();
+
+    // Apply rotations from state (not DOM) to ensure all pages including lazy-loaded ones are rotated
+    rotationStateArray.forEach((rotation, pageIndex) => {
+      if (rotation !== 0 && pages[pageIndex]) {
         const currentRotation = pages[pageIndex].getRotation().angle;
         pages[pageIndex].setRotation(degrees(currentRotation + rotation));
       }

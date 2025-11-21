@@ -1,14 +1,23 @@
 <p align="center"><img src="public/images/favicon.svg" width="80"></p>
 <h1 align="center">BentoPDF</h1>
 
-<hr>
-
 **BentoPDF** is a powerful, privacy-first, client-side PDF toolkit that is self hostable and allows you to manipulate, edit, merge, and process PDF files directly in your browser. No server-side processing is required, ensuring your files remain secure and private.
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/bentopdf/bentopdf) [![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?logo=kofi&style=flat-square)](https://ko-fi.com/alio0) ![GitHub Stars](https://img.shields.io/github/stars/alam00000/bentopdf?style=social)
 [![Sponsor me on GitHub](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4)](https://github.com/sponsors/alam00000)
 
 ![BentoPDF Tools](public/images/bentopdf-tools.png)
+
+---
+
+## 📜 Licensing
+
+BentoPDF is dual-licensed:
+
+- **AGPL-3.0** for open-source projects where you share your full source code publicly
+- **Commercial License** for proprietary/closed-source applications - **[Get Lifetime License for $49](https://ko-fi.com/s/f32ca4cb75)** (a one-time lifetime purchase, includes all feature updates forever)
+
+For more details, see our [Licensing Page](https://bentopdf.com/licensing.html)
 
 <hr>
 
@@ -435,7 +444,3 @@ BentoPDF wouldn't be possible without the amazing open-source tools and librarie
 - **[cpdf](https://www.coherentpdf.com/)** – For content preserving pdf operations.
 
 Your work inspires and empowers developers everywhere. Thank you for making open-source amazing!
-
-## 📜 License
-
-This project is licensed under the **GNU AGPLv3**. See the [LICENSE](https://github.com/alam00000/bentopdf/blob/main/LICENSE) file for details.

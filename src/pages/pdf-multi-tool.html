@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="overflow-hidden">
 
 <head>
   <meta charset="UTF-8" />
@@ -18,7 +18,7 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    
+
     /* Fix for mobile toolbar to prevent movement during drag operations */
     .toolbar-container {
       -webkit-user-select: none;
@@ -28,7 +28,7 @@
       transform: translateZ(0);
       will-change: transform;
     }
-    
+
     /* Prevent layout shifts during dragging */
     body.dragging {
       overflow: hidden;
@@ -36,10 +36,10 @@
   </style>
 </head>
 
-<body class="antialiased bg-gray-900 h-screen overflow-hidden">
+<body class="antialiased bg-gray-900 h-[100dvh] overflow-hidden flex flex-col">
 
   <!-- Navigation -->
-  <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-30">
+  <nav class="bg-gray-800 border-b border-gray-700 flex-none z-30">
     <div class="container mx-auto px-4">
       <div class="flex justify-between items-center h-16">
         <div class="flex-shrink-0 flex items-center">
@@ -58,10 +58,10 @@
   </nav>
 
   <!-- Main Container -->
-  <div class="flex flex-col h-[calc(100vh-4rem)]">
+  <div class="flex flex-col flex-1 overflow-hidden relative">
 
     <!-- Toolbar -->
-    <div class="bg-gray-800 border-b border-gray-700 p-2 sm:p-3 overflow-x-auto scrollbar-hide toolbar-container sm:sticky sm:top-16 sm:z-20">
+    <div class="bg-gray-800 border-b border-gray-700 p-2 sm:p-3 toolbar-container flex-none z-20">
       <div
         class="flex flex-wrap items-center justify-center sm:justify-start gap-2 bg-gray-900 p-2 sm:p-4 rounded-lg w-full">
 
@@ -186,7 +186,7 @@
     </div>
 
     <!-- Content Area -->
-    <div class="flex-1 overflow-auto p-3 sm:p-4 sm:pt-20 sm:pb-8 md:pt-4 md:pb-4">
+    <div id="main-scroll-container" class="flex-1 overflow-auto p-3 pb-24 sm:p-4 sm:pb-8 md:pt-4 md:pb-4">
       <div id="upload-area"
         class="hidden border-2 border-dashed border-gray-600 rounded-lg p-6 sm:p-12 text-center max-w-full cursor-pointer"
         onclick="document.getElementById('pdf-file-input').click()">

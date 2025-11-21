@@ -1,6 +1,7 @@
 import { showLoader, hideLoader, showAlert } from '../ui.js';
 import { downloadFile } from '../utils/helpers.js';
 import { state } from '../state.js';
+import { renderPagesProgressively, cleanupLazyRendering } from '../utils/render-utils.js';
 import Sortable from 'sortablejs';
 import { icons, createIcons } from 'lucide';
 import { PDFDocument as PDFLibDocument } from 'pdf-lib';
@@ -82,6 +83,9 @@ export async function renderDuplicateOrganizeThumbnails() {
   const grid = document.getElementById('page-grid');
   if (!grid) return;
 
+  // Cleanup any previous lazy loading observers
+  cleanupLazyRendering();
+
   showLoader('Rendering page previews...');
   const pdfData = await state.pdfDoc.save();
   // @ts-expect-error TS(2304) FIXME: Cannot find name 'pdfjsLib'.
@@ -89,20 +93,13 @@ export async function renderDuplicateOrganizeThumbnails() {
 
   grid.textContent = '';
 
-  for (let i = 1; i <= pdfjsDoc.numPages; i++) {
-    const page = await pdfjsDoc.getPage(i);
-    const viewport = page.getViewport({ scale: 0.5 });
-    const canvas = document.createElement('canvas');
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
-    await page.render({ canvasContext: canvas.getContext('2d'), viewport })
-      .promise;
-
+  // Function to create wrapper element for each page
+  const createWrapper = (canvas: HTMLCanvasElement, pageNumber: number) => {
     const wrapper = document.createElement('div');
     wrapper.className =
       'page-thumbnail relative cursor-move flex flex-col items-center gap-2';
     // @ts-expect-error TS(2322) FIXME: Type 'number' is not assignable to type 'string'.
-    wrapper.dataset.originalPageIndex = i - 1;
+    wrapper.dataset.originalPageIndex = pageNumber - 1;
 
     const imgContainer = document.createElement('div');
     imgContainer.className =
@@ -116,7 +113,7 @@ export async function renderDuplicateOrganizeThumbnails() {
     const pageNumberSpan = document.createElement('span');
     pageNumberSpan.className =
       'page-number absolute top-1 left-1 bg-gray-900 bg-opacity-75 text-white text-xs rounded-full px-2 py-1';
-    pageNumberSpan.textContent = i.toString();
+    pageNumberSpan.textContent = pageNumber.toString();
 
     const controlsDiv = document.createElement('div');
     controlsDiv.className = 'flex items-center justify-center gap-4';
@@ -141,13 +138,38 @@ export async function renderDuplicateOrganizeThumbnails() {
 
     controlsDiv.append(duplicateBtn, deleteBtn);
     wrapper.append(imgContainer, pageNumberSpan, controlsDiv);
-    grid.appendChild(wrapper);
-    attachEventListeners(wrapper);
-  }
 
-  initializePageGridSortable();
-  createIcons({ icons });
-  hideLoader();
+    attachEventListeners(wrapper);
+
+    return wrapper;
+  };
+
+  try {
+    // Render pages progressively with lazy loading
+    await renderPagesProgressively(
+      pdfjsDoc,
+      grid,
+      createWrapper,
+      {
+        batchSize: 8,
+        useLazyLoading: true,
+        lazyLoadMargin: '400px',
+        onProgress: (current, total) => {
+          showLoader(`Rendering page previews: ${current}/${total}`);
+        },
+        onBatchComplete: () => {
+          createIcons({ icons });
+        }
+      }
+    );
+
+    initializePageGridSortable();
+  } catch (error) {
+    console.error('Error rendering thumbnails:', error);
+    showAlert('Error', 'Failed to render page previews');
+  } finally {
+    hideLoader();
+  }
 }
 
 export async function processAndSave() {
@@ -156,11 +178,28 @@ export async function processAndSave() {
     const grid = document.getElementById('page-grid');
     const finalPageElements = grid.querySelectorAll('.page-thumbnail');
 
-    const finalIndices = Array.from(finalPageElements).map((el) =>
-      parseInt((el as HTMLElement).dataset.originalPageIndex)
-    );
+    const finalIndices = Array.from(finalPageElements)
+      .map((el) => parseInt((el as HTMLElement).dataset.originalPageIndex || '', 10))
+      .filter(index => !isNaN(index) && index >= 0);
+
+    console.log('Saving PDF with indices:', finalIndices);
+    console.log('Original PDF Page Count:', state.pdfDoc?.getPageCount());
+
+    if (finalIndices.length === 0) {
+      showAlert('Error', 'No valid pages to save.');
+      return;
+    }
 
     const newPdfDoc = await PDFLibDocument.create();
+    
+    const totalPages = state.pdfDoc.getPageCount();
+    const invalidIndices = finalIndices.filter(i => i >= totalPages);
+    if (invalidIndices.length > 0) {
+      console.error('Found invalid indices:', invalidIndices);
+      showAlert('Error', 'Some pages could not be processed. Please try again.');
+      return;
+    }
+
     const copiedPages = await newPdfDoc.copyPages(state.pdfDoc, finalIndices);
     copiedPages.forEach((page: any) => newPdfDoc.addPage(page));
 
@@ -170,8 +209,8 @@ export async function processAndSave() {
       'organized.pdf'
     );
   } catch (e) {
-    console.error(e);
-    showAlert('Error', 'Failed to save the new PDF.');
+    console.error('Save error:', e);
+    showAlert('Error', 'Failed to save the new PDF. Check console for details.');
   } finally {
     hideLoader();
   }

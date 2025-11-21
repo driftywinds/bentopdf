@@ -1,6 +1,9 @@
 import { showLoader, hideLoader, showAlert } from '../ui.js';
+import { createIcons, icons } from 'lucide';
+import * as pdfjsLib from 'pdfjs-dist';
 import { downloadFile } from '../utils/helpers.js';
 import { state } from '../state.js';
+import { renderPagesProgressively, cleanupLazyRendering } from '../utils/render-utils.js';
 import JSZip from 'jszip';
 
 import { PDFDocument as PDFLibDocument } from 'pdf-lib';
@@ -17,35 +20,29 @@ async function renderVisualSelector() {
 
   container.textContent = '';
 
+  // Cleanup any previous lazy loading observers
+  cleanupLazyRendering();
+
   showLoader('Rendering page previews...');
+
   try {
     const pdfData = await state.pdfDoc.save();
-    // @ts-expect-error TS(2304) FIXME: Cannot find name 'pdfjsLib'.
     const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
 
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const viewport = page.getViewport({ scale: 0.4 });
-      const canvas = document.createElement('canvas');
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-      await page.render({
-        canvasContext: canvas.getContext('2d'),
-        viewport: viewport,
-      }).promise;
-
+    // Function to create wrapper element for each page
+    const createWrapper = (canvas: HTMLCanvasElement, pageNumber: number) => {
       const wrapper = document.createElement('div');
       wrapper.className =
         'page-thumbnail-wrapper p-1 border-2 border-transparent rounded-lg cursor-pointer hover:border-indigo-500';
       // @ts-expect-error TS(2322) FIXME: Type 'number' is not assignable to type 'string'.
-      wrapper.dataset.pageIndex = i - 1;
+      wrapper.dataset.pageIndex = pageNumber - 1;
 
       const img = document.createElement('img');
       img.src = canvas.toDataURL();
       img.className = 'rounded-md w-full h-auto';
       const p = document.createElement('p');
       p.className = 'text-center text-xs mt-1 text-gray-300';
-      p.textContent = `Page ${i}`;
+      p.textContent = `Page ${pageNumber}`;
       wrapper.append(img, p);
 
       const handleSelection = (e: any) => {
@@ -69,12 +66,31 @@ async function renderVisualSelector() {
       wrapper.addEventListener('touchstart', (e) => {
         e.preventDefault();
       });
-      container.appendChild(wrapper);
-    }
+
+      return wrapper;
+    };
+
+    // Render pages progressively with lazy loading
+    await renderPagesProgressively(
+      pdf,
+      container,
+      createWrapper,
+      {
+        batchSize: 8,
+        useLazyLoading: true,
+        lazyLoadMargin: '400px',
+        onProgress: (current, total) => {
+          showLoader(`Rendering page previews: ${current}/${total}`);
+        },
+        onBatchComplete: () => {
+          createIcons({ icons });
+        }
+      }
+    );
   } catch (error) {
     console.error('Error rendering visual selector:', error);
     showAlert('Error', 'Failed to render page previews.');
-    // 4. ADDED: Reset the flag on error so the user can try again.
+    // Reset the flag on error so the user can try again.
     visualSelectorRendered = false;
   } finally {
     hideLoader();

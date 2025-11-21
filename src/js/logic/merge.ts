@@ -1,7 +1,9 @@
 import { showLoader, hideLoader, showAlert } from '../ui.ts';
 import { downloadFile, readFileAsArrayBuffer } from '../utils/helpers.ts';
 import { state } from '../state.ts';
+import { renderPagesProgressively, cleanupLazyRendering, createPlaceholder } from '../utils/render-utils.ts';
 
+import { createIcons, icons } from 'lucide';
 import { PDFDocument as PDFLibDocument } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
 import Sortable from 'sortablejs';
@@ -129,15 +131,53 @@ async function renderPageMergeThumbnails() {
   mergeState.isRendering = true;
   container.textContent = '';
 
-  let currentPageNumber = 0;
+  // Cleanup any previous lazy loading observers
+  cleanupLazyRendering();
+
   let totalPages = state.files.reduce((sum, file) => {
     const pdfDoc = mergeState.pdfDocs[file.name];
     return sum + (pdfDoc ? pdfDoc.getPageCount() : 0);
   }, 0);
 
   try {
-    const thumbnailsHTML = [];
+    let currentPageNumber = 0;
 
+    // Function to create wrapper element for each page
+    const createWrapper = (canvas: HTMLCanvasElement, pageNumber: number, fileName?: string) => {
+      const wrapper = document.createElement('div');
+      wrapper.className =
+        'page-thumbnail relative cursor-move flex flex-col items-center gap-1 p-2 border-2 border-gray-600 hover:border-indigo-500 rounded-lg bg-gray-700 transition-colors';
+      wrapper.dataset.fileName = fileName || '';
+      wrapper.dataset.pageIndex = (pageNumber - 1).toString();
+
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'relative';
+
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL();
+      img.className = 'rounded-md shadow-md max-w-full h-auto';
+
+      const pageNumDiv = document.createElement('div');
+      pageNumDiv.className =
+        'absolute top-1 left-1 bg-indigo-600 text-white text-xs px-2 py-1 rounded-md font-semibold shadow-lg';
+      pageNumDiv.textContent = pageNumber.toString();
+
+      imgContainer.append(img, pageNumDiv);
+
+      const fileNamePara = document.createElement('p');
+      fileNamePara.className =
+        'text-xs text-gray-400 truncate w-full text-center';
+      const fullTitle = fileName ? `${fileName} (page ${pageNumber})` : `Page ${pageNumber}`;
+      fileNamePara.title = fullTitle;
+      fileNamePara.textContent = fileName
+        ? `${fileName.substring(0, 10)}... (p${pageNumber})`
+        : `Page ${pageNumber}`;
+
+      wrapper.append(imgContainer, fileNamePara);
+      return wrapper;
+    };
+
+    // Render pages from all files progressively
     for (const file of state.files) {
       const pdfDoc = mergeState.pdfDocs[file.name];
       if (!pdfDoc) continue;
@@ -145,55 +185,35 @@ async function renderPageMergeThumbnails() {
       const pdfData = await pdfDoc.save();
       const pdfjsDoc = await pdfjsLib.getDocument({ data: pdfData }).promise;
 
-      for (let i = 1; i <= pdfjsDoc.numPages; i++) {
-        currentPageNumber++;
-        showLoader(
-          `Rendering page previews: ${currentPageNumber}/${totalPages}`
-        );
-        const page = await pdfjsDoc.getPage(i);
-        const viewport = page.getViewport({ scale: 0.3 });
-        const canvas = document.createElement('canvas');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        const context = canvas.getContext('2d')!;
-        await page.render({
-          canvasContext: context,
-          canvas: canvas,
-          viewport,
-        }).promise;
+      // Create a wrapper function that includes the file name
+      const createWrapperWithFileName = (canvas: HTMLCanvasElement, pageNumber: number) => {
+        return createWrapper(canvas, pageNumber, file.name);
+      };
 
-        const wrapper = document.createElement('div');
-        wrapper.className =
-          'page-thumbnail relative cursor-move flex flex-col items-center gap-1 p-2 border-2 border-gray-600 hover:border-indigo-500 rounded-lg bg-gray-700 transition-colors';
-        wrapper.dataset.fileName = file.name;
-        wrapper.dataset.pageIndex = (i - 1).toString();
+      // Render pages progressively with lazy loading
+      await renderPagesProgressively(
+        pdfjsDoc,
+        container,
+        createWrapperWithFileName,
+        {
+          batchSize: 6,
+          useLazyLoading: true,
+          lazyLoadMargin: '300px',
+          onProgress: (current, total) => {
+            currentPageNumber++;
+            showLoader(
+              `Rendering page previews...`
+            );
+          },
+          onBatchComplete: () => {
+            createIcons({ icons });
+          }
+        }
+      );
 
-        const imgContainer = document.createElement('div');
-        imgContainer.className = 'relative';
-
-        const img = document.createElement('img');
-        img.src = canvas.toDataURL();
-        img.className = 'rounded-md shadow-md max-w-full h-auto';
-
-        const pageNumDiv = document.createElement('div');
-        pageNumDiv.className =
-          'absolute top-1 left-1 bg-indigo-600 text-white text-xs px-2 py-1 rounded-md font-semibold shadow-lg';
-        pageNumDiv.textContent = i.toString();
-
-        imgContainer.append(img, pageNumDiv);
-
-        const fileNamePara = document.createElement('p');
-        fileNamePara.className =
-          'text-xs text-gray-400 truncate w-full text-center';
-        const fullTitle = `${file.name} (page ${i})`;
-        fileNamePara.title = fullTitle;
-        fileNamePara.textContent = `${file.name.substring(0, 10)}... (p${i})`;
-
-        wrapper.append(imgContainer, fileNamePara);
-        container.appendChild(wrapper);
-      }
-
-      pdfjsDoc.destroy();
+      // TODO@ALAM - DON'T destroy the PDF.js document here - lazy loading still needs it!
+      // It will be garbage collected automatically when no longer referenced
+      // pdfjsDoc.destroy(); // REMOVED
     }
 
     mergeState.cachedThumbnails = true;

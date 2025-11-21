@@ -21,6 +21,16 @@ import {
 } from '../config/pdf-tools.js';
 import * as pdfjsLib from 'pdfjs-dist';
 
+// Global state for rotation tracking (used by Rotate tool)
+const rotationState: number[] = [];
+let imageSortableInstance: Sortable | null = null;
+const activeImageUrls = new Map<File, string>();
+
+// Export getter for rotation state (used by ui.ts)
+export function getRotationState(): readonly number[] {
+  return rotationState;
+}
+
 async function handleSinglePdfUpload(toolId, file) {
   showLoader('Loading PDF...');
   try {
@@ -101,6 +111,12 @@ async function handleSinglePdfUpload(toolId, file) {
       await renderPageThumbnails(toolId, state.pdfDoc);
 
       if (toolId === 'rotate') {
+        // Initialize rotation state for all pages
+        rotationState.length = 0;
+        for (let i = 0; i < state.pdfDoc.getPageCount(); i++) {
+          rotationState.push(0);
+        }
+
         const rotateAllControls = document.getElementById(
           'rotate-all-controls'
         );
@@ -113,11 +129,15 @@ async function handleSinglePdfUpload(toolId, file) {
         createIcons({ icons });
 
         const rotateAll = (direction) => {
+          // Update rotation state for ALL pages (including unrendered ones)
+          for (let i = 0; i < rotationState.length; i++) {
+            rotationState[i] = (rotationState[i] + direction * 90 + 360) % 360;
+          }
+
+          // Update DOM for currently rendered pages
           document.querySelectorAll('.page-rotator-item').forEach((item) => {
-            const currentRotation = parseInt(
-              (item as HTMLElement).dataset.rotation || '0'
-            );
-            const newRotation = (currentRotation + direction * 90 + 360) % 360;
+            const pageIndex = parseInt((item as HTMLElement).dataset.pageIndex || '0');
+            const newRotation = rotationState[pageIndex];
             (item as HTMLElement).dataset.rotation = newRotation.toString();
             const thumbnail = item.querySelector('canvas, img');
             if (thumbnail) {
@@ -468,6 +488,8 @@ async function handleMultiFileUpload(toolId) {
     toolId === 'alternate-merge' ||
     toolId === 'reverse-pages'
   ) {
+    showLoader('Loading PDF documents...');
+
     const pdfFilesUnloaded: File[] = [];
 
     state.files.forEach((file) => {
@@ -502,6 +524,7 @@ async function handleMultiFileUpload(toolId) {
 
       const errorMessage = `PDFs found that are password-protected\n\nPlease use the Decrypt or Change Permissions tool on these files first:\n\n${encryptedPDFFileNames.join('\n')}`;
 
+      hideLoader(); // Hide loader before showing alert
       showAlert('Protected PDFs', errorMessage);
 
       switchView('grid');
@@ -526,9 +549,27 @@ async function handleMultiFileUpload(toolId) {
     toolLogic['alternate-merge'].setup();
   } else if (toolId === 'image-to-pdf') {
     const imageList = document.getElementById('image-list');
-    imageList.textContent = '';
+
+    const renderedFiles = new Set(
+      Array.from(imageList.querySelectorAll('li')).map(li => li.dataset.fileName)
+    );
+
     state.files.forEach((file) => {
-      const url = URL.createObjectURL(file);
+      if (!file) {
+        console.error('Invalid file encountered in state.files');
+        return;
+      }
+
+      if (renderedFiles.has(file.name)) {
+        return;
+      }
+
+      let url = activeImageUrls.get(file);
+      if (!url) {
+        url = URL.createObjectURL(file);
+        activeImageUrls.set(file, url);
+      }
+
       const li = document.createElement('li');
       li.className = 'relative group cursor-move';
       li.dataset.fileName = file.name;
@@ -550,10 +591,28 @@ async function handleMultiFileUpload(toolId) {
       imageList.appendChild(li);
     });
 
-    Sortable.create(imageList);
-    // Show image-to-pdf options and wire up slider text
+    const syncStateWithDOM = () => {
+      const domOrder = Array.from(imageList.querySelectorAll('li')).map(li => li.dataset.fileName);
+      state.files.sort((a, b) => {
+        const aIndex = domOrder.indexOf(a.name);
+        const bIndex = domOrder.indexOf(b.name);
+        return aIndex - bIndex;
+      });
+    };
+
+    if (!imageSortableInstance) {
+      imageSortableInstance = Sortable.create(imageList, {
+        animation: 150,
+        onEnd: () => {
+          syncStateWithDOM();
+        }
+      });
+    }
+
+    syncStateWithDOM();
+
     const opts = document.getElementById('image-to-pdf-options');
-    if (opts) {
+    if (opts && opts.classList.contains('hidden')) {
       opts.classList.remove('hidden');
       const slider = document.getElementById('image-pdf-quality') as HTMLInputElement;
       const value = document.getElementById('image-pdf-quality-value');
@@ -616,6 +675,18 @@ export function setupFileInputHandler(toolId) {
 
   const processFiles = async (newFiles) => {
     if (newFiles.length === 0) return;
+
+    if (toolId === 'image-to-pdf') {
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/bmp', 'image/tiff'];
+      const validFiles = newFiles.filter(file => validTypes.includes(file.type));
+
+      if (validFiles.length < newFiles.length) {
+        showAlert('Invalid Files', 'Some files were skipped because they are not supported images.');
+      }
+
+      newFiles = validFiles;
+      if (newFiles.length === 0) return;
+    }
 
     if (!isMultiFileTool || isFirstUpload) {
       state.files = newFiles;
@@ -731,6 +802,9 @@ export function setupFileInputHandler(toolId) {
     const clearBtn = document.getElementById('clear-files-btn');
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
+        activeImageUrls.forEach(url => URL.revokeObjectURL(url));
+        activeImageUrls.clear();
+
         state.files = [];
         isFirstUpload = true;
         (fileInput as HTMLInputElement).value = '';

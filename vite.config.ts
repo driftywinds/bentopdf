@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => ({
     exclude: ['coherentpdf'],
   },
   server: {
+    host: true,
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -50,6 +51,7 @@ export default defineConfig(({ mode }) => ({
         privacy: resolve(__dirname, 'privacy.html'),
         terms: resolve(__dirname, 'terms.html'),
         bookmark: resolve(__dirname, 'src/pages/bookmark.html'),
+        licensing: resolve(__dirname, 'licensing.html'),
         'table-of-contents': resolve(
           __dirname,
           'src/pages/table-of-contents.html'
