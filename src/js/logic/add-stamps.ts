@@ -1,4 +1,5 @@
 import { formatBytes, readFileAsArrayBuffer } from '../utils/helpers'
+import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js'
 
 let selectedFile: File | null = null
 let viewerIframe: HTMLIFrameElement | null = null
@@ -67,7 +68,7 @@ async function loadPdfInViewer(file: File) {
       enablePermissions: false,
     }
     localStorage.setItem('pdfjs.preferences', JSON.stringify(newPrefs))
-  } catch {}
+  } catch { }
 
   const iframe = document.createElement('iframe')
   iframe.className = 'w-full h-full border-0'
@@ -103,7 +104,7 @@ function setupAnnotationViewer(iframe: HTMLIFrameElement) {
             try {
               const stampBtn = doc.getElementById('editorStampButton') as HTMLButtonElement | null
               stampBtn?.click()
-            } catch {}
+            } catch { }
           })
         }
 
@@ -174,3 +175,5 @@ if (backToToolsBtn) {
     window.location.href = '/'
   })
 }
+
+initializeGlobalShortcuts()

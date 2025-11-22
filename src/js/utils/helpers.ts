@@ -194,3 +194,15 @@ export function formatStars(num: number) {
   }
   return num.toLocaleString();
 };
+
+export function formatShortcutDisplay(shortcut: string, isMac: boolean): string {
+    if (!shortcut) return '';
+    return shortcut
+      .replace('mod', isMac ? '⌘' : 'Ctrl')
+      .replace('ctrl', isMac ? '^' : 'Ctrl') // Control key on Mac shows as ^
+      .replace('alt', isMac ? '⌥' : 'Alt')
+      .replace('shift', 'Shift')
+      .split('+')
+      .map(k => k.charAt(0).toUpperCase() + k.slice(1))
+      .join(isMac ? '' : '+');
+}

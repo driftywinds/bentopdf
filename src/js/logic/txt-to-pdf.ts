@@ -154,6 +154,11 @@ export async function setupTxtToPdfTool() {
 
   uploadBtn.addEventListener('click', switchToUpload);
   textBtn.addEventListener('click', switchToText);
+
+  const processBtn = document.getElementById('process-btn');
+  if (processBtn) {
+    processBtn.onclick = txtToPdf;
+  }
 }
 
 export async function txtToPdf() {

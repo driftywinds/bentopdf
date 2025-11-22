@@ -1,4 +1,6 @@
 import { downloadFile, formatBytes } from "../utils/helpers";
+import { initializeGlobalShortcuts } from "../utils/shortcuts-init.js";
+
 
 const worker = new Worker('/workers/table-of-contents.worker.js');
 
@@ -54,10 +56,10 @@ function showStatus(
 ) {
   statusMessage.textContent = message;
   statusMessage.className = `mt-4 p-3 rounded-lg text-sm ${type === 'success'
-      ? 'bg-green-900 text-green-200'
-      : type === 'error'
-        ? 'bg-red-900 text-red-200'
-        : 'bg-blue-900 text-blue-200'
+    ? 'bg-green-900 text-green-200'
+    : type === 'error'
+      ? 'bg-red-900 text-red-200'
+      : 'bg-blue-900 text-blue-200'
     }`;
   statusMessage.classList.remove('hidden');
 }
@@ -202,3 +204,5 @@ if (backToToolsBtn) {
 }
 
 generateBtn.addEventListener('click', generateTableOfContents);
+
+initializeGlobalShortcuts();

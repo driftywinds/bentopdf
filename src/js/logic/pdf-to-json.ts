@@ -1,5 +1,6 @@
 import JSZip from 'jszip'
 import { downloadFile, formatBytes, readFileAsArrayBuffer } from '../utils/helpers';
+import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js';
 
 const worker = new Worker(new URL('/workers/pdf-to-json.worker.js', import.meta.url));
 
@@ -17,10 +18,10 @@ function showStatus(
 ) {
   statusMessage.textContent = message
   statusMessage.className = `mt-4 p-3 rounded-lg text-sm ${type === 'success'
-      ? 'bg-green-900 text-green-200'
-      : type === 'error'
-        ? 'bg-red-900 text-red-200'
-        : 'bg-blue-900 text-blue-200'
+    ? 'bg-green-900 text-green-200'
+    : type === 'error'
+      ? 'bg-red-900 text-red-200'
+      : 'bg-blue-900 text-blue-200'
     }`
   statusMessage.classList.remove('hidden')
 }
@@ -149,6 +150,5 @@ if (backToToolsBtn) {
 
 convertBtn.addEventListener('click', convertPDFsToJSON)
 
-// Initialize
 showStatus('Select PDF files to get started', 'info')
-
+initializeGlobalShortcuts()

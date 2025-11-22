@@ -5,6 +5,7 @@ import JSZip from 'jszip';
 import Sortable from 'sortablejs';
 import { downloadFile } from '../utils/helpers';
 import { renderPagesProgressively, cleanupLazyRendering, renderPageToCanvas, createPlaceholder } from '../utils/render-utils';
+import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -146,6 +147,8 @@ if (document.readyState === 'loading') {
 function initializeTool() {
   console.log('PDF Multi Tool: Initializing...');
   createIcons({ icons });
+
+  initializeGlobalShortcuts();
 
   document.getElementById('close-tool-btn')?.addEventListener('click', () => {
     window.location.href = '/';

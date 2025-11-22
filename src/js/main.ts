@@ -1,10 +1,12 @@
 import { categories } from './config/tools.js';
-import { dom, switchView, hideAlert } from './ui.js';
+import { dom, switchView, hideAlert, showLoader, hideLoader, showAlert } from './ui.js';
 import { setupToolInterface } from './handlers/toolSelectionHandler.js';
+import { state, resetState } from './state.js';
+import { ShortcutsManager } from './logic/shortcuts.js';
 import { createIcons, icons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
 import '../css/styles.css';
-import { formatStars } from './utils/helpers.js';
+import { formatShortcutDisplay, formatStars } from './utils/helpers.js';
 import { APP_VERSION, injectVersion } from '../version.js';
 
 const init = () => {
@@ -13,6 +15,7 @@ const init = () => {
     import.meta.url
   ).toString();
 
+  // Handle simple mode - hide branding sections but keep logo and copyright
   // Handle simple mode - hide branding sections but keep logo and copyright
   if (__SIMPLE_MODE__) {
     const hideBrandingSections = () => {
@@ -133,6 +136,16 @@ const init = () => {
 
     hideBrandingSections();
   }
+
+  // Hide shortcuts button on touch devices
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (isTouchDevice) {
+    const shortcutsBtn = document.getElementById('open-shortcuts-btn');
+    if (shortcutsBtn) {
+      shortcutsBtn.style.display = 'none';
+    }
+  }
+
 
   dom.toolGrid.textContent = '';
 
@@ -269,8 +282,17 @@ const init = () => {
     });
   }
 
+  if (window.location.hash.startsWith('#tool-')) {
+    const toolId = window.location.hash.substring(6);
+    setTimeout(() => {
+      setupToolInterface(toolId);
+      history.replaceState(null, '', window.location.pathname);
+    }, 100);
+  }
+
   createIcons({ icons });
   console.log('Please share our tool and share the love!');
+
 
   const githubStarsElement = document.getElementById('github-stars');
   if (githubStarsElement && !__SIMPLE_MODE__) {
@@ -284,6 +306,404 @@ const init = () => {
       .catch(() => {
         githubStarsElement.textContent = '-';
       });
+  }
+
+  // Initialize Shortcuts System
+  ShortcutsManager.init();
+
+  // Shortcuts UI Handlers
+  if (dom.openShortcutsBtn) {
+    dom.openShortcutsBtn.addEventListener('click', () => {
+      renderShortcutsList();
+      dom.shortcutsModal.classList.remove('hidden');
+    });
+  }
+
+  if (dom.closeShortcutsModalBtn) {
+    dom.closeShortcutsModalBtn.addEventListener('click', () => {
+      dom.shortcutsModal.classList.add('hidden');
+    });
+  }
+
+  // Close modal on outside click
+  if (dom.shortcutsModal) {
+    dom.shortcutsModal.addEventListener('click', (e) => {
+      if (e.target === dom.shortcutsModal) {
+        dom.shortcutsModal.classList.add('hidden');
+      }
+    });
+  }
+
+  if (dom.resetShortcutsBtn) {
+    dom.resetShortcutsBtn.addEventListener('click', async () => {
+      const confirmed = await showWarningModal(
+        'Reset Shortcuts',
+        'Are you sure you want to reset all shortcuts to default?<br><br>This action cannot be undone.',
+        true
+      );
+
+      if (confirmed) {
+        ShortcutsManager.reset();
+        renderShortcutsList();
+      }
+    });
+  }
+
+  if (dom.exportShortcutsBtn) {
+    dom.exportShortcutsBtn.addEventListener('click', () => {
+      ShortcutsManager.exportSettings();
+    });
+  }
+
+  if (dom.importShortcutsBtn) {
+    dom.importShortcutsBtn.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = async (e) => {
+            const content = e.target?.result as string;
+            if (ShortcutsManager.importSettings(content)) {
+              renderShortcutsList();
+              await showWarningModal(
+                'Import Successful',
+                'Shortcuts imported successfully!',
+                false
+              );
+            } else {
+              await showWarningModal(
+                'Import Failed',
+                'Failed to import shortcuts. Invalid file format.',
+                false
+              );
+            }
+          };
+          reader.readAsText(file);
+        }
+      };
+      input.click();
+    });
+  }
+
+  if (dom.shortcutSearch) {
+    dom.shortcutSearch.addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.toLowerCase();
+      const sections = dom.shortcutsList.querySelectorAll('.category-section');
+
+      sections.forEach((section) => {
+        const items = section.querySelectorAll('.shortcut-item');
+        let visibleCount = 0;
+
+        items.forEach((item) => {
+          const text = item.textContent?.toLowerCase() || '';
+          if (text.includes(term)) {
+            item.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+
+        if (visibleCount === 0) {
+          section.classList.add('hidden');
+        } else {
+          section.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  // Reserved shortcuts that commonly conflict with browser/OS functions
+  const RESERVED_SHORTCUTS: Record<string, { mac?: string; windows?: string }> = {
+    'mod+w': { mac: 'Closes tab', windows: 'Closes tab' },
+    'mod+t': { mac: 'Opens new tab', windows: 'Opens new tab' },
+    'mod+n': { mac: 'Opens new window', windows: 'Opens new window' },
+    'mod+shift+n': { mac: 'Opens incognito window', windows: 'Opens incognito window' },
+    'mod+q': { mac: 'Quits application (cannot be overridden)' },
+    'mod+m': { mac: 'Minimizes window' },
+    'mod+h': { mac: 'Hides window' },
+    'mod+r': { mac: 'Reloads page', windows: 'Reloads page' },
+    'mod+shift+r': { mac: 'Hard reloads page', windows: 'Hard reloads page' },
+    'mod+l': { mac: 'Focuses address bar', windows: 'Focuses address bar' },
+    'mod+d': { mac: 'Bookmarks page', windows: 'Bookmarks page' },
+    'mod+shift+t': { mac: 'Reopens closed tab', windows: 'Reopens closed tab' },
+    'mod+shift+w': { mac: 'Closes window', windows: 'Closes window' },
+    'mod+tab': { mac: 'Switches tabs', windows: 'Switches apps' },
+    'alt+f4': { windows: 'Closes window' },
+    'ctrl+tab': { mac: 'Switches tabs', windows: 'Switches tabs' },
+  };
+
+  function getReservedShortcutWarning(combo: string, isMac: boolean): string | null {
+    const reserved = RESERVED_SHORTCUTS[combo];
+    if (!reserved) return null;
+
+    const description = isMac ? reserved.mac : reserved.windows;
+    if (!description) return null;
+
+    return description;
+  }
+
+  function showWarningModal(title: string, message: string, confirmMode: boolean = true): Promise<boolean> {
+    return new Promise((resolve) => {
+      if (!dom.warningModal || !dom.warningTitle || !dom.warningMessage || !dom.warningCancelBtn || !dom.warningConfirmBtn) {
+        resolve(confirmMode ? confirm(message) : (alert(message), true));
+        return;
+      }
+
+      dom.warningTitle.textContent = title;
+      dom.warningMessage.innerHTML = message;
+      dom.warningModal.classList.remove('hidden');
+      dom.warningModal.classList.add('flex');
+
+      if (confirmMode) {
+        dom.warningCancelBtn.style.display = '';
+        dom.warningConfirmBtn.textContent = 'Proceed';
+      } else {
+        dom.warningCancelBtn.style.display = 'none';
+        dom.warningConfirmBtn.textContent = 'OK';
+      }
+
+      const handleConfirm = () => {
+        cleanup();
+        resolve(true);
+      };
+
+      const handleCancel = () => {
+        cleanup();
+        resolve(false);
+      };
+
+      const cleanup = () => {
+        dom.warningModal?.classList.add('hidden');
+        dom.warningModal?.classList.remove('flex');
+        dom.warningConfirmBtn?.removeEventListener('click', handleConfirm);
+        dom.warningCancelBtn?.removeEventListener('click', handleCancel);
+      };
+
+      dom.warningConfirmBtn.addEventListener('click', handleConfirm);
+      dom.warningCancelBtn.addEventListener('click', handleCancel);
+
+      // Close on backdrop click
+      dom.warningModal.addEventListener('click', (e) => {
+        if (e.target === dom.warningModal) {
+          if (confirmMode) {
+            handleCancel();
+          } else {
+            handleConfirm();
+          }
+        }
+      }, { once: true });
+    });
+  }
+
+  function getToolId(tool: any): string {
+    if (tool.id) return tool.id;
+    if (tool.href) {
+      const match = tool.href.match(/\/([^/]+)\.html$/);
+      return match ? match[1] : tool.href;
+    }
+    return 'unknown';
+  }
+
+  function renderShortcutsList() {
+    if (!dom.shortcutsList) return;
+    dom.shortcutsList.innerHTML = '';
+
+    const allShortcuts = ShortcutsManager.getAllShortcuts();
+    const isMac = navigator.userAgent.toUpperCase().includes('MAC');
+    const allTools = categories.flatMap(c => c.tools);
+
+    categories.forEach(category => {
+      const section = document.createElement('div');
+      section.className = 'category-section mb-6 last:mb-0';
+
+      const header = document.createElement('h3');
+      header.className = 'text-gray-400 text-xs font-bold uppercase tracking-wider mb-3 pl-1';
+      header.textContent = category.name;
+      section.appendChild(header);
+
+      const itemsContainer = document.createElement('div');
+      itemsContainer.className = 'space-y-2';
+      section.appendChild(itemsContainer);
+
+      let hasTools = false;
+
+      category.tools.forEach(tool => {
+        hasTools = true;
+        const toolId = getToolId(tool);
+        const currentShortcut = allShortcuts.get(toolId) || '';
+
+        const item = document.createElement('div');
+        item.className = 'shortcut-item flex items-center justify-between p-3 bg-gray-900 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors';
+
+        const left = document.createElement('div');
+        left.className = 'flex items-center gap-3';
+
+        const icon = document.createElement('i');
+        icon.className = 'w-5 h-5 text-indigo-400';
+        icon.setAttribute('data-lucide', tool.icon);
+
+        const name = document.createElement('span');
+        name.className = 'text-gray-200 font-medium';
+        name.textContent = tool.name;
+
+        left.append(icon, name);
+
+        const right = document.createElement('div');
+        right.className = 'relative';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'shortcut-input w-32 bg-gray-800 border border-gray-600 text-white text-center text-sm rounded px-2 py-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all';
+        input.placeholder = 'Click to set';
+        input.value = formatShortcutDisplay(currentShortcut, isMac);
+        input.readOnly = true;
+
+        const clearBtn = document.createElement('button');
+        clearBtn.className = 'absolute -right-2 -top-2 bg-gray-700 hover:bg-red-600 text-white rounded-full p-0.5 hidden group-hover:block shadow-sm';
+        clearBtn.innerHTML = '<i data-lucide="x" class="w-3 h-3"></i>';
+        if (currentShortcut) {
+          right.classList.add('group');
+        }
+
+        clearBtn.onclick = (e) => {
+          e.stopPropagation();
+          ShortcutsManager.setShortcut(toolId, '');
+          renderShortcutsList();
+        };
+
+        input.onkeydown = async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (e.key === 'Backspace' || e.key === 'Delete') {
+            ShortcutsManager.setShortcut(toolId, '');
+            renderShortcutsList();
+            return;
+          }
+
+          const keys: string[] = [];
+          // On Mac: metaKey = Command, ctrlKey = Control
+          // On Windows/Linux: metaKey is rare, ctrlKey = Ctrl
+          if (isMac) {
+            if (e.metaKey) keys.push('mod'); // Command on Mac
+            if (e.ctrlKey) keys.push('ctrl'); // Control on Mac (separate from Command)
+          } else {
+            if (e.ctrlKey || e.metaKey) keys.push('mod'); // Ctrl on Windows/Linux
+          }
+          if (e.altKey) keys.push('alt');
+          if (e.shiftKey) keys.push('shift');
+
+          let key = e.key.toLowerCase();
+
+          if (e.altKey && e.code) {
+            if (e.code.startsWith('Key')) {
+              key = e.code.slice(3).toLowerCase();
+            } else if (e.code.startsWith('Digit')) {
+              key = e.code.slice(5);
+            }
+          }
+
+          const isModifier = ['control', 'shift', 'alt', 'meta'].includes(key);
+          const isDeadKey = key === 'dead' || key.startsWith('dead');
+
+          // Ignore dead keys (used for accented characters on Mac with Option key)
+          if (isDeadKey) {
+            input.value = formatShortcutDisplay(ShortcutsManager.getShortcut(toolId) || '', isMac);
+            return;
+          }
+
+          if (!isModifier) {
+            keys.push(key);
+          }
+
+          const combo = keys.join('+');
+
+          input.value = formatShortcutDisplay(combo, isMac);
+
+          if (!isModifier) {
+            const existingToolId = ShortcutsManager.findToolByShortcut(combo);
+
+            if (existingToolId && existingToolId !== toolId) {
+              const existingTool = allTools.find(t => getToolId(t) === existingToolId);
+              const existingToolName = existingTool?.name || existingToolId;
+              const displayCombo = formatShortcutDisplay(combo, isMac);
+
+              await showWarningModal(
+                'Shortcut Already in Use',
+                `<strong>${displayCombo}</strong> is already assigned to:<br><br>` +
+                `<em>"${existingToolName}"</em><br><br>` +
+                `Please choose a different shortcut.`,
+                false
+              );
+
+              input.value = formatShortcutDisplay(ShortcutsManager.getShortcut(toolId) || '', isMac);
+              input.classList.remove('border-indigo-500', 'text-indigo-400');
+              input.blur();
+              return;
+            }
+
+            // Check if this is a reserved shortcut
+            const reservedWarning = getReservedShortcutWarning(combo, isMac);
+            if (reservedWarning) {
+              const displayCombo = formatShortcutDisplay(combo, isMac);
+              const shouldProceed = await showWarningModal(
+                'Reserved Shortcut Warning',
+                `<strong>${displayCombo}</strong> is commonly used for:<br><br>` +
+                `"<em>${reservedWarning}</em>"<br><br>` +
+                `This shortcut may not work reliably or might conflict with browser/system behavior.<br><br>` +
+                `Do you want to use it anyway?`
+              );
+
+              if (!shouldProceed) {
+                // Revert display
+                input.value = formatShortcutDisplay(ShortcutsManager.getShortcut(toolId) || '', isMac);
+                input.classList.remove('border-indigo-500', 'text-indigo-400');
+                input.blur();
+                return;
+              }
+            }
+
+            ShortcutsManager.setShortcut(toolId, combo);
+            // Re-render to update all inputs (show conflicts in real-time)
+            renderShortcutsList();
+          }
+        };
+
+        input.onkeyup = (e) => {
+          // If the user releases a modifier without pressing a main key, revert to saved
+          const key = e.key.toLowerCase();
+          if (['control', 'shift', 'alt', 'meta'].includes(key)) {
+            const currentSaved = ShortcutsManager.getShortcut(toolId);
+          }
+        };
+
+        input.onfocus = () => {
+          input.value = 'Press keys...';
+          input.classList.add('border-indigo-500', 'text-indigo-400');
+        };
+
+        input.onblur = () => {
+          input.value = formatShortcutDisplay(ShortcutsManager.getShortcut(toolId) || '', isMac);
+          input.classList.remove('border-indigo-500', 'text-indigo-400');
+        };
+
+        right.append(input);
+        if (currentShortcut) right.append(clearBtn);
+
+        item.append(left, right);
+        itemsContainer.appendChild(item);
+      });
+
+      if (hasTools) {
+        dom.shortcutsList.appendChild(section);
+      }
+    });
+
+    createIcons({ icons });
   }
 };
 

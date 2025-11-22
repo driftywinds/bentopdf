@@ -521,3 +521,63 @@ button:disabled,
 .btn:disabled {
   cursor: not-allowed;
 }
+
+/* Keyboard Shortcuts Styles */
+.shortcut-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.25rem;
+  font-size: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  line-height: 1;
+  color: #e5e7eb;
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 0 0 #1f2937;
+}
+
+.shortcut-input {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: 0.05em;
+}
+
+.shortcut-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Custom Scrollbar for Modal Content */
+#shortcuts-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#shortcuts-list::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+#shortcuts-list::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 3px;
+}
+
+#shortcuts-list::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+/* Hide elements on touch devices */
+@media (pointer: coarse) {
+  .hidden-on-touch {
+    display: none !important;
+  }
+}
+
+/* Also hide on very small screens just in case */
+@media (max-width: 640px) {
+  .hidden-on-touch {
+    display: none !important;
+  }
+}

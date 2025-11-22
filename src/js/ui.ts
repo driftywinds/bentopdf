@@ -24,6 +24,19 @@ export const dom = {
     toolsHeader: document.getElementById('tools-header'),
     dividers: document.querySelectorAll('.section-divider'),
     hideSections: document.querySelectorAll('.hide-section'),
+    shortcutsModal: document.getElementById('shortcuts-modal'),
+    closeShortcutsModalBtn: document.getElementById('close-shortcuts-modal'),
+    shortcutsList: document.getElementById('shortcuts-list'),
+    shortcutSearch: document.getElementById('shortcut-search'),
+    resetShortcutsBtn: document.getElementById('reset-shortcuts-btn'),
+    importShortcutsBtn: document.getElementById('import-shortcuts-btn'),
+    exportShortcutsBtn: document.getElementById('export-shortcuts-btn'),
+    openShortcutsBtn: document.getElementById('open-shortcuts-btn'),
+    warningModal: document.getElementById('warning-modal'),
+    warningTitle: document.getElementById('warning-title'),
+    warningMessage: document.getElementById('warning-message'),
+    warningCancelBtn: document.getElementById('warning-cancel-btn'),
+    warningConfirmBtn: document.getElementById('warning-confirm-btn'),
 };
 
 export const showLoader = (text = 'Processing...') => {
