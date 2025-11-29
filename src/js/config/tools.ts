@@ -13,7 +13,7 @@ export const categories = [
         id: 'merge',
         name: 'Merge PDF',
         icon: 'combine',
-        subtitle: 'Combine multiple PDFs into one file.',
+        subtitle: 'Combine multiple PDFs into one file. Preserves Bookmarks.',
       },
       {
         id: 'split',
@@ -310,7 +310,7 @@ export const categories = [
         id: 'alternate-merge',
         name: 'Alternate & Mix Pages',
         icon: 'shuffle',
-        subtitle: 'Combine PDFs by alternating pages from each.',
+        subtitle: 'Merge PDFs by alternating pages from each PDF. Preserves Bookmarks',
       },
       {
         id: 'organize',

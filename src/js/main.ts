@@ -80,6 +80,12 @@ const init = () => {
         supportSection.style.display = 'none';
       }
 
+      // Hide "Used by companies" section
+      const usedBySection = document.querySelector('.hide-section') as HTMLElement;
+      if (usedBySection) {
+        usedBySection.style.display = 'none';
+      }
+
       // Hide footer but keep copyright
       const footer = document.querySelector('footer');
       if (footer) {
@@ -291,17 +297,26 @@ const init = () => {
   console.log('Please share our tool and share the love!');
 
 
-  const githubStarsElement = document.getElementById('github-stars');
-  if (githubStarsElement && !__SIMPLE_MODE__) {
+  const githubStarsElements = [
+    document.getElementById('github-stars-desktop'),
+    document.getElementById('github-stars-mobile')
+  ];
+
+  if (githubStarsElements.some(el => el) && !__SIMPLE_MODE__) {
     fetch('https://api.github.com/repos/alam00000/bentopdf')
       .then((response) => response.json())
       .then((data) => {
         if (data.stargazers_count !== undefined) {
-          githubStarsElement.textContent = formatStars(data.stargazers_count);
+          const formattedStars = formatStars(data.stargazers_count);
+          githubStarsElements.forEach(el => {
+            if (el) el.textContent = formattedStars;
+          });
         }
       })
       .catch(() => {
-        githubStarsElement.textContent = '-';
+        githubStarsElements.forEach(el => {
+          if (el) el.textContent = '-';
+        });
       });
   }
 

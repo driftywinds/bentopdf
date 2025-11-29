@@ -9,7 +9,7 @@ export const singlePdfLoadTools = [
   'pdf-to-greyscale',
   'edit-metadata',
   'remove-metadata',
-  'flatten',
+
   'delete-pages',
   'add-blank-page',
   'extract-pages',
@@ -68,4 +68,5 @@ export const multiFileTools = [
   'txt-to-pdf',
   'compress',
   'extract-attachments',
+  'flatten',
 ];

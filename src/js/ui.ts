@@ -814,7 +814,7 @@ export const toolTemplates = {
     flatten: () => `
         <h2 class="text-2xl font-bold text-white mb-4">Flatten PDF</h2>
         <p class="mb-6 text-gray-400">Make PDF forms and annotations non-editable by flattening them.</p>
-        ${createFileInputHTML()}
+        ${createFileInputHTML({ multiple: true, showControls: true })}
         <div id="file-display-area" class="mt-4 space-y-2"></div>
         <button id="process-btn" class="hidden mt-6 btn-gradient w-full">Flatten PDF</button>
     `,

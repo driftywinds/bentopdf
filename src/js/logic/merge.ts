@@ -4,20 +4,22 @@ import { state } from '../state.ts';
 import { renderPagesProgressively, cleanupLazyRendering, createPlaceholder } from '../utils/render-utils.ts';
 
 import { createIcons, icons } from 'lucide';
-import { PDFDocument as PDFLibDocument } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
 import Sortable from 'sortablejs';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 
 const mergeState = {
-  pdfDocs: {},
+  pdfDocs: {} as Record<string, any>,
+  pdfBytes: {} as Record<string, ArrayBuffer>,
   activeMode: 'file',
   sortableInstances: {},
   isRendering: false,
   cachedThumbnails: null,
   lastFileHash: null,
 };
+
+const mergeWorker = new Worker('/workers/merge.worker.js');
 
 function parsePageRanges(rangeString: any, totalPages: any) {
   const indices = new Set();
@@ -128,13 +130,13 @@ async function renderPageMergeThumbnails() {
   mergeState.isRendering = true;
   container.textContent = '';
 
-  // Cleanup any previous lazy loading observers
   cleanupLazyRendering();
 
-  let totalPages = state.files.reduce((sum, file) => {
-    const pdfDoc = mergeState.pdfDocs[file.name];
-    return sum + (pdfDoc ? pdfDoc.getPageCount() : 0);
-  }, 0);
+  let totalPages = 0;
+  for (const file of state.files) {
+    const doc = mergeState.pdfDocs[file.name];
+    if (doc) totalPages += doc.numPages;
+  }
 
   try {
     let currentPageNumber = 0;
@@ -176,11 +178,8 @@ async function renderPageMergeThumbnails() {
 
     // Render pages from all files progressively
     for (const file of state.files) {
-      const pdfDoc = mergeState.pdfDocs[file.name];
-      if (!pdfDoc) continue;
-
-      const pdfData = await pdfDoc.save();
-      const pdfjsDoc = await getPDFDocument({ data: pdfData }).promise;
+      const pdfjsDoc = mergeState.pdfDocs[file.name];
+      if (!pdfjsDoc) continue;
 
       // Create a wrapper function that includes the file name
       const createWrapperWithFileName = (canvas: HTMLCanvasElement, pageNumber: number) => {
@@ -207,10 +206,6 @@ async function renderPageMergeThumbnails() {
           }
         }
       );
-
-      // TODO@ALAM - DON'T destroy the PDF.js document here - lazy loading still needs it!
-      // It will be garbage collected automatically when no longer referenced
-      // pdfjsDoc.destroy(); // REMOVED
     }
 
     mergeState.cachedThumbnails = true;
@@ -229,91 +224,159 @@ async function renderPageMergeThumbnails() {
 export async function merge() {
   showLoader('Merging PDFs...');
   try {
-    const newPdfDoc = await PDFLibDocument.create();
+    const jobs: any[] = [];
+    const filesToMerge: any[] = [];
+    const uniqueFileNames = new Set<string>();
 
     if (mergeState.activeMode === 'file') {
       const fileList = document.getElementById('file-list');
+      if (!fileList) throw new Error('File list not found');
+
       const sortedFiles = Array.from(fileList.children)
         .map((li) => {
-          // @ts-expect-error TS(2339) FIXME: Property 'dataset' does not exist on type 'Element... Remove this comment to see the full error message
+          // @ts-expect-error TS(2339) FIXME: Property 'dataset' does not exist on type 'Element...
           return state.files.find((f) => f.name === li.dataset.fileName);
         })
         .filter(Boolean);
 
       for (const file of sortedFiles) {
+        if (!file) continue;
         const safeFileName = file.name.replace(/[^a-zA-Z0-9]/g, '_');
-        const rangeInput = document.getElementById(`range-${safeFileName}`);
-        if (!rangeInput) continue;
+        const rangeInput = document.getElementById(`range-${safeFileName}`) as HTMLInputElement;
 
-        // @ts-expect-error TS(2339) FIXME: Property 'value' does not exist on type 'HTMLEleme... Remove this comment to see the full error message
-        const rangeInputValue = rangeInput.value;
-        const sourcePdf = mergeState.pdfDocs[file.name];
-        if (!sourcePdf) continue;
+        uniqueFileNames.add(file.name);
 
-        const totalPages = sourcePdf.getPageCount();
-        const pageIndices = parsePageRanges(rangeInputValue, totalPages);
-
-        const indicesToCopy =
-          pageIndices.length > 0 ? pageIndices : sourcePdf.getPageIndices();
-        const copiedPages = await newPdfDoc.copyPages(sourcePdf, indicesToCopy);
-        copiedPages.forEach((page: any) => newPdfDoc.addPage(page));
+        if (rangeInput && rangeInput.value.trim()) {
+          jobs.push({
+            fileName: file.name,
+            rangeType: 'specific',
+            rangeString: rangeInput.value.trim()
+          });
+        } else {
+          jobs.push({
+            fileName: file.name,
+            rangeType: 'all'
+          });
+        }
       }
     } else {
+      // Page Mode
       const pageContainer = document.getElementById('page-merge-preview');
+      if (!pageContainer) throw new Error('Page container not found');
       const pageElements = Array.from(pageContainer.children);
 
+      const rawPages: { fileName: string; pageIndex: number }[] = [];
       for (const el of pageElements) {
-        // @ts-expect-error TS(2339) FIXME: Property 'dataset' does not exist on type 'Element... Remove this comment to see the full error message
+        // @ts-expect-error TS(2339)
         const fileName = el.dataset.fileName;
-        // @ts-expect-error TS(2339) FIXME: Property 'dataset' does not exist on type 'Element... Remove this comment to see the full error message
-        const pageIndex = parseInt(el.dataset.pageIndex, 10);
+        // @ts-expect-error TS(2339)
+        const pageIndex = parseInt(el.dataset.pageIndex, 10); // 0-based index from dataset
 
-        const sourcePdf = mergeState.pdfDocs[fileName];
-        if (sourcePdf && !isNaN(pageIndex)) {
-          const [copiedPage] = await newPdfDoc.copyPages(sourcePdf, [
-            pageIndex,
-          ]);
-          newPdfDoc.addPage(copiedPage);
+        if (fileName && !isNaN(pageIndex)) {
+          uniqueFileNames.add(fileName);
+          rawPages.push({ fileName, pageIndex });
+        }
+      }
+
+      // Group contiguous pages
+      for (let i = 0; i < rawPages.length; i++) {
+        const current = rawPages[i];
+        let endPage = current.pageIndex;
+
+        while (
+          i + 1 < rawPages.length &&
+          rawPages[i + 1].fileName === current.fileName &&
+          rawPages[i + 1].pageIndex === endPage + 1
+        ) {
+          endPage++;
+          i++;
+        }
+
+        if (endPage === current.pageIndex) {
+          // Single page
+          jobs.push({
+            fileName: current.fileName,
+            rangeType: 'single',
+            pageIndex: current.pageIndex
+          });
+        } else {
+          // Range of pages
+          jobs.push({
+            fileName: current.fileName,
+            rangeType: 'range',
+            startPage: current.pageIndex + 1, 
+            endPage: endPage + 1 
+          });
         }
       }
     }
 
-    const mergedPdfBytes = await newPdfDoc.save();
-    downloadFile(
-      new Blob([new Uint8Array(mergedPdfBytes)], { type: 'application/pdf' }),
-      'merged.pdf'
-    );
-    showAlert('Success', 'PDFs merged successfully!');
+    if (jobs.length === 0) {
+      showAlert('Error', 'No files or pages selected to merge.');
+      hideLoader();
+      return;
+    }
+
+    for (const name of uniqueFileNames) {
+      const bytes = mergeState.pdfBytes[name];
+      if (bytes) {
+        filesToMerge.push({ name, data: bytes });
+      }
+    }
+
+    mergeWorker.postMessage({
+      command: 'merge',
+      files: filesToMerge,
+      jobs: jobs
+    }, filesToMerge.map(f => f.data)); 
+
+    mergeWorker.onmessage = (e) => {
+      hideLoader();
+      if (e.data.status === 'success') {
+        const blob = new Blob([e.data.pdfBytes], { type: 'application/pdf' });
+        downloadFile(blob, 'merged.pdf');
+        showAlert('Success', 'PDFs merged successfully!');
+      } else {
+        console.error('Worker merge error:', e.data.message);
+        showAlert('Error', e.data.message || 'Failed to merge PDFs.');
+      }
+    };
+
+    mergeWorker.onerror = (e) => {
+      hideLoader();
+      console.error('Worker error:', e);
+      showAlert('Error', 'An unexpected error occurred in the merge worker.');
+    };
+
   } catch (e) {
     console.error('Merge error:', e);
     showAlert(
       'Error',
       'Failed to merge PDFs. Please check that all files are valid and not password-protected.'
     );
-  } finally {
     hideLoader();
   }
 }
 
 export async function setupMergeTool() {
-  document.getElementById('merge-options').classList.remove('hidden');
-  // @ts-expect-error TS(2339) FIXME: Property 'disabled' does not exist on type 'HTMLEl... Remove this comment to see the full error message
-  document.getElementById('process-btn').disabled = false;
+  document.getElementById('merge-options')?.classList.remove('hidden');
+  const processBtn = document.getElementById('process-btn') as HTMLButtonElement;
+  if (processBtn) processBtn.disabled = false;
 
   const wasInPageMode = mergeState.activeMode === 'page';
 
   showLoader('Loading PDF documents...');
   try {
+    mergeState.pdfDocs = {};
+    mergeState.pdfBytes = {};
+
     for (const file of state.files) {
-      if (!mergeState.pdfDocs[file.name]) {
-        const pdfBytes = await readFileAsArrayBuffer(file);
-        mergeState.pdfDocs[file.name] = await PDFLibDocument.load(
-          pdfBytes as ArrayBuffer,
-          {
-            ignoreEncryption: true,
-          }
-        );
-      }
+      const pdfBytes = await readFileAsArrayBuffer(file);
+      mergeState.pdfBytes[file.name] = pdfBytes as ArrayBuffer;
+
+      const bytesForPdfJs = (pdfBytes as ArrayBuffer).slice(0);
+      const pdfjsDoc = await getPDFDocument({ data: bytesForPdfJs }).promise;
+      mergeState.pdfDocs[file.name] = pdfjsDoc;
     }
   } catch (error) {
     console.error('Error loading PDFs:', error);
@@ -329,10 +392,12 @@ export async function setupMergeTool() {
   const pagePanel = document.getElementById('page-mode-panel');
   const fileList = document.getElementById('file-list');
 
+  if (!fileModeBtn || !pageModeBtn || !filePanel || !pagePanel || !fileList) return;
+
   fileList.textContent = ''; // Clear list safely
   (state.files as File[]).forEach((f) => {
     const doc = mergeState.pdfDocs[f.name];
-    const pageCount = doc ? doc.getPageCount() : 'N/A';
+    const pageCount = doc ? doc.numPages : 'N/A';
     const safeFileName = f.name.replace(/[^a-zA-Z0-9]/g, '_');
 
     const li = document.createElement('li');
@@ -377,8 +442,8 @@ export async function setupMergeTool() {
 
   initializeFileListSortable();
 
-  const newFileModeBtn = fileModeBtn.cloneNode(true);
-  const newPageModeBtn = pageModeBtn.cloneNode(true);
+  const newFileModeBtn = fileModeBtn.cloneNode(true) as HTMLElement;
+  const newPageModeBtn = pageModeBtn.cloneNode(true) as HTMLElement;
   fileModeBtn.replaceWith(newFileModeBtn);
   pageModeBtn.replaceWith(newPageModeBtn);
 
@@ -389,13 +454,9 @@ export async function setupMergeTool() {
     filePanel.classList.remove('hidden');
     pagePanel.classList.add('hidden');
 
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newFileModeBtn.classList.add('bg-indigo-600', 'text-white');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newFileModeBtn.classList.remove('bg-gray-700', 'text-gray-300');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newPageModeBtn.classList.remove('bg-indigo-600', 'text-white');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newPageModeBtn.classList.add('bg-gray-700', 'text-gray-300');
   });
 
@@ -406,13 +467,9 @@ export async function setupMergeTool() {
     filePanel.classList.add('hidden');
     pagePanel.classList.remove('hidden');
 
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newPageModeBtn.classList.add('bg-indigo-600', 'text-white');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newPageModeBtn.classList.remove('bg-gray-700', 'text-gray-300');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newFileModeBtn.classList.remove('bg-indigo-600', 'text-white');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newFileModeBtn.classList.add('bg-gray-700', 'text-gray-300');
 
     await renderPageMergeThumbnails();
@@ -423,20 +480,14 @@ export async function setupMergeTool() {
     filePanel.classList.add('hidden');
     pagePanel.classList.remove('hidden');
 
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newPageModeBtn.classList.add('bg-indigo-600', 'text-white');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newPageModeBtn.classList.remove('bg-gray-700', 'text-gray-300');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newFileModeBtn.classList.remove('bg-indigo-600', 'text-white');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newFileModeBtn.classList.add('bg-gray-700', 'text-gray-300');
 
     await renderPageMergeThumbnails();
   } else {
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newFileModeBtn.classList.add('bg-indigo-600', 'text-white');
-    // @ts-expect-error TS(2339) FIXME: Property 'classList' does not exist on type 'Node'... Remove this comment to see the full error message
     newPageModeBtn.classList.add('bg-gray-700', 'text-gray-300');
   }
 }
