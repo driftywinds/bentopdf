@@ -1962,7 +1962,7 @@ downloadBtn.addEventListener('click', async () => {
 const backToToolsBtns = document.querySelectorAll('[id^="back-to-tools"]') as NodeListOf<HTMLButtonElement>
 backToToolsBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        window.location.href = '/'
+        window.location.href = import.meta.env.BASE_URL
     })
 })
 
