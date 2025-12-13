@@ -155,6 +155,7 @@ BentoPDF is available in multiple languages:
 |----------|--------|
 | English  | [![English](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/en/common.json) |
 | German   | [![German](https://img.shields.io/badge/In_Progress-yellow?style=flat-square)](public/locales/de/common.json) |
+| Vietnamese | [![Vietnamese](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/vi/common.json) |
 
 Want to help translate BentoPDF into your language? Check out our [Translation Guide](TRANSLATION.md)!
 

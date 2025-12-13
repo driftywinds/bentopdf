@@ -22,7 +22,7 @@
     },
     "features": {
         "title": "Warum",
-        "bentoPdf": "BentoPDF?",
+        "bentoPdf": "BentoPDF wählen?",
         "noSignup": {
             "title": "Keine Anmeldung",
             "description": "Sofort starten, keine Konten oder E-Mails erforderlich."
