@@ -86,7 +86,10 @@
     },
     "addStamps": {
         "name": "Thêm tem",
-        "subtitle": "Thêm tem hình ảnh vào PDF của bạn bằng thanh công cụ ghi chú."
+        "subtitle": "Thêm tem hình ảnh vào PDF của bạn bằng thanh công cụ ghi chú.",
+        "usernameLabel": "Tên người dùng tem",
+        "usernamePlaceholder": "Nhập tên của bạn (cho tem)",
+        "usernameHint": "Tên này sẽ xuất hiện trên các tem bạn tạo."
     },
     "removeAnnotations": {
         "name": "Xóa ghi chú",
@@ -277,4 +280,3 @@
         "subtitle": "Đặt hoặc thay đổi quyền người dùng trên PDF."
     }
 }
-

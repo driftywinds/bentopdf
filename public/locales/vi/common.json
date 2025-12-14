@@ -271,6 +271,48 @@
     "licensing": {
         "title": "Giấy phép cho",
         "subtitle": "Chọn giấy phép phù hợp với nhu cầu của bạn."
+    },
+    "multiTool": {
+        "uploadPdfs": "Tải lên PDF",
+        "upload": "Tải lên",
+        "addBlankPage": "Thêm trang trống",
+        "edit": "Chỉnh sửa:",
+        "undo": "Hoàn tác",
+        "redo": "Làm lại",
+        "reset": "Đặt lại",
+        "selection": "Chọn:",
+        "selectAll": "Chọn tất cả",
+        "deselectAll": "Bỏ chọn tất cả",
+        "rotate": "Xoay:",
+        "rotateLeft": "Trái",
+        "rotateRight": "Phải",
+        "transform": "Biến đổi:",
+        "duplicate": "Nhân bản",
+        "split": "Chia",
+        "clear": "Xóa:",
+        "delete": "Xóa",
+        "download": "Tải xuống:",
+        "downloadSelected": "Tải xuống đã chọn",
+        "exportPdf": "Xuất PDF",
+        "uploadPdfFiles": "Chọn tệp PDF",
+        "dragAndDrop": "Kéo và thả tệp PDF vào đây, hoặc nhấp để chọn",
+        "selectFiles": "Chọn tệp",
+        "renderingPages": "Đang kết xuất trang...",
+        "actions": {
+            "duplicatePage": "Nhân bản trang này",
+            "deletePage": "Xóa trang này",
+            "insertPdf": "Chèn PDF sau trang này",
+            "toggleSplit": "Bật/tắt chia sau trang này"
+        },
+        "pleaseWait": "Vui lòng đợi",
+        "pagesRendering": "Các trang vẫn đang được kết xuất. Vui lòng đợi...",
+        "noPagesSelected": "Chưa chọn trang nào",
+        "selectOnePage": "Vui lòng chọn ít nhất một trang để tải xuống.",
+        "noPages": "Không có trang",
+        "noPagesToExport": "Không có trang nào để xuất.",
+        "renderingTitle": "Đang kết xuất xem trước trang",
+        "errorRendering": "Không thể kết xuất hình thu nhỏ trang",
+        "error": "Lỗi",
+        "failedToLoad": "Không thể tải"
     }
 }
-

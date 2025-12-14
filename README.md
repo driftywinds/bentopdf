@@ -209,47 +209,19 @@ The easiest way to self-host is to download the pre-built distribution file from
 3. Extract the zip file
 4. Serve the extracted folder with your preferred web server
    
-**Navigate to the extracted Folder:**
+**Serve the extracted folder (requires Node.js):**
+
 ```bash
 # Navigate to the extracted folder
 cd dist-1.7.3  # Replace with your version
+
+# Start a local server
+npx http-server -c-1
 ```
 
-**Serve with Python:**
+The website will be accessible at: `http://localhost:8080/`
 
-```bash
-# For Python 3
-python -m http.server 8000
-```
-
-The website can be accessible at: ```http://[::1]:8000/```
-
-**Serve with Node.js:**
-
-```bash
-# Install a simple server
-npx serve .
-
-# Or if you have serve installed globally
-npm install -g serve
-serve .
-```
-
-The website can be accessible at: ```http://localhost:3000/```
-
-**Serve with other tools:**
-
-You can also use other static file servers like:
-- Go: `go run main.go` with a simple Go server
-- PHP: `php -S localhost:8000`
-- Ruby: `ruby -run -e httpd . -p 8000`
-
-The website can be accessible at:
-- Go: ```http://localhost:8080/``` (default) or as specified
-- PHP: ```http://localhost:8000/```
-- Ruby: ```http://localhost:8000/``` (default port can be changed)
-
-Simply serve the extracted folder using any static file server, and BentoPDF will work completely client-side without any server-side dependencies.
+> **Note:** The `-c-1` flag disables caching for development.
 
 **Build from Source (Advanced):**
 
@@ -269,10 +241,10 @@ npm run build
 # Package the distribution for hosting (optional)
 npm run package
 
-# Serve the dist folder
-npx serve dist
+# Preview the build locally
+npm run preview
 
-The website can be accessible at: http://localhost:3000/
+# The website will be accessible at: http://localhost:4173/
 
 ```
 
