@@ -23,11 +23,6 @@ import * as pdfjsLib from 'pdfjs-dist';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 
-const embedPdfWasmUrl = new URL(
-  'embedpdf-snippet/dist/pdfium.wasm',
-  import.meta.url
-).href;
-
 // Re-export rotation state utilities
 export { getRotationState, updateRotationState, resetRotationState, initializeRotationState } from '../utils/rotation-state.js';
 
@@ -826,40 +821,6 @@ export function setupFileInputHandler(toolId) {
           }
         };
       }
-    } else if (toolId === 'edit') {
-      const file = state.files[0];
-      if (!file) return;
-
-      const pdfWrapper = document.getElementById('embed-pdf-wrapper');
-      const pdfContainer = document.getElementById('embed-pdf-container');
-
-      if (!pdfContainer) return;
-
-      pdfContainer.textContent = ''; // Clear safely
-
-      if (state.currentPdfUrl) {
-        URL.revokeObjectURL(state.currentPdfUrl);
-      }
-      pdfWrapper.classList.remove('hidden');
-      const fileURL = URL.createObjectURL(file);
-      state.currentPdfUrl = fileURL;
-
-      const { default: EmbedPDF } = await import('embedpdf-snippet');
-      EmbedPDF.init({
-        type: 'container',
-        target: pdfContainer,
-        src: fileURL,
-        worker: true,
-        wasmUrl: embedPdfWasmUrl,
-      });
-
-      const backBtn = document.getElementById('back-to-grid');
-      const urlRevoker = () => {
-        URL.revokeObjectURL(fileURL);
-        state.currentPdfUrl = null;
-        backBtn.removeEventListener('click', urlRevoker);
-      };
-      backBtn.addEventListener('click', urlRevoker);
     }
   };
 
