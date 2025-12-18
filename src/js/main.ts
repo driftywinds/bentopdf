@@ -28,7 +28,7 @@ const init = async () => {
           <div class="container mx-auto px-4">
             <div class="flex justify-start items-center h-16">
               <div class="flex-shrink-0 flex items-center cursor-pointer" id="home-logo">
-                <img src="images/favicon.svg" alt="Bento PDF Logo" class="h-8 w-8">
+                <img src="/images/favicon.svg" alt="Bento PDF Logo" class="h-8 w-8">
                 <span class="text-white font-bold text-xl ml-2">
                   <a href="index.html">BentoPDF</a>
                 </span>
@@ -96,7 +96,7 @@ const init = async () => {
             <div class="flex items-center justify-between flex-wrap gap-4">
               <div>
                 <div class="flex items-center mb-2">
-                  <img src="images/favicon.svg" alt="Bento PDF Logo" class="h-8 w-8 mr-2">
+                  <img src="/images/favicon.svg" alt="Bento PDF Logo" class="h-8 w-8 mr-2">
                   <span class="text-white font-bold text-lg">BentoPDF</span>
                 </div>
                 <p class="text-gray-400 text-sm">
