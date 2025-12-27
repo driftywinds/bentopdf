@@ -196,7 +196,11 @@ Open your browser at: http://localhost:3000
 
 This is the fastest way to try BentoPDF without setting up a development environment.
 
-### 🏠 Self-Hosting
+### Static Hosting using Netlify, Vercel, and GitHub Pages
+
+It is very straightforward to host your own instance of BentoPDF using a static web page hosting service. Plus, services such as Netlify, Vercel, and GitHub Pages all offer a free tier for getting started.  See [Static Hosting](https://github.com/alam00000/bentopdf/blob/main/STATIC-HOSTING.md)) for details. 
+
+### 🏠 Self-Hosting Locally
 
 Since BentoPDF is fully client-side, all processing happens in the user's browser and no server-side processing is required. This means you can host BentoPDF as simple static files on any web server or hosting platform.
 
