@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="/images/favicon.svg" />
     <link rel="alternate" hreflang="en" href="/en/organize-pdf.html" />
     <link rel="alternate" hreflang="de" href="/de/organize-pdf.html" />
-	<link rel="alternate" hreflang="vi" href="/vi/organize-pdf.html" />
+    <link rel="alternate" hreflang="vi" href="/vi/organize-pdf.html" />
     <link rel="alternate" hreflang="x-default" href="/en/organize-pdf.html" />
     <link href="/src/css/styles.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -25,7 +25,7 @@
                 </div>
                 <div class="hidden md:flex items-center space-x-8 text-white">
                     <a href="/" class="nav-link" data-i18n="nav.home">Home</a>
-                    <a href="./about.html" class="nav-link">About</a>
+                    <a href="/about.html" class="nav-link">About</a>
                     <a href="/" class="nav-link" data-i18n="nav.allTools">All Tools</a>
                 </div>
             </div>
@@ -40,7 +40,8 @@
                 <i data-lucide="arrow-left" class="cursor-pointer"></i>
                 <span class="cursor-pointer">Back to Tools</span>
             </button>
-            <h1 class="text-2xl font-bold text-white mb-2" data-i18n="tools:duplicateOrganize.name">Duplicate and Organize PDF</h1>
+            <h1 class="text-2xl font-bold text-white mb-2" data-i18n="tools:duplicateOrganize.name">Duplicate and
+                Organize PDF</h1>
             <p class="text-gray-400 mb-6" data-i18n="tools:duplicateOrganize.subtitle">
                 Drag pages to reorder them. Use the <i data-lucide="copy-plus"
                     class="inline-block w-4 h-4 mx-1 align-text-bottom text-green-500"></i> icon to duplicate a page or
@@ -54,9 +55,12 @@
                 class="relative flex flex-col items-center justify-center w-full h-48 md:h-64 border-2 border-dashed border-gray-600 rounded-xl cursor-pointer bg-gray-900 hover:bg-gray-700 transition-colors duration-300">
                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                     <i data-lucide="upload-cloud" class="w-10 h-10 mb-3 text-gray-400"></i>
-                    <p class="mb-2 text-sm text-gray-400"><span class="font-semibold" data-i18n="upload.clickToSelect">Click to select a file</span> <span data-i18n="upload.orDragAndDrop">or drag and drop</span></p>
+                    <p class="mb-2 text-sm text-gray-400"><span class="font-semibold"
+                            data-i18n="upload.clickToSelect">Click to select a file</span> <span
+                            data-i18n="upload.orDragAndDrop">or drag and drop</span></p>
                     <p class="text-xs text-gray-500">PDF Documents</p>
-                    <p class="text-xs text-gray-500" data-i18n="upload.filesNeverLeave">Your files never leave your device.</p>
+                    <p class="text-xs text-gray-500" data-i18n="upload.filesNeverLeave">Your files never leave your
+                        device.</p>
                 </div>
                 <input id="file-input" type="file" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
                     accept="application/pdf">
@@ -74,15 +78,18 @@
     <div id="loader-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
         <div class="bg-gray-800 p-8 rounded-lg flex flex-col items-center gap-4 border border-gray-700 shadow-xl">
             <div class="solid-spinner"></div>
-            <p id="loader-text" class="text-white text-lg font-medium" data-i18n="loader.processing" data-i18n="loader.processing">Processing...</p>
+            <p id="loader-text" class="text-white text-lg font-medium" data-i18n="loader.processing"
+                data-i18n="loader.processing">Processing...</p>
         </div>
     </div>
     <div id="alert-modal" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-50 hidden">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 max-w-sm w-full border border-gray-700">
-            <h3 id="alert-title" class="text-xl font-bold text-white mb-2" data-i18n="alert.title" data-i18n="alert.title">Alert</h3>
+            <h3 id="alert-title" class="text-xl font-bold text-white mb-2" data-i18n="alert.title"
+                data-i18n="alert.title">Alert</h3>
             <p id="alert-message" class="text-gray-300 mb-6"></p>
             <button id="alert-ok"
-                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg" data-i18n="alert.ok" data-i18n="alert.ok">OK</button>
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg"
+                data-i18n="alert.ok" data-i18n="alert.ok">OK</button>
         </div>
     </div>
     <script type="module" src="/src/js/utils/lucide-init.ts"></script>
@@ -90,7 +97,7 @@
     <script type="module" src="/src/version.ts"></script>
     <script type="module" src="/src/js/logic/organize-pdf-page.ts"></script>
     <script type="module" src="/src/js/mobileMenu.ts"></script>
-  <script type="module" src="/src/js/main.ts"></script>
+    <script type="module" src="/src/js/main.ts"></script>
 </body>
 
 </html>

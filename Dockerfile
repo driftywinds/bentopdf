@@ -14,6 +14,8 @@ COPY . .
 # Pass SIMPLE_MODE environment variable if provided
 ARG SIMPLE_MODE=false
 ENV SIMPLE_MODE=$SIMPLE_MODE
+ARG COMPRESSION_MODE=all
+ENV COMPRESSION_MODE=$COMPRESSION_MODE
 
 # global arg to local arg
 ARG BASE_URL
