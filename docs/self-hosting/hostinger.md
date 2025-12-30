@@ -142,9 +142,9 @@ AddType image/webp .webp
 # ============================================
 # 5. REDIRECTS & ROUTING
 # ============================================
-# Canonical WWW (update domain name)
-RewriteCond %{HTTP_HOST} ^yourdomain\.com [NC]
-RewriteRule ^(.*)$ https://www.yourdomain.com/$1 [L,R=301]
+# Canonical WWW
+RewriteCond %{HTTP_HOST} ^bentopdf\.com [NC]
+RewriteRule ^(.*)$ https://www.bentopdf.com/$1 [L,R=301]
 
 # Force HTTPS
 RewriteCond %{HTTPS} off
@@ -161,15 +161,27 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 # Language routes
-RewriteRule ^(de|en)$ /$1/ [R=301,L]
 RewriteRule ^(de|en|zh|vi)/(.*)$ /$2 [L]
+RewriteRule ^(de|en|zh|vi)/?$ / [L]
 
-# SPA Fallback
+# ============================================
+# 5.5. DOCS ROUTING (VitePress)
+# ============================================
+RewriteCond %{REQUEST_URI} ^/docs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# ============================================
+# 6. SPA FALLBACK
+# ============================================
+# SPA Fallback (exclude /docs)
+RewriteCond %{REQUEST_URI} !^/docs
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ /index.html [L]
 
-ErrorDocument 404 /index.html
+ErrorDocument 404 /index.html 
 ```
 
 ## Subdirectory .htaccess Example

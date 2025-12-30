@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
     title: "BentoPDF Docs",
     description: "Documentation for BentoPDF - The free, open-source, privacy-first PDF toolkit",
+    base: '/docs/',
 
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
@@ -58,7 +59,7 @@ export default defineConfig({
         },
 
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/bentopdf/bentopdf' },
+            { icon: 'github', link: 'https://github.com/alam00000/bentopdf' },
             { icon: 'discord', link: 'https://discord.gg/Bgq3Ay3f2w' }
         ],
 

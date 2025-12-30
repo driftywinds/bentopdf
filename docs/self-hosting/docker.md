@@ -7,9 +7,9 @@ The easiest way to self-host BentoPDF in a production environment.
 ```bash
 docker run -d \
   --name bentopdf \
-  -p 3000:80 \
+  -p 3000:8080 \
   --restart unless-stopped \
-  ghcr.io/bentopdf/bentopdf:latest
+  ghcr.io/alam00000/bentopdf:latest
 ```
 
 ## Docker Compose
@@ -17,17 +17,15 @@ docker run -d \
 Create `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
-
 services:
   bentopdf:
-    image: ghcr.io/bentopdf/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf:latest
     container_name: bentopdf
     ports:
-      - "3000:80"
+      - "3000:8080"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -50,10 +48,10 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
-EXPOSE 80
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
@@ -61,7 +59,7 @@ Build and run:
 
 ```bash
 docker build -t bentopdf:custom .
-docker run -d -p 3000:80 bentopdf:custom
+docker run -d -p 3000:8080 bentopdf:custom
 ```
 
 ## Environment Variables
@@ -76,15 +74,13 @@ Example:
 ```bash
 docker run -d \
   -e SIMPLE_MODE=true \
-  -p 3000:80 \
-  ghcr.io/bentopdf/bentopdf:latest
+  -p 3000:8080 \
+  ghcr.io/alam00000/bentopdf:latest
 ```
 
 ## With Traefik (Reverse Proxy)
 
 ```yaml
-version: '3.8'
-
 services:
   traefik:
     image: traefik:v2.10
@@ -103,20 +99,19 @@ services:
       - ./letsencrypt:/letsencrypt
 
   bentopdf:
-    image: ghcr.io/bentopdf/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bentopdf.rule=Host(`pdf.example.com`)"
       - "traefik.http.routers.bentopdf.entrypoints=websecure"
       - "traefik.http.routers.bentopdf.tls.certresolver=letsencrypt"
+      - "traefik.http.services.bentopdf.loadbalancer.server.port=8080"
     restart: unless-stopped
 ```
 
 ## With Caddy (Reverse Proxy)
 
 ```yaml
-version: '3.8'
-
 services:
   caddy:
     image: caddy:2
@@ -128,7 +123,7 @@ services:
       - caddy_data:/data
     
   bentopdf:
-    image: ghcr.io/bentopdf/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf:latest
     restart: unless-stopped
 
 volumes:
@@ -139,7 +134,7 @@ Caddyfile:
 
 ```
 pdf.example.com {
-    reverse_proxy bentopdf:80
+    reverse_proxy bentopdf:8080
 }
 ```
 
@@ -148,7 +143,7 @@ pdf.example.com {
 ```yaml
 services:
   bentopdf:
-    image: ghcr.io/bentopdf/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf:latest
     deploy:
       resources:
         limits:

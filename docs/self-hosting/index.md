@@ -7,19 +7,18 @@ BentoPDF can be self-hosted on your own infrastructure. This guide covers variou
 The fastest way to self-host BentoPDF:
 
 ```bash
-docker run -d -p 3000:80 ghcr.io/bentopdf/bentopdf:latest
+docker run -d -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
 ```
 
 Or with Docker Compose:
 
 ```yaml
 # docker-compose.yml
-version: '3.8'
 services:
   bentopdf:
-    image: ghcr.io/bentopdf/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf:latest
     ports:
-      - "3000:80"
+      - "3000:8080"
     restart: unless-stopped
 ```
 
@@ -31,7 +30,7 @@ docker compose up -d
 
 ```bash
 # Clone and build
-git clone https://github.com/bentopdf/bentopdf.git
+git clone https://github.com/alam00000/bentopdf.git
 cd bentopdf
 npm install
 npm run build
@@ -60,7 +59,7 @@ SIMPLE_MODE=true npm run build
 docker run -p 3000:8080 bentopdf/bentopdf-simple:latest
 ```
 
-See [SIMPLE_MODE.md](https://github.com/bentopdf/bentopdf/blob/main/SIMPLE_MODE.md) for full details.
+See [SIMPLE_MODE.md](https://github.com/alam00000/bentopdf/blob/main/SIMPLE_MODE.md) for full details.
 
 ### Base URL
 

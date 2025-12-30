@@ -4,13 +4,13 @@
 
 ## One-Click Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/bentopdf/bentopdf)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/alam00000/bentopdf)
 
 ## Manual Deployment
 
 ### Step 1: Fork the Repository
 
-Fork [bentopdf/bentopdf](https://github.com/bentopdf/bentopdf) to your GitHub account.
+Fork [bentopdf/bentopdf](https://github.com/alam00000/bentopdf) to your GitHub account.
 
 ### Step 2: Import to Vercel
 
