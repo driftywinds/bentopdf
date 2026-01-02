@@ -308,6 +308,23 @@ docker build --build-arg COMPRESSION_MODE=all -t bentopdf:all .
 | `o` | originals | Development or custom compression |
 | `all` | all formats | Maximum compatibility (default) |
 
+**CDN Optimization:**
+
+BentoPDF can use jsDelivr CDN to serve large WASM files (LibreOffice, Ghostscript, PyMuPDF) for improved performance and reduced bandwidth costs:
+
+```bash
+# Production build with CDN (Recommended)
+VITE_USE_CDN=true npm run build
+
+# Standard build with local files only
+npm run build
+```
+
+**How it works:**
+- When `VITE_USE_CDN=true`: Browser loads WASM files from jsDelivr CDN (fast, global delivery)
+- Local files are **always included** as automatic fallback
+- If CDN fails then it falls back to local files
+
 **Subdirectory Hosting:**
 
 BentoPDF can also be hosted from a subdirectory (e.g., `example.com/tools/bentopdf/`):

@@ -5,6 +5,7 @@
  */
 
 import loadWASM from '@bentopdf/gs-wasm';
+import { getWasmBaseUrl, fetchWasmFile } from '../config/wasm-cdn-config.js';
 
 interface GhostscriptModule {
   FS: {
@@ -32,35 +33,35 @@ export function getCachedGsModule(): GhostscriptModule | null {
  * Encode binary data to Adobe ASCII85 (Base85) format.
  * This matches Python's base64.a85encode(data, adobe=True)
  */
-function encodeBase85(data: Uint8Array): string {
-  const POW85 = [85 * 85 * 85 * 85, 85 * 85 * 85, 85 * 85, 85, 1];
-  let result = '';
+// function encodeBase85(data: Uint8Array): string {
+//   const POW85 = [85 * 85 * 85 * 85, 85 * 85 * 85, 85 * 85, 85, 1];
+//   let result = '';
 
-  // Process 4 bytes at a time
-  for (let i = 0; i < data.length; i += 4) {
-    // Get 4 bytes (pad with zeros if needed)
-    let value = 0;
-    const remaining = Math.min(4, data.length - i);
-    for (let j = 0; j < 4; j++) {
-      value = value * 256 + (j < remaining ? data[i + j] : 0);
-    }
+//   // Process 4 bytes at a time
+//   for (let i = 0; i < data.length; i += 4) {
+//     // Get 4 bytes (pad with zeros if needed)
+//     let value = 0;
+//     const remaining = Math.min(4, data.length - i);
+//     for (let j = 0; j < 4; j++) {
+//       value = value * 256 + (j < remaining ? data[i + j] : 0);
+//     }
 
-    // Special case: all zeros become 'z'
-    if (value === 0 && remaining === 4) {
-      result += 'z';
-    } else {
-      // Encode to 5 ASCII85 characters
-      const encoded: string[] = [];
-      for (let j = 0; j < 5; j++) {
-        encoded.push(String.fromCharCode((value / POW85[j]) % 85 + 33));
-      }
-      // For partial blocks, only output needed characters
-      result += encoded.slice(0, remaining + 1).join('');
-    }
-  }
+//     // Special case: all zeros become 'z'
+//     if (value === 0 && remaining === 4) {
+//       result += 'z';
+//     } else {
+//       // Encode to 5 ASCII85 characters
+//       const encoded: string[] = [];
+//       for (let j = 0; j < 5; j++) {
+//         encoded.push(String.fromCharCode((value / POW85[j]) % 85 + 33));
+//       }
+//       // For partial blocks, only output needed characters
+//       result += encoded.slice(0, remaining + 1).join('');
+//     }
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
 export async function convertToPdfA(
   pdfData: Uint8Array,
@@ -74,10 +75,11 @@ export async function convertToPdfA(
   if (cachedGsModule) {
     gs = cachedGsModule;
   } else {
+    const gsBaseUrl = getWasmBaseUrl('ghostscript');
     gs = await loadWASM({
       locateFile: (path: string) => {
         if (path.endsWith('.wasm')) {
-          return import.meta.env.BASE_URL + 'ghostscript-wasm/gs.wasm';
+          return gsBaseUrl + 'gs.wasm';
         }
         return path;
       },
@@ -104,9 +106,7 @@ export async function convertToPdfA(
   const pdfaDefPath = '/tmp/pdfa.ps';
 
   try {
-    const response = await fetch(import.meta.env.BASE_URL + 'ghostscript-wasm/sRGB_v4_ICC_preference.icc');
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
+    const response = await fetchWasmFile('ghostscript', 'sRGB_v4_ICC_preference.icc');
     const iccData = new Uint8Array(await response.arrayBuffer());
     console.log('[Ghostscript] sRGB v4 ICC profile loaded:', iccData.length, 'bytes');
 

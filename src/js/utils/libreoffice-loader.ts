@@ -6,6 +6,7 @@
  */
 
 import { WorkerBrowserConverter } from '@matbee/libreoffice-converter/browser';
+import { getWasmBaseUrl } from '../config/wasm-cdn-config.js';
 
 export interface LoadProgress {
     phase: 'loading' | 'initializing' | 'converting' | 'complete' | 'ready';
@@ -24,8 +25,9 @@ export class LibreOfficeConverter {
     private initializing = false;
     private basePath: string;
 
-    constructor(basePath: string = import.meta.env.BASE_URL + 'libreoffice-wasm/') {
-        this.basePath = basePath;
+    constructor(basePath?: string) {
+        // Use CDN if available, otherwise use provided basePath or default local path
+        this.basePath = basePath || getWasmBaseUrl('libreoffice');
     }
 
     async initialize(onProgress?: ProgressCallback): Promise<void> {
