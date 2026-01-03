@@ -1,7 +1,7 @@
 {
   "name": "bento-pdf",
   "private": true,
-  "version": "1.15.3",
+  "version": "1.15.4",
   "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@bentopdf/gs-wasm": "^0.1.0",
-    "@bentopdf/pymupdf-wasm": "^0.1.9",
+    "@bentopdf/pymupdf-wasm": "^0.1.10",
     "@fontsource/cedarville-cursive": "^5.2.7",
     "@fontsource/dancing-script": "^5.2.8",
     "@fontsource/dm-sans": "^5.2.8",

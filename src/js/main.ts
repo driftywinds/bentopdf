@@ -102,7 +102,7 @@ const init = async () => {
                   <span class="text-white font-bold text-lg">BentoPDF</span>
                 </div>
                 <p class="text-gray-400 text-sm">
-                  &copy; 2025 BentoPDF. All rights reserved.
+                  &copy; 2026 BentoPDF. All rights reserved.
                 </p>
                 <p class="text-gray-500 text-xs mt-2">
                   Version <span id="app-version-simple">${APP_VERSION}</span>
@@ -321,70 +321,6 @@ const init = async () => {
     const searchBar = document.getElementById('search-bar');
     const categoryGroups = dom.toolGrid.querySelectorAll('.category-group');
 
-    const fuzzyMatchWithScore = (searchTerm: string, targetText: string): number => {
-      if (!searchTerm) return 100;
-
-      const search = searchTerm.toLowerCase();
-      const target = targetText.toLowerCase();
-
-      if (target === search) return 100;
-
-      if (target.includes(search)) {
-        if (target.startsWith(search)) return 95;
-        if (target.includes(' ' + search)) return 90;
-        return 85;
-      }
-
-      const words = target.split(/\s+/);
-      const searchWords = search.split(/\s+/);
-
-      let wordBoundaryScore = 0;
-      let matchedWords = 0;
-
-      for (const searchWord of searchWords) {
-        for (const targetWord of words) {
-          if (targetWord.startsWith(searchWord)) {
-            matchedWords++;
-            wordBoundaryScore += 20;
-            break;
-          }
-        }
-      }
-
-      if (matchedWords === searchWords.length) {
-        return Math.min(80, wordBoundaryScore);
-      }
-
-      let searchIndex = 0;
-      let targetIndex = 0;
-      let consecutiveMatches = 0;
-      let maxConsecutive = 0;
-      let totalMatches = 0;
-
-      while (searchIndex < search.length && targetIndex < target.length) {
-        if (search[searchIndex] === target[targetIndex]) {
-          searchIndex++;
-          totalMatches++;
-          consecutiveMatches++;
-          maxConsecutive = Math.max(maxConsecutive, consecutiveMatches);
-        } else {
-          consecutiveMatches = 0;
-        }
-        targetIndex++;
-      }
-
-      if (searchIndex !== search.length) return 0;
-      const matchRatio = totalMatches / search.length;
-      const consecutiveBonus = (maxConsecutive / search.length) * 20;
-      const lengthPenalty = Math.max(0, (target.length - search.length) / target.length) * 10;
-
-      const score = Math.max(0, Math.min(75,
-        (matchRatio * 50) + consecutiveBonus - lengthPenalty
-      ));
-
-      return score;
-    };
-
     searchBar.addEventListener('input', () => {
       // @ts-expect-error TS(2339) FIXME: Property 'value' does not exist on type 'HTMLEleme... Remove this comment to see the full error message
       const searchTerm = searchBar.value.toLowerCase().trim();
@@ -392,35 +328,22 @@ const init = async () => {
       categoryGroups.forEach((group) => {
         const toolCards = Array.from(group.querySelectorAll('.tool-card'));
 
-        const scoredCards = toolCards.map((card) => {
-          const toolName = card.querySelector('h3')?.textContent || '';
-          const toolSubtitle = card.querySelector('p')?.textContent || '';
-
-          const nameScore = fuzzyMatchWithScore(searchTerm, toolName);
-          const subtitleScore = fuzzyMatchWithScore(searchTerm, toolSubtitle);
-
-          const score = Math.max(nameScore, subtitleScore) +
-            (nameScore > 0 && subtitleScore > 0 ? 5 : 0);
-
-          return { card, score };
-        });
-
-        scoredCards.sort((a, b) => b.score - a.score);
-
         let visibleToolsInCategory = 0;
-        const threshold = 10;
 
-        scoredCards.forEach(({ card, score }, index) => {
-          const isMatch = score >= threshold;
-          card.classList.toggle('hidden', !isMatch);
+        toolCards.forEach((card) => {
+          const toolName = (card.querySelector('h3')?.textContent || '').toLowerCase();
+          const toolSubtitle = (card.querySelector('p')?.textContent || '').toLowerCase();
+
+          const isMatch = !searchTerm || toolName.includes(searchTerm) || toolSubtitle.includes(searchTerm);
+
+          (card as HTMLElement).style.display = isMatch ? '' : 'none';
 
           if (isMatch) {
             visibleToolsInCategory++;
-            (card as HTMLElement).style.order = index.toString();
           }
         });
 
-        group.classList.toggle('hidden', visibleToolsInCategory === 0);
+        (group as HTMLElement).style.display = visibleToolsInCategory === 0 ? 'none' : '';
       });
     });
 
