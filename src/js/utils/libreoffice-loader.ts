@@ -6,7 +6,7 @@
  */
 
 import { WorkerBrowserConverter } from '@matbee/libreoffice-converter/browser';
-import { getWasmBaseUrl } from '../config/wasm-cdn-config.js';
+import { getWasmBaseUrl, getWasmFallbackUrl, isCdnEnabled } from '../config/wasm-cdn-config.js';
 
 export interface LoadProgress {
     phase: 'loading' | 'initializing' | 'converting' | 'complete' | 'ready';
@@ -24,10 +24,12 @@ export class LibreOfficeConverter {
     private initialized = false;
     private initializing = false;
     private basePath: string;
+    private localPath: string;
 
     constructor(basePath?: string) {
         // Use CDN if available, otherwise use provided basePath or default local path
         this.basePath = basePath || getWasmBaseUrl('libreoffice');
+        this.localPath = getWasmFallbackUrl('libreoffice');
     }
 
     async initialize(onProgress?: ProgressCallback): Promise<void> {
@@ -47,12 +49,14 @@ export class LibreOfficeConverter {
         try {
             progressCallback?.({ phase: 'loading', percent: 0, message: 'Loading conversion engine...' });
 
+            const workerPath = isCdnEnabled() ? this.localPath : this.basePath;
+
             this.converter = new WorkerBrowserConverter({
                 sofficeJs: `${this.basePath}soffice.js`,
                 sofficeWasm: `${this.basePath}soffice.wasm.gz`,
                 sofficeData: `${this.basePath}soffice.data.gz`,
-                sofficeWorkerJs: `${this.basePath}soffice.worker.js`,
-                browserWorkerJs: `${this.basePath}browser.worker.global.js`,
+                sofficeWorkerJs: `${workerPath}soffice.worker.js`,
+                browserWorkerJs: `${workerPath}browser.worker.global.js`,
                 verbose: false,
                 onProgress: (info: { phase: string; percent: number; message: string }) => {
                     if (progressCallback && !this.initialized) {

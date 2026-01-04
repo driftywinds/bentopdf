@@ -8,7 +8,7 @@ export default defineConfig({
 
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
-        logo: '/images/favicon.svg',
+        logo: '/images/favicon-no-bg.svg',
 
         nav: [
             { text: 'Home', link: '/' },
