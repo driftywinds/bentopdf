@@ -726,6 +726,12 @@ export const categories = [
         icon: 'ph-certificate',
         subtitle: 'Add a cryptographic digital signature using X.509 certificates.',
       },
+      {
+        href: import.meta.env.BASE_URL + 'validate-signature-pdf.html',
+        name: 'Validate Signature',
+        icon: 'ph-seal-check',
+        subtitle: 'Verify digital signatures and view certificate details.',
+      },
     ],
   },
 ];

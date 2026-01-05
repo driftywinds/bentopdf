@@ -111,6 +111,64 @@ export function parseCombinedPem(pemContent: string, password?: string): Certifi
     return parsePemFiles(certMatch[0], keyMatch[0], password);
 }
 
+/**
+ * CORS Proxy URL for fetching external certificates.
+ * The zgapdfsigner library tries to fetch issuer certificates from external URLs,
+ * but those servers often don't have CORS headers. This proxy adds the necessary
+ * CORS headers to allow the requests from the browser.
+ * 
+ * If you are self-hosting, you MUST deploy your own proxy using cloudflare/cors-proxy-worker.js or any other way of your choice
+ * and set VITE_CORS_PROXY_URL environment variable.
+ * 
+ * If not set, certificates requiring external chain fetching will fail.
+ */
+const CORS_PROXY_URL = import.meta.env.VITE_CORS_PROXY_URL || '';
+
+/**
+ * Custom fetch wrapper that routes external certificate requests through a CORS proxy.
+ * The zgapdfsigner library tries to fetch issuer certificates from URLs embedded in the
+ * certificate's AIA extension. When those servers don't have CORS enabled (like www.cert.fnmt.es),
+ * the fetch fails. This wrapper routes such requests through our CORS proxy.
+ */
+function createCorsAwareFetch(): {
+    wrappedFetch: typeof fetch;
+    restore: () => void;
+} {
+    const originalFetch = window.fetch.bind(window);
+
+    const wrappedFetch: typeof fetch = async (input, init) => {
+        const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+
+        const isExternalCertificateUrl = (
+            url.includes('.crt') ||
+            url.includes('.cer') ||
+            url.includes('.pem') ||
+            url.includes('/certs/') ||
+            url.includes('/ocsp') ||
+            url.includes('/crl') ||
+            url.includes('caIssuers')
+        ) && !url.startsWith(window.location.origin);
+
+        if (isExternalCertificateUrl && CORS_PROXY_URL) {
+            const proxyUrl = `${CORS_PROXY_URL}?url=${encodeURIComponent(url)}`;
+            console.log(`[CORS Proxy] Routing certificate request through proxy: ${url}`);
+            return originalFetch(proxyUrl, init);
+        }
+
+        return originalFetch(input, init);
+    };
+
+    window.fetch = wrappedFetch;
+
+    return {
+        wrappedFetch,
+        restore: () => {
+            window.fetch = originalFetch;
+        }
+    };
+}
+
+
 export async function signPdf(
     pdfBytes: Uint8Array,
     certificateData: CertificateData,
@@ -169,9 +227,15 @@ export async function signPdf(
     }
 
     const signer = new PdfSigner(signOptions);
-    const signedPdfBytes = await signer.sign(pdfBytes);
 
-    return new Uint8Array(signedPdfBytes);
+    const { restore } = createCorsAwareFetch();
+
+    try {
+        const signedPdfBytes = await signer.sign(pdfBytes);
+        return new Uint8Array(signedPdfBytes);
+    } finally {
+        restore();
+    }
 }
 
 export function getCertificateInfo(certificate: forge.pki.Certificate): {

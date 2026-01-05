@@ -507,5 +507,10 @@
         "contactPlaceholder": "例如：email@example.com",
         "applySignature": "应用数字签名",
         "successMessage": "PDF 签名成功！签名可在任何 PDF 阅读器中验证。"
+    },
+    "validateSignaturePdf": {
+        "name": "验证 PDF 签名",
+        "pageTitle": "验证 PDF 签名 - 验证数字签名 | BentoPDF",
+        "subtitle": "验证您的 PDF 文件中的数字签名。检查证书有效性、查看签名者详情并确认文档完整性。所有处理都在您的浏览器中进行。"
     }
 }
