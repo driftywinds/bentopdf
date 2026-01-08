@@ -1,20 +1,12 @@
 import { categories } from './config/tools.js';
-import {
-  dom,
-  switchView,
-  hideAlert,
-  showLoader,
-  hideLoader,
-  showAlert,
-} from './ui.js';
-import { state, resetState } from './state.js';
+import { dom, switchView, hideAlert } from './ui.js';
 import { ShortcutsManager } from './logic/shortcuts.js';
 import { createIcons, icons } from 'lucide';
 import '@phosphor-icons/web/regular';
 import * as pdfjsLib from 'pdfjs-dist';
 import '../css/styles.css';
 import { formatShortcutDisplay, formatStars } from './utils/helpers.js';
-import { APP_VERSION, injectVersion } from '../version.js';
+import { APP_VERSION } from '../version.js';
 import {
   initI18n,
   applyTranslations,

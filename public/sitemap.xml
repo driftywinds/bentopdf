@@ -460,6 +460,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.bentopdf.com/digital-sign-pdf</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.bentopdf.com/validate-signature-pdf</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.bentopdf.com/sanitize-pdf</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>monthly</changefreq>
