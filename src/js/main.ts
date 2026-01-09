@@ -270,6 +270,7 @@ const init = async () => {
     'Flatten PDF': 'tools:flattenPdf',
     'Remove Metadata': 'tools:removeMetadata',
     'Change Permissions': 'tools:changePermissions',
+    'Email to PDF': 'tools:emailToPdf',
   };
 
   // Homepage-only tool grid rendering (not used on individual tool pages)

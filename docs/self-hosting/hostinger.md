@@ -40,7 +40,6 @@ BASE_URL=/pdf-tools/ npm run build
 2. Create the folder in Hostinger:
    - Go to **File Manager** → **public_html**
    - Create a new folder: `pdf-tools`
-   
 3. Upload all contents of `dist` to `public_html/pdf-tools/`
 
 ## Step 3: Create .htaccess File
@@ -64,7 +63,7 @@ RewriteBase /
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-    
+
     # REQUIRED for soffice.js (SharedArrayBuffer)
     Header always set Cross-Origin-Opener-Policy "same-origin"
     Header always set Cross-Origin-Embedder-Policy "require-corp"
@@ -161,8 +160,8 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 # Language routes
-RewriteRule ^(de|en|zh|vi)/(.*)$ /$2 [L]
-RewriteRule ^(de|en|zh|vi)/?$ / [L]
+RewriteRule ^(en|de|zh|vi|it|id)/(.*)$ /$2 [L]
+RewriteRule ^(en|de|zh|vi|it|id)/?$ / [L]
 
 # ============================================
 # 5.5. DOCS ROUTING (VitePress)
@@ -181,7 +180,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ /index.html [L]
 
-ErrorDocument 404 /index.html 
+ErrorDocument 404 /index.html
 ```
 
 ## Subdirectory .htaccess Example

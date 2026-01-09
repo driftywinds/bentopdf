@@ -2,8 +2,7 @@ import createModule from '@neslinesli93/qpdf-wasm';
 import { showLoader, hideLoader, showAlert } from '../ui.js';
 import { createIcons } from 'lucide';
 import { state, resetState } from '../state.js';
-import * as pdfjsLib from 'pdfjs-dist'
-
+import * as pdfjsLib from 'pdfjs-dist';
 
 const STANDARD_SIZES = {
   A4: { width: 595.28, height: 841.89 },
@@ -50,14 +49,14 @@ export function convertPoints(points: any, unit: any) {
 
 // Convert hex color to RGB
 export function hexToRgb(hex: string): { r: number; g: number; b: number } {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-      r: parseInt(result[1], 16) / 255,
-      g: parseInt(result[2], 16) / 255,
-      b: parseInt(result[3], 16) / 255,
-    }
-    : { r: 0, g: 0, b: 0 }
+        r: parseInt(result[1], 16) / 255,
+        g: parseInt(result[2], 16) / 255,
+        b: parseInt(result[3], 16) / 255,
+      }
+    : { r: 0, g: 0, b: 0 };
 }
 
 export const formatBytes = (bytes: any, decimals = 1) => {
@@ -89,7 +88,10 @@ export const readFileAsArrayBuffer = (file: any) => {
   });
 };
 
-export function parsePageRanges(rangeString: string, totalPages: number): number[] {
+export function parsePageRanges(
+  rangeString: string,
+  totalPages: number
+): number[] {
   if (!rangeString || rangeString.trim() === '') {
     return Array.from({ length: totalPages }, (_, i) => i);
   }
@@ -128,10 +130,8 @@ export function parsePageRanges(rangeString: string, totalPages: number): number
     }
   }
 
-
   return Array.from(indices).sort((a, b) => a - b);
 }
-
 
 /**
  * Formats an ISO 8601 date string (e.g., "2008-02-21T17:15:56-08:00")
@@ -198,7 +198,7 @@ export function formatStars(num: number) {
     return (num / 1000).toFixed(1) + 'K';
   }
   return num.toLocaleString();
-};
+}
 
 /**
  * Truncates a filename to a maximum length, adding ellipsis if needed.
@@ -207,14 +207,18 @@ export function formatStars(num: number) {
  * @param maxLength - Maximum length (default: 30)
  * @returns Truncated filename with ellipsis if needed
  */
-export function truncateFilename(filename: string, maxLength: number = 25): string {
+export function truncateFilename(
+  filename: string,
+  maxLength: number = 25
+): string {
   if (filename.length <= maxLength) {
     return filename;
   }
 
   const lastDotIndex = filename.lastIndexOf('.');
   const extension = lastDotIndex !== -1 ? filename.substring(lastDotIndex) : '';
-  const nameWithoutExt = lastDotIndex !== -1 ? filename.substring(0, lastDotIndex) : filename;
+  const nameWithoutExt =
+    lastDotIndex !== -1 ? filename.substring(0, lastDotIndex) : filename;
 
   const availableLength = maxLength - extension.length - 3; // 3 for '...'
 
@@ -225,7 +229,10 @@ export function truncateFilename(filename: string, maxLength: number = 25): stri
   return nameWithoutExt.substring(0, availableLength) + '...' + extension;
 }
 
-export function formatShortcutDisplay(shortcut: string, isMac: boolean): string {
+export function formatShortcutDisplay(
+  shortcut: string,
+  isMac: boolean
+): string {
   if (!shortcut) return '';
   return shortcut
     .replace('mod', isMac ? '⌘' : 'Ctrl')
@@ -233,7 +240,7 @@ export function formatShortcutDisplay(shortcut: string, isMac: boolean): string 
     .replace('alt', isMac ? '⌥' : 'Alt')
     .replace('shift', 'Shift')
     .split('+')
-    .map(k => k.charAt(0).toUpperCase() + k.slice(1))
+    .map((k) => k.charAt(0).toUpperCase() + k.slice(1))
     .join(isMac ? '' : '+');
 }
 
@@ -263,7 +270,7 @@ export function resetAndReloadTool(preResetCallback?: () => void) {
 export function getPDFDocument(src: any) {
   let params = src;
 
-  // Handle different input types similar to how getDocument handles them, 
+  // Handle different input types similar to how getDocument handles them,
   // but we ensure we have an object to attach wasmUrl to.
   if (typeof src === 'string') {
     params = { url: src };
@@ -282,4 +289,20 @@ export function getPDFDocument(src: any) {
     ...params,
     wasmUrl: import.meta.env.BASE_URL + 'pdfjs-viewer/wasm/',
   });
+}
+
+/**
+ * Escape HTML special characters to prevent XSS
+ * @param text - The text to escape
+ * @returns The escaped text
+ */
+export function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
 }
