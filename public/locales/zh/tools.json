@@ -518,5 +518,13 @@
     "subtitle": "将电子邮件文件 (EML, MSG) 转换为 PDF 格式。支持 Outlook 导出和标准邮件格式。",
     "acceptedFormats": "EML, MSG 文件",
     "convertButton": "转换为 PDF"
+  },
+  "fontToOutline": {
+    "name": "字体转轮廓",
+    "subtitle": "将所有字体转换为矢量轮廓，确保在所有设备上一致呈现。"
+  },
+  "deskewPdf": {
+    "name": "校正 PDF",
+    "subtitle": "使用 OpenCV 自动校正倾斜的扫描页面。"
   }
 }

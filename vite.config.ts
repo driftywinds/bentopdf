@@ -423,6 +423,11 @@ export default defineConfig(({ mode }) => {
             'src/pages/validate-signature-pdf.html'
           ),
           'email-to-pdf': resolve(__dirname, 'src/pages/email-to-pdf.html'),
+          'font-to-outline': resolve(
+            __dirname,
+            'src/pages/font-to-outline.html'
+          ),
+          'deskew-pdf': resolve(__dirname, 'src/pages/deskew-pdf.html'),
         },
       },
     },

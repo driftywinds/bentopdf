@@ -284,5 +284,13 @@
     "subtitle": "E-posta dosyalarını (EML, MSG) PDF formatına dönüştürün. Outlook dışa aktarmalarını ve standart e-posta formatlarını destekler.",
     "acceptedFormats": "EML, MSG Dosyaları",
     "convertButton": "PDF'ye Dönüştür"
+  },
+  "fontToOutline": {
+    "name": "Yazı Tipi Çerçeveye Dönüştür",
+    "subtitle": "Tüm yazı tiplerini vektör çerçevelere dönüştürün, tüm cihazlarda tutarlı görüntü için."
+  },
+  "deskewPdf": {
+    "name": "PDF Eğriliğini Düzelt",
+    "subtitle": "OpenCV kullanarak eğik taranmış sayfaları otomatik olarak düzeltin."
   }
 }

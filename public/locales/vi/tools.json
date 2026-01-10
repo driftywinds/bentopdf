@@ -521,5 +521,13 @@
     "subtitle": "Chuyển đổi tệp email (EML, MSG) sang định dạng PDF. Hỗ trợ xuất Outlook và định dạng email tiêu chuẩn.",
     "acceptedFormats": "Tệp EML, MSG",
     "convertButton": "Chuyển đổi sang PDF"
+  },
+  "fontToOutline": {
+    "name": "Phông chữ thành đường viền",
+    "subtitle": "Chuyển đổi tất cả phông chữ thành đường viền vector để hiển thị nhất quán trên mọi thiết bị."
+  },
+  "deskewPdf": {
+    "name": "Chỉnh nghiêng PDF",
+    "subtitle": "Tự động làm thẳng các trang quét bị nghiêng bằng OpenCV."
   }
 }

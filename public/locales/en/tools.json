@@ -521,5 +521,13 @@
     "subtitle": "Convert email files (EML, MSG) to PDF format. Supports Outlook exports and standard email formats.",
     "acceptedFormats": "EML, MSG files",
     "convertButton": "Convert to PDF"
+  },
+  "fontToOutline": {
+    "name": "Font to Outline",
+    "subtitle": "Convert all fonts to vector outlines for consistent rendering across all devices."
+  },
+  "deskewPdf": {
+    "name": "Deskew PDF",
+    "subtitle": "Automatically straighten tilted scanned pages using OpenCV."
   }
 }

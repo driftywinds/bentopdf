@@ -1,14 +1,16 @@
 import PostalMime from 'postal-mime';
 import MsgReader from '@kenjiuno/msgreader';
-import { formatBytes, escapeHtml } from '../utils/helpers.js';
+import {
+  formatBytes,
+  escapeHtml,
+  uint8ArrayToBase64,
+  sanitizeEmailHtml,
+  formatRawDate,
+} from '../utils/helpers.js';
 import type { EmailAttachment, ParsedEmail, EmailRenderOptions } from '@/types';
 
-// Re-export types for convenience
 export type { EmailAttachment, ParsedEmail, EmailRenderOptions };
 
-/**
- * Format email address without angle brackets for cleaner display
- */
 function formatAddress(
   name: string | undefined,
   email: string | undefined
@@ -173,80 +175,6 @@ export async function parseMsgFile(file: File): Promise<ParsedEmail> {
 }
 
 /**
- * Formats a raw RFC 2822 date string into a nicer human-readable format,
- * while preserving the original timezone and time.
- * Example input: "Sun, 8 Jan 2017 20:37:44 +0200"
- * Example output: "Sunday, January 8, 2017 at 8:37 PM (+0200)"
- */
-function formatRawDate(raw: string): string {
-  try {
-    // Regex to parse RFC 2822 date parts: Day, DD Mon YYYY HH:MM:SS Timezone
-    const match = raw.match(
-      /([A-Za-z]{3}),\s+(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})\s+(\d{2}):(\d{2})(?::(\d{2}))?\s+([+-]\d{4})/
-    );
-
-    if (match) {
-      const [
-        ,
-        dayAbbr,
-        dom,
-        monthAbbr,
-        year,
-        hoursStr,
-        minsStr,
-        secsStr,
-        timezone,
-      ] = match;
-
-      // Map abbreviations to full names
-      const days: Record<string, string> = {
-        Sun: 'Sunday',
-        Mon: 'Monday',
-        Tue: 'Tuesday',
-        Wed: 'Wednesday',
-        Thu: 'Thursday',
-        Fri: 'Friday',
-        Sat: 'Saturday',
-      };
-      const months: Record<string, string> = {
-        Jan: 'January',
-        Feb: 'February',
-        Mar: 'March',
-        Apr: 'April',
-        May: 'May',
-        Jun: 'June',
-        Jul: 'July',
-        Aug: 'August',
-        Sep: 'September',
-        Oct: 'October',
-        Nov: 'November',
-        Dec: 'December',
-      };
-
-      const fullDay = days[dayAbbr] || dayAbbr;
-      const fullMonth = months[monthAbbr] || monthAbbr;
-
-      // Convert to 12-hour format manually
-      let hours = parseInt(hoursStr, 10);
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // the hour '0' should be '12'
-
-      // Format timezone: +0200 -> UTC+02:00
-      const tzSign = timezone.substring(0, 1);
-      const tzHours = timezone.substring(1, 3);
-      const tzMins = timezone.substring(3, 5);
-      const formattedTz = `UTC${tzSign}${tzHours}:${tzMins}`;
-
-      return `${fullDay}, ${fullMonth} ${dom}, ${year} at ${hours}:${minsStr} ${ampm} (${formattedTz})`;
-    }
-  } catch (e) {
-    // Fallback to raw string if parsing fails
-  }
-  return raw;
-}
-
-/**
  * Replace CID references in HTML with base64 data URIs
  */
 function processInlineImages(
@@ -263,23 +191,13 @@ function processInlineImages(
     }
   });
 
-  // Replace src="cid:..."
   return html.replace(/src=["']cid:([^"']+)["']/g, (match, cid) => {
     const att = cidMap.get(cid);
     if (att && att.content) {
-      // Convert Uint8Array to base64
-      let binary = '';
-      const len = att.content.byteLength;
-      for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(att.content[i]);
-      }
-      const base64 =
-        typeof btoa === 'function'
-          ? btoa(binary)
-          : Buffer.from(binary, 'binary').toString('base64');
+      const base64 = uint8ArrayToBase64(att.content);
       return `src="data:${att.contentType};base64,${base64}"`;
     }
-    return match; // Keep original if not found
+    return match;
   });
 }
 
@@ -291,12 +209,12 @@ export function renderEmailToHtml(
 
   let processedHtml = '';
   if (email.htmlBody) {
-    processedHtml = processInlineImages(email.htmlBody, email.attachments);
+    const sanitizedHtml = sanitizeEmailHtml(email.htmlBody);
+    processedHtml = processInlineImages(sanitizedHtml, email.attachments);
   } else {
     processedHtml = `<pre style="white-space: pre-wrap; font-family: inherit; margin: 0;">${escapeHtml(email.textBody)}</pre>`;
   }
 
-  // Format date in a human-readable way
   let dateStr = 'Unknown Date';
   if (email.rawDateString) {
     dateStr = formatRawDate(email.rawDateString);
@@ -329,7 +247,6 @@ export function renderEmailToHtml(
   `
       : '';
 
-  // Build CC/BCC rows
   let ccBccHtml = '';
   if (includeCcBcc) {
     if (email.cc.length > 0) {

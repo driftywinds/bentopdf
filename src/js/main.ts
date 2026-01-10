@@ -271,6 +271,8 @@ const init = async () => {
     'Remove Metadata': 'tools:removeMetadata',
     'Change Permissions': 'tools:changePermissions',
     'Email to PDF': 'tools:emailToPdf',
+    'Font to Outline': 'tools:fontToOutline',
+    'Deskew PDF': 'tools:deskewPdf',
   };
 
   // Homepage-only tool grid rendering (not used on individual tool pages)

@@ -693,6 +693,19 @@ export const categories = [
         subtitle:
           'Convert PDF to image-based PDF. Flatten layers and remove selectable text.',
       },
+      {
+        href: import.meta.env.BASE_URL + 'deskew-pdf.html',
+        name: 'Deskew PDF',
+        icon: 'ph-perspective',
+        subtitle: 'Automatically straighten tilted scanned pages using OpenCV.',
+      },
+      {
+        href: import.meta.env.BASE_URL + 'font-to-outline.html',
+        name: 'Font to Outline',
+        icon: 'ph-text-outdent',
+        subtitle:
+          'Convert all fonts to vector outlines for consistent rendering.',
+      },
     ],
   },
   {

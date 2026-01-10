@@ -494,5 +494,13 @@
     "subtitle": "Converti file email (EML, MSG) in formato PDF. Supporta esportazioni Outlook e formati email standard.",
     "acceptedFormats": "File EML, MSG",
     "convertButton": "Converti in PDF"
+  },
+  "fontToOutline": {
+    "name": "Font in Contorni",
+    "subtitle": "Converti tutti i font in contorni vettoriali per una visualizzazione coerente su tutti i dispositivi."
+  },
+  "deskewPdf": {
+    "name": "Raddrizza PDF",
+    "subtitle": "Raddrizza automaticamente le pagine scansionate inclinate usando OpenCV."
   }
 }

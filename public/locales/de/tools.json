@@ -521,5 +521,13 @@
     "subtitle": "E-Mail-Dateien (EML, MSG) in PDF-Format konvertieren. Unterstützt Outlook-Exporte und Standard-E-Mail-Formate.",
     "acceptedFormats": "EML, MSG-Dateien",
     "convertButton": "In PDF konvertieren"
+  },
+  "fontToOutline": {
+    "name": "Schriftart zu Umriss",
+    "subtitle": "Alle Schriftarten in Vektorumrisse für konsistente Darstellung auf allen Geräten konvertieren."
+  },
+  "deskewPdf": {
+    "name": "PDF entzerren",
+    "subtitle": "Automatisch schiefe gescannte Seiten mit OpenCV begradigen."
   }
 }
