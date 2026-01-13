@@ -3,18 +3,18 @@
     "popularTools": "Strumenti popolari",
     "editAnnotate": "Modifica e Annota",
     "convertToPdf": "Converti in PDF",
-    "convertFromPdf": "Convert da PDF",
+    "convertFromPdf": "Converti da PDF",
     "organizeManage": "Organizza e Gestisci",
     "optimizeRepair": "Ottimizza e Ripara",
     "securePdf": "Proteggi PDF"
   },
   "pdfMultiTool": {
-    "name": "PDF Multi Tool",
-    "subtitle": "Unisci, Dividi, Organizza, Elimina, Ruota, Aggiungi Pagine Vuote, Estrai e Duplica in un'interfaccia unificata."
+    "name": "Strumento PDF multifunzione",
+    "subtitle": "Unisci, dividi, organizza, elimina, ruota, aggiungi pagine vuote, estrai e duplica in un'interfaccia unificata."
   },
   "mergePdf": {
     "name": "Unisci PDF",
-    "subtitle": "Unisci più PDF in un unico file. Conserva i Segnalibri."
+    "subtitle": "Unisci più PDF in un unico file. Conserva i segnalibri."
   },
   "splitPdf": {
     "name": "Dividi PDF",
@@ -68,7 +68,7 @@
   },
   "duplicateOrganize": {
     "name": "Duplica e Organizza",
-    "subtitle": "Duplica, riordina e elimina pagine."
+    "subtitle": "Duplica, riordina ed elimina pagine."
   },
   "deletePages": {
     "name": "Elimina Pagine",
@@ -199,7 +199,7 @@
   },
   "alternateMix": {
     "name": "Alterna e Riordina Pagine",
-    "subtitle": "Unisci PDF sostituendo le pagine di ogni file. Conserva i segnalibri."
+    "subtitle": "Unisci i PDF alternando le pagine di ogni file. Conserva i segnalibri."
   },
   "addAttachments": {
     "name": "Aggiungi Allegati",
@@ -488,6 +488,33 @@
     "subtitle": "Estrai il testo dai file PDF e salvalo come testo semplice (.txt). Supporta più file.",
     "note": "Questo strumento funziona SOLO con PDF creati digitalmente. Per documenti scansionati o basati su immagini, usa invece il nostro strumento OCR PDF.",
     "convertButton": "Estrai testo"
+  },
+  "digitalSignPdf": {
+    "name": "Firma digitale PDF",
+    "pageTitle": "Firma digitale PDF - Aggiungi firma crittografica | BentoPDF",
+    "subtitle": "Aggiungi una firma digitale crittografica al tuo PDF usando certificati X.509. Supporta i formati PKCS#12 (.pfx, .p12) e PEM. La tua chiave privata non lascia mai il browser.",
+    "certificateSection": "Certificato",
+    "uploadCert": "Carica certificato (.pfx, .p12)",
+    "certPassword": "Password del certificato",
+    "certPasswordPlaceholder": "Inserisci la password del certificato",
+    "certInfo": "Informazioni sul certificato",
+    "certSubject": "Soggetto",
+    "certIssuer": "Emittente",
+    "certValidity": "Valido",
+    "signatureDetails": "Dettagli della firma (opzionale)",
+    "reason": "Motivo",
+    "reasonPlaceholder": "es. Approvo questo documento",
+    "location": "Luogo",
+    "locationPlaceholder": "es. Roma, Italia",
+    "contactInfo": "Contatto",
+    "contactPlaceholder": "es. email@example.com",
+    "applySignature": "Applica firma digitale",
+    "successMessage": "PDF firmato con successo! La firma può essere verificata in qualsiasi lettore PDF."
+  },
+  "validateSignaturePdf": {
+    "name": "Verifica firma PDF",
+    "pageTitle": "Verifica firma PDF - Controlla firme digitali | BentoPDF",
+    "subtitle": "Verifica le firme digitali nei tuoi PDF. Controlla la validità del certificato, visualizza i dati del firmatario e conferma l'integrità del documento. Tutto avviene nel tuo browser."
   },
   "emailToPdf": {
     "name": "Email in PDF",

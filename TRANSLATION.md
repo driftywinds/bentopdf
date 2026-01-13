@@ -23,6 +23,9 @@ BentoPDF uses **i18next** for internationalization (i18n). Currently supported l
 - **German** (`de`)
 - **Vietnamese** (`vi`)
 - **Indonesian** (`id`)
+- **Chinese** (`zh`)
+- **Traditional Chinese (Taiwan)** (`zh-TW`)
+- **French** (`fr`)
 
 The app automatically detects the language from the URL path:
 
@@ -30,6 +33,9 @@ The app automatically detects the language from the URL path:
 - `/de/` → German
 - `/vi/` → Vietnamese
 - `/id/` → Indonesian
+- `/zh/` → Chinese
+- `/zh-TW/` → Traditional Chinese (Taiwan)
+- `/fr/` → French
 
 ---
 
@@ -54,33 +60,33 @@ The app automatically detects the language from the URL path:
 
 ## Adding a New Language
 
-Let's add **French** as an example:
+Let's add **Spanish** as an example:
 
 ### Step 1: Create Translation File
 
 ```bash
 # Create the directory
-mkdir -p public/locales/fr
+mkdir -p public/locales/es
 
 # Copy the English template
-cp public/locales/en/common.json public/locales/fr/common.json
+cp public/locales/en/common.json public/locales/es/common.json
 ```
 
 ### Step 2: Translate the JSON File
 
-Open `public/locales/fr/common.json` and translate all the values:
+Open `public/locales/es/common.json` and translate all the values:
 
 ```json
 {
   "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "contact": "Contact",
-    "allTools": "Tous les outils"
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "allTools": "Todas las herramientas"
   },
   "hero": {
-    "title": "Votre boîte à outils PDF gratuite et sécurisée",
-    "subtitle": "Fusionnez, divisez, compressez et modifiez des PDF directement dans votre navigateur."
+    "title": "Tu conjunto de herramientas PDF gratuito y seguro",
+    "subtitle": "Combina, divide, comprime y edita archivos PDF directamente en tu navegador."
   }
   // ... continue translating all keys
 }
@@ -91,13 +97,13 @@ Open `public/locales/fr/common.json` and translate all the values:
 ✅ **Correct:**
 
 ```json
-"home": "Accueil"
+"home": "Inicio"
 ```
 
 ❌ **Wrong:**
 
 ```json
-"accueil": "Accueil"
+"inicio": "Inicio"
 ```
 
 ### Step 3: Register the Language
@@ -105,8 +111,8 @@ Open `public/locales/fr/common.json` and translate all the values:
 Edit `src/js/i18n/i18n.ts`:
 
 ```typescript
-// Add 'fr' to supported languages
-export const supportedLanguages = ['en', 'de', 'fr'] as const;
+// Add 'es' to supported languages
+export const supportedLanguages = ['en', 'de', 'fr', 'es'] as const;
 export type SupportedLanguage = (typeof supportedLanguages)[number];
 
 // Add French display name
@@ -132,8 +138,8 @@ const langMatch = url.match(/^\/(en|de|zh|vi|it|fr)(\/.*)?$/);
 # Start the dev server
 npm run dev
 
-# Visit the French version
-# http://localhost:5173/fr/
+# Visit the Spanish version
+# http://localhost:5173/es/
 ```
 
 ---
@@ -283,7 +289,10 @@ In `common.json`:
    - German: `http://localhost:5173/de/`
    - Vietnamese: `http://localhost:5173/vi/`
    - Indonesian: `http://localhost:5173/id/`
-   - Your new language: `http://localhost:5173/fr/`
+   - Chinese: `http://localhost:5173/zh/`
+   - Traditional Chinese (Taiwan): `http://localhost:5173/zh-TW/`
+   - French: `http://localhost:5173/fr/`
+   - Your new language: `http://localhost:5173/es/`
 
 3. **Check these pages:**
    - Homepage (`/`)
@@ -506,7 +515,6 @@ Current translation coverage:
 | English       | `en` | ✅ Complete    | Core team  |
 | German        | `de` | 🚧 In Progress | Core team  |
 | Vietnamese    | `vi` | ✅ Complete    | Community  |
-| Indonesian    | `id` | ✅ Complete    | Community  |
 | Your Language | `??` | 🚧 In Progress | You?       |
 
 ---

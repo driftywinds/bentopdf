@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import viteCompression from 'vite-plugin-compression';
+import handlebars from 'vite-plugin-handlebars';
 import { resolve } from 'path';
 import fs from 'fs';
 import { constants as zlibConstants } from 'zlib';
@@ -14,7 +15,9 @@ function pagesRewritePlugin(): Plugin {
       server.middlewares.use((req, res, next) => {
         const url = req.url?.split('?')[0] || '';
 
-        const langMatch = url.match(/^\/(en|de|zh|vi|it|id|tr)(\/.*)?$/);
+        const langMatch = url.match(
+          /^\/(en|de|zh|zh-TW|vi|it|id|tr|fr)(\/.*)?$/
+        );
         if (langMatch) {
           const lang = langMatch[1];
           const restOfPath = langMatch[2] || '/';
@@ -176,6 +179,9 @@ export default defineConfig(({ mode }) => {
   return {
     base: (process.env.BASE_URL || '/').replace(/\/?$/, '/'),
     plugins: [
+      handlebars({
+        partialDirectory: resolve(__dirname, 'src/partials'),
+      }),
       pagesRewritePlugin(),
       flattenPagesPlugin(),
       rewriteHtmlPathsPlugin(),
