@@ -273,6 +273,8 @@ const init = async () => {
     'Email to PDF': 'tools:emailToPdf',
     'Font to Outline': 'tools:fontToOutline',
     'Deskew PDF': 'tools:deskewPdf',
+    'Digital Signature': 'tools:digitalSignPdf',
+    'Validate Signature': 'tools:validateSignaturePdf',
   };
 
   // Homepage-only tool grid rendering (not used on individual tool pages)

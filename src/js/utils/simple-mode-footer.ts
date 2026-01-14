@@ -44,4 +44,44 @@ if (__SIMPLE_MODE__) {
       langContainer.appendChild(switcher);
     }
   }
+
+  const sectionsToHide = [
+    'How It Works',
+    'Related PDF Tools',
+    'Related Tools',
+    'Frequently Asked Questions',
+  ];
+
+  document.querySelectorAll('section').forEach((section) => {
+    const h2 = section.querySelector('h2');
+    if (h2) {
+      const heading = h2.textContent?.trim() || '';
+      if (sectionsToHide.some((text) => heading.includes(text))) {
+        (section as HTMLElement).style.display = 'none';
+      }
+    }
+  });
+
+  const nav = document.querySelector('nav');
+  if (nav && !document.querySelector('[data-simple-nav]')) {
+    nav.style.display = 'none';
+
+    const simpleNav = document.createElement('nav');
+    simpleNav.className =
+      'bg-gray-800 border-b border-gray-700 sticky top-0 z-30';
+    simpleNav.setAttribute('data-simple-nav', 'true');
+    simpleNav.innerHTML = `
+      <div class="container mx-auto px-4">
+        <div class="flex justify-start items-center h-16">
+          <div class="flex-shrink-0 flex items-center cursor-pointer">
+            <img src="/images/favicon.svg" alt="Bento PDF Logo" class="h-8 w-8">
+            <span class="text-white font-bold text-xl ml-2">
+              <a href="/">BentoPDF</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertBefore(simpleNav, document.body.firstChild);
+  }
 }

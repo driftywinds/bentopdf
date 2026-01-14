@@ -8,6 +8,10 @@
     "openMainMenu": "Hauptmenü öffnen",
     "language": "Sprache"
   },
+  "donation": {
+    "message": "Lieben Sie BentoPDF? Helfen Sie uns, es kostenlos und Open Source zu halten!",
+    "button": "Spenden"
+  },
   "hero": {
     "title": "Das",
     "pdfToolkit": "PDF-Toolkit",

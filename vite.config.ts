@@ -9,63 +9,100 @@ import fs from 'fs';
 import { constants as zlibConstants } from 'zlib';
 
 function pagesRewritePlugin(): Plugin {
+  const rewriteMiddleware = (req: any, res: any, next: any) => {
+    const url = req.url?.split('?')[0] || '';
+
+    const langMatch = url.match(
+      /^\/(en|de|es|zh|zh-TW|vi|it|id|tr|fr|pt)(\/.*)?$/
+    );
+    if (langMatch) {
+      const lang = langMatch[1];
+      const restOfPath = langMatch[2] || '/';
+
+      if (!langMatch[2]) {
+        res.writeHead(302, { Location: `/${lang}/` });
+        res.end();
+        return;
+      }
+      if (restOfPath === '/') {
+        req.url = '/index.html';
+        return next();
+      }
+      const pagePath = restOfPath.slice(1);
+      if (pagePath.endsWith('.html')) {
+        const srcPath = resolve(__dirname, 'src/pages', pagePath);
+        const rootPath = resolve(__dirname, pagePath);
+        const distPath = resolve(__dirname, 'dist', pagePath);
+        if (fs.existsSync(srcPath)) {
+          req.url = `/src/pages/${pagePath}`;
+        } else if (fs.existsSync(distPath)) {
+          req.url = `/${pagePath}`;
+        } else if (fs.existsSync(rootPath)) {
+          req.url = `/${pagePath}`;
+        } else {
+          req.url = `/${pagePath}`;
+        }
+      } else if (!pagePath.includes('.')) {
+        const htmlPath = pagePath + '.html';
+        const srcPath = resolve(__dirname, 'src/pages', htmlPath);
+        const rootPath = resolve(__dirname, htmlPath);
+        const distPath = resolve(__dirname, 'dist', htmlPath);
+        if (fs.existsSync(srcPath)) {
+          req.url = `/src/pages/${htmlPath}`;
+        } else if (fs.existsSync(distPath)) {
+          req.url = `/${htmlPath}`;
+        } else if (fs.existsSync(rootPath)) {
+          req.url = `/${htmlPath}`;
+        } else {
+          req.url = `/${htmlPath}`;
+        }
+      } else {
+        req.url = restOfPath;
+      }
+      return next();
+    }
+    if (url.endsWith('.html') && !url.startsWith('/src/')) {
+      const pageName = url.slice(1);
+      const pagePath = resolve(__dirname, 'src/pages', pageName);
+      if (fs.existsSync(pagePath)) {
+        req.url = `/src/pages${url}`;
+      } else if (
+        url !== '/404.html' &&
+        !fs.existsSync(resolve(__dirname, pageName))
+      ) {
+        const rootExists = fs.existsSync(resolve(__dirname, pageName));
+        if (!rootExists) {
+          req.url = '/404.html';
+        }
+      }
+    }
+    next();
+  };
+
   return {
     name: 'pages-rewrite',
     configureServer(server) {
-      server.middlewares.use((req, res, next) => {
+      server.middlewares.use(rewriteMiddleware);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((req: any, res: any, next: any) => {
         const url = req.url?.split('?')[0] || '';
-
         const langMatch = url.match(
-          /^\/(en|de|zh|zh-TW|vi|it|id|tr|fr)(\/.*)?$/
+          /^\/(en|de|es|zh|zh-TW|vi|it|id|tr|fr|pt)(\/.*)?$/
         );
-        if (langMatch) {
-          const lang = langMatch[1];
-          const restOfPath = langMatch[2] || '/';
 
-          if (!langMatch[2]) {
-            res.writeHead(302, { Location: `/${lang}/` });
-            res.end();
-            return;
-          }
-          if (restOfPath === '/') {
-            req.url = '/index.html';
-            return next();
-          }
-          const pagePath = restOfPath.slice(1);
-          if (pagePath.endsWith('.html')) {
-            const srcPath = resolve(__dirname, 'src/pages', pagePath);
-            const rootPath = resolve(__dirname, pagePath);
-            if (fs.existsSync(srcPath)) {
-              req.url = `/src/pages/${pagePath}`;
-            } else if (fs.existsSync(rootPath)) {
-              req.url = `/${pagePath}`;
-            }
-          } else if (!pagePath.includes('.')) {
-            const htmlPath = pagePath + '.html';
-            const srcPath = resolve(__dirname, 'src/pages', htmlPath);
-            const rootPath = resolve(__dirname, htmlPath);
-            if (fs.existsSync(srcPath)) {
-              req.url = `/src/pages/${htmlPath}`;
-            } else if (fs.existsSync(rootPath)) {
-              req.url = `/${htmlPath}`;
-            }
-          } else {
-            req.url = restOfPath;
-          }
-          return next();
-        }
-        if (url.endsWith('.html') && !url.startsWith('/src/')) {
-          const pageName = url.slice(1);
-          const pagePath = resolve(__dirname, 'src/pages', pageName);
-          if (fs.existsSync(pagePath)) {
-            req.url = `/src/pages${url}`;
-          } else if (
-            url !== '/404.html' &&
-            !fs.existsSync(resolve(__dirname, pageName))
-          ) {
-            const rootExists = fs.existsSync(resolve(__dirname, pageName));
-            if (!rootExists) {
-              req.url = '/404.html';
+        if (langMatch && langMatch[2]) {
+          const restOfPath = langMatch[2];
+          if (restOfPath !== '/') {
+            const pagePath = restOfPath.slice(1);
+            if (pagePath.endsWith('.html')) {
+              const distPath = resolve(__dirname, 'dist', pagePath);
+              if (fs.existsSync(distPath)) {
+                const content = fs.readFileSync(distPath, 'utf-8');
+                res.setHeader('Content-Type', 'text/html');
+                res.end(content);
+                return;
+              }
             }
           }
         }
@@ -87,6 +124,11 @@ function flattenPagesPlugin(): Plugin {
           bundle[newFileName].fileName = newFileName;
           delete bundle[fileName];
         }
+      }
+      if (process.env.SIMPLE_MODE === 'true' && bundle['simple-index.html']) {
+        bundle['index.html'] = bundle['simple-index.html'];
+        bundle['index.html'].fileName = 'index.html';
+        delete bundle['simple-index.html'];
       }
     },
   };
@@ -224,6 +266,7 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
+        '@/types': resolve(__dirname, 'src/js/types/index.ts'),
         stream: 'stream-browserify',
         zlib: 'browserify-zlib',
       },
@@ -248,7 +291,10 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         input: {
-          main: resolve(__dirname, 'index.html'),
+          main:
+            process.env.SIMPLE_MODE === 'true'
+              ? resolve(__dirname, 'simple-index.html')
+              : resolve(__dirname, 'index.html'),
           about: resolve(__dirname, 'about.html'),
           contact: resolve(__dirname, 'contact.html'),
           faq: resolve(__dirname, 'faq.html'),

@@ -8,6 +8,10 @@
     "openMainMenu": "Ana menüyü aç",
     "language": "Dil"
   },
+  "donation": {
+    "message": "BentoPDF'i seviyor musunuz? Ücretsiz ve açık kaynaklı kalmasına yardımcı olun!",
+    "button": "Bağış Yap"
+  },
   "hero": {
     "title": " ",
     "pdfToolkit": "PDF Toolkit",
@@ -53,7 +57,8 @@
     "toolsLabel": "Başlayın",
     "subtitle": "Dosya yükleyiciyi açmak için bir araç seçin",
     "searchPlaceholder": "Bir araç arayın (örn. 'böl', 'düzenle'...)",
-    "backToTools": "Araçlara Dön"
+    "backToTools": "Araçlara Dön",
+    "firstLoadNotice": "Dönüştürme motorumuzu indirirken ilk yükleme biraz zaman alır. Sonrasında tüm yüklemeler anında gerçekleşir."
   },
   "upload": {
     "clickToSelect": "Dosya seçmek için tıklayın",

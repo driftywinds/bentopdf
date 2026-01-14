@@ -8,6 +8,10 @@
     "openMainMenu": "打开主菜单",
     "language": "语言"
   },
+  "donation": {
+    "message": "喜欢 BentoPDF？帮助我们保持免费和开源！",
+    "button": "捐赠"
+  },
   "hero": {
     "title": "专为隐私打造的",
     "pdfToolkit": "PDF 工具箱",

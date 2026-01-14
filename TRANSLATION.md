@@ -43,7 +43,7 @@ The app automatically detects the language from the URL path:
 
 **To improve existing translations:**
 
-1. Navigate to `public/locales/{language}/common.json`
+1. Navigate to `public/locales/{language}/common.json` and `public/locales/{language}/tools.json`
 2. Find the key you want to update
 3. Change the translation value
 4. Save and test
@@ -51,10 +51,13 @@ The app automatically detects the language from the URL path:
 **To add a new language (e.g., Spanish):**
 
 1. Copy `public/locales/en/common.json` to `public/locales/es/common.json`
-2. Translate all values in `es/common.json`
-3. Add Spanish to `supportedLanguages` in `src/js/i18n/i18n.ts`
-4. Add Spanish name to `languageNames` in `src/js/i18n/i18n.ts`
-5. Test thoroughly
+2. Copy `public/locales/en/tools.json` to `public/locales/es/tools.json`
+3. Translate all values in both `es/common.json` and `es/tools.json`
+4. Add Spanish to `supportedLanguages` in `src/js/i18n/i18n.ts`
+5. Add Spanish name to `languageNames` in `src/js/i18n/i18n.ts`
+6. Add Spanish language code to the routing regex in `vite.config.ts`
+7. Restart the dev server
+8. Test thoroughly
 
 ---
 
@@ -62,7 +65,7 @@ The app automatically detects the language from the URL path:
 
 Let's add **Spanish** as an example:
 
-### Step 1: Create Translation File
+### Step 1: Create Translation Files
 
 ```bash
 # Create the directory
@@ -72,7 +75,7 @@ mkdir -p public/locales/es
 cp public/locales/en/common.json public/locales/es/common.json
 ```
 
-### Step 2: Translate the JSON File
+### Step 2: Translate the JSON Files
 
 Open `public/locales/es/common.json` and translate all the values:
 
@@ -106,13 +109,15 @@ Open `public/locales/es/common.json` and translate all the values:
 "inicio": "Inicio"
 ```
 
+Then do the same for `public/locales/fr/tools.json` to translate all tool names and descriptions.
+
 ### Step 3: Register the Language
 
 Edit `src/js/i18n/i18n.ts`:
 
 ```typescript
-// Add 'es' to supported languages
-export const supportedLanguages = ['en', 'de', 'fr', 'es'] as const;
+// Add 'fr' to supported languages
+export const supportedLanguages = ['en', 'de', 'es', 'fr', 'zh', 'vi'] as const;
 export type SupportedLanguage = (typeof supportedLanguages)[number];
 
 // Add French display name
@@ -129,13 +134,16 @@ In `vite.config.ts`, ensure the new language is included in the build:
 
 ```typescript
 // Add 'fr' to the language regex
-const langMatch = url.match(/^\/(en|de|zh|vi|it|fr)(\/.*)?$/);
+const langMatch = url.match(/^\/(en|de|es|zh|vi|it|fr)(\/.*)?$/);
 ```
+
+ **Important**: This step is critical! Without updating the Vite config, you'll get 404 errors when trying to access French pages.
 
 ### Step 5: Test Your Translation
 
 ```bash
-# Start the dev server
+# Stop the dev server (Ctrl+C)
+# Start it again
 npm run dev
 
 # Visit the Spanish version
@@ -454,12 +462,32 @@ SyntaxError: Unexpected token } in JSON at position 1234
 Make sure you added the language to both arrays in `i18n.ts`:
 
 ```typescript
-export const supportedLanguages = ['en', 'de', 'fr']; // ← Add here
+export const supportedLanguages = ['en', 'de', 'es', 'fr', 'zh', 'vi']; // ← Add here
 export const languageNames = {
-  en: 'English',
-  de: 'Deutsch',
-  fr: 'Français', // ← And here
+    en: 'English',
+    de: 'Deutsch',
+    es: 'Español',
+    fr: 'Français', // ← And here
+    zh: '中文',
+    vi: 'Tiếng Việt',
 };
+```
+
+### Issue: 404 Error When Accessing Language Pages
+
+**Symptoms:**
+Visiting `http://localhost:5173/fr/about.html` shows a 404 error page.
+
+**Solution:**
+You need to update `vite.config.ts` to include your language code in the routing regex:
+```typescript
+// In the pagesRewritePlugin function
+const langMatch = url.match(/^\/(en|de|es|fr|zh|vi)(\/.*)?$/); // ← Add your language code
+```
+
+After updating, restart the dev server:
+```bash
+npm run dev
 ```
 
 ---
@@ -475,6 +503,7 @@ When adding a new language, make sure these files are updated:
 - [ ] Test settings modal and shortcuts
 - [ ] Test language switcher in footer
 - [ ] Verify URL routing works (`/{lang}/`)
+- [ ] Test that all tools load correctly
 
 ---
 
@@ -514,9 +543,10 @@ Current translation coverage:
 | ------------- | ---- | -------------- | ---------- |
 | English       | `en` | ✅ Complete    | Core team  |
 | German        | `de` | 🚧 In Progress | Core team  |
+| Spanish       | `es` | ✅ Complete    | Community  |
 | Vietnamese    | `vi` | ✅ Complete    | Community  |
 | Your Language | `??` | 🚧 In Progress | You?       |
 
 ---
 
-**Last Updated**: December 2025
+**Last Updated**: January 2026

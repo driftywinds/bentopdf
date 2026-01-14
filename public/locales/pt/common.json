@@ -8,6 +8,10 @@
     "openMainMenu": "Abrir menu principal",
     "language": "Idioma"
   },
+  "donation": {
+    "message": "Adora o BentoPDF? Ajude-nos a mantê-lo gratuito e de código aberto!",
+    "button": "Doar"
+  },
   "hero": {
     "title": "O",
     "pdfToolkit": "Kit de Ferramentas PDF",
@@ -53,7 +57,8 @@
     "toolsLabel": "Ferramentas",
     "subtitle": "Clique em uma ferramenta para abrir o seletor de arquivos",
     "searchPlaceholder": "Buscar ferramenta (ex: 'dividir', 'organizar'...)",
-    "backToTools": "Voltar para Ferramentas"
+    "backToTools": "Voltar para Ferramentas",
+    "firstLoadNotice": "O primeiro carregamento demora um momento enquanto baixamos nosso mecanismo de conversão. Depois disso, todos os carregamentos serão instantâneos."
   },
   "upload": {
     "clickToSelect": "Clique para selecionar um arquivo",

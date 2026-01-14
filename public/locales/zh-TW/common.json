@@ -8,6 +8,10 @@
     "openMainMenu": "開啟主選單",
     "language": "語言"
   },
+  "donation": {
+    "message": "喜歡 BentoPDF？幫助我們保持免費和開源！",
+    "button": "捐贈"
+  },
   "hero": {
     "title": "專為隱私打造的",
     "pdfToolkit": "PDF 工具箱",
@@ -53,7 +57,8 @@
     "toolsLabel": "工具",
     "subtitle": "點擊任意工具以開始上傳檔案",
     "searchPlaceholder": "搜尋工具（例如「合併」或「分割」...）",
-    "backToTools": "返回工具列表"
+    "backToTools": "返回工具列表",
+    "firstLoadNotice": "首次載入需要一點時間，因為我們正在下載轉換引擎。之後所有載入將即時完成。"
   },
   "upload": {
     "clickToSelect": "點擊以選擇檔案",

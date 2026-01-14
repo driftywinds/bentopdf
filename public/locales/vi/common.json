@@ -8,6 +8,10 @@
     "openMainMenu": "Mở menu chính",
     "language": "Ngôn ngữ"
   },
+  "donation": {
+    "message": "Bạn yêu thích BentoPDF? Hãy giúp chúng tôi giữ nó miễn phí và mã nguồn mở!",
+    "button": "Quyên góp"
+  },
   "hero": {
     "title": "Bộ công cụ",
     "pdfToolkit": "PDF",
