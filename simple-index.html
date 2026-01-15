@@ -48,27 +48,22 @@
 
   <body class="antialiased">
     <!-- Simple Mode Navbar -->
-    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-30">
+    <nav
+      class="bg-gray-800 border-b border-gray-700 sticky top-0 z-30"
+      data-simple-nav="true"
+    >
       <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center h-16">
-          <div
-            class="flex-shrink-0 flex items-center cursor-pointer"
-            id="home-logo"
-          >
+        <div class="flex justify-start items-center h-16">
+          <div class="flex-shrink-0 flex items-center cursor-pointer">
             <img
               src="/images/favicon-no-bg.svg"
-              alt="PDF Tools Logo"
+              alt="Bento PDF Logo"
               class="h-8 w-8"
             />
             <span class="text-white font-bold text-xl ml-2">
-              <a href="index.html" data-i18n="simpleMode.title">PDF Tools</a>
+              <a href="/">BentoPDF</a>
             </span>
           </div>
-          <!-- Language Switcher Container -->
-          <div
-            id="simple-mode-language-switcher"
-            class="flex items-center"
-          ></div>
         </div>
       </div>
     </nav>
@@ -435,16 +430,35 @@
     </div>
 
     <!-- Simple mode footer -->
-    <footer class="py-6 border-t border-gray-800">
-      <div class="container mx-auto px-4 text-center">
-        <p class="text-gray-500 text-sm" data-i18n="simpleMode.footer">
-          All processing happens locally in your browser. Your files never leave
-          your device.
-        </p>
+    <footer
+      class="mt-16 border-t-2 border-gray-700 py-8"
+      data-simple-footer="true"
+    >
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <div class="flex items-center mb-2">
+              <img
+                src="/images/favicon.svg"
+                alt="Bento PDF Logo"
+                class="h-8 w-8 mr-2"
+              />
+              <span class="text-white font-bold text-lg">BentoPDF</span>
+            </div>
+            <p class="text-gray-400 text-sm">
+              &copy; 2026 BentoPDF. All rights reserved.
+            </p>
+            <p class="text-gray-500 text-xs mt-2">
+              Version <span id="app-version-simple"></span>
+            </p>
+          </div>
+          <div id="simple-mode-lang-switcher" class="flex-shrink-0"></div>
+        </div>
       </div>
     </footer>
 
     <script type="module" src="src/js/utils/lucide-init.ts"></script>
+    <script type="module" src="src/js/utils/simple-mode-footer.ts"></script>
     <script type="module" src="src/version.ts"></script>
     <script type="module" src="src/js/main.ts"></script>
     <script type="module" src="src/js/sw-register.ts"></script>

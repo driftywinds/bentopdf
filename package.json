@@ -1,12 +1,12 @@
 {
   "name": "bento-pdf",
   "private": true,
-  "version": "1.15.4",
+  "version": "1.16.0",
   "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && NODE_OPTIONS='--max-old-space-size=4096' node scripts/generate-i18n-pages.mjs && node scripts/generate-sitemap.mjs",
     "build:with-docs": "npm run build && npm run docs:build && node scripts/include-docs-in-dist.js",
     "build:gzip": "COMPRESSION_MODE=g npm run build",
     "build:brotli": "COMPRESSION_MODE=b npm run build",

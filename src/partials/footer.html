@@ -1,10 +1,11 @@
+{{#if simpleMode}} {{> footer-simple}} {{else}}
 <footer class="mt-16 border-t-2 border-gray-700 py-8">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
       <div class="mb-8 md:mb-0">
         <div class="flex items-center justify-center md:justify-start mb-4">
           <img
-            src="/images/favicon.svg"
+            src="{{baseUrl}}images/favicon.svg"
             alt="Bento PDF Logo"
             class="h-10 w-10 mr-3"
           />
@@ -26,7 +27,7 @@
         <ul class="space-y-2 text-gray-400">
           <li>
             <a
-              href="/about.html"
+              href="about.html"
               class="hover:text-indigo-400"
               data-i18n="footer.aboutUs"
               >About Us</a
@@ -34,7 +35,7 @@
           </li>
           <li>
             <a
-              href="/faq.html"
+              href="faq.html"
               class="hover:text-indigo-400"
               data-i18n="footer.faqLink"
               >FAQ</a
@@ -42,7 +43,7 @@
           </li>
           <li>
             <a
-              href="/contact.html"
+              href="contact.html"
               class="hover:text-indigo-400"
               data-i18n="footer.contactUs"
               >Contact Us</a
@@ -58,7 +59,7 @@
         <ul class="space-y-2 text-gray-400">
           <li>
             <a
-              href="/licensing.html"
+              href="licensing.html"
               class="hover:text-indigo-400"
               data-i18n="nav.licensing"
               >Licensing</a
@@ -66,7 +67,7 @@
           </li>
           <li>
             <a
-              href="/terms.html"
+              href="terms.html"
               class="hover:text-indigo-400"
               data-i18n="footer.termsAndConditions"
               >Terms and Conditions</a
@@ -74,7 +75,7 @@
           </li>
           <li>
             <a
-              href="/privacy.html"
+              href="privacy.html"
               class="hover:text-indigo-400"
               data-i18n="footer.privacyPolicy"
               >Privacy Policy</a
@@ -161,3 +162,4 @@
     </div>
   </div>
 </footer>
+{{/if}}
