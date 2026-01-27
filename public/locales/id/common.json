@@ -66,7 +66,8 @@
     "pdfOrImages": "PDF atau Gambar",
     "filesNeverLeave": "File Anda tidak pernah meninggalkan perangkat Anda.",
     "addMore": "Tambah Lebih Banyak File",
-    "clearAll": "Hapus Semua"
+    "clearAll": "Hapus Semua",
+    "clearFiles": "Hapus file"
   },
   "loader": {
     "processing": "Memproses..."
@@ -226,7 +227,8 @@
     "error": "Kesalahan",
     "success": "Berhasil",
     "file": "File",
-    "files": "File"
+    "files": "File",
+    "close": "Tutup"
   },
   "about": {
     "hero": {

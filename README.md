@@ -3,10 +3,44 @@
 
 **BentoPDF** is a powerful, privacy-first, client-side PDF toolkit that is self hostable and allows you to manipulate, edit, merge, and process PDF files directly in your browser. No server-side processing is required, ensuring your files remain secure and private.
 
-![Docker Pulls](https://img.shields.io/docker/pulls/bentopdf/bentopdf) [![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?logo=kofi&style=flat-square)](https://ko-fi.com/alio01) ![GitHub Stars](https://img.shields.io/github/stars/alam00000/bentopdf?style=social)
+![Docker Pulls](https://img.shields.io/docker/pulls/bentopdfteam/bentopdf) [![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?logo=kofi&style=flat-square)](https://ko-fi.com/alio01) ![GitHub Stars](https://img.shields.io/github/stars/alam00000/bentopdf?style=social)
 [![Sponsor me on GitHub](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4)](https://github.com/sponsors/alam00000)
 
 ![BentoPDF Tools](public/images/bentopdf-tools.png)
+
+---
+
+## Table of Contents
+
+- [Join Us on Discord](#-join-us-on-discord)
+- [Documentation](#-documentation)
+- [Licensing](#-licensing)
+- [Stargazers over time](#-stargazers-over-time)
+- [Thank You to Our Sponsors](#-thank-you-to-our-sponsors)
+- [Why BentoPDF?](#-why-bentopdf)
+- [Features / Tools Supported](#️-features--tools-supported)
+  - [Organize & Manage PDFs](#organize--manage-pdfs)
+  - [Edit & Modify PDFs](#edit--modify-pdfs)
+  - [Convert to PDF](#convert-to-pdf)
+  - [Convert from PDF](#convert-from-pdf)
+  - [Secure & Optimize PDFs](#secure--optimize-pdfs)
+- [Translations](#-translations)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quick Start](#-quick-start)
+  - [Static Hosting](#static-hosting-using-netlify-vercel-and-github-pages)
+  - [Self-Hosting Locally](#-self-hosting-locally)
+  - [Docker Compose / Podman Compose](#-run-with-docker-compose--podman-compose-recommended)
+  - [Podman Quadlet](#-podman-quadlet-systemd-integration)
+  - [Simple Mode](#-simple-mode-for-internal-use)
+  - [Security Features](#-security-features)
+  - [Digital Signature CORS Proxy](#digital-signature-cors-proxy-required)
+  - [Version Management](#-version-management)
+  - [Development Setup](#-development-setup)
+- [Tech Stack & Background](#️-tech-stack--background)
+- [Roadmap](#️-roadmap)
+- [Contributing](#-contributing)
+- [Special Thanks](#special-thanks)
 
 ---
 
@@ -247,22 +281,9 @@ You can run BentoPDF locally for development or personal use.
 - [npm](https://www.npmjs.com/) (or yarn/pnpm)
 - [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/install/) (for containerized setup)
 
-### 🚀 Quick Start with Docker
+### 🚀 Quick Start
 
-[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/K4AU2B)
-
-You can run BentoPDF directly from Docker Hub or GitHub Container Registry without cloning the repository:
-
-You can also watch the video on how to set it up 👉
-[BentoPDF Docker Setup](https://drive.google.com/file/d/1C4eJ2nqeaH__1Tlad-xuBHaF2Ha4fSBf/view?usp=drive_link)
-
-**Using Docker Hub:**
-
-```bash
-docker run -p 3000:8080 bentopdf/bentopdf:latest
-```
-
-**Using GitHub Container Registry:**
+Run BentoPDF instantly from GitHub Container Registry (Recommended):
 
 ```bash
 docker run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
@@ -270,11 +291,34 @@ docker run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
 
 Open your browser at: http://localhost:3000
 
-This is the fastest way to try BentoPDF without setting up a development environment.
+<details>
+<summary><b>Alternative: Using Docker Hub or Podman</b></summary>
+
+**Docker Hub:**
+
+```bash
+docker run -p 3000:8080 bentopdfteam/bentopdf:latest
+```
+
+**Podman (GHCR):**
+
+```bash
+podman run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
+```
+
+**Podman (Docker Hub):**
+
+```bash
+podman run -p 3000:8080 docker.io/bentopdfteam/bentopdf:latest
+```
+
+> **Note:** All `docker` commands in this documentation work with Podman by replacing `docker` with `podman`.
+
+</details>
 
 ### Static Hosting using Netlify, Vercel, and GitHub Pages
 
-It is very straightforward to host your own instance of BentoPDF using a static web page hosting service. Plus, services such as Netlify, Vercel, and GitHub Pages all offer a free tier for getting started. See [Static Hosting](https://github.com/alam00000/bentopdf/blob/main/STATIC-HOSTING.md)) for details.
+It is very straightforward to host your own instance of BentoPDF using a static web page hosting service. Plus, services such as Netlify, Vercel, and GitHub Pages all offer a free tier for getting started. See [Static Hosting](https://github.com/alam00000/bentopdf/blob/main/STATIC-HOSTING.md) for details.
 
 ### 🏠 Self-Hosting Locally
 
@@ -431,7 +475,7 @@ docker run -p 3000:8080 bentopdf-simple
 > - Always include trailing slashes in `BASE_URL` (e.g., `/bentopdf/` not `/bentopdf`)
 > - The default value is `/` for root deployment
 
-### 🚀 Run with Docker Compose (Recommended)
+### 🚀 Run with Docker Compose / Podman Compose (Recommended)
 
 For a more robust setup with auto-restart capabilities:
 
@@ -440,7 +484,8 @@ For a more robust setup with auto-restart capabilities:
 ```yaml
 services:
   bentopdf:
-    image: bentopdf/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf:latest # Recommended
+    # image: bentopdfteam/bentopdf:latest     # Alternative: Docker Hub
     container_name: bentopdf
     ports:
       - '3000:8080'
@@ -450,10 +495,47 @@ services:
 2. **Start the application**:
 
 ```bash
+# Docker Compose
 docker-compose up -d
+
+# Podman Compose
+podman-compose up -d
 ```
 
 The application will be available at `http://localhost:3000`.
+
+### 🐧 Podman Quadlet (Systemd Integration)
+
+For Linux production deployments, you can run BentoPDF as a systemd service using [Podman Quadlet](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html).
+
+Create `~/.config/containers/systemd/bentopdf.container`:
+
+```ini
+[Unit]
+Description=BentoPDF - Privacy-first PDF toolkit
+After=network-online.target
+
+[Container]
+Image=ghcr.io/alam00000/bentopdf:latest
+ContainerName=bentopdf
+PublishPort=3000:8080
+AutoUpdate=registry
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
+```
+
+Then enable and start:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now bentopdf
+```
+
+For detailed Quadlet configuration, see [Self-Hosting Docker Guide](https://bentopdf.com/docs/self-hosting/docker).
 
 ### 🏢 Simple Mode for Internal Use
 
@@ -574,19 +656,19 @@ VITE_CORS_PROXY_SECRET=your-secret npm run build
 
 ### 📦 Version Management
 
-BentoPDF supports semantic versioning with multiple Docker tags available on both Docker Hub and GitHub Container Registry:
+BentoPDF supports semantic versioning with multiple container tags available:
 
-**Docker Hub:**
-
-- **Latest**: `bentopdf/bentopdf:latest`
-- **Specific Version**: `bentopdf/bentopdf:1.0.0`
-- **Version with Prefix**: `bentopdf/bentopdf:v1.0.0`
-
-**GitHub Container Registry:**
+**GitHub Container Registry (Recommended):**
 
 - **Latest**: `ghcr.io/alam00000/bentopdf:latest`
 - **Specific Version**: `ghcr.io/alam00000/bentopdf:1.0.0`
 - **Version with Prefix**: `ghcr.io/alam00000/bentopdf:v1.0.0`
+
+**Docker Hub:**
+
+- **Latest**: `bentopdfteam/bentopdf:latest`
+- **Specific Version**: `bentopdfteam/bentopdf:1.0.0`
+- **Version with Prefix**: `bentopdfteam/bentopdf:v1.0.0`
 
 #### Quick Release
 

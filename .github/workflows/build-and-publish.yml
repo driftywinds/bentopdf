@@ -109,7 +109,7 @@ jobs:
           build-args: |
             SIMPLE_MODE=${{ matrix.mode.simple_mode }}
           tags: |
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64
             ghcr.io/${{ github.repository_owner }}/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64
           platforms: linux/amd64
           cache-from: type=gha,scope=amd64-${{ matrix.mode.name }}
@@ -123,7 +123,7 @@ jobs:
           build-args: |
             SIMPLE_MODE=${{ matrix.mode.simple_mode }}
           tags: |
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:edge-amd64
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:edge-amd64
             ghcr.io/${{ github.repository_owner }}/bentopdf${{ matrix.mode.suffix }}:edge-amd64
           platforms: linux/amd64
           cache-from: type=gha,scope=amd64-${{ matrix.mode.name }}
@@ -186,7 +186,7 @@ jobs:
           build-args: |
             SIMPLE_MODE=${{ matrix.mode.simple_mode }}
           tags: |
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
             ghcr.io/${{ github.repository_owner }}/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
           platforms: linux/arm64
           cache-from: type=gha,scope=arm64-${{ matrix.mode.name }}
@@ -200,7 +200,7 @@ jobs:
           build-args: |
             SIMPLE_MODE=${{ matrix.mode.simple_mode }}
           tags: |
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:edge-arm64
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:edge-arm64
             ghcr.io/${{ github.repository_owner }}/bentopdf${{ matrix.mode.suffix }}:edge-arm64
           platforms: linux/arm64
           cache-from: type=gha,scope=arm64-${{ matrix.mode.name }}
@@ -253,17 +253,17 @@ jobs:
         if: steps.version.outputs.is_release == 'true'
         run: |
           # DockerHub manifests
-          docker buildx imagetools create -t bentopdf/bentopdf${{ matrix.mode.suffix }}:latest \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64 \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
+          docker buildx imagetools create -t bentopdfteam/bentopdf${{ matrix.mode.suffix }}:latest \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64 \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
           
-          docker buildx imagetools create -t bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }} \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64 \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
+          docker buildx imagetools create -t bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }} \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64 \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
           
-          docker buildx imagetools create -t bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version_without_v }} \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64 \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
+          docker buildx imagetools create -t bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version_without_v }} \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-amd64 \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:${{ steps.version.outputs.version }}-arm64
           
           # GHCR manifests
           docker buildx imagetools create -t ghcr.io/${{ github.repository_owner }}/bentopdf${{ matrix.mode.suffix }}:latest \
@@ -282,13 +282,13 @@ jobs:
         if: steps.version.outputs.is_release == 'false'
         run: |
           # DockerHub manifests
-          docker buildx imagetools create -t bentopdf/bentopdf${{ matrix.mode.suffix }}:edge \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:edge-amd64 \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:edge-arm64
+          docker buildx imagetools create -t bentopdfteam/bentopdf${{ matrix.mode.suffix }}:edge \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:edge-amd64 \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:edge-arm64
           
-          docker buildx imagetools create -t bentopdf/bentopdf${{ matrix.mode.suffix }}:sha-${{ steps.version.outputs.short_sha }} \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:edge-amd64 \
-            bentopdf/bentopdf${{ matrix.mode.suffix }}:edge-arm64
+          docker buildx imagetools create -t bentopdfteam/bentopdf${{ matrix.mode.suffix }}:sha-${{ steps.version.outputs.short_sha }} \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:edge-amd64 \
+            bentopdfteam/bentopdf${{ matrix.mode.suffix }}:edge-arm64
           
           # GHCR manifests
           docker buildx imagetools create -t ghcr.io/${{ github.repository_owner }}/bentopdf${{ matrix.mode.suffix }}:edge \

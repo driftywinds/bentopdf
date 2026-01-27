@@ -66,7 +66,8 @@
     "pdfOrImages": "PDF 或圖片",
     "filesNeverLeave": "你的檔案永遠不會離開你的裝置。",
     "addMore": "添加更多檔案",
-    "clearAll": "清除全部"
+    "clearAll": "清除全部",
+    "clearFiles": "清除檔案"
   },
   "loader": {
     "processing": "正在處理..."
@@ -226,7 +227,8 @@
     "error": "錯誤",
     "success": "成功",
     "file": "檔案",
-    "files": "檔案"
+    "files": "檔案",
+    "close": "關閉"
   },
   "about": {
     "hero": {

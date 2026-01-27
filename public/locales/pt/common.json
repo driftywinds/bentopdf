@@ -66,7 +66,8 @@
     "pdfOrImages": "PDFs ou Imagens",
     "filesNeverLeave": "Seus arquivos nunca saem do seu dispositivo.",
     "addMore": "Adicionar Mais Arquivos",
-    "clearAll": "Limpar Tudo"
+    "clearAll": "Limpar Tudo",
+    "clearFiles": "Limpar arquivos"
   },
   "loader": {
     "processing": "Processando..."
@@ -226,7 +227,8 @@
     "error": "Erro",
     "success": "Sucesso",
     "file": "Arquivo",
-    "files": "Arquivos"
+    "files": "Arquivos",
+    "close": "Fechar"
   },
   "about": {
     "hero": {

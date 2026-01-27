@@ -173,7 +173,7 @@ async function generateI18nPages() {
             : href;
           newHref = `${BASE_PATH}/${lang}${pathWithoutBase}`;
         } else {
-          newHref = `${lang}/${href}`;
+          newHref = `${BASE_PATH}/${lang}/${href}`;
         }
 
         link.setAttribute('href', newHref);

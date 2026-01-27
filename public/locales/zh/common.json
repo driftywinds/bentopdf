@@ -66,7 +66,8 @@
     "pdfOrImages": "PDF 或图片",
     "filesNeverLeave": "您的文件从未离开您的设备。",
     "addMore": "添加更多文件",
-    "clearAll": "清空所有"
+    "clearAll": "清空所有",
+    "clearFiles": "清除文件"
   },
   "loader": {
     "processing": "处理中..."
@@ -226,7 +227,8 @@
     "error": "错误",
     "success": "成功",
     "file": "文件",
-    "files": "文件"
+    "files": "文件",
+    "close": "关闭"
   },
   "about": {
     "hero": {

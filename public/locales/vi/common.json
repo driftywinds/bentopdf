@@ -66,7 +66,8 @@
     "pdfOrImages": "PDF hoặc Hình ảnh",
     "filesNeverLeave": "Tệp của bạn không bao giờ rời khỏi thiết bị.",
     "addMore": "Thêm tệp",
-    "clearAll": "Xóa tất cả"
+    "clearAll": "Xóa tất cả",
+    "clearFiles": "Xóa tệp"
   },
   "loader": {
     "processing": "Đang xử lý..."
@@ -226,7 +227,8 @@
     "error": "Lỗi",
     "success": "Thành công",
     "file": "Tệp",
-    "files": "Tệp"
+    "files": "Tệp",
+    "close": "Đóng"
   },
   "about": {
     "hero": {

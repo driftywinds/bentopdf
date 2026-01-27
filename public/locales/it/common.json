@@ -66,7 +66,8 @@
     "pdfOrImages": "PDF o immagini",
     "filesNeverLeave": "I tuoi file non lasciano mai il tuo dispositivo.",
     "addMore": "Aggiungi altri file",
-    "clearAll": "Svuota tutto"
+    "clearAll": "Svuota tutto",
+    "clearFiles": "Cancella file"
   },
   "loader": {
     "processing": "Elaborazione..."
@@ -226,7 +227,8 @@
     "error": "Errore",
     "success": "Successo",
     "file": "File",
-    "files": "File"
+    "files": "File",
+    "close": "Chiudi"
   },
   "about": {
     "hero": {
