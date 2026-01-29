@@ -3,7 +3,7 @@
 ARG BASE_URL=
 
 # Build stage
-FROM node:20-alpine AS builder
+FROM public.ecr.aws/docker/library/node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 COPY vendor ./vendor
@@ -22,18 +22,16 @@ ENV SIMPLE_MODE=$SIMPLE_MODE
 ARG COMPRESSION_MODE=all
 ENV COMPRESSION_MODE=$COMPRESSION_MODE
 
-# global arg to local arg
+# global arg to local arg - BASE_URL is read from env by vite.config.ts
 ARG BASE_URL
 ENV BASE_URL=$BASE_URL
 
-RUN if [ -z "$BASE_URL" ]; then \
-    npm run build -- --mode production; \
-    else \
-    npm run build -- --base=${BASE_URL} --mode production; \
-    fi
+ENV NODE_OPTIONS="--max-old-space-size=3072"
+
+RUN npm run build:with-docs
 
 # Production stage
-FROM nginxinc/nginx-unprivileged:stable-alpine-slim
+FROM quay.io/nginx/nginx-unprivileged:stable-alpine-slim
 
 LABEL org.opencontainers.image.source="https://github.com/alam00000/bentopdf"
 LABEL org.opencontainers.image.url="https://github.com/alam00000/bentopdf"

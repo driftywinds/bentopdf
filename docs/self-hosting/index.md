@@ -118,13 +118,49 @@ Choose your platform:
 - [Kubernetes](/self-hosting/kubernetes)
 - [CORS Proxy](/self-hosting/cors-proxy) - Required for digital signatures
 
+## Configuring AGPL WASM Components
+
+BentoPDF **does not bundle** AGPL-licensed processing libraries. Some advanced features require you to configure WASM modules separately.
+
+::: warning AGPL Components Not Included
+The following WASM modules are **not bundled** with BentoPDF and must be configured by users who want to use features powered by these libraries:
+
+| Component       | License  | Features                                                         |
+| --------------- | -------- | ---------------------------------------------------------------- |
+| **PyMuPDF**     | AGPL-3.0 | EPUB/MOBI/FB2/XPS conversion, image extraction, table extraction |
+| **Ghostscript** | AGPL-3.0 | PDF/A conversion, compression, deskewing, rasterization          |
+| **CoherentPDF** | AGPL-3.0 | Table of contents, attachments, PDF merge with bookmarks         |
+
+:::
+
+### How to Configure WASM Sources
+
+1. Navigate to **Advanced Settings** in the BentoPDF interface
+2. Enter the URLs for the WASM modules you want to use
+3. You can use:
+   - Your own hosted WASM files
+   - A [WASM proxy](/self-hosting/cors-proxy) you deploy (handles CORS)
+   - Any compatible CDN hosting these packages
+
+### Hosting Your Own WASM Proxy
+
+If you need to serve AGPL WASM files with proper CORS headers, you can deploy a simple proxy. See the [Cloudflare WASM Proxy guide](https://github.com/alam00000/bentopdf/blob/main/cloudflare/WASM-PROXY.md) for an example implementation.
+
+::: tip Why Separate?
+This separation ensures:
+
+- Clear legal compliance for commercial users
+- Users make informed choices when enabling AGPL features
+- BentoPDF's core remains under its dual-license (AGPL-3.0 / Commercial)
+  :::
+
 ## System Requirements
 
-| Requirement | Minimum                         |
-| ----------- | ------------------------------- |
-| Storage     | ~500 MB (with all WASM modules) |
-| RAM         | 512 MB                          |
-| CPU         | Any modern processor            |
+| Requirement | Minimum                             |
+| ----------- | ----------------------------------- |
+| Storage     | ~100 MB (core without AGPL modules) |
+| RAM         | 512 MB                              |
+| CPU         | Any modern processor                |
 
 ::: tip
 BentoPDF is a static site—there's no database or backend server required!

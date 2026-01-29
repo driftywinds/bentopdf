@@ -275,34 +275,6 @@ export default defineConfig(() => {
 
   const staticCopyTargets = [
     {
-      src: 'node_modules/@bentopdf/pymupdf-wasm/assets/*.wasm',
-      dest: 'pymupdf-wasm',
-    },
-    {
-      src: 'node_modules/@bentopdf/pymupdf-wasm/assets/*.js',
-      dest: 'pymupdf-wasm',
-    },
-    {
-      src: 'node_modules/@bentopdf/pymupdf-wasm/assets/*.whl',
-      dest: 'pymupdf-wasm',
-    },
-    {
-      src: 'node_modules/@bentopdf/pymupdf-wasm/assets/*.zip',
-      dest: 'pymupdf-wasm',
-    },
-    {
-      src: 'node_modules/@bentopdf/pymupdf-wasm/assets/*.json',
-      dest: 'pymupdf-wasm',
-    },
-    {
-      src: 'node_modules/@bentopdf/gs-wasm/assets/*.wasm',
-      dest: 'ghostscript-wasm',
-    },
-    {
-      src: 'node_modules/@bentopdf/gs-wasm/assets/*.js',
-      dest: 'ghostscript-wasm',
-    },
-    {
       src: 'node_modules/embedpdf-snippet/dist/pdfium.wasm',
       dest: 'embedpdf',
     },
@@ -574,6 +546,7 @@ export default defineConfig(() => {
             'src/pages/font-to-outline.html'
           ),
           'deskew-pdf': resolve(__dirname, 'src/pages/deskew-pdf.html'),
+          'wasm-settings': resolve(__dirname, 'src/pages/wasm-settings.html'),
         },
       },
     },

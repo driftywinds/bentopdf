@@ -1,6 +1,8 @@
 import { showAlert } from '../ui.js';
 import { downloadFile, formatBytes } from '../utils/helpers.js';
 import { convertFileToOutlines } from '../utils/ghostscript-loader.js';
+import { isGhostscriptAvailable } from '../utils/ghostscript-dynamic-loader.js';
+import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
 import { icons, createIcons } from 'lucide';
 import JSZip from 'jszip';
 
@@ -95,6 +97,12 @@ function handleFileSelect(files: FileList | null) {
 async function processFiles() {
   if (pageState.files.length === 0) {
     showAlert('No Files', 'Please select at least one PDF file.');
+    return;
+  }
+
+  // Check if Ghostscript is configured
+  if (!isGhostscriptAvailable()) {
+    showWasmRequiredDialog('ghostscript');
     return;
   }
 

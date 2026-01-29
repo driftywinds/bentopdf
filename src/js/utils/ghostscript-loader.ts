@@ -1,10 +1,14 @@
 /**
  * PDF/A Conversion using Ghostscript WASM
- * * Converts PDFs to PDF/A-1b, PDF/A-2b, or PDF/A-3b format.
+ * Converts PDFs to PDF/A-1b, PDF/A-2b, or PDF/A-3b format.
+ * Requires user to configure Ghostscript URL in WASM Settings.
  */
 
-import loadWASM from '@bentopdf/gs-wasm';
-import { getWasmBaseUrl, fetchWasmFile } from '../config/wasm-cdn-config.js';
+import {
+  getWasmBaseUrl,
+  fetchWasmFile,
+  isWasmAvailable,
+} from '../config/wasm-cdn-config.js';
 import { PDFDocument, PDFDict, PDFName, PDFArray } from 'pdf-lib';
 
 interface GhostscriptModule {
@@ -34,6 +38,12 @@ export async function convertToPdfA(
   level: PdfALevel = 'PDF/A-2b',
   onProgress?: (msg: string) => void
 ): Promise<Uint8Array> {
+  if (!isWasmAvailable('ghostscript')) {
+    throw new Error(
+      'Ghostscript is not configured. Please configure it in WASM Settings.'
+    );
+  }
+
   onProgress?.('Loading Ghostscript...');
 
   let gs: GhostscriptModule;
@@ -41,11 +51,16 @@ export async function convertToPdfA(
   if (cachedGsModule) {
     gs = cachedGsModule;
   } else {
-    const gsBaseUrl = getWasmBaseUrl('ghostscript');
+    const gsBaseUrl = getWasmBaseUrl('ghostscript')!;
+    const libUrl = `${gsBaseUrl}dist/index.js`;
+    const module = await import(/* @vite-ignore */ libUrl);
+    const loadWASM = module.loadGhostscriptWASM || module.default;
+
     gs = (await loadWASM({
+      baseUrl: `${gsBaseUrl}assets/`,
       locateFile: (path: string) => {
         if (path.endsWith('.wasm')) {
-          return gsBaseUrl + 'gs.wasm';
+          return gsBaseUrl + 'assets/gs.wasm';
         }
         return path;
       },
@@ -73,11 +88,12 @@ export async function convertToPdfA(
 
   try {
     const iccFileName = 'sRGB_IEC61966-2-1_no_black_scaling.icc';
-    const response = await fetchWasmFile('ghostscript', iccFileName);
+    const iccLocalPath = `${import.meta.env.BASE_URL}ghostscript-wasm/${iccFileName}`;
+    const response = await fetch(iccLocalPath);
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch ICC profile: ${iccFileName}. Ensure it is in your assets folder.`
+        `Failed to fetch ICC profile from ${iccLocalPath}: HTTP ${response.status}`
       );
     }
 
@@ -362,6 +378,12 @@ export async function convertFontsToOutlines(
   pdfData: Uint8Array,
   onProgress?: (msg: string) => void
 ): Promise<Uint8Array> {
+  if (!isWasmAvailable('ghostscript')) {
+    throw new Error(
+      'Ghostscript is not configured. Please configure it in WASM Settings.'
+    );
+  }
+
   onProgress?.('Loading Ghostscript...');
 
   let gs: GhostscriptModule;
@@ -369,11 +391,16 @@ export async function convertFontsToOutlines(
   if (cachedGsModule) {
     gs = cachedGsModule;
   } else {
-    const gsBaseUrl = getWasmBaseUrl('ghostscript');
+    const gsBaseUrl = getWasmBaseUrl('ghostscript')!;
+    const libUrl = `${gsBaseUrl}dist/index.js`;
+    const module = await import(/* @vite-ignore */ libUrl);
+    const loadWASM = module.loadGhostscriptWASM || module.default;
+
     gs = (await loadWASM({
+      baseUrl: `${gsBaseUrl}assets/`,
       locateFile: (path: string) => {
         if (path.endsWith('.wasm')) {
-          return gsBaseUrl + 'gs.wasm';
+          return gsBaseUrl + 'assets/gs.wasm';
         }
         return path;
       },

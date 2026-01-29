@@ -1,5 +1,10 @@
 <p align="center"><img src="public/images/favicon-no-bg.svg" width="80"></p>
 <h1 align="center">BentoPDF</h1>
+<p align="center">
+  <a href="https://www.digitalocean.com/?refcode=d93c189ef6d0&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
+    <img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%203.svg" alt="DigitalOcean Referral Badge">
+  </a>
+</p>
 
 **BentoPDF** is a powerful, privacy-first, client-side PDF toolkit that is self hostable and allows you to manipulate, edit, merge, and process PDF files directly in your browser. No server-side processing is required, ensuring your files remain secure and private.
 
@@ -84,6 +89,24 @@ BentoPDF is **dual-licensed** to fit your needs:
 > **One-time purchase** · **Unlimited devices & users** · **Lifetime updates** · **No AGPL obligations**
 
 📖 For more details, see our [Licensing Page](https://bentopdf.com/licensing.html)
+
+### AGPL Components (Not Bundled)
+
+BentoPDF does **not** bundle AGPL-licensed processing libraries. The following components must be configured separately via **Advanced Settings** if you wish to use their features:
+
+| Component              | License  | Features Enabled                                                                                    |
+| ---------------------- | -------- | --------------------------------------------------------------------------------------------------- |
+| **PyMuPDF**            | AGPL-3.0 | PDF to Text/Markdown/SVG/DOCX, Extract Images/Tables, EPUB/MOBI/XPS conversion, Compression, Deskew |
+| **Ghostscript**        | AGPL-3.0 | PDF/A Conversion, Font to Outline                                                                   |
+| **CoherentPDF (CPDF)** | AGPL-3.0 | Merge, Split by Bookmarks, Table of Contents, PDF to/from JSON, Attachments                         |
+
+> **Why?** This separation ensures clear legal boundaries. Users who need these features can configure their own WASM sources or use our optional [WASM Proxy](cloudflare/WASM-PROXY.md) to load them from external URLs.
+
+**To enable these features:**
+
+1. Navigate to **Advanced Settings** in BentoPDF
+2. Configure the URL for each WASM module you need
+3. The modules will be loaded dynamically when required
 
 <hr>
 
@@ -806,6 +829,8 @@ Documentation files are in the `docs/` folder:
 
 BentoPDF wouldn't be possible without the amazing open-source tools and libraries that power it. We'd like to extend our heartfelt thanks to the creators and maintainers of:
 
+**Bundled Libraries:**
+
 - **[PDFLib.js](https://pdf-lib.js.org/)** – For enabling powerful client-side PDF manipulation.
 - **[PDF.js](https://mozilla.github.io/pdf.js/)** – For the robust PDF rendering engine in the browser.
 - **[PDFKit](https://pdfkit.org/)** – For creating and editing PDFs with ease.
@@ -813,10 +838,15 @@ BentoPDF wouldn't be possible without the amazing open-source tools and librarie
 - **[Cropper.js](https://fengyuanchen.github.io/cropperjs/)** – For intuitive image cropping functionality.
 - **[Vite](https://vitejs.dev/)** – For lightning-fast development and build tooling.
 - **[Tailwind CSS](https://tailwindcss.com/)** – For rapid, flexible, and beautiful UI styling.
-- **[qpdf](https://github.com/qpdf/qpdf)** and **[qpdf-wasm](https://github.com/neslinesli93/qpdf-wasm)**– A powerful command-line tool and library for inspecting, repairing, and transforming PDF file ported to wasm
-- **[cpdf](https://www.coherentpdf.com/)** – For content preserving pdf operations.
+- **[qpdf](https://github.com/qpdf/qpdf)** and **[qpdf-wasm](https://github.com/neslinesli93/qpdf-wasm)** – For inspecting, repairing, and transforming PDF files.
 - **[LibreOffice](https://www.libreoffice.org/)** – For powerful document conversion capabilities.
-- **[PyMuPDF](https://github.com/pymupdf/PyMuPDF)** – For high-performance PDF manipulation and data extraction.
-- **[Ghostscript(GhostPDL)](https://github.com/ArtifexSoftware/ghostpdl)** – Needs no Introduction.
+
+**AGPL Libraries (Not Bundled - User Configured):**
+
+- **[CoherentPDF (cpdf)](https://www.coherentpdf.com/)** – For content-preserving PDF operations. _(AGPL-3.0)_
+- **[PyMuPDF](https://github.com/pymupdf/PyMuPDF)** – For high-performance PDF manipulation and data extraction. _(AGPL-3.0)_
+- **[Ghostscript (GhostPDL)](https://github.com/ArtifexSoftware/ghostpdl)** – For PDF/A conversion and font outlining. _(AGPL-3.0)_
+
+> **Note:** AGPL-licensed libraries are not bundled with BentoPDF. Users can optionally configure these via Advanced Settings to enable additional features.
 
 Your work inspires and empowers developers everywhere. Thank you for making open-source amazing!

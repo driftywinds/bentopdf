@@ -12,13 +12,13 @@ For complete licensing information, delivery details, AGPL component notices, an
 
 ## When Do You Need a Commercial License?
 
-| Use Case | License Required |
-|----------|------------------|
-| Open-source project with public source code | AGPL-3.0 (Free) |
-| Internal company tool (not distributed) | AGPL-3.0 (Free) |
-| Proprietary/closed-source application | **Commercial License** |
+| Use Case                                    | License Required       |
+| ------------------------------------------- | ---------------------- |
+| Open-source project with public source code | AGPL-3.0 (Free)        |
+| Internal company tool (not distributed)     | AGPL-3.0 (Free)        |
+| Proprietary/closed-source application       | **Commercial License** |
 | SaaS product without source code disclosure | **Commercial License** |
-| Redistributing without AGPL compliance | **Commercial License** |
+| Redistributing without AGPL compliance      | **Commercial License** |
 
 ## Delivery & Licensing Model
 
@@ -30,12 +30,32 @@ For complete licensing information, delivery details, AGPL component notices, an
 
 ## Important Notice on Third-Party Components
 
-::: warning AGPL Components
-This software includes components licensed under the **GNU AGPL v3**, such as CPDF.
+::: warning AGPL Components - Not Bundled
+BentoPDF **does not bundle** AGPL-licensed processing libraries. The following components are loaded separately by users who configure them via **Advanced Settings**:
 
-- This commercial license **does not** grant rights to use AGPL components in a closed-source manner.
-- Users must comply with the AGPL v3 terms for these components.
-- Source code for all AGPL components is included in the distribution.
+| Component       | License  | Status                        |
+| --------------- | -------- | ----------------------------- |
+| **PyMuPDF**     | AGPL-3.0 | Not bundled - user configured |
+| **Ghostscript** | AGPL-3.0 | Not bundled - user configured |
+| **CoherentPDF** | AGPL-3.0 | Not bundled - user configured |
+
+**Why are AGPL binaries not included?**
+
+To maintain clear legal separation, BentoPDF does not distribute AGPL-licensed binaries. Users who need features powered by these libraries can:
+
+1. Configure their own WASM sources in Advanced Settings
+2. Host their own WASM proxy to serve these files
+3. Use any compatible CDN that hosts these packages
+
+This approach ensures:
+
+- BentoPDF's core code remains under its dual-license (AGPL-3.0 / Commercial)
+- Users make an informed choice when enabling AGPL features
+- Clear compliance boundaries for commercial users
+  :::
+
+::: tip Commercial License & AGPL Features
+The commercial license covers BentoPDF's own code. If you configure and use AGPL components (PyMuPDF, Ghostscript, CoherentPDF), you must still comply with their respective AGPL-3.0 license terms, which may require source code disclosure if you distribute modified versions.
 :::
 
 ## Invoicing
@@ -47,15 +67,15 @@ This software includes components licensed under the **GNU AGPL v3**, such as CP
 
 ## What's Included
 
-| Feature | Included |
-|---------|----------|
-| Full source code | ✅ |
-| All 50+ PDF tools | ✅ |
-| Self-hosting rights | ✅ |
-| Lifetime updates | ✅ |
-| Remove branding (Simple Mode) | ✅ |
-| Commercial support | ✅ (via email) |
-| Priority feature requests | ✅ |
+| Feature                       | Included       |
+| ----------------------------- | -------------- |
+| Full source code              | ✅             |
+| All 50+ PDF tools             | ✅             |
+| Self-hosting rights           | ✅             |
+| Lifetime updates              | ✅             |
+| Remove branding (Simple Mode) | ✅             |
+| Commercial support            | ✅ (via email) |
+| Priority feature requests     | ✅             |
 
 ## FAQ
 
@@ -69,7 +89,7 @@ Yes, with a commercial license. Without it, you must comply with AGPL-3.0, which
 
 ### What about the AGPL components?
 
-Components like CPDF are licensed under AGPL v3 and remain under that license. The commercial license covers BentoPDF's own code but does not override third-party AGPL obligations.
+Components like CoherentPDF are licensed under AGPL v3 and remain under that license. The commercial license covers BentoPDF's own code but does not override third-party AGPL obligations.
 
 ### How do I get an invoice?
 

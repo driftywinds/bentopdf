@@ -1,4 +1,6 @@
-import { PyMuPDF } from '@bentopdf/pymupdf-wasm';
+import { isWasmAvailable, getWasmBaseUrl } from '../config/wasm-cdn-config.js';
+import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
+import { loadPyMuPDF, isPyMuPDFAvailable } from '../utils/pymupdf-loader.js';
 import { createIcons, icons } from 'lucide';
 import { downloadFile } from '../utils/helpers';
 
@@ -10,13 +12,11 @@ interface DeskewResult {
 }
 
 let selectedFiles: File[] = [];
-let pymupdf: PyMuPDF | null = null;
+let pymupdf: any = null;
 
-function initPyMuPDF(): PyMuPDF {
+async function initPyMuPDF(): Promise<any> {
   if (!pymupdf) {
-    pymupdf = new PyMuPDF({
-      assetPath: import.meta.env.BASE_URL + 'pymupdf-wasm/',
-    });
+    pymupdf = await loadPyMuPDF();
   }
   return pymupdf;
 }
@@ -137,6 +137,12 @@ async function processDeskew(): Promise<void> {
     return;
   }
 
+  // Check if PyMuPDF is configured
+  if (!isWasmAvailable('pymupdf')) {
+    showWasmRequiredDialog('pymupdf');
+    return;
+  }
+
   const thresholdSelect = document.getElementById(
     'deskew-threshold'
   ) as HTMLSelectElement;
@@ -148,7 +154,7 @@ async function processDeskew(): Promise<void> {
   showLoader('Initializing PyMuPDF...');
 
   try {
-    const pdf = initPyMuPDF();
+    const pdf = await initPyMuPDF();
     await pdf.load();
 
     for (const file of selectedFiles) {

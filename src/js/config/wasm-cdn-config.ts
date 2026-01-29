@@ -1,75 +1,52 @@
-/**
- * WASM CDN Configuration
- * 
- * Centralized configuration for loading WASM files from jsDelivr CDN or local paths.
- * Supports environment-based toggling and automatic fallback mechanism.
- */
+import { PACKAGE_VERSIONS } from '../const/cdn-version';
+import { WasmProvider } from '../utils/wasm-provider';
 
-const USE_CDN = import.meta.env.VITE_USE_CDN === 'true';
-import { CDN_URLS, PACKAGE_VERSIONS } from '../const/cdn-version';
+export type WasmPackage = 'ghostscript' | 'pymupdf' | 'cpdf';
 
-const LOCAL_PATHS = {
-    ghostscript: import.meta.env.BASE_URL + 'ghostscript-wasm/',
-    pymupdf: import.meta.env.BASE_URL + 'pymupdf-wasm/',
-} as const;
+export function getWasmBaseUrl(packageName: WasmPackage): string | undefined {
+  const userUrl = WasmProvider.getUrl(packageName);
+  if (userUrl) {
+    console.log(
+      `[WASM Config] Using configured URL for ${packageName}: ${userUrl}`
+    );
+    return userUrl;
+  }
 
-export type WasmPackage = 'ghostscript' | 'pymupdf';
-
-export function getWasmBaseUrl(packageName: WasmPackage): string {
-    if (USE_CDN) {
-        return CDN_URLS[packageName];
-    }
-    return LOCAL_PATHS[packageName];
+  console.warn(
+    `[WASM Config] No URL configured for ${packageName}. Feature unavailable.`
+  );
+  return undefined;
 }
 
-export function getWasmFallbackUrl(packageName: WasmPackage): string {
-    return LOCAL_PATHS[packageName];
+export function isWasmAvailable(packageName: WasmPackage): boolean {
+  return WasmProvider.isConfigured(packageName);
 }
 
-
-export function isCdnEnabled(): boolean {
-    return USE_CDN;
-}
-
-/**
- * Fetch a file with automatic CDN → local fallback
- * @param packageName - WASM package name
- * @param fileName - File name relative to package base
- * @returns Response object
- */
 export async function fetchWasmFile(
-    packageName: WasmPackage,
-    fileName: string
+  packageName: WasmPackage,
+  fileName: string
 ): Promise<Response> {
-    const cdnUrl = CDN_URLS[packageName] + fileName;
-    const localUrl = LOCAL_PATHS[packageName] + fileName;
+  const baseUrl = getWasmBaseUrl(packageName);
 
-    if (USE_CDN) {
-        try {
-            console.log(`[WASM CDN] Fetching from CDN: ${cdnUrl}`);
-            const response = await fetch(cdnUrl);
-            if (response.ok) {
-                return response;
-            }
-            console.warn(`[WASM CDN] CDN fetch failed with status ${response.status}, trying local fallback...`);
-        } catch (error) {
-            console.warn(`[WASM CDN] CDN fetch error:`, error, `- trying local fallback...`);
-        }
-    }
+  if (!baseUrl) {
+    throw new Error(
+      `No URL configured for ${packageName}. Please configure it in WASM Settings.`
+    );
+  }
 
-    const response = await fetch(localUrl);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch ${fileName}: HTTP ${response.status}`);
-    }
-    return response;
+  const url = baseUrl + fileName;
+  console.log(`[WASM] Fetching: ${url}`);
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${fileName}: HTTP ${response.status}`);
+  }
+  return response;
 }
 
-// use this to debug
 export function getWasmConfigInfo() {
-    return {
-        cdnEnabled: USE_CDN,
-        packageVersions: PACKAGE_VERSIONS,
-        cdnUrls: CDN_URLS,
-        localPaths: LOCAL_PATHS,
-    };
+  return {
+    packageVersions: PACKAGE_VERSIONS,
+    configuredProviders: WasmProvider.getAllProviders(),
+  };
 }
