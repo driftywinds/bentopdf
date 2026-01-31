@@ -5,7 +5,7 @@
  * Version: 1.1.0
  */
 
-const CACHE_VERSION = 'bentopdf-v8';
+const CACHE_VERSION = 'bentopdf-v10';
 const CACHE_NAME = `${CACHE_VERSION}-static`;
 
 const getBasePath = () => {
@@ -14,30 +14,10 @@ const getBasePath = () => {
   return url.pathname.replace(/\/$/, '') || '';
 };
 
-const buildCriticalAssets = (basePath) => [
-  `${basePath}/pymupdf-wasm/pyodide.js`,
-  `${basePath}/pymupdf-wasm/pyodide.asm.js`,
-  `${basePath}/pymupdf-wasm/pyodide.asm.wasm`,
-  `${basePath}/pymupdf-wasm/python_stdlib.zip`,
-  `${basePath}/pymupdf-wasm/pyodide-lock.json`,
-
-  `${basePath}/pymupdf-wasm/pymupdf-1.26.3-cp313-none-pyodide_2025_0_wasm32.whl`,
-  `${basePath}/pymupdf-wasm/numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl`,
-  `${basePath}/pymupdf-wasm/opencv_python-4.11.0.86-cp313-cp313-pyodide_2025_0_wasm32.whl`,
-  `${basePath}/pymupdf-wasm/lxml-5.4.0-cp313-cp313-pyodide_2025_0_wasm32.whl`,
-  `${basePath}/pymupdf-wasm/python_docx-1.2.0-py3-none-any.whl`,
-  `${basePath}/pymupdf-wasm/pdf2docx-0.5.8-py3-none-any.whl`,
-  `${basePath}/pymupdf-wasm/fonttools-4.56.0-py3-none-any.whl`,
-  `${basePath}/pymupdf-wasm/typing_extensions-4.12.2-py3-none-any.whl`,
-  `${basePath}/pymupdf-wasm/pymupdf4llm-0.0.27-py3-none-any.whl`,
-
-  `${basePath}/ghostscript-wasm/gs.js`,
-  `${basePath}/ghostscript-wasm/gs.wasm`,
-];
+const buildCriticalAssets = () => [];
 
 self.addEventListener('install', (event) => {
-  const basePath = getBasePath();
-  const CRITICAL_ASSETS = buildCriticalAssets(basePath);
+  const CRITICAL_ASSETS = buildCriticalAssets();
   // console.log('🚀 [ServiceWorker] Installing version:', CACHE_VERSION);
   // console.log('📍 [ServiceWorker] Base path detected:', basePath || '/');
   // console.log('📦 [ServiceWorker] Will cache', CRITICAL_ASSETS.length, 'critical assets');
@@ -118,7 +98,9 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(cacheFirstStrategyWithDedup(event.request, isCDN));
   } else if (
     isLocal &&
-    (url.pathname.endsWith('.html') || url.pathname === '/')
+    (url.pathname.endsWith('.html') ||
+      url.pathname === '/' ||
+      /^\/(en|fr|es|de|zh|zh-TW|vi|tr|id|it|pt|nl)(\/|$)/.test(url.pathname))
   ) {
     event.respondWith(networkFirstStrategy(event.request));
   }
@@ -133,7 +115,7 @@ async function cacheFirstStrategyWithDedup(request, isCDN) {
   const fileName = url.pathname.split('/').pop();
 
   try {
-    const cachedResponse = await findCachedFile(fileName);
+    const cachedResponse = await findCachedFile(fileName, request.url);
     if (cachedResponse) {
       // console.log('⚡ [Cache HIT] Instant load:', fileName);
       return cachedResponse;
@@ -144,12 +126,20 @@ async function cacheFirstStrategyWithDedup(request, isCDN) {
     const networkResponse = await fetch(request);
 
     if (networkResponse && networkResponse.status === 200) {
-      const cache = await caches.open(CACHE_NAME);
-
-      await removeDuplicateCache(cache, fileName, isCDN);
-
-      await cache.put(request, networkResponse.clone());
-      // console.log(`💾 [Cached from ${isCDN ? 'CDN' : 'local'}] Saved:`, fileName);
+      const clone = networkResponse.clone();
+      const buffer = await clone.arrayBuffer();
+      if (buffer.byteLength > 0) {
+        const cache = await caches.open(CACHE_NAME);
+        await removeDuplicateCache(cache, fileName, isCDN);
+        await cache.put(
+          request,
+          new Response(buffer, {
+            status: networkResponse.status,
+            statusText: networkResponse.statusText,
+            headers: networkResponse.headers,
+          })
+        );
+      }
     }
 
     return networkResponse;
@@ -164,9 +154,19 @@ async function cacheFirstStrategyWithDedup(request, isCDN) {
         try {
           const fallbackResponse = await fetch(localUrl);
           if (fallbackResponse && fallbackResponse.status === 200) {
-            const cache = await caches.open(CACHE_NAME);
-            await cache.put(localUrl, fallbackResponse.clone());
-            // console.log('✅ [Fallback Success] Cached local version:', fileName);
+            const fbClone = fallbackResponse.clone();
+            const fbBuffer = await fbClone.arrayBuffer();
+            if (fbBuffer.byteLength > 0) {
+              const cache = await caches.open(CACHE_NAME);
+              await cache.put(
+                localUrl,
+                new Response(fbBuffer, {
+                  status: fallbackResponse.status,
+                  statusText: fallbackResponse.statusText,
+                  headers: fallbackResponse.headers,
+                })
+              );
+            }
             return fallbackResponse;
           }
         } catch (fallbackError) {
@@ -181,14 +181,32 @@ async function cacheFirstStrategyWithDedup(request, isCDN) {
   }
 }
 
-async function findCachedFile(fileName) {
+async function findCachedFile(fileName, requestUrl) {
   const cache = await caches.open(CACHE_NAME);
-  const requests = await cache.keys();
 
+  const exactMatch = await cache.match(requestUrl);
+  if (exactMatch) {
+    const clone = exactMatch.clone();
+    const buffer = await clone.arrayBuffer();
+    if (buffer.byteLength > 0) {
+      return exactMatch;
+    }
+    await cache.delete(requestUrl);
+  }
+
+  const requests = await cache.keys();
   for (const req of requests) {
     const reqUrl = new URL(req.url);
     if (reqUrl.pathname.endsWith(fileName)) {
-      return await cache.match(req);
+      const response = await cache.match(req);
+      if (response) {
+        const clone = response.clone();
+        const buffer = await clone.arrayBuffer();
+        if (buffer.byteLength > 0) {
+          return response;
+        }
+        await cache.delete(req);
+      }
     }
   }
   return null;
@@ -219,8 +237,19 @@ async function networkFirstStrategy(request) {
     const networkResponse = await fetch(request);
 
     if (networkResponse && networkResponse.status === 200) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(request, networkResponse.clone());
+      const clone = networkResponse.clone();
+      const buffer = await clone.arrayBuffer();
+      if (buffer.byteLength > 0) {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(
+          request,
+          new Response(buffer, {
+            status: networkResponse.status,
+            statusText: networkResponse.statusText,
+            headers: networkResponse.headers,
+          })
+        );
+      }
     }
 
     return networkResponse;
@@ -239,12 +268,6 @@ async function networkFirstStrategy(request) {
  * Returns the local directory path for a given CDN package
  */
 function getLocalPathForCDNUrl(pathname) {
-  if (pathname.includes('/@bentopdf/pymupdf-wasm')) {
-    return '/pymupdf-wasm/';
-  }
-  if (pathname.includes('/@bentopdf/gs-wasm')) {
-    return '/ghostscript-wasm/';
-  }
   if (pathname.includes('/@matbee/libreoffice-converter')) {
     return '/libreoffice-wasm/';
   }
@@ -267,8 +290,6 @@ function shouldCache(pathname, isCDN = false) {
 
   return (
     pathname.includes('/libreoffice-wasm/') ||
-    pathname.includes('/pymupdf-wasm/') ||
-    pathname.includes('/ghostscript-wasm/') ||
     pathname.includes('/embedpdf/') ||
     pathname.includes('/assets/') ||
     pathname.match(
@@ -283,18 +304,18 @@ function shouldCache(pathname, isCDN = false) {
 async function cacheInBatches(cache, urls, batchSize = 5) {
   for (let i = 0; i < urls.length; i += batchSize) {
     const batch = urls.slice(i, i + batchSize);
-    // console.log(`[ServiceWorker] Caching batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(urls.length / batchSize)}`);
 
     await Promise.all(
       batch.map(async (url) => {
         try {
-          await cache.add(url);
-          const fileName = url.split('/').pop();
-          const fileSize =
-            fileName.includes('.wasm') || fileName.includes('.whl')
-              ? '(large file)'
-              : '';
-          // console.log(`  ✓ Cached: ${fileName} ${fileSize}`);
+          const response = await fetch(url);
+          if (response.ok && response.status === 200) {
+            const clone = response.clone();
+            const buffer = await clone.arrayBuffer();
+            if (buffer.byteLength > 0) {
+              await cache.put(url, response);
+            }
+          }
         } catch (error) {
           console.warn('[ServiceWorker] Failed to cache:', url, error.message);
         }

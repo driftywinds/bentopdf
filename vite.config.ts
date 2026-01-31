@@ -1,6 +1,7 @@
 import { defineConfig, Plugin } from 'vitest/config';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Connect } from 'vite';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 import tailwindcss from '@tailwindcss/vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
@@ -283,6 +284,7 @@ export default defineConfig(() => {
   return {
     base: (process.env.BASE_URL || '/').replace(/\/?$/, '/'),
     plugins: [
+      // basicSsl(),
       handlebars({
         partialDirectory: resolve(__dirname, 'src/partials'),
         context: {

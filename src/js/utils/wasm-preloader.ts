@@ -73,34 +73,10 @@ async function preloadGhostscript(): Promise<void> {
   console.log('[Preloader] Starting Ghostscript WASM preload...');
 
   try {
-    const gsBaseUrl = getWasmBaseUrl('ghostscript')!;
+    const { loadGsModule, setCachedGsModule } =
+      await import('./ghostscript-loader.js');
 
-    let packageBaseUrl = gsBaseUrl;
-    if (packageBaseUrl.endsWith('/assets/')) {
-      packageBaseUrl = packageBaseUrl.slice(0, -8);
-    } else if (packageBaseUrl.endsWith('/assets')) {
-      packageBaseUrl = packageBaseUrl.slice(0, -7);
-    }
-    const normalizedUrl = packageBaseUrl.endsWith('/')
-      ? packageBaseUrl
-      : `${packageBaseUrl}/`;
-
-    const libUrl = `${normalizedUrl}dist/index.js`;
-    const module = await import(/* @vite-ignore */ libUrl);
-    const loadGsWASM = module.loadGhostscriptWASM || module.default;
-    const { setCachedGsModule } = await import('./ghostscript-loader.js');
-
-    const gsModule = await loadGsWASM({
-      baseUrl: `${normalizedUrl}assets/`,
-      locateFile: (path: string) => {
-        if (path.endsWith('.wasm')) {
-          return `${normalizedUrl}assets/gs.wasm`;
-        }
-        return path;
-      },
-      print: () => {},
-      printErr: () => {},
-    });
+    const gsModule = await loadGsModule();
     setCachedGsModule(gsModule as any);
     preloadState.ghostscript = PreloadStatus.READY;
     console.log('[Preloader] Ghostscript WASM ready');
