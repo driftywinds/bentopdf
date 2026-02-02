@@ -76,6 +76,37 @@
     "name": "反轉顏色",
     "subtitle": "為你的 PDF 建立深色版本。"
   },
+  "scannerEffect": {
+    "name": "掃描效果",
+    "subtitle": "讓你的 PDF 看起來像掃描文件。",
+    "scanSettings": "掃描設定",
+    "colorspace": "色彩空間",
+    "gray": "灰階",
+    "border": "邊框",
+    "rotate": "旋轉",
+    "rotateVariance": "旋轉變異",
+    "brightness": "亮度",
+    "contrast": "對比度",
+    "blur": "模糊",
+    "noise": "雜訊",
+    "yellowish": "泛黃",
+    "resolution": "解析度",
+    "processButton": "套用掃描效果"
+  },
+  "adjustColors": {
+    "name": "調整顏色",
+    "subtitle": "微調 PDF 的亮度、對比度、飽和度等。",
+    "colorSettings": "顏色設定",
+    "brightness": "亮度",
+    "contrast": "對比度",
+    "saturation": "飽和度",
+    "hueShift": "色相偏移",
+    "temperature": "色溫",
+    "tint": "色調",
+    "gamma": "Gamma",
+    "sepia": "復古色",
+    "processButton": "套用顏色調整"
+  },
   "backgroundColor": {
     "name": "背景顏色",
     "subtitle": "更改你的 PDF 的背景顏色。"

@@ -404,6 +404,8 @@ export default defineConfig(() => {
           'add-watermark': resolve(__dirname, 'src/pages/add-watermark.html'),
           'header-footer': resolve(__dirname, 'src/pages/header-footer.html'),
           'invert-colors': resolve(__dirname, 'src/pages/invert-colors.html'),
+          'scanner-effect': resolve(__dirname, 'src/pages/scanner-effect.html'),
+          'adjust-colors': resolve(__dirname, 'src/pages/adjust-colors.html'),
           'background-color': resolve(
             __dirname,
             'src/pages/background-color.html'

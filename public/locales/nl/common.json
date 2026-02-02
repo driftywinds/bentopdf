@@ -10,7 +10,7 @@
   },
   "donation": {
     "message": "Vind je BentoPDF geweldig? Help ons het gratis en open source te houden!",
-    "button": "Doneren"
+    "button": "Donatie"
   },
   "hero": {
     "title": "De",
@@ -18,7 +18,7 @@
     "builtForPrivacy": "gemaakt voor privacy",
     "noSignups": "Geen aanmelding",
     "unlimitedUse": "Onbegrenst gebruik",
-    "worksOffline": "Werkt Offline",
+    "worksOffline": "Werkt offline",
     "startUsing": "Direct aan de slag"
   },
   "usedBy": {
@@ -63,7 +63,7 @@
   "upload": {
     "clickToSelect": "Klik om een bestand te selecteren",
     "orDragAndDrop": "of sleep er een hierheen",
-    "pdfOrImages": "PDF's of Afbeeldingen",
+    "pdfOrImages": "PDF's of afbeeldingen",
     "filesNeverLeave": "Je bestanden blijven op jouw apparaat.",
     "addMore": "Meer bestanden toevoegen",
     "clearAll": "Alles wissen",
@@ -77,7 +77,7 @@
     "ok": "OK"
   },
   "preview": {
-    "title": "Document Weergeven",
+    "title": "Document weergeven",
     "downloadAsPdf": "Downloaden als PDF",
     "close": "Sluiten"
   },
@@ -107,7 +107,7 @@
       "useAnyway": "Wil je het toch gebruiken?",
       "resetTitle": "Sneltoetsen terugzetten",
       "resetMessage": "Weet je zeker dat je alle sneltoetsen wilt terugzetten naar standaard?<br><br>Deze actie kan niet ongedaan worden gemaakt.",
-      "importSuccessTitle": "Import succesvoll",
+      "importSuccessTitle": "Import voltooid",
       "importSuccessMessage": "Sneltoetsen zijn met succes geïmporteerd!",
       "importFailTitle": "Import mislukt",
       "importFailMessage": "Het importeren van sneltoetsen is mislukt. Ongeldig bestandsformaat."
@@ -138,7 +138,7 @@
     }
   },
   "faq": {
-    "title": "Vaak gestelde vragen",
+    "title": "Veelgestelde",
     "questions": "Vragen",
     "isFree": {
       "question": "Is BentoPDF echt gratis?",
@@ -174,9 +174,9 @@
     }
   },
   "testimonials": {
-    "title": "Wat Onze",
+    "title": "Wat onze",
     "users": "Gebruikers",
-    "say": "Zeggen"
+    "say": "Vertellen"
   },
   "support": {
     "title": "Vind je mijn werk leuk?",
@@ -184,11 +184,11 @@
     "buyMeCoffee": "Koop een kopje koffie voor me"
   },
   "footer": {
-    "copyright": "© 2025 BentoPDF. Alle rechten voorbehouden.",
+    "copyright": "© 2026 BentoPDF. Alle rechten voorbehouden.",
     "version": "Versie",
     "company": "Bedrijf",
     "aboutUs": "Over ons",
-    "faqLink": "FAQ",
+    "faqLink": "Veelgestelde vragen",
     "contactUs": "Contact",
     "legal": "Juridisch",
     "termsAndConditions": "Algemene voorwaarden",
@@ -196,7 +196,7 @@
     "followUs": "Volgen"
   },
   "merge": {
-    "title": "PDF's Samenvoegen",
+    "title": "PDF's samenvoegen",
     "description": "Combineer hele bestanden, of selecteer specifieke pagina's om te samen te voegen tot een nieuw document.",
     "fileMode": "Bestandsmodus",
     "pageMode": "Paginamodus",
@@ -210,13 +210,13 @@
       "Alle pagina's van je PDF's worden hieronder weergegeven.",
       "Sleep afzonderlijke pagina-miniaturen in de gewenste volgorde voor je nieuwe bestand."
     ],
-    "mergePdfs": "PDF's Samenvoegen"
+    "mergePdfs": "PDF's samenvoegen"
   },
   "common": {
     "page": "Pagina",
     "pages": "Pagina's",
     "of": "van",
-    "download": "Download",
+    "download": "Downloaden",
     "cancel": "Annuleren",
     "save": "Opslaan",
     "delete": "Verwijderen",
@@ -237,12 +237,12 @@
       "noCompromises": "Geen compromissen."
     },
     "mission": {
-      "title": "Onze Missie",
+      "title": "Onze missie",
       "description": "Ons doel is om de meest complete PDF-toolbox te bieden die je privacy respecteert en nooit om betaling vraagt. Wij geloven dat essentiële documententools voor iedereen, overal en zonder obstakels toegankelijk moeten zijn."
     },
     "philosophy": {
       "label": "Onze kernfilosofie",
-      "title": "Privacy First. Always.",
+      "title": "Privacy First. Altijd.",
       "description": "In een tijdperk waarin data een handelswaar is, doen wij het net even anders. Alle verwerking voor BentoPDF-tools gebeurt lokaal in je browser. Dat betekent dat je bestanden nooit oop onze servers terechtkomen, dat wij je documenten nooit zien en niets volgen van wat je doet. Je documenten blijven volledig privé, punt. Het is niet zomaar een functie; het is onze basis."
     },
     "whyBentopdf": {
@@ -300,7 +300,7 @@
     "delete": "Verwijderen",
     "download": "Laden:",
     "downloadSelected": "Selectie laden",
-    "exportPdf": "PDF Exporteren",
+    "exportPdf": "PDF exporteren",
     "uploadPdfFiles": "PDF-bestanden selecteren",
     "dragAndDrop": "Klik om een bestand te selecteren, of sleep er een hierheen",
     "selectFiles": "Bestanden selecteren",

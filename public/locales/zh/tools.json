@@ -98,6 +98,37 @@
     "name": "反转颜色",
     "subtitle": "创建您的 PDF 的“暗黑模式”版本。"
   },
+  "scannerEffect": {
+    "name": "扫描效果",
+    "subtitle": "让您的 PDF 看起来像扫描文件。",
+    "scanSettings": "扫描设置",
+    "colorspace": "色彩空间",
+    "gray": "灰度",
+    "border": "边框",
+    "rotate": "旋转",
+    "rotateVariance": "旋转偏差",
+    "brightness": "亮度",
+    "contrast": "对比度",
+    "blur": "模糊",
+    "noise": "噪点",
+    "yellowish": "泛黄",
+    "resolution": "分辨率",
+    "processButton": "应用扫描效果"
+  },
+  "adjustColors": {
+    "name": "调整颜色",
+    "subtitle": "微调 PDF 的亮度、对比度、饱和度等。",
+    "colorSettings": "颜色设置",
+    "brightness": "亮度",
+    "contrast": "对比度",
+    "saturation": "饱和度",
+    "hueShift": "色相偏移",
+    "temperature": "色温",
+    "tint": "色调",
+    "gamma": "Gamma",
+    "sepia": "复古色",
+    "processButton": "应用颜色调整"
+  },
   "backgroundColor": {
     "name": "背景颜色",
     "subtitle": "更改您的 PDF 的背景颜色。"

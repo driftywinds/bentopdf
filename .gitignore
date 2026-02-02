@@ -30,6 +30,9 @@ dist-ssr
 coverage/
 *.lcov
 
+# Generated sitemap
+public/sitemap.xml
+
 #backup
 .seo-backup
 libreoffice-wasm-package

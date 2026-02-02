@@ -120,6 +120,18 @@ export const categories = [
         subtitle: 'Create a "dark mode" version of your PDF.',
       },
       {
+        href: import.meta.env.BASE_URL + 'scanner-effect.html',
+        name: 'Scanner Effect',
+        icon: 'ph-scan',
+        subtitle: 'Make your PDF look like a scanned document.',
+      },
+      {
+        href: import.meta.env.BASE_URL + 'adjust-colors.html',
+        name: 'Adjust Colors',
+        icon: 'ph-sliders-horizontal',
+        subtitle: 'Fine-tune brightness, contrast, saturation and more.',
+      },
+      {
         href: import.meta.env.BASE_URL + 'background-color.html',
         name: 'Background Color',
         icon: 'ph-palette',

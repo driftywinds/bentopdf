@@ -98,6 +98,37 @@
     "name": "Farben invertieren",
     "subtitle": "Eine \"Dunkelmodus\"-Version Ihrer PDF erstellen."
   },
+  "scannerEffect": {
+    "name": "Scanner-Effekt",
+    "subtitle": "Lassen Sie Ihr PDF wie ein gescanntes Dokument aussehen.",
+    "scanSettings": "Scan-Einstellungen",
+    "colorspace": "Farbraum",
+    "gray": "Grau",
+    "border": "Rand",
+    "rotate": "Drehen",
+    "rotateVariance": "Drehvarianz",
+    "brightness": "Helligkeit",
+    "contrast": "Kontrast",
+    "blur": "Unschärfe",
+    "noise": "Rauschen",
+    "yellowish": "Gelbstich",
+    "resolution": "Auflösung",
+    "processButton": "Scanner-Effekt anwenden"
+  },
+  "adjustColors": {
+    "name": "Farben anpassen",
+    "subtitle": "Helligkeit, Kontrast, Sättigung und mehr in Ihrem PDF feinabstimmen.",
+    "colorSettings": "Farbeinstellungen",
+    "brightness": "Helligkeit",
+    "contrast": "Kontrast",
+    "saturation": "Sättigung",
+    "hueShift": "Farbton",
+    "temperature": "Temperatur",
+    "tint": "Tönung",
+    "gamma": "Gamma",
+    "sepia": "Sepia",
+    "processButton": "Farbanpassungen anwenden"
+  },
   "backgroundColor": {
     "name": "Hintergrundfarbe",
     "subtitle": "Die Hintergrundfarbe Ihrer PDF ändern."

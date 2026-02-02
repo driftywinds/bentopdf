@@ -98,6 +98,37 @@
     "name": "Інвертаваць колеры",
     "subtitle": "Стварыць версію PDF у \"цёмнай тэме\"."
   },
+  "scannerEffect": {
+    "name": "Эфект сканера",
+    "subtitle": "Зрабіць PDF падобным на адсканіраваны дакумент.",
+    "scanSettings": "Налады сканіравання",
+    "colorspace": "Каляровая прастора",
+    "gray": "Градацыі шэрага",
+    "border": "Рамка",
+    "rotate": "Паварот",
+    "rotateVariance": "Варыяцыя павароту",
+    "brightness": "Яркасць",
+    "contrast": "Кантраст",
+    "blur": "Размыццё",
+    "noise": "Шум",
+    "yellowish": "Жаўтаватасць",
+    "resolution": "Раздзяляльнасць",
+    "processButton": "Ужыць эфект сканера"
+  },
+  "adjustColors": {
+    "name": "Наладзіць колеры",
+    "subtitle": "Наладзьце яркасць, кантраст, насычанасць і іншае ў вашым PDF.",
+    "colorSettings": "Налады колеру",
+    "brightness": "Яркасць",
+    "contrast": "Кантраст",
+    "saturation": "Насычанасць",
+    "hueShift": "Зрух адцення",
+    "temperature": "Тэмпература",
+    "tint": "Адценне",
+    "gamma": "Гама",
+    "sepia": "Сэпія",
+    "processButton": "Прымяніць налады колеру"
+  },
   "backgroundColor": {
     "name": "Колер фону",
     "subtitle": "Змяніць колер фону PDF."

@@ -98,6 +98,37 @@
     "name": "Đảo ngược màu",
     "subtitle": "Tạo phiên bản \"chế độ tối\" cho PDF của bạn."
   },
+  "scannerEffect": {
+    "name": "Hiệu ứng máy quét",
+    "subtitle": "Làm cho PDF trông giống như tài liệu đã quét.",
+    "scanSettings": "Cài đặt quét",
+    "colorspace": "Không gian màu",
+    "gray": "Thang xám",
+    "border": "Viền",
+    "rotate": "Xoay",
+    "rotateVariance": "Biên độ xoay",
+    "brightness": "Độ sáng",
+    "contrast": "Độ tương phản",
+    "blur": "Làm mờ",
+    "noise": "Nhiễu",
+    "yellowish": "Ngả vàng",
+    "resolution": "Độ phân giải",
+    "processButton": "Áp dụng hiệu ứng máy quét"
+  },
+  "adjustColors": {
+    "name": "Điều chỉnh màu sắc",
+    "subtitle": "Tinh chỉnh độ sáng, tương phản, độ bão hòa và nhiều hơn nữa.",
+    "colorSettings": "Cài đặt màu sắc",
+    "brightness": "Độ sáng",
+    "contrast": "Tương phản",
+    "saturation": "Độ bão hòa",
+    "hueShift": "Dịch chuyển sắc độ",
+    "temperature": "Nhiệt độ màu",
+    "tint": "Sắc thái",
+    "gamma": "Gamma",
+    "sepia": "Sepia",
+    "processButton": "Áp dụng điều chỉnh màu"
+  },
   "backgroundColor": {
     "name": "Màu nền",
     "subtitle": "Thay đổi màu nền của PDF của bạn."

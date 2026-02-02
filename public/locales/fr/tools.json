@@ -98,6 +98,37 @@
     "name": "Inverser les couleurs",
     "subtitle": "Créer une version « mode sombre » du PDF."
   },
+  "scannerEffect": {
+    "name": "Effet scanner",
+    "subtitle": "Donnez à votre PDF l'apparence d'un document scanné.",
+    "scanSettings": "Paramètres de numérisation",
+    "colorspace": "Espace colorimétrique",
+    "gray": "Gris",
+    "border": "Bordure",
+    "rotate": "Rotation",
+    "rotateVariance": "Variance de rotation",
+    "brightness": "Luminosité",
+    "contrast": "Contraste",
+    "blur": "Flou",
+    "noise": "Bruit",
+    "yellowish": "Jaunissement",
+    "resolution": "Résolution",
+    "processButton": "Appliquer l'effet scanner"
+  },
+  "adjustColors": {
+    "name": "Ajuster les couleurs",
+    "subtitle": "Affinez la luminosité, le contraste, la saturation et plus dans votre PDF.",
+    "colorSettings": "Paramètres de couleur",
+    "brightness": "Luminosité",
+    "contrast": "Contraste",
+    "saturation": "Saturation",
+    "hueShift": "Teinte",
+    "temperature": "Température",
+    "tint": "Nuance",
+    "gamma": "Gamma",
+    "sepia": "Sépia",
+    "processButton": "Appliquer les ajustements"
+  },
   "backgroundColor": {
     "name": "Couleur de fond",
     "subtitle": "Modifier la couleur de fond du PDF."

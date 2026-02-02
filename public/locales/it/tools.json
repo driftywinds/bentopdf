@@ -98,6 +98,37 @@
     "name": "Inverti Colori",
     "subtitle": "Crea una versione \"modalità scura\" del tuo PDF."
   },
+  "scannerEffect": {
+    "name": "Effetto scanner",
+    "subtitle": "Fai sembrare il tuo PDF un documento scansionato.",
+    "scanSettings": "Impostazioni di scansione",
+    "colorspace": "Spazio colore",
+    "gray": "Grigio",
+    "border": "Bordo",
+    "rotate": "Rotazione",
+    "rotateVariance": "Variazione rotazione",
+    "brightness": "Luminosità",
+    "contrast": "Contrasto",
+    "blur": "Sfocatura",
+    "noise": "Rumore",
+    "yellowish": "Ingiallimento",
+    "resolution": "Risoluzione",
+    "processButton": "Applica effetto scanner"
+  },
+  "adjustColors": {
+    "name": "Regola colori",
+    "subtitle": "Regola luminosità, contrasto, saturazione e altro nel tuo PDF.",
+    "colorSettings": "Impostazioni colore",
+    "brightness": "Luminosità",
+    "contrast": "Contrasto",
+    "saturation": "Saturazione",
+    "hueShift": "Tonalità",
+    "temperature": "Temperatura",
+    "tint": "Tinta",
+    "gamma": "Gamma",
+    "sepia": "Seppia",
+    "processButton": "Applica regolazioni colore"
+  },
   "backgroundColor": {
     "name": "Colore di Sfondo",
     "subtitle": "Cambia il colore di sfondo del tuo PDF."

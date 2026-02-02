@@ -98,6 +98,37 @@
     "name": "Kleuren Omkeren",
     "subtitle": "Maak een \"donkere modus\"-versie van je PDF."
   },
+  "scannerEffect": {
+    "name": "Scannereffect",
+    "subtitle": "Laat je PDF eruitzien als een gescand document.",
+    "scanSettings": "Scaninstellingen",
+    "colorspace": "Kleurruimte",
+    "gray": "Grijswaarden",
+    "border": "Rand",
+    "rotate": "Roteren",
+    "rotateVariance": "Rotatievariatie",
+    "brightness": "Helderheid",
+    "contrast": "Contrast",
+    "blur": "Vervaging",
+    "noise": "Ruis",
+    "yellowish": "Geelheid",
+    "resolution": "Resolutie",
+    "processButton": "Scannereffect toepassen"
+  },
+  "adjustColors": {
+    "name": "Kleuren aanpassen",
+    "subtitle": "Pas helderheid, contrast, verzadiging en meer aan in je PDF.",
+    "colorSettings": "Kleurinstellingen",
+    "brightness": "Helderheid",
+    "contrast": "Contrast",
+    "saturation": "Verzadiging",
+    "hueShift": "Tintrotatie",
+    "temperature": "Temperatuur",
+    "tint": "Tint",
+    "gamma": "Gamma",
+    "sepia": "Sepia",
+    "processButton": "Kleuraanpassingen toepassen"
+  },
   "backgroundColor": {
     "name": "Achtergrondkleur",
     "subtitle": "Wijzig de achtergrondkleur van je PDF."
@@ -111,7 +142,7 @@
     "subtitle": "Voeg afbeeldingsstempels toe aan je PDF met de werkbalk Annotatie.",
     "usernameLabel": "Gebruikersnaam stempelen",
     "usernamePlaceholder": "Voer je naam in (voor stempels)",
-    "usernameHint": "Deze naam verschijnt op stempels die jij aanmaakt."
+    "usernameHint": "Deze naam verschijnt op stempels die je aanmaakt."
   },
   "removeAnnotations": {
     "name": "Annotaties Verwijderen",
@@ -207,7 +238,7 @@
   },
   "extractAttachments": {
     "name": "Bijlagen Extraheren",
-    "subtitle": "Extraheer alle ingevoegde bestanden als ZIP uit PDF(-en)."
+    "subtitle": "Extraheer alle ingevoegde bestanden als ZIP uit PDF('s)."
   },
   "editAttachments": {
     "name": "Bijlagen Bewerken",
@@ -227,7 +258,7 @@
   },
   "rotatePdf": {
     "name": "PDF Roteren",
-    "subtitle": "Roteer pagina's in stappen van 90 gradden."
+    "subtitle": "Roteer pagina's in stappen van 90 graden."
   },
   "rotateCustom": {
     "name": "Roteren met aangepaste hoek",
@@ -369,7 +400,7 @@
     "step2": "Pagina's worden in brochurevolgorde gerangschikt.",
     "step3": "Dubbelzijdig afdrukken, omdraaien langs de korte kant, vouwen en nieten.",
     "paperSize": "Paperformaat",
-    "orientation": "Ori�ntatie",
+    "orientation": "Oriëntatie",
     "portrait": "Staand",
     "landscape": "Liggend",
     "pagesPerSheet": "Pagina's per vel",
@@ -509,12 +540,12 @@
     "contactInfo": "Contactinformatie",
     "contactPlaceholder": "bijv., email@example.com",
     "applySignature": "Digitale handtekening toepassen",
-    "successMessage": "PDF succesvol ondertekend! De handtekening kan in elke PDF-lezer worden geverifieerd."
+    "successMessage": "PDF is ondertekend! De handtekening kan in elke PDF-lezer worden geverifieerd."
   },
   "validateSignaturePdf": {
     "name": "PDF-handtekening valideren",
-    "pageTitle": "PDF-handtekening valideren - Digitale handtekeningen verifi�ren | BentoPDF",
-    "subtitle": "Digitale handtekeningen in je PDF-bestanden verifi�ren. Controleer de geldigheid van het certificaat, bekijk de gegevens van de ondertekenaar en bevestig de integriteit van het document. Alle verwerking gebeurt binnen jouw browser."
+    "pageTitle": "PDF-handtekening valideren - Digitale handtekeningen verifiëren | BentoPDF",
+    "subtitle": "Digitale handtekeningen in je PDF-bestanden verifiëren. Controleer de geldigheid van het certificaat, bekijk de gegevens van de ondertekenaar en bevestig de integriteit van het document. Alle verwerking gebeurt binnen jouw browser."
   },
   "emailToPdf": {
     "name": "E-mail naar PDF",

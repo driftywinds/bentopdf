@@ -98,6 +98,37 @@
     "name": "Invert Colors",
     "subtitle": "Create a \"dark mode\" version of your PDF."
   },
+  "scannerEffect": {
+    "name": "Scanner Effect",
+    "subtitle": "Make your PDF look like a scanned document.",
+    "scanSettings": "Scan Settings",
+    "colorspace": "Colorspace",
+    "gray": "Gray",
+    "border": "Border",
+    "rotate": "Rotate",
+    "rotateVariance": "Rotate Variance",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "blur": "Blur",
+    "noise": "Noise",
+    "yellowish": "Yellowish",
+    "resolution": "Resolution",
+    "processButton": "Apply Scanner Effect"
+  },
+  "adjustColors": {
+    "name": "Adjust Colors",
+    "subtitle": "Fine-tune brightness, contrast, saturation and more in your PDF.",
+    "colorSettings": "Color Settings",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "saturation": "Saturation",
+    "hueShift": "Hue Shift",
+    "temperature": "Temperature",
+    "tint": "Tint",
+    "gamma": "Gamma",
+    "sepia": "Sepia",
+    "processButton": "Apply Color Adjustments"
+  },
   "backgroundColor": {
     "name": "Background Color",
     "subtitle": "Change the background color of your PDF."

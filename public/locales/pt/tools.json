@@ -76,6 +76,37 @@
     "name": "Inverter Cores",
     "subtitle": "Crie uma versão em \"modo escuro\" do seu PDF."
   },
+  "scannerEffect": {
+    "name": "Efeito Scanner",
+    "subtitle": "Faça seu PDF parecer um documento digitalizado.",
+    "scanSettings": "Configurações de Digitalização",
+    "colorspace": "Espaço de Cor",
+    "gray": "Cinza",
+    "border": "Borda",
+    "rotate": "Rotação",
+    "rotateVariance": "Variação de Rotação",
+    "brightness": "Brilho",
+    "contrast": "Contraste",
+    "blur": "Desfoque",
+    "noise": "Ruído",
+    "yellowish": "Amarelado",
+    "resolution": "Resolução",
+    "processButton": "Aplicar Efeito Scanner"
+  },
+  "adjustColors": {
+    "name": "Ajustar Cores",
+    "subtitle": "Ajuste brilho, contraste, saturação e mais no seu PDF.",
+    "colorSettings": "Configurações de Cor",
+    "brightness": "Brilho",
+    "contrast": "Contraste",
+    "saturation": "Saturação",
+    "hueShift": "Matiz",
+    "temperature": "Temperatura",
+    "tint": "Tonalidade",
+    "gamma": "Gamma",
+    "sepia": "Sépia",
+    "processButton": "Aplicar Ajustes de Cor"
+  },
   "backgroundColor": {
     "name": "Cor de Fundo",
     "subtitle": "Altere a cor de fundo do seu PDF."

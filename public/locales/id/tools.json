@@ -98,6 +98,37 @@
     "name": "Balik Warna",
     "subtitle": "Buat versi \"mode gelap\" dari PDF Anda."
   },
+  "scannerEffect": {
+    "name": "Efek Pemindai",
+    "subtitle": "Buat PDF Anda terlihat seperti dokumen yang dipindai.",
+    "scanSettings": "Pengaturan Pemindaian",
+    "colorspace": "Ruang Warna",
+    "gray": "Skala Abu-abu",
+    "border": "Batas",
+    "rotate": "Putar",
+    "rotateVariance": "Variasi Putaran",
+    "brightness": "Kecerahan",
+    "contrast": "Kontras",
+    "blur": "Blur",
+    "noise": "Noise",
+    "yellowish": "Kekuningan",
+    "resolution": "Resolusi",
+    "processButton": "Terapkan Efek Pemindai"
+  },
+  "adjustColors": {
+    "name": "Sesuaikan Warna",
+    "subtitle": "Sesuaikan kecerahan, kontras, saturasi dan lainnya pada PDF Anda.",
+    "colorSettings": "Pengaturan Warna",
+    "brightness": "Kecerahan",
+    "contrast": "Kontras",
+    "saturation": "Saturasi",
+    "hueShift": "Pergeseran Rona",
+    "temperature": "Suhu",
+    "tint": "Pewarnaan",
+    "gamma": "Gamma",
+    "sepia": "Sepia",
+    "processButton": "Terapkan Penyesuaian Warna"
+  },
   "backgroundColor": {
     "name": "Warna Latar Belakang",
     "subtitle": "Ubah warna latar belakang PDF Anda."

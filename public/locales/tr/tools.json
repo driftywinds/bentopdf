@@ -76,6 +76,37 @@
     "name": "Renkleri Ters Çevir",
     "subtitle": "PDF'niz için \"karanlık mod\" sürümü oluşturun."
   },
+  "scannerEffect": {
+    "name": "Tarayıcı Efekti",
+    "subtitle": "PDF'nizi taranmış bir belge gibi gösterin.",
+    "scanSettings": "Tarama Ayarları",
+    "colorspace": "Renk Alanı",
+    "gray": "Gri",
+    "border": "Kenarlık",
+    "rotate": "Döndür",
+    "rotateVariance": "Döndürme Varyansı",
+    "brightness": "Parlaklık",
+    "contrast": "Kontrast",
+    "blur": "Bulanıklık",
+    "noise": "Gürültü",
+    "yellowish": "Sarımsı",
+    "resolution": "Çözünürlük",
+    "processButton": "Tarayıcı Efekti Uygula"
+  },
+  "adjustColors": {
+    "name": "Renkleri Ayarla",
+    "subtitle": "PDF'inizde parlaklık, kontrast, doygunluk ve daha fazlasını ayarlayın.",
+    "colorSettings": "Renk Ayarları",
+    "brightness": "Parlaklık",
+    "contrast": "Kontrast",
+    "saturation": "Doygunluk",
+    "hueShift": "Ton Kaydırma",
+    "temperature": "Sıcaklık",
+    "tint": "Renk Tonu",
+    "gamma": "Gamma",
+    "sepia": "Sepya",
+    "processButton": "Renk Ayarlarını Uygula"
+  },
   "backgroundColor": {
     "name": "Arka Plan Rengi",
     "subtitle": "PDF'nizin arka plan rengini değiştirin."
