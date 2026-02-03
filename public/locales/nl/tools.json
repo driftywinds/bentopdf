@@ -523,7 +523,7 @@
   "digitalSignPdf": {
     "name": "Digitale handtekening PDF",
     "pageTitle": "Digitale handtekening PDF - Cryptografische handtekening toevoegen | BentoPDF",
-    "subtitle": "Voeg een cryptografische digitale handtekening toe aan je PDF met behulp van X.509-certificaten. Ondersteunt PKCS#12 (.pfx, .p12) en PEM-formaten. Je priv�sleutel verlaat jouw browser nooit.",
+    "subtitle": "Voeg een cryptografische digitale handtekening toe aan je PDF met behulp van X.509-certificaten. Ondersteunt PKCS#12 (.pfx, .p12) en PEM-formaten. Je privésleutel verlaat jouw browser nooit.",
     "certificateSection": "Certificaat",
     "uploadCert": "Certificaat laden (.pfx, .p12)",
     "certPassword": "Certificaatwachtwoord",
@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "PDF rechttrekken",
     "subtitle": "Automatisch rechttrekken van scheef gescande pagina's met OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF naar Word",
+    "subtitle": "Converteer PDF-bestanden naar bewerkbare Word-documenten."
+  },
+  "extractImages": {
+    "name": "Afbeeldingen extraheren",
+    "subtitle": "Extraheer alle ingesloten afbeeldingen uit uw PDF-bestanden."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF naar Markdown",
+    "subtitle": "Converteer PDF-tekst en tabellen naar Markdown-formaat."
+  },
+  "preparePdfForAi": {
+    "name": "PDF voorbereiden voor AI",
+    "subtitle": "Extraheer PDF-inhoud als LlamaIndex JSON voor RAG/LLM-pipelines."
+  },
+  "pdfOcg": {
+    "name": "PDF-lagen (OCG)",
+    "subtitle": "Bekijk, schakel, voeg toe en verwijder OCG-lagen in uw PDF."
+  },
+  "pdfToPdfa": {
+    "name": "PDF naar PDF/A",
+    "subtitle": "Converteer PDF naar PDF/A voor langetermijnarchivering."
+  },
+  "rasterizePdf": {
+    "name": "PDF rasteren",
+    "subtitle": "Converteer PDF naar beeldgebaseerde PDF. Lagen afvlakken en selecteerbare tekst verwijderen."
   }
 }

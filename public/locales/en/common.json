@@ -67,7 +67,42 @@
     "filesNeverLeave": "Your files never leave your device.",
     "addMore": "Add More Files",
     "clearAll": "Clear All",
-    "clearFiles": "Clear Files"
+    "clearFiles": "Clear Files",
+    "hints": {
+      "singlePdf": "A single PDF file",
+      "pdfFile": "PDF file",
+      "multiplePdfs2": "Multiple PDF files (at least 2)",
+      "bmpImages": "BMP images",
+      "oneOrMorePdfs": "One or more PDF files",
+      "pdfDocuments": "PDF Documents",
+      "oneOrMoreCsv": "One or more CSV files",
+      "multiplePdfsSupported": "Multiple PDF files supported",
+      "singleOrMultiplePdfs": "Single or multiple PDF files supported",
+      "singlePdfFile": "Single PDF file",
+      "pdfWithForms": "PDF file with form fields",
+      "heicImages": "HEIC/HEIF images",
+      "jpgImages": "JPG, JPEG, JP2, JPX Images",
+      "pdfsOrImages": "PDFs or Images",
+      "oneOrMoreOdt": "One or more ODT files",
+      "singlePdfOnly": "Single PDF file only",
+      "pdfFiles": "PDF files",
+      "multiplePdfs": "Multiple PDF files",
+      "pngImages": "PNG Images",
+      "pdfFilesOneOrMore": "PDF files (one or more)",
+      "oneOrMoreRtf": "One or more RTF files",
+      "svgGraphics": "SVG Graphics",
+      "tiffImages": "TIFF images",
+      "webpImages": "WebP Images"
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1": "Click or drag and drop your file to begin",
+    "step2": "Click the process button to start",
+    "step3": "Save your processed file instantly"
+  },
+  "relatedTools": {
+    "title": "Related PDF Tools"
   },
   "loader": {
     "processing": "Processing..."
@@ -140,6 +175,7 @@
   "faq": {
     "title": "Frequently Asked",
     "questions": "Questions",
+    "sectionTitle": "Frequently Asked Questions",
     "isFree": {
       "question": "Is BentoPDF really free?",
       "answer": "Yes, absolutely. All tools on BentoPDF are 100% free to use, with no file limits, no sign-ups, and no watermarks. We believe everyone deserves access to simple, powerful PDF tools without a paywall."

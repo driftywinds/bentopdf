@@ -8,6 +8,28 @@ interface WasmProviderConfig {
 
 const STORAGE_KEY = 'bentopdf:wasm-providers';
 
+const CDN_DEFAULTS: Record<WasmPackage, string> = {
+  pymupdf: 'https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.14/',
+  ghostscript: 'https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/',
+  cpdf: 'https://cdn.jsdelivr.net/npm/coherentpdf/dist/',
+};
+
+function envOrDefault(envVar: string | undefined, fallback: string): string {
+  return envVar || fallback;
+}
+
+const ENV_DEFAULTS: Record<WasmPackage, string> = {
+  pymupdf: envOrDefault(
+    import.meta.env.VITE_WASM_PYMUPDF_URL,
+    CDN_DEFAULTS.pymupdf
+  ),
+  ghostscript: envOrDefault(
+    import.meta.env.VITE_WASM_GS_URL,
+    CDN_DEFAULTS.ghostscript
+  ),
+  cpdf: envOrDefault(import.meta.env.VITE_WASM_CPDF_URL, CDN_DEFAULTS.cpdf),
+};
+
 class WasmProviderManager {
   private config: WasmProviderConfig;
   private validationCache: Map<WasmPackage, boolean> = new Map();
@@ -31,6 +53,10 @@ class WasmProviderManager {
     return {};
   }
 
+  private getEnvDefault(packageName: WasmPackage): string | undefined {
+    return ENV_DEFAULTS[packageName];
+  }
+
   private saveConfig(): void {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.config));
@@ -40,7 +66,7 @@ class WasmProviderManager {
   }
 
   getUrl(packageName: WasmPackage): string | undefined {
-    return this.config[packageName];
+    return this.config[packageName] || this.getEnvDefault(packageName);
   }
 
   setUrl(packageName: WasmPackage, url: string): void {
@@ -57,11 +83,22 @@ class WasmProviderManager {
   }
 
   isConfigured(packageName: WasmPackage): boolean {
+    return !!(this.config[packageName] || this.getEnvDefault(packageName));
+  }
+
+  isUserConfigured(packageName: WasmPackage): boolean {
     return !!this.config[packageName];
   }
 
+  hasEnvDefault(packageName: WasmPackage): boolean {
+    return !!this.getEnvDefault(packageName);
+  }
+
   hasAnyProvider(): boolean {
-    return Object.keys(this.config).length > 0;
+    return (
+      Object.keys(this.config).length > 0 ||
+      Object.values(ENV_DEFAULTS).some(Boolean)
+    );
   }
 
   async validateUrl(
@@ -172,13 +209,25 @@ class WasmProviderManager {
   }
 
   getAllProviders(): WasmProviderConfig {
-    return { ...this.config };
+    return {
+      pymupdf: this.config.pymupdf || ENV_DEFAULTS.pymupdf,
+      ghostscript: this.config.ghostscript || ENV_DEFAULTS.ghostscript,
+      cpdf: this.config.cpdf || ENV_DEFAULTS.cpdf,
+    };
   }
 
   clearAll(): void {
     this.config = {};
     this.validationCache.clear();
-    this.saveConfig();
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {
+      console.error('[WasmProvider] Failed to clear localStorage:', e);
+    }
+  }
+
+  resetToDefaults(): void {
+    this.clearAll();
   }
 
   getPackageDisplayName(packageName: WasmPackage): string {

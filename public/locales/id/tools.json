@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "Luruskan PDF",
     "subtitle": "Otomatis meluruskan halaman hasil pindai yang miring menggunakan OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF ke Word",
+    "subtitle": "Konversi file PDF ke dokumen Word yang dapat diedit."
+  },
+  "extractImages": {
+    "name": "Ekstrak Gambar",
+    "subtitle": "Ekstrak semua gambar yang tertanam dari file PDF Anda."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF ke Markdown",
+    "subtitle": "Konversi teks dan tabel PDF ke format Markdown."
+  },
+  "preparePdfForAi": {
+    "name": "Siapkan PDF untuk AI",
+    "subtitle": "Ekstrak konten PDF sebagai JSON LlamaIndex untuk pipeline RAG/LLM."
+  },
+  "pdfOcg": {
+    "name": "Lapisan PDF (OCG)",
+    "subtitle": "Lihat, beralih, tambah, dan hapus lapisan OCG di PDF Anda."
+  },
+  "pdfToPdfa": {
+    "name": "PDF ke PDF/A",
+    "subtitle": "Konversi PDF ke PDF/A untuk pengarsipan jangka panjang."
+  },
+  "rasterizePdf": {
+    "name": "Rasterisasi PDF",
+    "subtitle": "Konversi PDF ke PDF berbasis gambar. Ratakan lapisan dan hapus teks yang dapat dipilih."
   }
 }

@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "Redresser un PDF",
     "subtitle": "Redresser automatiquement les pages scannées inclinées à l’aide d’OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF vers Word",
+    "subtitle": "Convertir des fichiers PDF en documents Word modifiables."
+  },
+  "extractImages": {
+    "name": "Extraire les images",
+    "subtitle": "Extraire toutes les images intégrées de vos fichiers PDF."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF vers Markdown",
+    "subtitle": "Convertir le texte et les tableaux PDF au format Markdown."
+  },
+  "preparePdfForAi": {
+    "name": "Préparer le PDF pour l'IA",
+    "subtitle": "Extraire le contenu PDF en JSON LlamaIndex pour les pipelines RAG/LLM."
+  },
+  "pdfOcg": {
+    "name": "Calques PDF (OCG)",
+    "subtitle": "Afficher, basculer, ajouter et supprimer les calques OCG de votre PDF."
+  },
+  "pdfToPdfa": {
+    "name": "PDF vers PDF/A",
+    "subtitle": "Convertir un PDF en PDF/A pour l'archivage à long terme."
+  },
+  "rasterizePdf": {
+    "name": "Rastériser le PDF",
+    "subtitle": "Convertir un PDF en PDF basé sur des images. Aplatir les calques et supprimer le texte sélectionnable."
   }
 }

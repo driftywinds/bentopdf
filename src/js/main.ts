@@ -15,7 +15,6 @@ import {
   createLanguageSwitcher,
   t,
 } from './i18n/index.js';
-import { startBackgroundPreload } from './utils/wasm-preloader.js';
 
 const init = async () => {
   await initI18n();
@@ -211,6 +210,43 @@ const init = async () => {
     'Deskew PDF': 'tools:deskewPdf',
     'Digital Signature': 'tools:digitalSignPdf',
     'Validate Signature': 'tools:validateSignaturePdf',
+    'Scanner Effect': 'tools:scannerEffect',
+    'Adjust Colors': 'tools:adjustColors',
+    'Markdown to PDF': 'tools:markdownToPdf',
+    'PDF Booklet': 'tools:pdfBooklet',
+    'Word to PDF': 'tools:wordToPdf',
+    'Excel to PDF': 'tools:excelToPdf',
+    'PowerPoint to PDF': 'tools:powerpointToPdf',
+    'XPS to PDF': 'tools:xpsToPdf',
+    'MOBI to PDF': 'tools:mobiToPdf',
+    'EPUB to PDF': 'tools:epubToPdf',
+    'FB2 to PDF': 'tools:fb2ToPdf',
+    'CBZ to PDF': 'tools:cbzToPdf',
+    'WPD to PDF': 'tools:wpdToPdf',
+    'WPS to PDF': 'tools:wpsToPdf',
+    'XML to PDF': 'tools:xmlToPdf',
+    'Pages to PDF': 'tools:pagesToPdf',
+    'ODG to PDF': 'tools:odgToPdf',
+    'ODS to PDF': 'tools:odsToPdf',
+    'ODP to PDF': 'tools:odpToPdf',
+    'PUB to PDF': 'tools:pubToPdf',
+    'VSD to PDF': 'tools:vsdToPdf',
+    'PSD to PDF': 'tools:psdToPdf',
+    'ODT to PDF': 'tools:odtToPdf',
+    'CSV to PDF': 'tools:csvToPdf',
+    'RTF to PDF': 'tools:rtfToPdf',
+    'PDF to SVG': 'tools:pdfToSvg',
+    'PDF to CSV': 'tools:pdfToCsv',
+    'PDF to Excel': 'tools:pdfToExcel',
+    'PDF to Text': 'tools:pdfToText',
+    'Extract Tables': 'tools:extractTables',
+    'PDF to Word': 'tools:pdfToWord',
+    'Extract Images': 'tools:extractImages',
+    'PDF to Markdown': 'tools:pdfToMarkdown',
+    'Prepare PDF for AI': 'tools:preparePdfForAi',
+    'PDF OCG': 'tools:pdfOcg',
+    'PDF to PDF/A': 'tools:pdfToPdfa',
+    'Rasterize PDF': 'tools:rasterizePdf',
   };
 
   // Homepage-only tool grid rendering (not used on individual tool pages)
@@ -397,9 +433,6 @@ const init = async () => {
 
   createIcons({ icons });
   console.log('Please share our tool and share the love!');
-
-  // Start background WASM preloading on all pages
-  startBackgroundPreload();
 
   const githubStarsElements = [
     document.getElementById('github-stars-desktop'),

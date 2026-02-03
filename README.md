@@ -8,7 +8,7 @@
 
 **BentoPDF** is a powerful, privacy-first, client-side PDF toolkit that is self hostable and allows you to manipulate, edit, merge, and process PDF files directly in your browser. No server-side processing is required, ensuring your files remain secure and private.
 
-![Docker Pulls](https://img.shields.io/docker/pulls/bentopdfteam/bentopdf) [![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?logo=kofi&style=flat-square)](https://ko-fi.com/alio01) ![GitHub Stars](https://img.shields.io/github/stars/alam00000/bentopdf?style=social)
+[![Docker Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fghcr-badge.elias.eu.org%2Fapi%2Falam00000%2Fbentopdf%2Fbentopdf&query=%24.downloadCount&logo=docker&label=Docker%20Downloads&color=blue)](https://github.com/alam00000/bentopdf/pkgs/container/bentopdf) [![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?logo=kofi&style=flat-square)](https://ko-fi.com/alio01) ![GitHub Stars](https://img.shields.io/github/stars/alam00000/bentopdf?style=social)
 [![Sponsor me on GitHub](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4)](https://github.com/sponsors/alam00000)
 
 ![BentoPDF Tools](public/images/bentopdf-tools.png)
@@ -38,6 +38,8 @@
   - [Docker Compose / Podman Compose](#-run-with-docker-compose--podman-compose-recommended)
   - [Podman Quadlet](#-podman-quadlet-systemd-integration)
   - [Simple Mode](#-simple-mode-for-internal-use)
+  - [WASM Configuration](#wasm-configuration)
+  - [Air-Gapped / Offline Deployment](#air-gapped--offline-deployment)
   - [Security Features](#-security-features)
   - [Digital Signature CORS Proxy](#digital-signature-cors-proxy-required)
   - [Version Management](#-version-management)
@@ -90,9 +92,9 @@ BentoPDF is **dual-licensed** to fit your needs:
 
 📖 For more details, see our [Licensing Page](https://bentopdf.com/licensing.html)
 
-### AGPL Components (Not Bundled)
+### AGPL Components (Pre-configured via CDN)
 
-BentoPDF does **not** bundle AGPL-licensed processing libraries. The following components must be configured separately via **Advanced Settings** if you wish to use their features:
+BentoPDF does **not** bundle AGPL-licensed processing libraries in its source code, but **pre-configures CDN URLs** so all features work out of the box with zero setup:
 
 | Component              | License  | Features Enabled                                                                                    |
 | ---------------------- | -------- | --------------------------------------------------------------------------------------------------- |
@@ -100,13 +102,8 @@ BentoPDF does **not** bundle AGPL-licensed processing libraries. The following c
 | **Ghostscript**        | AGPL-3.0 | PDF/A Conversion, Font to Outline                                                                   |
 | **CoherentPDF (CPDF)** | AGPL-3.0 | Merge, Split by Bookmarks, Table of Contents, PDF to/from JSON, Attachments                         |
 
-> **Why?** This separation ensures clear legal boundaries. Users who need these features can configure their own WASM sources or use our optional [WASM Proxy](cloudflare/WASM-PROXY.md) to load them from external URLs.
-
-**To enable these features:**
-
-1. Navigate to **Advanced Settings** in BentoPDF
-2. Configure the URL for each WASM module you need
-3. The modules will be loaded dynamically when required
+> [!TIP]
+> **Zero-config by default.** WASM modules are loaded at runtime from jsDelivr CDN. No manual configuration is needed. For custom deployments (air-gapped, self-hosted), see [WASM Configuration](#wasm-configuration) below.
 
 <hr>
 
@@ -335,7 +332,8 @@ podman run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
 podman run -p 3000:8080 docker.io/bentopdfteam/bentopdf:latest
 ```
 
-> **Note:** All `docker` commands in this documentation work with Podman by replacing `docker` with `podman`.
+> [!NOTE]
+> All `docker` commands in this documentation work with Podman by replacing `docker` with `podman`.
 
 </details>
 
@@ -368,7 +366,8 @@ npx http-server -c-1
 
 The website will be accessible at: `http://localhost:8080/`
 
-> **Note:** The `-c-1` flag disables caching for development.
+> [!NOTE]
+> The `-c-1` flag disables caching for development.
 
 **Build from Source (Advanced):**
 
@@ -442,6 +441,110 @@ npm run build
 - Local files are **always included** as automatic fallback
 - If CDN fails then it falls back to local files
 
+<h3 id="wasm-configuration">⚙️ WASM Configuration</h3>
+
+Advanced PDF features (PyMuPDF, Ghostscript, CoherentPDF) are pre-configured to load from jsDelivr CDN via environment variables. This means **all features work out of the box** — no manual setup needed.
+
+The default URLs are set in `.env.production`:
+
+```bash
+VITE_WASM_PYMUPDF_URL=https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.14/
+VITE_WASM_GS_URL=https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/
+VITE_WASM_CPDF_URL=https://cdn.jsdelivr.net/npm/coherentpdf/dist/
+```
+
+To override via Docker build args:
+
+```bash
+docker build \
+  --build-arg VITE_WASM_PYMUPDF_URL=https://your-server.com/pymupdf/ \
+  --build-arg VITE_WASM_GS_URL=https://your-server.com/gs/ \
+  --build-arg VITE_WASM_CPDF_URL=https://your-server.com/cpdf/ \
+  -t bentopdf .
+```
+
+To disable a module (require manual user config via Advanced Settings), set its variable to an empty string.
+
+Users can also override these defaults per-browser via **Advanced Settings** in the UI — user overrides take priority over the environment defaults.
+
+> [!IMPORTANT]
+> These URLs are baked into the JavaScript at **build time**. The WASM files themselves are downloaded by the **user's browser** at runtime — Docker does not download them during the build.
+
+<h3 id="air-gapped--offline-deployment">🔒 Air-Gapped / Offline Deployment</h3>
+
+For networks with no internet access (government, healthcare, financial, etc.), you need to prepare everything on a machine **with** internet, then transfer it into the isolated network.
+
+**Step 1: Download the WASM packages** (on a machine with internet)
+
+```bash
+npm pack @bentopdf/pymupdf-wasm@0.11.14
+npm pack @bentopdf/gs-wasm
+npm pack coherentpdf
+```
+
+This creates three `.tgz` files in your current directory.
+
+**Step 2: Build the Docker image with internal URLs** (on a machine with internet)
+
+Point the WASM URLs to where you'll host the files inside the air-gapped network:
+
+```bash
+# Clone and build
+git clone https://github.com/alam00000/bentopdf.git
+cd bentopdf
+
+docker build \
+  --build-arg VITE_WASM_PYMUPDF_URL=https://internal-server.example.com/wasm/pymupdf/ \
+  --build-arg VITE_WASM_GS_URL=https://internal-server.example.com/wasm/gs/ \
+  --build-arg VITE_WASM_CPDF_URL=https://internal-server.example.com/wasm/cpdf/ \
+  -t bentopdf .
+```
+
+**Step 3: Export the Docker image**
+
+```bash
+docker save bentopdf -o bentopdf.tar
+```
+
+**Step 4: Transfer into the air-gapped network**
+
+Copy these files via USB drive, internal artifact repository, or approved transfer method:
+
+- `bentopdf.tar` — the Docker image
+- `bentopdf-pymupdf-wasm-0.11.14.tgz` — PyMuPDF WASM package
+- `bentopdf-gs-wasm-*.tgz` — Ghostscript WASM package
+- `coherentpdf-*.tgz` — CoherentPDF WASM package
+
+**Step 5: Set up inside the air-gapped network**
+
+```bash
+# Load the Docker image
+docker load -i bentopdf.tar
+
+# Extract the WASM packages
+mkdir -p /var/www/wasm/pymupdf /var/www/wasm/gs /var/www/wasm/cpdf
+tar xzf bentopdf-pymupdf-wasm-0.11.14.tgz -C /var/www/wasm/pymupdf --strip-components=1
+tar xzf bentopdf-gs-wasm-*.tgz -C /var/www/wasm/gs --strip-components=1
+tar xzf coherentpdf-*.tgz -C /var/www/wasm/cpdf --strip-components=1
+
+# Serve the WASM files on your internal web server (e.g., nginx, Apache)
+# Make sure they're accessible at the URLs you configured in Step 2
+
+# Run BentoPDF
+docker run -d -p 3000:8080 --restart unless-stopped bentopdf
+```
+
+Users open their browser, access BentoPDF on the internal network, and the browser fetches WASM files from the internal server. No internet required at any point.
+
+> [!NOTE]
+> If you're building from source instead of Docker, set the variables in `.env.production` before running `npm run build`:
+>
+> ```bash
+> VITE_WASM_PYMUPDF_URL=https://internal-server.example.com/wasm/pymupdf/
+> VITE_WASM_GS_URL=https://internal-server.example.com/wasm/gs/
+> VITE_WASM_CPDF_URL=https://internal-server.example.com/wasm/cpdf/
+> ```
+
 **Subdirectory Hosting:**
 
 BentoPDF can also be hosted from a subdirectory (e.g., `example.com/tools/bentopdf/`):
@@ -493,7 +596,7 @@ docker build \
 docker run -p 3000:8080 bentopdf-simple
 ```
 
-> **Important**:
+> [!IMPORTANT]
 >
 > - Always include trailing slashes in `BASE_URL` (e.g., `/bentopdf/` not `/bentopdf`)
 > - The default value is `/` for root deployment
@@ -662,7 +765,8 @@ npx wrangler deploy
 
 #### HMAC Signature Verification (Optional)
 
-> **⚠️ Security Warning:** Client-side secrets can be extracted from bundled JavaScript. For production deployments with sensitive requirements, use your own backend server to proxy requests instead of embedding secrets in frontend code.
+> [!WARNING]
+> Client-side secrets can be extracted from bundled JavaScript. For production deployments with sensitive requirements, use your own backend server to proxy requests instead of embedding secrets in frontend code.
 
 BentoPDF uses client-side HMAC as a deterrent against casual abuse, but accepts this tradeoff due to its fully client-side architecture. To enable:
 
@@ -748,7 +852,8 @@ For detailed release instructions, see [RELEASE.md](RELEASE.md).
 
    The application will be available at `http://localhost:3000`.
 
-   > **Note:** After making any local changes to the code, rebuild the Docker image using:
+   > [!NOTE]
+   > After making any local changes to the code, rebuild the Docker image using:
 
    ```bash
    docker-compose -f docker-compose.dev.yml up --build -d
@@ -766,7 +871,8 @@ BentoPDF was originally built using **HTML**, **CSS**, and **vanilla JavaScript*
 - **TypeScript**: For type safety and an improved developer experience.
 - **Tailwind CSS**: For rapid and consistent UI development.
 
-> **Note:** Some parts of the codebase still use legacy structures from the original implementation. Contributors should expect gradual updates as testing and refactoring continue.
+> [!NOTE]
+> Some parts of the codebase still use legacy structures from the original implementation. Contributors should expect gradual updates as testing and refactoring continue.
 
 ---
 
@@ -841,12 +947,13 @@ BentoPDF wouldn't be possible without the amazing open-source tools and librarie
 - **[qpdf](https://github.com/qpdf/qpdf)** and **[qpdf-wasm](https://github.com/neslinesli93/qpdf-wasm)** – For inspecting, repairing, and transforming PDF files.
 - **[LibreOffice](https://www.libreoffice.org/)** – For powerful document conversion capabilities.
 
-**AGPL Libraries (Not Bundled - User Configured):**
+**AGPL Libraries (Pre-configured via CDN):**
 
 - **[CoherentPDF (cpdf)](https://www.coherentpdf.com/)** – For content-preserving PDF operations. _(AGPL-3.0)_
 - **[PyMuPDF](https://github.com/pymupdf/PyMuPDF)** – For high-performance PDF manipulation and data extraction. _(AGPL-3.0)_
 - **[Ghostscript (GhostPDL)](https://github.com/ArtifexSoftware/ghostpdl)** – For PDF/A conversion and font outlining. _(AGPL-3.0)_
 
-> **Note:** AGPL-licensed libraries are not bundled with BentoPDF. Users can optionally configure these via Advanced Settings to enable additional features.
+> [!NOTE]
+> AGPL-licensed libraries are not bundled in BentoPDF's source code. They are loaded at runtime from CDN (pre-configured) and can be overridden via environment variables or Advanced Settings.
 
 Your work inspires and empowers developers everywhere. Thank you for making open-source amazing!

@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "Enderezar PDF",
     "subtitle": "Endereza automáticamente páginas escaneadas inclinadas usando OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF a Word",
+    "subtitle": "Convertir archivos PDF a documentos Word editables."
+  },
+  "extractImages": {
+    "name": "Extraer imágenes",
+    "subtitle": "Extraer todas las imágenes incrustadas de sus archivos PDF."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF a Markdown",
+    "subtitle": "Convertir texto y tablas de PDF a formato Markdown."
+  },
+  "preparePdfForAi": {
+    "name": "Preparar PDF para IA",
+    "subtitle": "Extraer contenido PDF como JSON de LlamaIndex para pipelines RAG/LLM."
+  },
+  "pdfOcg": {
+    "name": "Capas PDF (OCG)",
+    "subtitle": "Ver, alternar, agregar y eliminar capas OCG en su PDF."
+  },
+  "pdfToPdfa": {
+    "name": "PDF a PDF/A",
+    "subtitle": "Convertir PDF a PDF/A para archivado a largo plazo."
+  },
+  "rasterizePdf": {
+    "name": "Rasterizar PDF",
+    "subtitle": "Convertir PDF a PDF basado en imágenes. Aplanar capas y eliminar texto seleccionable."
   }
 }

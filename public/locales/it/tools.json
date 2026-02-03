@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "Raddrizza PDF",
     "subtitle": "Raddrizza automaticamente le pagine scansionate inclinate usando OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF in Word",
+    "subtitle": "Converti file PDF in documenti Word modificabili."
+  },
+  "extractImages": {
+    "name": "Estrai immagini",
+    "subtitle": "Estrai tutte le immagini incorporate dai tuoi file PDF."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF in Markdown",
+    "subtitle": "Converti testo e tabelle PDF in formato Markdown."
+  },
+  "preparePdfForAi": {
+    "name": "Prepara PDF per IA",
+    "subtitle": "Estrai il contenuto PDF come JSON LlamaIndex per pipeline RAG/LLM."
+  },
+  "pdfOcg": {
+    "name": "Livelli PDF (OCG)",
+    "subtitle": "Visualizza, attiva/disattiva, aggiungi ed elimina livelli OCG nel tuo PDF."
+  },
+  "pdfToPdfa": {
+    "name": "PDF in PDF/A",
+    "subtitle": "Converti PDF in PDF/A per l'archiviazione a lungo termine."
+  },
+  "rasterizePdf": {
+    "name": "Rasterizza PDF",
+    "subtitle": "Converti PDF in PDF basato su immagini. Appiattisci i livelli e rimuovi il testo selezionabile."
   }
 }

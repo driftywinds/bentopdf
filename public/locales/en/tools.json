@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "Deskew PDF",
     "subtitle": "Automatically straighten tilted scanned pages using OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF to Word",
+    "subtitle": "Convert PDF files to editable Word documents."
+  },
+  "extractImages": {
+    "name": "Extract Images",
+    "subtitle": "Extract all embedded images from your PDF files."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF to Markdown",
+    "subtitle": "Convert PDF text and tables to Markdown format."
+  },
+  "preparePdfForAi": {
+    "name": "Prepare PDF for AI",
+    "subtitle": "Extract PDF content as LlamaIndex JSON for RAG/LLM pipelines."
+  },
+  "pdfOcg": {
+    "name": "PDF OCG",
+    "subtitle": "View, toggle, add, and delete OCG layers in your PDF."
+  },
+  "pdfToPdfa": {
+    "name": "PDF to PDF/A",
+    "subtitle": "Convert PDF to PDF/A for long-term archiving."
+  },
+  "rasterizePdf": {
+    "name": "Rasterize PDF",
+    "subtitle": "Convert PDF to image-based PDF. Flatten layers and remove selectable text."
   }
 }

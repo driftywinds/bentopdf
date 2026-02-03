@@ -67,7 +67,33 @@
     "filesNeverLeave": "Seus arquivos nunca saem do seu dispositivo.",
     "addMore": "Adicionar Mais Arquivos",
     "clearAll": "Limpar Tudo",
-    "clearFiles": "Limpar arquivos"
+    "clearFiles": "Limpar arquivos",
+    "hints": {
+      "singlePdf": "Um único arquivo PDF",
+      "pdfFile": "Arquivo PDF",
+      "multiplePdfs2": "Múltiplos arquivos PDF (pelo menos 2)",
+      "bmpImages": "Imagens BMP",
+      "oneOrMorePdfs": "Um ou mais arquivos PDF",
+      "pdfDocuments": "Documentos PDF",
+      "oneOrMoreCsv": "Um ou mais arquivos CSV",
+      "multiplePdfsSupported": "Múltiplos arquivos PDF suportados",
+      "singleOrMultiplePdfs": "Um ou vários arquivos PDF suportados",
+      "singlePdfFile": "Um único arquivo PDF",
+      "pdfWithForms": "Arquivo PDF com campos de formulário",
+      "heicImages": "Imagens HEIC/HEIF",
+      "jpgImages": "Imagens JPG, JPEG, JP2, JPX",
+      "pdfsOrImages": "PDFs ou imagens",
+      "oneOrMoreOdt": "Um ou mais arquivos ODT",
+      "singlePdfOnly": "Apenas um arquivo PDF",
+      "pdfFiles": "Arquivos PDF",
+      "multiplePdfs": "Múltiplos arquivos PDF",
+      "pngImages": "Imagens PNG",
+      "pdfFilesOneOrMore": "Arquivos PDF (um ou mais)",
+      "oneOrMoreRtf": "Um ou mais arquivos RTF",
+      "svgGraphics": "Gráficos SVG",
+      "tiffImages": "Imagens TIFF",
+      "webpImages": "Imagens WebP"
+    }
   },
   "loader": {
     "processing": "Processando..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Vocês usam cookies ou rastreamento?",
       "answer": "Usamos apenas o Simple Analytics para contar visitas de forma anônima. Sabemos quantos usuários nos visitam, mas nunca quem você é. O sistema respeita totalmente a GDPR."
-    }
+    },
+    "sectionTitle": "Perguntas frequentes"
   },
   "testimonials": {
     "title": "O que nossos",
@@ -321,5 +348,14 @@
     "errorRendering": "Falha ao renderizar miniaturas das páginas",
     "error": "Erro",
     "failedToLoad": "Falha ao carregar"
+  },
+  "howItWorks": {
+    "title": "Como funciona",
+    "step1": "Clique ou arraste seu arquivo aqui",
+    "step2": "Clique no botão de processamento",
+    "step3": "Salve seu arquivo processado instantaneamente"
+  },
+  "relatedTools": {
+    "title": "Ferramentas PDF relacionadas"
   }
 }

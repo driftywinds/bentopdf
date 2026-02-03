@@ -121,6 +121,15 @@ async function performCondenseCompression(
       return { ...result, usedFallback: true };
     }
 
+    if (
+      errorMessage.includes('closed or encrypted') ||
+      errorMessage.includes('encrypted')
+    ) {
+      throw new Error(
+        'This PDF is encrypted or password-protected. Please remove the password first using the Unlock PDF tool, then try compressing again.'
+      );
+    }
+
     throw new Error(`PDF compression failed: ${errorMessage}`);
   }
 }

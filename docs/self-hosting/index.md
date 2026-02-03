@@ -118,12 +118,13 @@ Choose your platform:
 - [Kubernetes](/self-hosting/kubernetes)
 - [CORS Proxy](/self-hosting/cors-proxy) - Required for digital signatures
 
-## Configuring AGPL WASM Components
+## WASM Configuration (AGPL Components)
 
-BentoPDF **does not bundle** AGPL-licensed processing libraries. Some advanced features require you to configure WASM modules separately.
+BentoPDF **does not bundle** AGPL-licensed processing libraries in its source code, but **pre-configures CDN URLs** so all features work out of the box — no manual setup needed.
 
-::: warning AGPL Components Not Included
-The following WASM modules are **not bundled** with BentoPDF and must be configured by users who want to use features powered by these libraries:
+::: tip Zero-Config by Default
+As of v2.0.0, WASM modules are pre-configured to load from jsDelivr CDN via environment variables. All advanced features work immediately without any user configuration.
+:::
 
 | Component       | License  | Features                                                         |
 | --------------- | -------- | ---------------------------------------------------------------- |
@@ -131,16 +132,102 @@ The following WASM modules are **not bundled** with BentoPDF and must be configu
 | **Ghostscript** | AGPL-3.0 | PDF/A conversion, compression, deskewing, rasterization          |
 | **CoherentPDF** | AGPL-3.0 | Table of contents, attachments, PDF merge with bookmarks         |
 
+### Default Environment Variables
+
+These are set in `.env.production` and baked into the build:
+
+```bash
+VITE_WASM_PYMUPDF_URL=https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.14/
+VITE_WASM_GS_URL=https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/
+VITE_WASM_CPDF_URL=https://cdn.jsdelivr.net/npm/coherentpdf/dist/
+```
+
+### Overriding WASM URLs
+
+You can override the defaults at build time for custom deployments:
+
+```bash
+# Via Docker build args
+docker build \
+  --build-arg VITE_WASM_PYMUPDF_URL=https://your-server.com/pymupdf/ \
+  --build-arg VITE_WASM_GS_URL=https://your-server.com/gs/ \
+  --build-arg VITE_WASM_CPDF_URL=https://your-server.com/cpdf/ \
+  -t bentopdf .
+
+# Or via .env.production before building from source
+VITE_WASM_PYMUPDF_URL=https://your-server.com/pymupdf/ npm run build
+```
+
+To disable a module entirely (require manual user config via Advanced Settings), set its variable to an empty string.
+
+Users can also override these defaults at any time via **Advanced Settings** in the UI — user overrides stored in the browser take priority over environment defaults.
+
+### Air-Gapped / Offline Deployment
+
+For networks with no internet access (government, healthcare, financial, etc.). The WASM URLs are baked into the JavaScript at **build time** — the actual WASM files are downloaded by the **user's browser** at runtime. So you need to prepare everything on a machine with internet, then transfer it into the isolated network.
+
+**Step 1: Download the WASM packages** (on a machine with internet)
+
+```bash
+npm pack @bentopdf/pymupdf-wasm@0.11.14
+npm pack @bentopdf/gs-wasm
+npm pack coherentpdf
+```
+
+**Step 2: Build the Docker image with internal URLs**
+
+```bash
+git clone https://github.com/alam00000/bentopdf.git
+cd bentopdf
+
+docker build \
+  --build-arg VITE_WASM_PYMUPDF_URL=https://internal-server.example.com/wasm/pymupdf/ \
+  --build-arg VITE_WASM_GS_URL=https://internal-server.example.com/wasm/gs/ \
+  --build-arg VITE_WASM_CPDF_URL=https://internal-server.example.com/wasm/cpdf/ \
+  -t bentopdf .
+```
+
+**Step 3: Export the Docker image**
+
+```bash
+docker save bentopdf -o bentopdf.tar
+```
+
+**Step 4: Transfer into the air-gapped network**
+
+Copy via USB, internal artifact repo, or approved transfer method:
+
+- `bentopdf.tar` — the Docker image
+- The three `.tgz` WASM packages from Step 1
+
+**Step 5: Set up inside the air-gapped network**
+
+```bash
+# Load the Docker image
+docker load -i bentopdf.tar
+
+# Extract WASM packages to your internal web server's document root
+mkdir -p /var/www/wasm/pymupdf /var/www/wasm/gs /var/www/wasm/cpdf
+tar xzf bentopdf-pymupdf-wasm-0.11.14.tgz -C /var/www/wasm/pymupdf --strip-components=1
+tar xzf bentopdf-gs-wasm-*.tgz -C /var/www/wasm/gs --strip-components=1
+tar xzf coherentpdf-*.tgz -C /var/www/wasm/cpdf --strip-components=1
+
+# Run BentoPDF
+docker run -d -p 3000:8080 --restart unless-stopped bentopdf
+```
+
+Make sure the WASM files are accessible at the URLs you configured in Step 2. Users open their browser and everything works — no internet required.
+
+::: info Building from source instead of Docker?
+Set the variables in `.env.production` before running `npm run build`:
+
+```bash
+VITE_WASM_PYMUPDF_URL=https://internal-server.example.com/wasm/pymupdf/
+VITE_WASM_GS_URL=https://internal-server.example.com/wasm/gs/
+VITE_WASM_CPDF_URL=https://internal-server.example.com/wasm/cpdf/
+```
+
 :::
-
-### How to Configure WASM Sources
-
-1. Navigate to **Advanced Settings** in the BentoPDF interface
-2. Enter the URLs for the WASM modules you want to use
-3. You can use:
-   - Your own hosted WASM files
-   - A [WASM proxy](/self-hosting/cors-proxy) you deploy (handles CORS)
-   - Any compatible CDN hosting these packages
 
 ### Hosting Your Own WASM Proxy
 
@@ -150,8 +237,8 @@ If you need to serve AGPL WASM files with proper CORS headers, you can deploy a 
 This separation ensures:
 
 - Clear legal compliance for commercial users
-- Users make informed choices when enabling AGPL features
 - BentoPDF's core remains under its dual-license (AGPL-3.0 / Commercial)
+- WASM files are loaded at runtime, not bundled in the source
   :::
 
 ## System Requirements

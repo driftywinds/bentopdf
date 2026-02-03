@@ -67,7 +67,33 @@
     "filesNeverLeave": "File Anda tidak pernah meninggalkan perangkat Anda.",
     "addMore": "Tambah Lebih Banyak File",
     "clearAll": "Hapus Semua",
-    "clearFiles": "Hapus file"
+    "clearFiles": "Hapus file",
+    "hints": {
+      "singlePdf": "Satu file PDF",
+      "pdfFile": "File PDF",
+      "multiplePdfs2": "Beberapa file PDF (minimal 2)",
+      "bmpImages": "Gambar BMP",
+      "oneOrMorePdfs": "Satu atau lebih file PDF",
+      "pdfDocuments": "Dokumen PDF",
+      "oneOrMoreCsv": "Satu atau lebih file CSV",
+      "multiplePdfsSupported": "Beberapa file PDF didukung",
+      "singleOrMultiplePdfs": "Satu atau beberapa file PDF didukung",
+      "singlePdfFile": "Satu file PDF",
+      "pdfWithForms": "File PDF dengan kolom formulir",
+      "heicImages": "Gambar HEIC/HEIF",
+      "jpgImages": "Gambar JPG, JPEG, JP2, JPX",
+      "pdfsOrImages": "PDF atau gambar",
+      "oneOrMoreOdt": "Satu atau lebih file ODT",
+      "singlePdfOnly": "Hanya satu file PDF",
+      "pdfFiles": "File PDF",
+      "multiplePdfs": "Beberapa file PDF",
+      "pngImages": "Gambar PNG",
+      "pdfFilesOneOrMore": "File PDF (satu atau lebih)",
+      "oneOrMoreRtf": "Satu atau lebih file RTF",
+      "svgGraphics": "Grafik SVG",
+      "tiffImages": "Gambar TIFF",
+      "webpImages": "Gambar WebP"
+    }
   },
   "loader": {
     "processing": "Memproses..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Apakah Anda menggunakan cookie atau analitik untuk melacak saya?",
       "answer": "Kami peduli dengan privasi Anda. BentoPDF tidak melacak informasi pribadi. Kami menggunakan Simple Analytics hanya untuk melihat jumlah kunjungan anonim. Ini berarti kami dapat mengetahui berapa banyak pengguna yang mengunjungi situs kami, tetapi kami tidak pernah tahu siapa Anda. Simple Analytics sepenuhnya patuh GDPR dan menghormati privasi Anda."
-    }
+    },
+    "sectionTitle": "Pertanyaan yang Sering Diajukan"
   },
   "testimonials": {
     "title": "Apa Kata",
@@ -321,5 +348,14 @@
     "errorRendering": "Gagal merender thumbnail halaman",
     "error": "Kesalahan",
     "failedToLoad": "Gagal memuat"
+  },
+  "howItWorks": {
+    "title": "Cara Kerja",
+    "step1": "Klik atau seret file Anda ke sini",
+    "step2": "Klik tombol proses untuk memulai",
+    "step3": "Simpan file yang diproses secara instan"
+  },
+  "relatedTools": {
+    "title": "Alat PDF Terkait"
   }
 }

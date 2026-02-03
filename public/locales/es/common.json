@@ -67,7 +67,33 @@
     "filesNeverLeave": "Tus archivos nunca salen de tu dispositivo.",
     "addMore": "Agregar Más Archivos",
     "clearAll": "Limpiar Todo",
-    "clearFiles": "Borrar archivos"
+    "clearFiles": "Borrar archivos",
+    "hints": {
+      "singlePdf": "Un solo archivo PDF",
+      "pdfFile": "Archivo PDF",
+      "multiplePdfs2": "Múltiples archivos PDF (al menos 2)",
+      "bmpImages": "Imágenes BMP",
+      "oneOrMorePdfs": "Uno o más archivos PDF",
+      "pdfDocuments": "Documentos PDF",
+      "oneOrMoreCsv": "Uno o más archivos CSV",
+      "multiplePdfsSupported": "Múltiples archivos PDF compatibles",
+      "singleOrMultiplePdfs": "Uno o varios archivos PDF compatibles",
+      "singlePdfFile": "Un solo archivo PDF",
+      "pdfWithForms": "Archivo PDF con campos de formulario",
+      "heicImages": "Imágenes HEIC/HEIF",
+      "jpgImages": "Imágenes JPG, JPEG, JP2, JPX",
+      "pdfsOrImages": "PDFs o imágenes",
+      "oneOrMoreOdt": "Uno o más archivos ODT",
+      "singlePdfOnly": "Solo un archivo PDF",
+      "pdfFiles": "Archivos PDF",
+      "multiplePdfs": "Múltiples archivos PDF",
+      "pngImages": "Imágenes PNG",
+      "pdfFilesOneOrMore": "Archivos PDF (uno o más)",
+      "oneOrMoreRtf": "Uno o más archivos RTF",
+      "svgGraphics": "Gráficos SVG",
+      "tiffImages": "Imágenes TIFF",
+      "webpImages": "Imágenes WebP"
+    }
   },
   "loader": {
     "processing": "Procesando..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "¿Usan cookies o análisis para rastrearme?",
       "answer": "Nos preocupamos por tu privacidad. BentoPDF no rastrea información personal. Usamos Simple Analytics únicamente para ver recuentos de visitas anónimas. Esto significa que podemos saber cuántos usuarios visitan nuestro sitio, pero nunca sabemos quién eres. Simple Analytics cumple completamente con GDPR y respeta tu privacidad."
-    }
+    },
+    "sectionTitle": "Preguntas frecuentes"
   },
   "testimonials": {
     "title": "Lo que Nuestros",
@@ -321,5 +348,14 @@
     "errorRendering": "Error al renderizar miniaturas de páginas",
     "error": "Error",
     "failedToLoad": "Error al cargar"
+  },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "step1": "Haz clic o arrastra tu archivo aquí",
+    "step2": "Haz clic en el botón de procesar",
+    "step3": "Guarda tu archivo procesado al instante"
+  },
+  "relatedTools": {
+    "title": "Herramientas PDF relacionadas"
   }
 }

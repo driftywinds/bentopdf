@@ -66,7 +66,33 @@
     "pdfOrImages": "PDF або відарысы",
     "filesNeverLeave": "Вашы файлы ніколі не пакідаюць прыладу.",
     "addMore": "Дадаць больш файлаў",
-    "clearAll": "Ачысціць усё"
+    "clearAll": "Ачысціць усё",
+    "hints": {
+      "singlePdf": "Адзін PDF-файл",
+      "pdfFile": "PDF-файл",
+      "multiplePdfs2": "Некалькі PDF-файлаў (мінімум 2)",
+      "bmpImages": "Выявы BMP",
+      "oneOrMorePdfs": "Адзін або некалькі PDF-файлаў",
+      "pdfDocuments": "PDF-дакументы",
+      "oneOrMoreCsv": "Адзін або некалькі CSV-файлаў",
+      "multiplePdfsSupported": "Падтрымліваецца некалькі PDF-файлаў",
+      "singleOrMultiplePdfs": "Падтрымліваецца адзін або некалькі PDF-файлаў",
+      "singlePdfFile": "Адзін PDF-файл",
+      "pdfWithForms": "PDF-файл з палямі формы",
+      "heicImages": "Выявы HEIC/HEIF",
+      "jpgImages": "Выявы JPG, JPEG, JP2, JPX",
+      "pdfsOrImages": "PDF або выявы",
+      "oneOrMoreOdt": "Адзін або некалькі ODT-файлаў",
+      "singlePdfOnly": "Толькі адзін PDF-файл",
+      "pdfFiles": "PDF-файлы",
+      "multiplePdfs": "Некалькі PDF-файлаў",
+      "pngImages": "Выявы PNG",
+      "pdfFilesOneOrMore": "PDF-файлы (адзін або некалькі)",
+      "oneOrMoreRtf": "Адзін або некалькі RTF-файлаў",
+      "svgGraphics": "SVG-графіка",
+      "tiffImages": "Выявы TIFF",
+      "webpImages": "Выявы WebP"
+    }
   },
   "loader": {
     "processing": "Апрацоўка..."
@@ -170,7 +196,8 @@
     "analytics": {
       "question": "Вы выкарыстоўваеце cookies або аналітыку, каб сачыць за мной?",
       "answer": "Мы дбаем пра вашу прыватнасць. BentoPDF не адсочвае персанальную інфармацыю. Мы выкарыстоўваем Simple Analytics, толькі каб бачыць ананімную статыстыку наведванняў. Гэта значыць, мы ведаем, колькі карыстальнікаў наведвае наш сайт, але ніколі не ведаем, хто вы. Simple Analytics цалкам адпавядае GDPR і шануе вашу прыватнасць."
-    }
+    },
+    "sectionTitle": "Часта задаваныя пытанні"
   },
   "testimonials": {
     "title": "Што кажуць",
@@ -319,5 +346,14 @@
     "errorRendering": "Не ўдалося апрацаваць мініяцюры старонак",
     "error": "Памылка",
     "failedToLoad": "Не ўдалося загрузіць"
+  },
+  "howItWorks": {
+    "title": "Як гэта працуе",
+    "step1": "Націсніце або перацягніце файл сюды",
+    "step2": "Націсніце кнопку апрацоўкі",
+    "step3": "Захавайце апрацаваны файл імгненна"
+  },
+  "relatedTools": {
+    "title": "Звязаныя інструменты PDF"
   }
 }

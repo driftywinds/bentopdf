@@ -538,5 +538,33 @@
     "name": "Validate PDF Signature",
     "pageTitle": "Validate PDF Signature - Verify Digital Signatures | BentoPDF",
     "subtitle": "Verify digital signatures in your PDF files. Check certificate validity, view signer details, and confirm document integrity. All processing happens in your browser."
+  },
+  "pdfToWord": {
+    "name": "PDF 轉 Word",
+    "subtitle": "將 PDF 檔案轉換為可編輯的 Word 文件。"
+  },
+  "extractImages": {
+    "name": "擷取圖片",
+    "subtitle": "從 PDF 檔案中擷取所有嵌入的圖片。"
+  },
+  "pdfToMarkdown": {
+    "name": "PDF 轉 Markdown",
+    "subtitle": "將 PDF 文字和表格轉換為 Markdown 格式。"
+  },
+  "preparePdfForAi": {
+    "name": "為 AI 準備 PDF",
+    "subtitle": "將 PDF 內容擷取為 LlamaIndex JSON，用於 RAG/LLM 管線。"
+  },
+  "pdfOcg": {
+    "name": "PDF 圖層 (OCG)",
+    "subtitle": "檢視、切換、新增和刪除 PDF 中的 OCG 圖層。"
+  },
+  "pdfToPdfa": {
+    "name": "PDF 轉 PDF/A",
+    "subtitle": "將 PDF 轉換為 PDF/A 格式以進行長期歸檔。"
+  },
+  "rasterizePdf": {
+    "name": "柵格化 PDF",
+    "subtitle": "將 PDF 轉換為基於影像的 PDF。展平圖層並移除可選取的文字。"
   }
 }

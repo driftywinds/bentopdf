@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "Chỉnh nghiêng PDF",
     "subtitle": "Tự động làm thẳng các trang quét bị nghiêng bằng OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF sang Word",
+    "subtitle": "Chuyển đổi tệp PDF thành tài liệu Word có thể chỉnh sửa."
+  },
+  "extractImages": {
+    "name": "Trích xuất hình ảnh",
+    "subtitle": "Trích xuất tất cả hình ảnh nhúng từ tệp PDF của bạn."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF sang Markdown",
+    "subtitle": "Chuyển đổi văn bản và bảng PDF sang định dạng Markdown."
+  },
+  "preparePdfForAi": {
+    "name": "Chuẩn bị PDF cho AI",
+    "subtitle": "Trích xuất nội dung PDF dưới dạng JSON LlamaIndex cho quy trình RAG/LLM."
+  },
+  "pdfOcg": {
+    "name": "Lớp PDF (OCG)",
+    "subtitle": "Xem, chuyển đổi, thêm và xóa các lớp OCG trong PDF của bạn."
+  },
+  "pdfToPdfa": {
+    "name": "PDF sang PDF/A",
+    "subtitle": "Chuyển đổi PDF sang PDF/A để lưu trữ lâu dài."
+  },
+  "rasterizePdf": {
+    "name": "Rasterize PDF",
+    "subtitle": "Chuyển đổi PDF thành PDF dựa trên hình ảnh. Làm phẳng các lớp và xóa văn bản có thể chọn."
   }
 }

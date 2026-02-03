@@ -67,7 +67,33 @@
     "filesNeverLeave": "你的檔案永遠不會離開你的裝置。",
     "addMore": "添加更多檔案",
     "clearAll": "清除全部",
-    "clearFiles": "清除檔案"
+    "clearFiles": "清除檔案",
+    "hints": {
+      "singlePdf": "單個 PDF 檔案",
+      "pdfFile": "PDF 檔案",
+      "multiplePdfs2": "多個 PDF 檔案（至少 2 個）",
+      "bmpImages": "BMP 圖片",
+      "oneOrMorePdfs": "一個或多個 PDF 檔案",
+      "pdfDocuments": "PDF 文件",
+      "oneOrMoreCsv": "一個或多個 CSV 檔案",
+      "multiplePdfsSupported": "支援多個 PDF 檔案",
+      "singleOrMultiplePdfs": "支援單個或多個 PDF 檔案",
+      "singlePdfFile": "單個 PDF 檔案",
+      "pdfWithForms": "含有表單欄位的 PDF 檔案",
+      "heicImages": "HEIC/HEIF 圖片",
+      "jpgImages": "JPG、JPEG、JP2、JPX 圖片",
+      "pdfsOrImages": "PDF 或圖片",
+      "oneOrMoreOdt": "一個或多個 ODT 檔案",
+      "singlePdfOnly": "僅限單個 PDF 檔案",
+      "pdfFiles": "PDF 檔案",
+      "multiplePdfs": "多個 PDF 檔案",
+      "pngImages": "PNG 圖片",
+      "pdfFilesOneOrMore": "PDF 檔案（一個或多個）",
+      "oneOrMoreRtf": "一個或多個 RTF 檔案",
+      "svgGraphics": "SVG 圖形",
+      "tiffImages": "TIFF 圖片",
+      "webpImages": "WebP 圖片"
+    }
   },
   "loader": {
     "processing": "正在處理..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "你會使用 Cookies 或網站分析來追蹤我嗎？",
       "answer": "我們在乎你的隱私。BentoPDF 並不追蹤個人資訊。我們僅使用 Simple Analytics 來查看匿名訪問次數。這代表我們能知道有多少使用者造訪過我們的網站，但我們永遠都不會知道你是誰。Simple Analytics 完全符合 GDPR 規範且尊重你的隱私。"
-    }
+    },
+    "sectionTitle": "常見問題"
   },
   "testimonials": {
     "title": "看看我們的",
@@ -321,5 +348,14 @@
     "errorRendering": "無法渲染頁面縮圖",
     "error": "錯誤",
     "failedToLoad": "載入失敗"
+  },
+  "howItWorks": {
+    "title": "使用方式",
+    "step1": "點擊或拖放您的檔案到此處",
+    "step2": "點擊處理按鈕開始",
+    "step3": "立即儲存處理後的檔案"
+  },
+  "relatedTools": {
+    "title": "相關 PDF 工具"
   }
 }

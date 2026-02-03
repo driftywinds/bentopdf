@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "Выпрастаць PDF",
     "subtitle": "Аўтаматычна выраўняць нахіленыя адсканіраваныя старонкі з дапамогай OpenCV."
+  },
+  "pdfToWord": {
+    "name": "PDF у Word",
+    "subtitle": "Канвертаваць PDF-файлы ў рэдагуемыя дакументы Word."
+  },
+  "extractImages": {
+    "name": "Выняць выявы",
+    "subtitle": "Выняць усе ўбудаваныя выявы з вашых PDF-файлаў."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF у Markdown",
+    "subtitle": "Канвертаваць тэкст і табліцы PDF у фармат Markdown."
+  },
+  "preparePdfForAi": {
+    "name": "Падрыхтаваць PDF для ШI",
+    "subtitle": "Выняць змесціва PDF як JSON LlamaIndex для канвеераў RAG/LLM."
+  },
+  "pdfOcg": {
+    "name": "Пласты PDF (OCG)",
+    "subtitle": "Прагляд, пераключэнне, даданне і выдаленне пластоў OCG у вашым PDF."
+  },
+  "pdfToPdfa": {
+    "name": "PDF у PDF/A",
+    "subtitle": "Канвертаваць PDF у PDF/A для доўгатэрміновага архівавання."
+  },
+  "rasterizePdf": {
+    "name": "Растарызаваць PDF",
+    "subtitle": "Канвертаваць PDF у PDF на аснове выяваў. Сплюшчыць пласты і выдаліць выдзяляемы тэкст."
   }
 }

@@ -67,7 +67,33 @@
     "filesNeverLeave": "I tuoi file non lasciano mai il tuo dispositivo.",
     "addMore": "Aggiungi altri file",
     "clearAll": "Svuota tutto",
-    "clearFiles": "Cancella file"
+    "clearFiles": "Cancella file",
+    "hints": {
+      "singlePdf": "Un singolo file PDF",
+      "pdfFile": "File PDF",
+      "multiplePdfs2": "Più file PDF (almeno 2)",
+      "bmpImages": "Immagini BMP",
+      "oneOrMorePdfs": "Uno o più file PDF",
+      "pdfDocuments": "Documenti PDF",
+      "oneOrMoreCsv": "Uno o più file CSV",
+      "multiplePdfsSupported": "Più file PDF supportati",
+      "singleOrMultiplePdfs": "Uno o più file PDF supportati",
+      "singlePdfFile": "Un singolo file PDF",
+      "pdfWithForms": "File PDF con campi modulo",
+      "heicImages": "Immagini HEIC/HEIF",
+      "jpgImages": "Immagini JPG, JPEG, JP2, JPX",
+      "pdfsOrImages": "PDF o immagini",
+      "oneOrMoreOdt": "Uno o più file ODT",
+      "singlePdfOnly": "Solo un file PDF",
+      "pdfFiles": "File PDF",
+      "multiplePdfs": "Più file PDF",
+      "pngImages": "Immagini PNG",
+      "pdfFilesOneOrMore": "File PDF (uno o più)",
+      "oneOrMoreRtf": "Uno o più file RTF",
+      "svgGraphics": "Grafica SVG",
+      "tiffImages": "Immagini TIFF",
+      "webpImages": "Immagini WebP"
+    }
   },
   "loader": {
     "processing": "Elaborazione..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Usate cookie o analytics per tracciarmi?",
       "answer": "Ci teniamo alla tua privacy. BentoPDF non traccia informazioni personali. Usiamo Simple Analytics solo per visualizzare conteggi di visite anonime. Questo significa che possiamo sapere quante persone visitano il sito, ma non chi sei. Simple Analytics è pienamente conforme al GDPR e rispetta la tua privacy."
-    }
+    },
+    "sectionTitle": "Domande frequenti"
   },
   "testimonials": {
     "title": "Cosa",
@@ -321,5 +348,14 @@
     "errorRendering": "Impossibile generare le miniature delle pagine",
     "error": "Errore",
     "failedToLoad": "Caricamento fallito"
+  },
+  "howItWorks": {
+    "title": "Come funziona",
+    "step1": "Clicca o trascina il tuo file qui",
+    "step2": "Clicca il pulsante di elaborazione",
+    "step3": "Salva il tuo file elaborato istantaneamente"
+  },
+  "relatedTools": {
+    "title": "Strumenti PDF correlati"
   }
 }

@@ -67,7 +67,33 @@
     "filesNeverLeave": "Dosyalarınız cihazınızı asla terk etmez.",
     "addMore": "Daha Fazla Dosya Ekle",
     "clearAll": "Tümünü Temizle",
-    "clearFiles": "Dosyaları temizle"
+    "clearFiles": "Dosyaları temizle",
+    "hints": {
+      "singlePdf": "Tek bir PDF dosyası",
+      "pdfFile": "PDF dosyası",
+      "multiplePdfs2": "Birden fazla PDF dosyası (en az 2)",
+      "bmpImages": "BMP görüntüler",
+      "oneOrMorePdfs": "Bir veya daha fazla PDF dosyası",
+      "pdfDocuments": "PDF belgeleri",
+      "oneOrMoreCsv": "Bir veya daha fazla CSV dosyası",
+      "multiplePdfsSupported": "Birden fazla PDF dosyası desteklenir",
+      "singleOrMultiplePdfs": "Tek veya birden fazla PDF dosyası desteklenir",
+      "singlePdfFile": "Tek PDF dosyası",
+      "pdfWithForms": "Form alanları olan PDF dosyası",
+      "heicImages": "HEIC/HEIF görüntüler",
+      "jpgImages": "JPG, JPEG, JP2, JPX Görüntüler",
+      "pdfsOrImages": "PDF'ler veya görüntüler",
+      "oneOrMoreOdt": "Bir veya daha fazla ODT dosyası",
+      "singlePdfOnly": "Yalnızca tek PDF dosyası",
+      "pdfFiles": "PDF dosyaları",
+      "multiplePdfs": "Birden fazla PDF dosyası",
+      "pngImages": "PNG Görüntüler",
+      "pdfFilesOneOrMore": "PDF dosyaları (bir veya daha fazla)",
+      "oneOrMoreRtf": "Bir veya daha fazla RTF dosyası",
+      "svgGraphics": "SVG Grafikler",
+      "tiffImages": "TIFF görüntüler",
+      "webpImages": "WebP Görüntüler"
+    }
   },
   "loader": {
     "processing": "İşleniyor..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Beni takip etmek için çerez veya analiz kullanıyor musunuz?",
       "answer": "Gizliliğinizi önemsiyoruz. BentoPDF kişisel bilgileri takip etmez. Sadece anonim ziyaretçi sayılarını görmek için Simple Analytics kullanıyoruz. Bu, sitemizi kaç kişinin ziyaret ettiğini görebileceğimiz, ancak kim olduğunuzu asla bilemeyeceğimiz anlamına gelir. Simple Analytics tamamen GDPR uyumludur ve gizliliğinize saygı gösterir."
-    }
+    },
+    "sectionTitle": "Sıkça Sorulan Sorular"
   },
   "testimonials": {
     "title": "Kullanıcılarımız",
@@ -321,5 +348,14 @@
     "errorRendering": "Sayfa küçük resimleri oluşturulamadı",
     "error": "Hata",
     "failedToLoad": "Yüklenemedi"
+  },
+  "howItWorks": {
+    "title": "Nasıl Çalışır",
+    "step1": "Dosyanızı tıklayın veya sürükleyin",
+    "step2": "İşlem düğmesine tıklayın",
+    "step3": "İşlenmiş dosyanızı anında kaydedin"
+  },
+  "relatedTools": {
+    "title": "İlgili PDF Araçları"
   }
 }

@@ -88,10 +88,15 @@ docker run -d -p 3000:8080 bentopdf:custom
 
 ## Environment Variables
 
-| Variable      | Description                     | Default |
-| ------------- | ------------------------------- | ------- |
-| `SIMPLE_MODE` | Build without LibreOffice tools | `false` |
-| `BASE_URL`    | Deploy to subdirectory          | `/`     |
+| Variable                | Description                     | Default                                                        |
+| ----------------------- | ------------------------------- | -------------------------------------------------------------- |
+| `SIMPLE_MODE`           | Build without LibreOffice tools | `false`                                                        |
+| `BASE_URL`              | Deploy to subdirectory          | `/`                                                            |
+| `VITE_WASM_PYMUPDF_URL` | PyMuPDF WASM module URL         | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.14/` |
+| `VITE_WASM_GS_URL`      | Ghostscript WASM module URL     | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/`       |
+| `VITE_WASM_CPDF_URL`    | CoherentPDF WASM module URL     | `https://cdn.jsdelivr.net/npm/coherentpdf/dist/`               |
+
+WASM module URLs are pre-configured with CDN defaults — all advanced features work out of the box. Override these for air-gapped or self-hosted deployments.
 
 Example:
 
@@ -101,6 +106,46 @@ docker run -d \
   -p 3000:8080 \
   ghcr.io/alam00000/bentopdf:latest
 ```
+
+### Custom WASM URLs (Air-Gapped / Self-Hosted)
+
+> [!IMPORTANT]
+> WASM URLs are baked into the JavaScript at **build time**. The WASM files are downloaded by the **user's browser** at runtime — Docker does not download them during the build. For air-gapped networks, you must host the WASM files on an internal server that browsers can reach.
+
+**Full air-gapped workflow:**
+
+```bash
+# 1. On a machine WITH internet — download WASM packages
+npm pack @bentopdf/pymupdf-wasm@0.11.14
+npm pack @bentopdf/gs-wasm
+npm pack coherentpdf
+
+# 2. Build the image with your internal server URLs
+docker build \
+  --build-arg VITE_WASM_PYMUPDF_URL=https://internal-server.example.com/wasm/pymupdf/ \
+  --build-arg VITE_WASM_GS_URL=https://internal-server.example.com/wasm/gs/ \
+  --build-arg VITE_WASM_CPDF_URL=https://internal-server.example.com/wasm/cpdf/ \
+  -t bentopdf .
+
+# 3. Export the image
+docker save bentopdf -o bentopdf.tar
+
+# 4. Transfer bentopdf.tar + the .tgz WASM packages into the air-gapped network
+
+# 5. Inside the air-gapped network — load and run
+docker load -i bentopdf.tar
+
+# Extract WASM packages to your internal web server
+mkdir -p /var/www/wasm/pymupdf /var/www/wasm/gs /var/www/wasm/cpdf
+tar xzf bentopdf-pymupdf-wasm-0.11.14.tgz -C /var/www/wasm/pymupdf --strip-components=1
+tar xzf bentopdf-gs-wasm-*.tgz -C /var/www/wasm/gs --strip-components=1
+tar xzf coherentpdf-*.tgz -C /var/www/wasm/cpdf --strip-components=1
+
+# Run BentoPDF
+docker run -d -p 3000:8080 --restart unless-stopped bentopdf
+```
+
+Set a variable to empty string to disable that module (users must configure manually via Advanced Settings).
 
 ## With Traefik (Reverse Proxy)
 

@@ -67,7 +67,33 @@
     "filesNeverLeave": "Ihre Dateien verlassen nie Ihr Gerät.",
     "addMore": "Weitere Dateien hinzufügen",
     "clearAll": "Alle löschen",
-    "clearFiles": "Dateien löschen"
+    "clearFiles": "Dateien löschen",
+    "hints": {
+      "singlePdf": "Eine einzelne PDF-Datei",
+      "pdfFile": "PDF-Datei",
+      "multiplePdfs2": "Mehrere PDF-Dateien (mindestens 2)",
+      "bmpImages": "BMP-Bilder",
+      "oneOrMorePdfs": "Eine oder mehrere PDF-Dateien",
+      "pdfDocuments": "PDF-Dokumente",
+      "oneOrMoreCsv": "Eine oder mehrere CSV-Dateien",
+      "multiplePdfsSupported": "Mehrere PDF-Dateien unterstützt",
+      "singleOrMultiplePdfs": "Einzelne oder mehrere PDF-Dateien unterstützt",
+      "singlePdfFile": "Einzelne PDF-Datei",
+      "pdfWithForms": "PDF-Datei mit Formularfeldern",
+      "heicImages": "HEIC/HEIF-Bilder",
+      "jpgImages": "JPG, JPEG, JP2, JPX Bilder",
+      "pdfsOrImages": "PDFs oder Bilder",
+      "oneOrMoreOdt": "Eine oder mehrere ODT-Dateien",
+      "singlePdfOnly": "Nur eine einzelne PDF-Datei",
+      "pdfFiles": "PDF-Dateien",
+      "multiplePdfs": "Mehrere PDF-Dateien",
+      "pngImages": "PNG-Bilder",
+      "pdfFilesOneOrMore": "PDF-Dateien (eine oder mehrere)",
+      "oneOrMoreRtf": "Eine oder mehrere RTF-Dateien",
+      "svgGraphics": "SVG-Grafiken",
+      "tiffImages": "TIFF-Bilder",
+      "webpImages": "WebP-Bilder"
+    }
   },
   "loader": {
     "processing": "Verarbeitung..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Verwenden Sie Cookies oder Analysen, um mich zu verfolgen?",
       "answer": "Uns liegt Ihre Privatsphäre am Herzen. BentoPDF verfolgt keine persönlichen Informationen. Wir verwenden Simple Analytics ausschließlich, um anonyme Besucherzahlen zu sehen. Das bedeutet, wir können wissen, wie viele Benutzer unsere Seite besuchen, aber wir wissen nie, wer Sie sind. Simple Analytics ist vollständig DSGVO-konform und respektiert Ihre Privatsphäre."
-    }
+    },
+    "sectionTitle": "Häufig gestellte Fragen"
   },
   "testimonials": {
     "title": "Was unsere",
@@ -321,5 +348,14 @@
     "errorRendering": "Fehler beim Rendern der Seitenvorschau",
     "error": "Fehler",
     "failedToLoad": "Laden fehlgeschlagen"
+  },
+  "howItWorks": {
+    "title": "So funktioniert's",
+    "step1": "Klicken oder Datei hierher ziehen",
+    "step2": "Klicken Sie auf die Verarbeitungsschaltfläche",
+    "step3": "Speichern Sie Ihre verarbeitete Datei sofort"
+  },
+  "relatedTools": {
+    "title": "Verwandte PDF-Tools"
   }
 }

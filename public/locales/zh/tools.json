@@ -557,5 +557,33 @@
   "deskewPdf": {
     "name": "校正 PDF",
     "subtitle": "使用 OpenCV 自动校正倾斜的扫描页面。"
+  },
+  "pdfToWord": {
+    "name": "PDF 转 Word",
+    "subtitle": "将 PDF 文件转换为可编辑的 Word 文档。"
+  },
+  "extractImages": {
+    "name": "提取图片",
+    "subtitle": "从 PDF 文件中提取所有嵌入的图片。"
+  },
+  "pdfToMarkdown": {
+    "name": "PDF 转 Markdown",
+    "subtitle": "将 PDF 文本和表格转换为 Markdown 格式。"
+  },
+  "preparePdfForAi": {
+    "name": "为 AI 准备 PDF",
+    "subtitle": "将 PDF 内容提取为 LlamaIndex JSON，用于 RAG/LLM 管道。"
+  },
+  "pdfOcg": {
+    "name": "PDF 图层 (OCG)",
+    "subtitle": "查看、切换、添加和删除 PDF 中的 OCG 图层。"
+  },
+  "pdfToPdfa": {
+    "name": "PDF 转 PDF/A",
+    "subtitle": "将 PDF 转换为 PDF/A 格式以进行长期存档。"
+  },
+  "rasterizePdf": {
+    "name": "栅格化 PDF",
+    "subtitle": "将 PDF 转换为基于图像的 PDF。展平图层并移除可选择的文本。"
   }
 }

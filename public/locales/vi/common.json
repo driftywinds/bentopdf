@@ -67,7 +67,33 @@
     "filesNeverLeave": "Tệp của bạn không bao giờ rời khỏi thiết bị.",
     "addMore": "Thêm tệp",
     "clearAll": "Xóa tất cả",
-    "clearFiles": "Xóa tệp"
+    "clearFiles": "Xóa tệp",
+    "hints": {
+      "singlePdf": "Một tệp PDF duy nhất",
+      "pdfFile": "Tệp PDF",
+      "multiplePdfs2": "Nhiều tệp PDF (ít nhất 2)",
+      "bmpImages": "Ảnh BMP",
+      "oneOrMorePdfs": "Một hoặc nhiều tệp PDF",
+      "pdfDocuments": "Tài liệu PDF",
+      "oneOrMoreCsv": "Một hoặc nhiều tệp CSV",
+      "multiplePdfsSupported": "Hỗ trợ nhiều tệp PDF",
+      "singleOrMultiplePdfs": "Hỗ trợ một hoặc nhiều tệp PDF",
+      "singlePdfFile": "Một tệp PDF",
+      "pdfWithForms": "Tệp PDF có trường biểu mẫu",
+      "heicImages": "Ảnh HEIC/HEIF",
+      "jpgImages": "Ảnh JPG, JPEG, JP2, JPX",
+      "pdfsOrImages": "PDF hoặc hình ảnh",
+      "oneOrMoreOdt": "Một hoặc nhiều tệp ODT",
+      "singlePdfOnly": "Chỉ một tệp PDF duy nhất",
+      "pdfFiles": "Tệp PDF",
+      "multiplePdfs": "Nhiều tệp PDF",
+      "pngImages": "Ảnh PNG",
+      "pdfFilesOneOrMore": "Tệp PDF (một hoặc nhiều)",
+      "oneOrMoreRtf": "Một hoặc nhiều tệp RTF",
+      "svgGraphics": "Đồ họa SVG",
+      "tiffImages": "Ảnh TIFF",
+      "webpImages": "Ảnh WebP"
+    }
   },
   "loader": {
     "processing": "Đang xử lý..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Bạn có sử dụng cookie hoặc phân tích để theo dõi tôi không?",
       "answer": "Chúng tôi quan tâm đến quyền riêng tư của bạn. BentoPDF không theo dõi thông tin cá nhân. Chúng tôi chỉ sử dụng Simple Analytics để xem số lượt truy cập ẩn danh. Điều này có nghĩa là chúng tôi có thể biết có bao nhiêu người dùng truy cập trang web của chúng tôi, nhưng chúng tôi không bao giờ biết bạn là ai. Simple Analytics hoàn toàn tuân thủ GDPR và tôn trọng quyền riêng tư của bạn."
-    }
+    },
+    "sectionTitle": "Câu hỏi thường gặp"
   },
   "testimonials": {
     "title": "Người dùng",
@@ -321,5 +348,14 @@
     "errorRendering": "Không thể kết xuất hình thu nhỏ trang",
     "error": "Lỗi",
     "failedToLoad": "Không thể tải"
+  },
+  "howItWorks": {
+    "title": "Cách thức hoạt động",
+    "step1": "Nhấp hoặc kéo tệp của bạn vào đây",
+    "step2": "Nhấp vào nút xử lý để bắt đầu",
+    "step3": "Lưu tệp đã xử lý ngay lập tức"
+  },
+  "relatedTools": {
+    "title": "Công cụ PDF liên quan"
   }
 }

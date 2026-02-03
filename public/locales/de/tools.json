@@ -560,5 +560,33 @@
   "deskewPdf": {
     "name": "PDF entzerren",
     "subtitle": "Automatisch schiefe gescannte Seiten mit OpenCV begradigen."
+  },
+  "pdfToWord": {
+    "name": "PDF zu Word",
+    "subtitle": "PDF-Dateien in bearbeitbare Word-Dokumente umwandeln."
+  },
+  "extractImages": {
+    "name": "Bilder extrahieren",
+    "subtitle": "Alle eingebetteten Bilder aus Ihren PDF-Dateien extrahieren."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF zu Markdown",
+    "subtitle": "PDF-Text und Tabellen in das Markdown-Format umwandeln."
+  },
+  "preparePdfForAi": {
+    "name": "PDF für KI vorbereiten",
+    "subtitle": "PDF-Inhalte als LlamaIndex JSON für RAG/LLM-Pipelines extrahieren."
+  },
+  "pdfOcg": {
+    "name": "PDF-Ebenen (OCG)",
+    "subtitle": "OCG-Ebenen in Ihrem PDF anzeigen, umschalten, hinzufügen und löschen."
+  },
+  "pdfToPdfa": {
+    "name": "PDF zu PDF/A",
+    "subtitle": "PDF in PDF/A für Langzeitarchivierung umwandeln."
+  },
+  "rasterizePdf": {
+    "name": "PDF rastern",
+    "subtitle": "PDF in bildbasiertes PDF umwandeln. Ebenen glätten und auswählbaren Text entfernen."
   }
 }

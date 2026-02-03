@@ -36,6 +36,18 @@ npx wrangler secret put CPDF_SOURCE -c wasm-wrangler.toml
 
 ### 3. Configure BentoPDF
 
+**Option A: Environment variables (recommended — zero-config for users)**
+
+Set these in `.env.production` or pass as Docker build args:
+
+```bash
+VITE_WASM_PYMUPDF_URL=https://bentopdf-wasm-proxy.<your-subdomain>.workers.dev/pymupdf/
+VITE_WASM_GS_URL=https://bentopdf-wasm-proxy.<your-subdomain>.workers.dev/gs/
+VITE_WASM_CPDF_URL=https://bentopdf-wasm-proxy.<your-subdomain>.workers.dev/cpdf/
+```
+
+**Option B: Manual per-user configuration**
+
 In BentoPDF's Advanced Settings (wasm-settings.html), enter:
 
 | Module      | URL                                                                 |

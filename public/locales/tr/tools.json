@@ -538,5 +538,33 @@
     "name": "Validate PDF Signature",
     "pageTitle": "Validate PDF Signature - Verify Digital Signatures | BentoPDF",
     "subtitle": "Verify digital signatures in your PDF files. Check certificate validity, view signer details, and confirm document integrity. All processing happens in your browser."
+  },
+  "pdfToWord": {
+    "name": "PDF'den Word'e",
+    "subtitle": "PDF dosyalarını düzenlenebilir Word belgelerine dönüştürün."
+  },
+  "extractImages": {
+    "name": "Görüntüleri Çıkar",
+    "subtitle": "PDF dosyalarınızdaki tüm gömülü görüntüleri çıkarın."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF'den Markdown'a",
+    "subtitle": "PDF metin ve tablolarını Markdown formatına dönüştürün."
+  },
+  "preparePdfForAi": {
+    "name": "PDF'yi Yapay Zeka için Hazırla",
+    "subtitle": "RAG/LLM iş hatları için PDF içeriğini LlamaIndex JSON olarak çıkarın."
+  },
+  "pdfOcg": {
+    "name": "PDF Katmanları (OCG)",
+    "subtitle": "PDF'nizdeki OCG katmanlarını görüntüleyin, değiştirin, ekleyin ve silin."
+  },
+  "pdfToPdfa": {
+    "name": "PDF'den PDF/A'ya",
+    "subtitle": "Uzun süreli arşivleme için PDF'yi PDF/A'ya dönüştürün."
+  },
+  "rasterizePdf": {
+    "name": "PDF'yi Rasterleştir",
+    "subtitle": "PDF'yi görüntü tabanlı PDF'ye dönüştürün. Katmanları düzleştirin ve seçilebilir metni kaldırın."
   }
 }

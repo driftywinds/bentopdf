@@ -538,5 +538,33 @@
     "name": "Validar Assinatura PDF",
     "pageTitle": "Validar Assinatura PDF - Verificar Assinaturas Digitais | BentoPDF",
     "subtitle": "Verifique assinaturas digitais em seus arquivos PDF. Verifique a validade do certificado e a integridade do documento."
+  },
+  "pdfToWord": {
+    "name": "PDF para Word",
+    "subtitle": "Converter arquivos PDF em documentos Word editáveis."
+  },
+  "extractImages": {
+    "name": "Extrair Imagens",
+    "subtitle": "Extrair todas as imagens incorporadas dos seus arquivos PDF."
+  },
+  "pdfToMarkdown": {
+    "name": "PDF para Markdown",
+    "subtitle": "Converter texto e tabelas de PDF para formato Markdown."
+  },
+  "preparePdfForAi": {
+    "name": "Preparar PDF para IA",
+    "subtitle": "Extrair conteúdo PDF como JSON LlamaIndex para pipelines RAG/LLM."
+  },
+  "pdfOcg": {
+    "name": "Camadas PDF (OCG)",
+    "subtitle": "Visualizar, alternar, adicionar e excluir camadas OCG no seu PDF."
+  },
+  "pdfToPdfa": {
+    "name": "PDF para PDF/A",
+    "subtitle": "Converter PDF em PDF/A para arquivamento de longo prazo."
+  },
+  "rasterizePdf": {
+    "name": "Rasterizar PDF",
+    "subtitle": "Converter PDF em PDF baseado em imagens. Achatar camadas e remover texto selecionável."
   }
 }

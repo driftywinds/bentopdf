@@ -67,7 +67,33 @@
     "filesNeverLeave": "Vos fichiers restent sur votre appareil.",
     "addMore": "Ajouter d’autres fichiers",
     "clearAll": "Tout effacer",
-    "clearFiles": "Effacer les fichiers"
+    "clearFiles": "Effacer les fichiers",
+    "hints": {
+      "singlePdf": "Un seul fichier PDF",
+      "pdfFile": "Fichier PDF",
+      "multiplePdfs2": "Plusieurs fichiers PDF (au moins 2)",
+      "bmpImages": "Images BMP",
+      "oneOrMorePdfs": "Un ou plusieurs fichiers PDF",
+      "pdfDocuments": "Documents PDF",
+      "oneOrMoreCsv": "Un ou plusieurs fichiers CSV",
+      "multiplePdfsSupported": "Plusieurs fichiers PDF pris en charge",
+      "singleOrMultiplePdfs": "Un ou plusieurs fichiers PDF pris en charge",
+      "singlePdfFile": "Un seul fichier PDF",
+      "pdfWithForms": "Fichier PDF avec champs de formulaire",
+      "heicImages": "Images HEIC/HEIF",
+      "jpgImages": "Images JPG, JPEG, JP2, JPX",
+      "pdfsOrImages": "PDFs ou images",
+      "oneOrMoreOdt": "Un ou plusieurs fichiers ODT",
+      "singlePdfOnly": "Un seul fichier PDF uniquement",
+      "pdfFiles": "Fichiers PDF",
+      "multiplePdfs": "Plusieurs fichiers PDF",
+      "pngImages": "Images PNG",
+      "pdfFilesOneOrMore": "Fichiers PDF (un ou plusieurs)",
+      "oneOrMoreRtf": "Un ou plusieurs fichiers RTF",
+      "svgGraphics": "Graphiques SVG",
+      "tiffImages": "Images TIFF",
+      "webpImages": "Images WebP"
+    }
   },
   "loader": {
     "processing": "Traitement en cours..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Utilisez-vous des cookies ou des outils de suivi ?",
       "answer": "Nous respectons votre vie privée. BentoPDF utilise uniquement des statistiques anonymes pour connaître le nombre de visites, sans jamais identifier les utilisateurs."
-    }
+    },
+    "sectionTitle": "Questions fréquemment posées"
   },
   "testimonials": {
     "title": "Ce que disent",
@@ -321,5 +348,14 @@
     "errorRendering": "Échec du rendu des miniatures",
     "error": "Erreur",
     "failedToLoad": "Échec du chargement"
+  },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "step1": "Cliquez ou glissez votre fichier ici",
+    "step2": "Cliquez sur le bouton de traitement",
+    "step3": "Enregistrez votre fichier traité instantanément"
+  },
+  "relatedTools": {
+    "title": "Outils PDF associés"
   }
 }

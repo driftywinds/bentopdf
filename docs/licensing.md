@@ -30,27 +30,23 @@ For complete licensing information, delivery details, AGPL component notices, an
 
 ## Important Notice on Third-Party Components
 
-::: warning AGPL Components - Not Bundled
-BentoPDF **does not bundle** AGPL-licensed processing libraries. The following components are loaded separately by users who configure them via **Advanced Settings**:
+::: info AGPL Components — Pre-configured via CDN
+BentoPDF **does not bundle** AGPL-licensed processing libraries in its source code. These components are loaded at runtime from CDN URLs that are **pre-configured by default** — all features work out of the box with zero setup.
 
-| Component       | License  | Status                        |
-| --------------- | -------- | ----------------------------- |
-| **PyMuPDF**     | AGPL-3.0 | Not bundled - user configured |
-| **Ghostscript** | AGPL-3.0 | Not bundled - user configured |
-| **CoherentPDF** | AGPL-3.0 | Not bundled - user configured |
+| Component       | License  | Status                 |
+| --------------- | -------- | ---------------------- |
+| **PyMuPDF**     | AGPL-3.0 | Pre-configured via CDN |
+| **Ghostscript** | AGPL-3.0 | Pre-configured via CDN |
+| **CoherentPDF** | AGPL-3.0 | Pre-configured via CDN |
 
-**Why are AGPL binaries not included?**
+WASM module URLs are configured via environment variables at build time (`.env.production`). The defaults point to jsDelivr CDN. For custom deployments (air-gapped, self-hosted), you can override via environment variables, Docker build args, or per-user via **Advanced Settings** in the UI.
 
-To maintain clear legal separation, BentoPDF does not distribute AGPL-licensed binaries. Users who need features powered by these libraries can:
-
-1. Configure their own WASM sources in Advanced Settings
-2. Host their own WASM proxy to serve these files
-3. Use any compatible CDN that hosts these packages
+See [Self-Hosting > WASM Configuration](/self-hosting/#wasm-configuration-agpl-components) for details.
 
 This approach ensures:
 
 - BentoPDF's core code remains under its dual-license (AGPL-3.0 / Commercial)
-- Users make an informed choice when enabling AGPL features
+- WASM binaries are loaded at runtime, not included in the source
 - Clear compliance boundaries for commercial users
   :::
 

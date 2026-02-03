@@ -67,7 +67,33 @@
     "filesNeverLeave": "Je bestanden blijven op jouw apparaat.",
     "addMore": "Meer bestanden toevoegen",
     "clearAll": "Alles wissen",
-    "clearFiles": "Bestanden wissen"
+    "clearFiles": "Bestanden wissen",
+    "hints": {
+      "singlePdf": "Een enkel PDF-bestand",
+      "pdfFile": "PDF-bestand",
+      "multiplePdfs2": "Meerdere PDF-bestanden (minimaal 2)",
+      "bmpImages": "BMP-afbeeldingen",
+      "oneOrMorePdfs": "Een of meer PDF-bestanden",
+      "pdfDocuments": "PDF-documenten",
+      "oneOrMoreCsv": "Een of meer CSV-bestanden",
+      "multiplePdfsSupported": "Meerdere PDF-bestanden ondersteund",
+      "singleOrMultiplePdfs": "Enkel of meerdere PDF-bestanden ondersteund",
+      "singlePdfFile": "Enkel PDF-bestand",
+      "pdfWithForms": "PDF-bestand met formuliervelden",
+      "heicImages": "HEIC/HEIF-afbeeldingen",
+      "jpgImages": "JPG, JPEG, JP2, JPX afbeeldingen",
+      "pdfsOrImages": "PDF's of afbeeldingen",
+      "oneOrMoreOdt": "Een of meer ODT-bestanden",
+      "singlePdfOnly": "Alleen een enkel PDF-bestand",
+      "pdfFiles": "PDF-bestanden",
+      "multiplePdfs": "Meerdere PDF-bestanden",
+      "pngImages": "PNG-afbeeldingen",
+      "pdfFilesOneOrMore": "PDF-bestanden (een of meer)",
+      "oneOrMoreRtf": "Een of meer RTF-bestanden",
+      "svgGraphics": "SVG-graphics",
+      "tiffImages": "TIFF-afbeeldingen",
+      "webpImages": "WebP-afbeeldingen"
+    }
   },
   "loader": {
     "processing": "Verwerken..."
@@ -171,7 +197,8 @@
     "analytics": {
       "question": "Gebruikt BentoPDF cookies of analytics om mij te volgen?",
       "answer": "We geven om je privacy. BentoPDF houdt geen persoonlijke gegevens bij. We gebruiken Simple Analytics alleen om anonieme bezoekersaantallen te zien. Dit betekent dat we kunnen weten hoeveel mensen onze site bezoeken, maar we weten nooit wie jij bent. Simple Analytics is volledig AVG-conform en respecteert je privacy."
-    }
+    },
+    "sectionTitle": "Veelgestelde vragen"
   },
   "testimonials": {
     "title": "Wat onze",
@@ -321,5 +348,14 @@
     "errorRendering": "Generatie van pagina-miniaturen is mislukt",
     "error": "Fout",
     "failedToLoad": "Laden is mislukt"
+  },
+  "howItWorks": {
+    "title": "Hoe het werkt",
+    "step1": "Klik of sleep uw bestand hierheen",
+    "step2": "Klik op de verwerkingsknop",
+    "step3": "Sla uw verwerkte bestand direct op"
+  },
+  "relatedTools": {
+    "title": "Gerelateerde PDF-tools"
   }
 }
