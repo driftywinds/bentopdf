@@ -90,7 +90,7 @@
       "pngImages": "PNG-afbeeldingen",
       "pdfFilesOneOrMore": "PDF-bestanden (een of meer)",
       "oneOrMoreRtf": "Een of meer RTF-bestanden",
-      "svgGraphics": "SVG-graphics",
+      "svgGraphics": "SVG-afbeeldingen",
       "tiffImages": "TIFF-afbeeldingen",
       "webpImages": "WebP-afbeeldingen"
     }
@@ -260,7 +260,7 @@
   "about": {
     "hero": {
       "title": "Wij vinden dat PDF-tools",
-      "subtitle": "snel, privé, en gratis moeten zijn.",
+      "subtitle": "snel, privé en gratis moeten zijn.",
       "noCompromises": "Geen compromissen."
     },
     "mission": {

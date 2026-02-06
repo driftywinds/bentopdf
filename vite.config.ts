@@ -26,6 +26,7 @@ const SUPPORTED_LANGUAGES = [
   'fr',
   'pt',
   'nl',
+  'da',
 ] as const;
 const LANG_REGEX = new RegExp(
   `^/(${SUPPORTED_LANGUAGES.join('|')})(?:/(.*))?$`

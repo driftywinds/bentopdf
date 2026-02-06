@@ -178,8 +178,8 @@ async function addWatermark() {
                 const textWidth = watermarkAsset.widthOfTextAtSize(text, fontSize);
 
                 page.drawText(text, {
-                    x: (width - textWidth) / 2,
-                    y: height / 2,
+                    x: (width / 2) - ((textWidth / 2) * Math.cos(angle * Math.PI / 180)),
+                    y: (height / 2) - ((textWidth / 2) * Math.sin(angle * Math.PI / 180)),
                     font: watermarkAsset,
                     size: fontSize,
                     color: rgb(textColor.r, textColor.g, textColor.b),
