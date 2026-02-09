@@ -4,6 +4,7 @@ import HttpBackend from 'i18next-http-backend';
 // Supported languages
 export const supportedLanguages = [
   'en',
+  'ar',
   'be',
   'fr',
   'de',
@@ -22,6 +23,7 @@ export type SupportedLanguage = (typeof supportedLanguages)[number];
 
 export const languageNames: Record<SupportedLanguage, string> = {
   en: 'English',
+  ar: 'العربية',
   be: 'Беларуская',
   fr: 'Français',
   de: 'Deutsch',
@@ -50,7 +52,7 @@ export const getLanguageFromUrl = (): SupportedLanguage => {
   }
 
   const langMatch = path.match(
-    /^\/(en|fr|es|de|zh|zh-TW|vi|tr|id|it|pt|nl|be|da)(?:\/|$)/
+    /^\/(en|ar|fr|es|de|zh|zh-TW|vi|tr|id|it|pt|nl|be|da)(?:\/|$)/
   );
   if (
     langMatch &&
@@ -121,7 +123,7 @@ export const changeLanguage = (lang: SupportedLanguage): void => {
 
   let pagePathWithoutLang = relativePath;
   const langPrefixMatch = relativePath.match(
-    /^\/(en|fr|es|de|zh|zh-TW|vi|tr|id|it|pt|nl|be)(\/.*)?$/
+    /^\/(en|ar|fr|es|de|zh|zh-TW|vi|tr|id|it|pt|nl|be|da)(\/.*)?$/
   );
   if (langPrefixMatch) {
     pagePathWithoutLang = langPrefixMatch[2] || '/';
@@ -184,6 +186,7 @@ export const applyTranslations = (): void => {
   });
 
   document.documentElement.lang = i18next.language;
+  document.documentElement.dir = i18next.language === 'ar' ? 'rtl' : 'ltr';
 };
 
 export const rewriteLinks = (): void => {
@@ -213,7 +216,7 @@ export const rewriteLinks = (): void => {
     }
 
     const langPrefixRegex = new RegExp(
-      `^(${basePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})?/?(en|fr|es|de|zh|zh-TW|vi|tr|id|it|pt|nl|be|da)(/|$)`
+      `^(${basePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})?/?(en|ar|fr|es|de|zh|zh-TW|vi|tr|id|it|pt|nl|be|da)(/|$)`
     );
     if (langPrefixRegex.test(href)) {
       return;

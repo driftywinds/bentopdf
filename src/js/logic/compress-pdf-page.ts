@@ -6,9 +6,8 @@ import {
   getPDFDocument,
 } from '../utils/helpers.js';
 import { state } from '../state.js';
-import { createIcons, icons } from 'lucide';
 import { PDFDocument } from 'pdf-lib';
-import { isWasmAvailable, getWasmBaseUrl } from '../config/wasm-cdn-config.js';
+import { createIcons, icons } from 'lucide';
 import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
 import { loadPyMuPDF, isPyMuPDFAvailable } from '../utils/pymupdf-loader.js';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -119,15 +118,6 @@ async function performCondenseCompression(
 
       const result = await pymupdf.compressPdf(fileBlob, fallbackOptions);
       return { ...result, usedFallback: true };
-    }
-
-    if (
-      errorMessage.includes('closed or encrypted') ||
-      errorMessage.includes('encrypted')
-    ) {
-      throw new Error(
-        'This PDF is encrypted or password-protected. Please remove the password first using the Unlock PDF tool, then try compressing again.'
-      );
     }
 
     throw new Error(`PDF compression failed: ${errorMessage}`);

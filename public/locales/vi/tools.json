@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "Rasterize PDF",
     "subtitle": "Chuyển đổi PDF thành PDF dựa trên hình ảnh. Làm phẳng các lớp và xóa văn bản có thể chọn."
+  },
+  "pdfWorkflow": {
+    "name": "Trình xây dựng quy trình PDF",
+    "subtitle": "Xây dựng quy trình xử lý PDF tùy chỉnh bằng trình chỉnh sửa nút trực quan.",
+    "nodes": "Nút",
+    "searchNodes": "Tìm kiếm nút...",
+    "run": "Chạy",
+    "clear": "Xóa",
+    "save": "Lưu",
+    "load": "Tải",
+    "export": "Xuất",
+    "import": "Nhập",
+    "ready": "Sẵn sàng",
+    "settings": "Cài đặt",
+    "processing": "Đang xử lý...",
+    "saveTemplate": "Lưu mẫu",
+    "templateName": "Tên mẫu",
+    "templatePlaceholder": "ví dụ: Quy trình hóa đơn",
+    "cancel": "Hủy",
+    "loadTemplate": "Tải mẫu",
+    "noTemplates": "Chưa có mẫu nào được lưu.",
+    "ok": "OK",
+    "workflowCompleted": "Quy trình đã hoàn tất",
+    "errorDuringExecution": "Lỗi trong quá trình thực thi",
+    "addNodeError": "Thêm ít nhất một nút để chạy quy trình.",
+    "needInputOutput": "Quy trình của bạn cần ít nhất một nút đầu vào và một nút đầu ra để chạy.",
+    "enterName": "Vui lòng nhập tên.",
+    "templateExists": "Đã tồn tại mẫu có tên này.",
+    "templateSaved": "Đã lưu mẫu \"{{name}}\".",
+    "templateLoaded": "Đã tải mẫu \"{{name}}\".",
+    "failedLoadTemplate": "Không thể tải mẫu.",
+    "noSettings": "Không có cài đặt nào có thể cấu hình cho nút này.",
+    "advancedSettings": "Cài đặt nâng cao"
   }
 }

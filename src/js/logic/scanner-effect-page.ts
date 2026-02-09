@@ -7,6 +7,7 @@ import {
 } from '../utils/helpers.js';
 import { createIcons, icons } from 'lucide';
 import { PDFDocument } from 'pdf-lib';
+import { applyScannerEffect } from '../utils/image-effects.js';
 import * as pdfjsLib from 'pdfjs-dist';
 import type { ScanSettings } from '../types/scanner-effect-type.js';
 
@@ -64,143 +65,7 @@ function getSettings(): ScanSettings {
   };
 }
 
-function applyEffects(
-  sourceData: ImageData,
-  canvas: HTMLCanvasElement,
-  settings: ScanSettings,
-  rotationAngle: number,
-  scale: number = 1
-): void {
-  const ctx = canvas.getContext('2d')!;
-  const w = sourceData.width;
-  const h = sourceData.height;
-
-  const scaledBlur = settings.blur * scale;
-  const scaledNoise = settings.noise * scale;
-
-  const workCanvas = document.createElement('canvas');
-  workCanvas.width = w;
-  workCanvas.height = h;
-  const workCtx = workCanvas.getContext('2d')!;
-
-  if (scaledBlur > 0) {
-    workCtx.filter = `blur(${scaledBlur}px)`;
-  }
-
-  workCtx.putImageData(sourceData, 0, 0);
-  if (scaledBlur > 0) {
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = w;
-    tempCanvas.height = h;
-    const tempCtx = tempCanvas.getContext('2d')!;
-    tempCtx.filter = `blur(${scaledBlur}px)`;
-    tempCtx.drawImage(workCanvas, 0, 0);
-    workCtx.filter = 'none';
-    workCtx.clearRect(0, 0, w, h);
-    workCtx.drawImage(tempCanvas, 0, 0);
-  }
-
-  const imageData = workCtx.getImageData(0, 0, w, h);
-  const data = imageData.data;
-
-  const contrastFactor =
-    settings.contrast !== 0
-      ? (259 * (settings.contrast + 255)) / (255 * (259 - settings.contrast))
-      : 1;
-
-  for (let i = 0; i < data.length; i += 4) {
-    let r = data[i];
-    let g = data[i + 1];
-    let b = data[i + 2];
-
-    if (settings.grayscale) {
-      const grey = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
-      r = grey;
-      g = grey;
-      b = grey;
-    }
-
-    if (settings.brightness !== 0) {
-      r += settings.brightness;
-      g += settings.brightness;
-      b += settings.brightness;
-    }
-
-    if (settings.contrast !== 0) {
-      r = contrastFactor * (r - 128) + 128;
-      g = contrastFactor * (g - 128) + 128;
-      b = contrastFactor * (b - 128) + 128;
-    }
-
-    if (settings.yellowish > 0) {
-      const intensity = settings.yellowish / 50;
-      r += 20 * intensity;
-      g += 12 * intensity;
-      b -= 15 * intensity;
-    }
-
-    if (scaledNoise > 0) {
-      const n = (Math.random() - 0.5) * scaledNoise;
-      r += n;
-      g += n;
-      b += n;
-    }
-
-    data[i] = Math.max(0, Math.min(255, r));
-    data[i + 1] = Math.max(0, Math.min(255, g));
-    data[i + 2] = Math.max(0, Math.min(255, b));
-  }
-
-  workCtx.putImageData(imageData, 0, 0);
-
-  if (settings.border) {
-    const borderSize = Math.max(w, h) * 0.02;
-    const gradient1 = workCtx.createLinearGradient(0, 0, borderSize, 0);
-    gradient1.addColorStop(0, 'rgba(0,0,0,0.3)');
-    gradient1.addColorStop(1, 'rgba(0,0,0,0)');
-    workCtx.fillStyle = gradient1;
-    workCtx.fillRect(0, 0, borderSize, h);
-
-    const gradient2 = workCtx.createLinearGradient(w, 0, w - borderSize, 0);
-    gradient2.addColorStop(0, 'rgba(0,0,0,0.3)');
-    gradient2.addColorStop(1, 'rgba(0,0,0,0)');
-    workCtx.fillStyle = gradient2;
-    workCtx.fillRect(w - borderSize, 0, borderSize, h);
-
-    const gradient3 = workCtx.createLinearGradient(0, 0, 0, borderSize);
-    gradient3.addColorStop(0, 'rgba(0,0,0,0.3)');
-    gradient3.addColorStop(1, 'rgba(0,0,0,0)');
-    workCtx.fillStyle = gradient3;
-    workCtx.fillRect(0, 0, w, borderSize);
-
-    const gradient4 = workCtx.createLinearGradient(0, h, 0, h - borderSize);
-    gradient4.addColorStop(0, 'rgba(0,0,0,0.3)');
-    gradient4.addColorStop(1, 'rgba(0,0,0,0)');
-    workCtx.fillStyle = gradient4;
-    workCtx.fillRect(0, h - borderSize, w, borderSize);
-  }
-
-  if (rotationAngle !== 0) {
-    const rad = (rotationAngle * Math.PI) / 180;
-    const cos = Math.abs(Math.cos(rad));
-    const sin = Math.abs(Math.sin(rad));
-    const newW = Math.ceil(w * cos + h * sin);
-    const newH = Math.ceil(w * sin + h * cos);
-
-    canvas.width = newW;
-    canvas.height = newH;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, newW, newH);
-    ctx.translate(newW / 2, newH / 2);
-    ctx.rotate(rad);
-    ctx.drawImage(workCanvas, -w / 2, -h / 2);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-  } else {
-    canvas.width = w;
-    canvas.height = h;
-    ctx.drawImage(workCanvas, 0, 0);
-  }
-}
+const applyEffects = applyScannerEffect;
 
 function updatePreview(): void {
   if (!cachedBaselineData) return;

@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "Rasterize PDF",
     "subtitle": "Convert PDF to image-based PDF. Flatten layers and remove selectable text."
+  },
+  "pdfWorkflow": {
+    "name": "PDF Workflow Builder",
+    "subtitle": "Build custom PDF processing pipelines with a visual node editor.",
+    "nodes": "Nodes",
+    "searchNodes": "Search nodes...",
+    "run": "Run",
+    "clear": "Clear",
+    "save": "Save",
+    "load": "Load",
+    "export": "Export",
+    "import": "Import",
+    "ready": "Ready",
+    "settings": "Settings",
+    "processing": "Processing...",
+    "saveTemplate": "Save Template",
+    "templateName": "Template Name",
+    "templatePlaceholder": "e.g. Invoice Workflow",
+    "cancel": "Cancel",
+    "loadTemplate": "Load Template",
+    "noTemplates": "No saved templates yet.",
+    "ok": "OK",
+    "workflowCompleted": "Workflow completed",
+    "errorDuringExecution": "Error during execution",
+    "addNodeError": "Add at least one node to run the workflow.",
+    "needInputOutput": "Your workflow needs at least one input node and one output node to run.",
+    "enterName": "Please enter a name.",
+    "templateExists": "A template with this name already exists.",
+    "templateSaved": "Template \"{{name}}\" saved.",
+    "templateLoaded": "Template \"{{name}}\" loaded.",
+    "failedLoadTemplate": "Failed to load template.",
+    "noSettings": "No configurable settings for this node.",
+    "advancedSettings": "Advanced Settings"
   }
 }

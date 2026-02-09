@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "Rasterizza PDF",
     "subtitle": "Converti PDF in PDF basato su immagini. Appiattisci i livelli e rimuovi il testo selezionabile."
+  },
+  "pdfWorkflow": {
+    "name": "Costruttore di workflow PDF",
+    "subtitle": "Crea pipeline di elaborazione PDF personalizzate con un editor visuale a nodi.",
+    "nodes": "Nodi",
+    "searchNodes": "Cerca nodi...",
+    "run": "Esegui",
+    "clear": "Cancella",
+    "save": "Salva",
+    "load": "Carica",
+    "export": "Esporta",
+    "import": "Importa",
+    "ready": "Pronto",
+    "settings": "Impostazioni",
+    "processing": "Elaborazione in corso...",
+    "saveTemplate": "Salva modello",
+    "templateName": "Nome del modello",
+    "templatePlaceholder": "es. Workflow fatturazione",
+    "cancel": "Annulla",
+    "loadTemplate": "Carica modello",
+    "noTemplates": "Nessun modello salvato al momento.",
+    "ok": "OK",
+    "workflowCompleted": "Workflow completato",
+    "errorDuringExecution": "Errore durante l'esecuzione",
+    "addNodeError": "Aggiungi almeno un nodo per eseguire il workflow.",
+    "needInputOutput": "Il tuo workflow necessita di almeno un nodo di input e un nodo di output per funzionare.",
+    "enterName": "Inserisci un nome.",
+    "templateExists": "Esiste già un modello con questo nome.",
+    "templateSaved": "Modello \"{{name}}\" salvato.",
+    "templateLoaded": "Modello \"{{name}}\" caricato.",
+    "failedLoadTemplate": "Impossibile caricare il modello.",
+    "noSettings": "Nessuna impostazione configurabile per questo nodo.",
+    "advancedSettings": "Impostazioni avanzate"
   }
 }

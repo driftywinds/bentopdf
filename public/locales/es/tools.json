@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "Rasterizar PDF",
     "subtitle": "Convertir PDF a PDF basado en imágenes. Aplanar capas y eliminar texto seleccionable."
+  },
+  "pdfWorkflow": {
+    "name": "Constructor de flujos de trabajo PDF",
+    "subtitle": "Cree pipelines de procesamiento PDF personalizados con un editor visual de nodos.",
+    "nodes": "Nodos",
+    "searchNodes": "Buscar nodos...",
+    "run": "Ejecutar",
+    "clear": "Limpiar",
+    "save": "Guardar",
+    "load": "Cargar",
+    "export": "Exportar",
+    "import": "Importar",
+    "ready": "Listo",
+    "settings": "Configuración",
+    "processing": "Procesando...",
+    "saveTemplate": "Guardar plantilla",
+    "templateName": "Nombre de la plantilla",
+    "templatePlaceholder": "ej. Flujo de trabajo de facturación",
+    "cancel": "Cancelar",
+    "loadTemplate": "Cargar plantilla",
+    "noTemplates": "Aún no hay plantillas guardadas.",
+    "ok": "OK",
+    "workflowCompleted": "Flujo de trabajo completado",
+    "errorDuringExecution": "Error durante la ejecución",
+    "addNodeError": "Agregue al menos un nodo para ejecutar el flujo de trabajo.",
+    "needInputOutput": "Su flujo de trabajo necesita al menos un nodo de entrada y un nodo de salida para ejecutarse.",
+    "enterName": "Por favor, introduzca un nombre.",
+    "templateExists": "Ya existe una plantilla con este nombre.",
+    "templateSaved": "Plantilla \"{{name}}\" guardada.",
+    "templateLoaded": "Plantilla \"{{name}}\" cargada.",
+    "failedLoadTemplate": "Error al cargar la plantilla.",
+    "noSettings": "No hay opciones configurables para este nodo.",
+    "advancedSettings": "Configuración avanzada"
   }
 }

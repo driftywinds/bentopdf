@@ -566,5 +566,38 @@
   "rasterizePdf": {
     "name": "PDF'yi Rasterleştir",
     "subtitle": "PDF'yi görüntü tabanlı PDF'ye dönüştürün. Katmanları düzleştirin ve seçilebilir metni kaldırın."
+  },
+  "pdfWorkflow": {
+    "name": "PDF İş Akışı Oluşturucu",
+    "subtitle": "Görsel düğüm düzenleyicisi ile özel PDF işleme hatları oluşturun.",
+    "nodes": "Düğümler",
+    "searchNodes": "Düğüm ara...",
+    "run": "Çalıştır",
+    "clear": "Temizle",
+    "save": "Kaydet",
+    "load": "Yükle",
+    "export": "Dışa Aktar",
+    "import": "İçe Aktar",
+    "ready": "Hazır",
+    "settings": "Ayarlar",
+    "processing": "İşleniyor...",
+    "saveTemplate": "Şablonu Kaydet",
+    "templateName": "Şablon Adı",
+    "templatePlaceholder": "örn. Fatura İş Akışı",
+    "cancel": "İptal",
+    "loadTemplate": "Şablon Yükle",
+    "noTemplates": "Henüz kaydedilmiş şablon yok.",
+    "ok": "Tamam",
+    "workflowCompleted": "İş akışı tamamlandı",
+    "errorDuringExecution": "Yürütme sırasında hata oluştu",
+    "addNodeError": "İş akışını çalıştırmak için en az bir düğüm ekleyin.",
+    "needInputOutput": "İş akışınızın çalışması için en az bir giriş düğümü ve bir çıkış düğümü gereklidir.",
+    "enterName": "Lütfen bir ad girin.",
+    "templateExists": "Bu adla bir şablon zaten mevcut.",
+    "templateSaved": "\"{{name}}\" şablonu kaydedildi.",
+    "templateLoaded": "\"{{name}}\" şablonu yüklendi.",
+    "failedLoadTemplate": "Şablon yüklenemedi.",
+    "noSettings": "Bu düğüm için yapılandırılabilir ayar yok.",
+    "advancedSettings": "Gelişmiş Ayarlar"
   }
 }

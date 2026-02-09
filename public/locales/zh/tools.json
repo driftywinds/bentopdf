@@ -585,5 +585,38 @@
   "rasterizePdf": {
     "name": "栅格化 PDF",
     "subtitle": "将 PDF 转换为基于图像的 PDF。展平图层并移除可选择的文本。"
+  },
+  "pdfWorkflow": {
+    "name": "PDF 工作流构建器",
+    "subtitle": "使用可视化节点编辑器构建自定义 PDF 处理流水线。",
+    "nodes": "节点",
+    "searchNodes": "搜索节点...",
+    "run": "运行",
+    "clear": "清除",
+    "save": "保存",
+    "load": "加载",
+    "export": "导出",
+    "import": "导入",
+    "ready": "就绪",
+    "settings": "设置",
+    "processing": "处理中...",
+    "saveTemplate": "保存模板",
+    "templateName": "模板名称",
+    "templatePlaceholder": "例如：发票处理工作流",
+    "cancel": "取消",
+    "loadTemplate": "加载模板",
+    "noTemplates": "暂无已保存的模板。",
+    "ok": "确定",
+    "workflowCompleted": "工作流已完成",
+    "errorDuringExecution": "执行过程中出错",
+    "addNodeError": "请至少添加一个节点以运行工作流。",
+    "needInputOutput": "工作流至少需要一个输入节点和一个输出节点才能运行。",
+    "enterName": "请输入名称。",
+    "templateExists": "已存在同名模板。",
+    "templateSaved": "模板「{{name}}」已保存。",
+    "templateLoaded": "模板「{{name}}」已加载。",
+    "failedLoadTemplate": "加载模板失败。",
+    "noSettings": "此节点没有可配置的设置。",
+    "advancedSettings": "高级设置"
   }
 }

@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "Rasterisasi PDF",
     "subtitle": "Konversi PDF ke PDF berbasis gambar. Ratakan lapisan dan hapus teks yang dapat dipilih."
+  },
+  "pdfWorkflow": {
+    "name": "Pembangun Alur Kerja PDF",
+    "subtitle": "Bangun alur pemrosesan PDF kustom dengan editor node visual.",
+    "nodes": "Node",
+    "searchNodes": "Cari node...",
+    "run": "Jalankan",
+    "clear": "Bersihkan",
+    "save": "Simpan",
+    "load": "Muat",
+    "export": "Ekspor",
+    "import": "Impor",
+    "ready": "Siap",
+    "settings": "Pengaturan",
+    "processing": "Memproses...",
+    "saveTemplate": "Simpan Template",
+    "templateName": "Nama Template",
+    "templatePlaceholder": "mis. Alur Kerja Faktur",
+    "cancel": "Batal",
+    "loadTemplate": "Muat Template",
+    "noTemplates": "Belum ada template tersimpan.",
+    "ok": "OK",
+    "workflowCompleted": "Alur kerja selesai",
+    "errorDuringExecution": "Kesalahan saat eksekusi",
+    "addNodeError": "Tambahkan setidaknya satu node untuk menjalankan alur kerja.",
+    "needInputOutput": "Alur kerja Anda memerlukan setidaknya satu node input dan satu node output untuk dijalankan.",
+    "enterName": "Silakan masukkan nama.",
+    "templateExists": "Template dengan nama ini sudah ada.",
+    "templateSaved": "Template \"{{name}}\" tersimpan.",
+    "templateLoaded": "Template \"{{name}}\" dimuat.",
+    "failedLoadTemplate": "Gagal memuat template.",
+    "noSettings": "Tidak ada pengaturan yang dapat dikonfigurasi untuk node ini.",
+    "advancedSettings": "Pengaturan Lanjutan"
   }
 }

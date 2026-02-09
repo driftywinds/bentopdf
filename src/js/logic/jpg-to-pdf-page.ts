@@ -1,9 +1,11 @@
 import { createIcons, icons } from 'lucide';
 import { showAlert, showLoader, hideLoader } from '../ui.js';
 import { downloadFile, formatBytes } from '../utils/helpers.js';
-import { isWasmAvailable, getWasmBaseUrl } from '../config/wasm-cdn-config.js';
-import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
-import { loadPyMuPDF, isPyMuPDFAvailable } from '../utils/pymupdf-loader.js';
+import { loadPyMuPDF } from '../utils/pymupdf-loader.js';
+import {
+  getSelectedQuality,
+  compressImageFile,
+} from '../utils/image-compress.js';
 
 const SUPPORTED_FORMATS = '.jpg,.jpeg,.jp2,.jpx';
 const SUPPORTED_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/jp2'];
@@ -185,8 +187,13 @@ async function convertToPdf() {
     const mupdf = await ensurePyMuPDF();
 
     showLoader('Converting images to PDF...');
+    const quality = getSelectedQuality();
+    const compressedFiles: File[] = [];
+    for (const file of files) {
+      compressedFiles.push(await compressImageFile(file, quality));
+    }
 
-    const pdfBlob = await mupdf.imagesToPdf(files);
+    const pdfBlob = await mupdf.imagesToPdf(compressedFiles);
 
     downloadFile(pdfBlob, 'from_jpgs.pdf');
 

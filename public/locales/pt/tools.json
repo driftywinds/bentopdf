@@ -566,5 +566,38 @@
   "rasterizePdf": {
     "name": "Rasterizar PDF",
     "subtitle": "Converter PDF em PDF baseado em imagens. Achatar camadas e remover texto selecionável."
+  },
+  "pdfWorkflow": {
+    "name": "Construtor de fluxo de trabalho PDF",
+    "subtitle": "Crie pipelines de processamento PDF personalizados com um editor visual de nós.",
+    "nodes": "Nós",
+    "searchNodes": "Pesquisar nós...",
+    "run": "Executar",
+    "clear": "Limpar",
+    "save": "Salvar",
+    "load": "Carregar",
+    "export": "Exportar",
+    "import": "Importar",
+    "ready": "Pronto",
+    "settings": "Configurações",
+    "processing": "Processando...",
+    "saveTemplate": "Salvar modelo",
+    "templateName": "Nome do modelo",
+    "templatePlaceholder": "ex. Fluxo de trabalho de faturamento",
+    "cancel": "Cancelar",
+    "loadTemplate": "Carregar modelo",
+    "noTemplates": "Nenhum modelo salvo ainda.",
+    "ok": "OK",
+    "workflowCompleted": "Fluxo de trabalho concluído",
+    "errorDuringExecution": "Erro durante a execução",
+    "addNodeError": "Adicione pelo menos um nó para executar o fluxo de trabalho.",
+    "needInputOutput": "Seu fluxo de trabalho precisa de pelo menos um nó de entrada e um nó de saída para ser executado.",
+    "enterName": "Por favor, insira um nome.",
+    "templateExists": "Já existe um modelo com este nome.",
+    "templateSaved": "Modelo \"{{name}}\" salvo.",
+    "templateLoaded": "Modelo \"{{name}}\" carregado.",
+    "failedLoadTemplate": "Falha ao carregar o modelo.",
+    "noSettings": "Nenhuma configuração disponível para este nó.",
+    "advancedSettings": "Configurações avançadas"
   }
 }

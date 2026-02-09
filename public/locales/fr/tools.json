@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "Rastériser le PDF",
     "subtitle": "Convertir un PDF en PDF basé sur des images. Aplatir les calques et supprimer le texte sélectionnable."
+  },
+  "pdfWorkflow": {
+    "name": "Constructeur de workflow PDF",
+    "subtitle": "Créez des pipelines de traitement PDF personnalisés avec un éditeur de nœuds visuel.",
+    "nodes": "Nœuds",
+    "searchNodes": "Rechercher des nœuds...",
+    "run": "Exécuter",
+    "clear": "Effacer",
+    "save": "Enregistrer",
+    "load": "Charger",
+    "export": "Exporter",
+    "import": "Importer",
+    "ready": "Prêt",
+    "settings": "Paramètres",
+    "processing": "Traitement en cours...",
+    "saveTemplate": "Enregistrer le modèle",
+    "templateName": "Nom du modèle",
+    "templatePlaceholder": "ex. Workflow de facturation",
+    "cancel": "Annuler",
+    "loadTemplate": "Charger un modèle",
+    "noTemplates": "Aucun modèle enregistré pour le moment.",
+    "ok": "OK",
+    "workflowCompleted": "Workflow terminé",
+    "errorDuringExecution": "Erreur lors de l'exécution",
+    "addNodeError": "Ajoutez au moins un nœud pour exécuter le workflow.",
+    "needInputOutput": "Votre workflow nécessite au moins un nœud d'entrée et un nœud de sortie pour fonctionner.",
+    "enterName": "Veuillez saisir un nom.",
+    "templateExists": "Un modèle portant ce nom existe déjà.",
+    "templateSaved": "Modèle \"{{name}}\" enregistré.",
+    "templateLoaded": "Modèle \"{{name}}\" chargé.",
+    "failedLoadTemplate": "Échec du chargement du modèle.",
+    "noSettings": "Aucun paramètre configurable pour ce nœud.",
+    "advancedSettings": "Paramètres avancés"
   }
 }

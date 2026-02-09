@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "PDF rasteren",
     "subtitle": "Converteer PDF naar beeldgebaseerde PDF. Lagen afvlakken en selecteerbare tekst verwijderen."
+  },
+  "pdfWorkflow": {
+    "name": "PDF Workflow Builder",
+    "subtitle": "Bouw aangepaste PDF-verwerkingspipelines met een visuele node-editor.",
+    "nodes": "Nodes",
+    "searchNodes": "Nodes zoeken...",
+    "run": "Uitvoeren",
+    "clear": "Wissen",
+    "save": "Opslaan",
+    "load": "Laden",
+    "export": "Exporteren",
+    "import": "Importeren",
+    "ready": "Gereed",
+    "settings": "Instellingen",
+    "processing": "Verwerken...",
+    "saveTemplate": "Sjabloon opslaan",
+    "templateName": "Sjabloonnaam",
+    "templatePlaceholder": "bijv. Factuur-workflow",
+    "cancel": "Annuleren",
+    "loadTemplate": "Sjabloon laden",
+    "noTemplates": "Nog geen opgeslagen sjablonen.",
+    "ok": "OK",
+    "workflowCompleted": "Workflow voltooid",
+    "errorDuringExecution": "Fout tijdens uitvoering",
+    "addNodeError": "Voeg minimaal één node toe om de workflow uit te voeren.",
+    "needInputOutput": "Uw workflow heeft minimaal één invoer-node en één uitvoer-node nodig om te kunnen draaien.",
+    "enterName": "Voer een naam in.",
+    "templateExists": "Er bestaat al een sjabloon met deze naam.",
+    "templateSaved": "Sjabloon \"{{name}}\" opgeslagen.",
+    "templateLoaded": "Sjabloon \"{{name}}\" geladen.",
+    "failedLoadTemplate": "Sjabloon laden mislukt.",
+    "noSettings": "Geen configureerbare instellingen voor deze node.",
+    "advancedSettings": "Geavanceerde instellingen"
   }
 }

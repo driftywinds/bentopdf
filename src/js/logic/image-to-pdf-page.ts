@@ -5,6 +5,10 @@ import { isWasmAvailable, getWasmBaseUrl } from '../config/wasm-cdn-config.js';
 import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
 import { loadPyMuPDF, isPyMuPDFAvailable } from '../utils/pymupdf-loader.js';
 import heic2any from 'heic2any';
+import {
+  getSelectedQuality,
+  compressImageFile,
+} from '../utils/image-compress.js';
 
 const SUPPORTED_FORMATS =
   '.jpg,.jpeg,.png,.bmp,.gif,.tiff,.tif,.pnm,.pgm,.pbm,.ppm,.pam,.jxr,.jpx,.jp2,.psd,.svg,.heic,.heif,.webp';
@@ -259,11 +263,13 @@ async function convertToPdf() {
   showLoader('Processing images...');
 
   try {
+    const quality = getSelectedQuality();
     const processedFiles: File[] = [];
     for (const file of files) {
       try {
         const processed = await preprocessFile(file);
-        processedFiles.push(processed);
+        const compressed = await compressImageFile(processed, quality);
+        processedFiles.push(compressed);
       } catch (error: any) {
         console.warn(error);
         throw error;

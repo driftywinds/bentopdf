@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "Rasterisér PDF",
     "subtitle": "Konverter PDF til en billedbaseret PDF. Flatten lag og fjern valgbare tekster."
+  },
+  "pdfWorkflow": {
+    "name": "PDF Workflow-bygger",
+    "subtitle": "Byg tilpassede PDF-behandlingspipelines med en visuel nodeeditor.",
+    "nodes": "Noder",
+    "searchNodes": "Søg noder...",
+    "run": "Kør",
+    "clear": "Ryd",
+    "save": "Gem",
+    "load": "Indlæs",
+    "export": "Eksportér",
+    "import": "Importér",
+    "ready": "Klar",
+    "settings": "Indstillinger",
+    "processing": "Behandler...",
+    "saveTemplate": "Gem skabelon",
+    "templateName": "Skabelonnavn",
+    "templatePlaceholder": "f.eks. Faktura-workflow",
+    "cancel": "Annuller",
+    "loadTemplate": "Indlæs skabelon",
+    "noTemplates": "Ingen gemte skabeloner endnu.",
+    "ok": "OK",
+    "workflowCompleted": "Workflow fuldført",
+    "errorDuringExecution": "Fejl under udførelse",
+    "addNodeError": "Tilføj mindst én node for at køre workflowet.",
+    "needInputOutput": "Dit workflow skal have mindst én inputnode og én outputnode for at kunne køre.",
+    "enterName": "Indtast venligst et navn.",
+    "templateExists": "En skabelon med dette navn findes allerede.",
+    "templateSaved": "Skabelon \"{{name}}\" gemt.",
+    "templateLoaded": "Skabelon \"{{name}}\" indlæst.",
+    "failedLoadTemplate": "Kunne ikke indlæse skabelon.",
+    "noSettings": "Ingen konfigurerbare indstillinger for denne node.",
+    "advancedSettings": "Avancerede indstillinger"
   }
 }

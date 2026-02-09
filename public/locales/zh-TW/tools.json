@@ -566,5 +566,38 @@
   "rasterizePdf": {
     "name": "柵格化 PDF",
     "subtitle": "將 PDF 轉換為基於影像的 PDF。展平圖層並移除可選取的文字。"
+  },
+  "pdfWorkflow": {
+    "name": "PDF 工作流程建構器",
+    "subtitle": "使用視覺化節點編輯器建構自訂 PDF 處理管線。",
+    "nodes": "節點",
+    "searchNodes": "搜尋節點...",
+    "run": "執行",
+    "clear": "清除",
+    "save": "儲存",
+    "load": "載入",
+    "export": "匯出",
+    "import": "匯入",
+    "ready": "就緒",
+    "settings": "設定",
+    "processing": "處理中...",
+    "saveTemplate": "儲存範本",
+    "templateName": "範本名稱",
+    "templatePlaceholder": "例如：發票處理工作流程",
+    "cancel": "取消",
+    "loadTemplate": "載入範本",
+    "noTemplates": "目前沒有已儲存的範本。",
+    "ok": "確定",
+    "workflowCompleted": "工作流程已完成",
+    "errorDuringExecution": "執行過程中發生錯誤",
+    "addNodeError": "請至少新增一個節點以執行工作流程。",
+    "needInputOutput": "您的工作流程至少需要一個輸入節點和一個輸出節點才能執行。",
+    "enterName": "請輸入名稱。",
+    "templateExists": "已存在相同名稱的範本。",
+    "templateSaved": "範本「{{name}}」已儲存。",
+    "templateLoaded": "範本「{{name}}」已載入。",
+    "failedLoadTemplate": "載入範本失敗。",
+    "noSettings": "此節點沒有可設定的選項。",
+    "advancedSettings": "進階設定"
   }
 }

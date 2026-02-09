@@ -588,5 +588,38 @@
   "rasterizePdf": {
     "name": "PDF rastern",
     "subtitle": "PDF in bildbasiertes PDF umwandeln. Ebenen glätten und auswählbaren Text entfernen."
+  },
+  "pdfWorkflow": {
+    "name": "PDF-Workflow-Builder",
+    "subtitle": "Erstellen Sie individuelle PDF-Verarbeitungspipelines mit einem visuellen Node-Editor.",
+    "nodes": "Nodes",
+    "searchNodes": "Nodes suchen...",
+    "run": "Ausführen",
+    "clear": "Leeren",
+    "save": "Speichern",
+    "load": "Laden",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "ready": "Bereit",
+    "settings": "Einstellungen",
+    "processing": "Verarbeitung...",
+    "saveTemplate": "Vorlage speichern",
+    "templateName": "Vorlagenname",
+    "templatePlaceholder": "z. B. Rechnungs-Workflow",
+    "cancel": "Abbrechen",
+    "loadTemplate": "Vorlage laden",
+    "noTemplates": "Noch keine gespeicherten Vorlagen.",
+    "ok": "OK",
+    "workflowCompleted": "Workflow abgeschlossen",
+    "errorDuringExecution": "Fehler bei der Ausführung",
+    "addNodeError": "Fügen Sie mindestens einen Node hinzu, um den Workflow auszuführen.",
+    "needInputOutput": "Ihr Workflow benötigt mindestens einen Eingabe-Node und einen Ausgabe-Node.",
+    "enterName": "Bitte geben Sie einen Namen ein.",
+    "templateExists": "Eine Vorlage mit diesem Namen existiert bereits.",
+    "templateSaved": "Vorlage \"{{name}}\" gespeichert.",
+    "templateLoaded": "Vorlage \"{{name}}\" geladen.",
+    "failedLoadTemplate": "Vorlage konnte nicht geladen werden.",
+    "noSettings": "Keine konfigurierbaren Einstellungen für diesen Node.",
+    "advancedSettings": "Erweiterte Einstellungen"
   }
 }
