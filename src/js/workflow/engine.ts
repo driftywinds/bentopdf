@@ -73,6 +73,25 @@ function tick(): Promise<void> {
   return new Promise((r) => setTimeout(r, 0));
 }
 
+function validateEncryptOrdering(
+  editor: NodeEditor<ClassicScheme>,
+  pipelineNodes: string[]
+): string | null {
+  for (const nodeId of pipelineNodes) {
+    const node = editor.getNode(nodeId) as BaseWorkflowNode;
+    if (node?.label !== 'Encrypt') continue;
+
+    const outConns = editor.getConnections().filter((c) => c.source === nodeId);
+    for (const conn of outConns) {
+      const target = editor.getNode(conn.target) as BaseWorkflowNode;
+      if (target && target.category !== 'Output') {
+        return `The Encrypt node feeds into "${target.label}", which may fail on encrypted data. Move Encrypt to just before the output node.`;
+      }
+    }
+  }
+  return null;
+}
+
 export async function executeWorkflow(
   editor: NodeEditor<ClassicScheme>,
   engine: DataflowEngine<DataflowEngineScheme>,
@@ -106,6 +125,11 @@ export async function executeWorkflow(
   await tick();
 
   const sorted = topologicalSort(pipelineNodes, editor);
+
+  const encryptWarning = validateEncryptOrdering(editor, sorted);
+  if (encryptWarning) {
+    throw new WorkflowError(encryptWarning, 'Encrypt');
+  }
 
   engine.reset();
 

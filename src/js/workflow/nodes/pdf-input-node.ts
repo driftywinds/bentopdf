@@ -3,7 +3,14 @@ import { BaseWorkflowNode } from './base-node';
 import { pdfSocket } from '../sockets';
 import type { PDFData, SocketData, MultiPDFData } from '../types';
 import { PDFDocument } from 'pdf-lib';
-import { readFileAsArrayBuffer } from '../../utils/helpers.js';
+import { readFileAsArrayBuffer, initializeQpdf } from '../../utils/helpers.js';
+
+export class EncryptedPDFError extends Error {
+  constructor(public readonly filename: string) {
+    super(`PDF "${filename}" is password-protected`);
+    this.name = 'EncryptedPDFError';
+  }
+}
 
 export class PDFInputNode extends BaseWorkflowNode {
   readonly category = 'Input' as const;
@@ -20,8 +27,29 @@ export class PDFInputNode extends BaseWorkflowNode {
   async addFile(file: File): Promise<void> {
     const arrayBuffer = await readFileAsArrayBuffer(file);
     const bytes = new Uint8Array(arrayBuffer as ArrayBuffer);
+
+    let isEncrypted = false;
+    try {
+      await PDFDocument.load(bytes, { throwOnInvalidObject: false });
+    } catch {
+      isEncrypted = true;
+    }
+
+    if (isEncrypted) {
+      try {
+        await PDFDocument.load(bytes, {
+          ignoreEncryption: true,
+          throwOnInvalidObject: false,
+        });
+      } catch {
+        throw new Error(
+          `Failed to load "${file.name}" - file may be corrupted`
+        );
+      }
+      throw new EncryptedPDFError(file.name);
+    }
+
     const document = await PDFDocument.load(bytes, {
-      ignoreEncryption: true,
       throwOnInvalidObject: false,
     });
     this.files.push({
@@ -30,6 +58,49 @@ export class PDFInputNode extends BaseWorkflowNode {
       bytes,
       filename: file.name,
     });
+  }
+
+  async addDecryptedFile(file: File, password: string): Promise<void> {
+    const arrayBuffer = await readFileAsArrayBuffer(file);
+    const bytes = new Uint8Array(arrayBuffer as ArrayBuffer);
+    const qpdf = await initializeQpdf();
+    const uid = `${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    const inputPath = `/tmp/input_decrypt_${uid}.pdf`;
+    const outputPath = `/tmp/output_decrypt_${uid}.pdf`;
+
+    try {
+      qpdf.FS.writeFile(inputPath, bytes);
+      qpdf.callMain([
+        inputPath,
+        '--password=' + password,
+        '--decrypt',
+        outputPath,
+      ]);
+      const decryptedData = qpdf.FS.readFile(outputPath, {
+        encoding: 'binary',
+      });
+      const decryptedBytes = new Uint8Array(decryptedData);
+      const document = await PDFDocument.load(decryptedBytes, {
+        throwOnInvalidObject: false,
+      });
+      this.files.push({
+        type: 'pdf',
+        document,
+        bytes: decryptedBytes,
+        filename: file.name,
+      });
+    } finally {
+      try {
+        qpdf.FS.unlink(inputPath);
+      } catch {
+        /* cleanup */
+      }
+      try {
+        qpdf.FS.unlink(outputPath);
+      } catch {
+        /* cleanup */
+      }
+    }
   }
 
   async setFile(file: File): Promise<void> {

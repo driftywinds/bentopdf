@@ -5,7 +5,10 @@ import { executeWorkflow } from '../workflow/engine';
 import { nodeRegistry, getNodesByCategory } from '../workflow/nodes/registry';
 import type { BaseWorkflowNode } from '../workflow/nodes/base-node';
 import type { WorkflowEditor } from '../workflow/editor';
-import { PDFInputNode } from '../workflow/nodes/pdf-input-node';
+import {
+  PDFInputNode,
+  EncryptedPDFError,
+} from '../workflow/nodes/pdf-input-node';
 import { ImageInputNode } from '../workflow/nodes/image-input-node';
 import { WordToPdfNode } from '../workflow/nodes/word-to-pdf-node';
 import { ExcelToPdfNode } from '../workflow/nodes/excel-to-pdf-node';
@@ -136,6 +139,32 @@ async function initializePage() {
     updateNodeCount();
   });
 
+  // Mobile toolbox sidebar toggle
+  const toolboxSidebar = document.getElementById('toolbox-sidebar');
+  const toolboxBackdrop = document.getElementById('toolbox-backdrop');
+
+  function closeToolbox() {
+    toolboxSidebar?.classList.add('hidden');
+    toolboxSidebar?.classList.remove('flex');
+    toolboxBackdrop?.classList.add('hidden');
+  }
+
+  function openToolbox() {
+    toolboxSidebar?.classList.remove('hidden');
+    toolboxSidebar?.classList.add('flex');
+    toolboxBackdrop?.classList.remove('hidden');
+  }
+
+  document.getElementById('toolbox-toggle')?.addEventListener('click', () => {
+    if (toolboxSidebar?.classList.contains('hidden')) {
+      openToolbox();
+    } else {
+      closeToolbox();
+    }
+  });
+
+  toolboxBackdrop?.addEventListener('click', closeToolbox);
+
   document.getElementById('node-search')?.addEventListener('input', (e) => {
     const query = (e.target as HTMLInputElement).value.toLowerCase();
     const items = document.querySelectorAll<HTMLElement>('.toolbox-node-item');
@@ -158,16 +187,30 @@ async function initializePage() {
   });
 
   let justPicked = false;
+  let dragDistance = 0;
+  let pickedNodeId: string | null = null;
 
   area.addPipe((context) => {
     if (context.type === 'nodepicked') {
       const nodeId = context.data.id;
       selectedNodeId = nodeId;
       justPicked = true;
-      const node = editor.getNode(nodeId) as BaseWorkflowNode;
-      if (node) {
-        showNodeSettings(node);
+      pickedNodeId = nodeId;
+      dragDistance = 0;
+    }
+    if (context.type === 'nodetranslated') {
+      const dx = context.data.position.x - context.data.previous.x;
+      const dy = context.data.position.y - context.data.previous.y;
+      dragDistance += Math.abs(dx) + Math.abs(dy);
+    }
+    if (context.type === 'nodedragged') {
+      if (pickedNodeId && dragDistance < 5) {
+        const node = editor.getNode(pickedNodeId) as BaseWorkflowNode;
+        if (node) {
+          showNodeSettings(node);
+        }
       }
+      pickedNodeId = null;
     }
     if (context.type === 'translated') {
       container.classList.add('is-panning');
@@ -443,7 +486,14 @@ function buildToolbox() {
       labelEl.textContent = entry.label;
       item.appendChild(labelEl);
 
-      item.addEventListener('click', () => addNodeToCanvas(item.dataset.type!));
+      item.addEventListener('click', () => {
+        addNodeToCanvas(item.dataset.type!);
+        if (window.innerWidth < 768) {
+          document.getElementById('toolbox-sidebar')?.classList.add('hidden');
+          document.getElementById('toolbox-sidebar')?.classList.remove('flex');
+          document.getElementById('toolbox-backdrop')?.classList.add('hidden');
+        }
+      });
 
       item.draggable = true;
       item.addEventListener('dragstart', (e) => {
@@ -552,6 +602,57 @@ function buildFileList(
   container.appendChild(list);
 }
 
+function promptPdfPassword(filename: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('pdf-password-modal')!;
+    const filenameEl = document.getElementById('pdf-password-filename')!;
+    const input = document.getElementById(
+      'pdf-password-input'
+    ) as HTMLInputElement;
+    const errorEl = document.getElementById('pdf-password-error')!;
+    const skipBtn = document.getElementById('pdf-password-skip')!;
+    const unlockBtn = document.getElementById('pdf-password-unlock')!;
+
+    filenameEl.textContent = filename;
+    input.value = '';
+    errorEl.classList.add('hidden');
+    modal.classList.remove('hidden');
+    input.focus();
+
+    const cleanup = () => {
+      modal.classList.add('hidden');
+      skipBtn.replaceWith(skipBtn.cloneNode(true));
+      unlockBtn.replaceWith(unlockBtn.cloneNode(true));
+      input.removeEventListener('keydown', onKeydown);
+    };
+
+    const onKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        cleanup();
+        resolve(input.value || null);
+      }
+      if (e.key === 'Escape') {
+        cleanup();
+        resolve(null);
+      }
+    };
+
+    input.addEventListener('keydown', onKeydown);
+    document
+      .getElementById('pdf-password-skip')!
+      .addEventListener('click', () => {
+        cleanup();
+        resolve(null);
+      });
+    document
+      .getElementById('pdf-password-unlock')!
+      .addEventListener('click', () => {
+        cleanup();
+        resolve(input.value || null);
+      });
+  });
+}
+
 function showNodeSettings(node: BaseWorkflowNode) {
   const sidebar = document.getElementById('settings-sidebar');
   const title = document.getElementById('settings-title');
@@ -590,14 +691,28 @@ function showNodeSettings(node: BaseWorkflowNode) {
     fileInput.addEventListener('change', async (e) => {
       const files = Array.from((e.target as HTMLInputElement).files ?? []);
       if (files.length === 0) return;
-      try {
-        for (const file of files) {
+      for (const file of files) {
+        try {
           await node.addFile(file);
+        } catch (err) {
+          if (err instanceof EncryptedPDFError) {
+            const password = await promptPdfPassword(file.name);
+            if (password) {
+              try {
+                await node.addDecryptedFile(file, password);
+              } catch {
+                showAlert(
+                  'Error',
+                  `Wrong password or failed to decrypt "${file.name}".`
+                );
+              }
+            }
+          } else {
+            showAlert('Error', 'Failed to load PDF: ' + (err as Error).message);
+          }
         }
-        showNodeSettings(node);
-      } catch (err) {
-        showAlert('Error', 'Failed to load PDF: ' + (err as Error).message);
       }
+      showNodeSettings(node);
     });
 
     uploadBtn.addEventListener('click', () => fileInput.click());

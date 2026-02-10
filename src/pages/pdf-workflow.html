@@ -281,7 +281,7 @@
       <!-- LEFT SIDEBAR: Node Toolbox -->
       <aside
         id="toolbox-sidebar"
-        class="w-60 bg-gray-800 border-r border-gray-700 flex flex-col overflow-y-auto flex-shrink-0"
+        class="w-60 bg-gray-800 border-r border-gray-700 flex-col overflow-y-auto flex-shrink-0 hidden md:flex max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-40 max-md:shadow-2xl"
       >
         <div class="p-3 border-b border-gray-700">
           <h2 class="text-white font-bold text-sm mb-2">Nodes</h2>
@@ -295,50 +295,66 @@
 
         <div id="toolbox-categories" class="flex-1 p-2 space-y-2 text-sm"></div>
       </aside>
+      <div
+        id="toolbox-backdrop"
+        class="hidden max-md:fixed max-md:inset-0 max-md:bg-black/40 max-md:z-30"
+      ></div>
 
       <!-- CENTER: Canvas + Toolbar -->
       <main class="flex-1 flex flex-col min-w-0">
         <!-- Top Toolbar -->
         <div
           id="workflow-toolbar"
-          class="h-11 bg-gray-800 border-b border-gray-700 flex items-center px-4 gap-2 flex-shrink-0"
+          class="h-11 bg-gray-800 border-b border-gray-700 flex items-center px-2 md:px-4 gap-1.5 md:gap-2 flex-shrink-0"
         >
           <button
-            id="run-btn"
-            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-1.5 rounded-lg flex items-center gap-1.5 text-sm transition-colors"
+            id="toolbox-toggle"
+            class="md:hidden bg-gray-700 hover:bg-gray-600 text-white p-1.5 rounded-lg transition-colors"
           >
-            <i class="ph ph-play text-base"></i> Run
+            <i class="ph ph-plus-circle text-lg"></i>
+          </button>
+          <button
+            id="run-btn"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3 md:px-4 py-1.5 rounded-lg flex items-center gap-1.5 text-sm transition-colors"
+          >
+            <i class="ph ph-play text-base"></i>
+            <span class="hidden md:inline">Run</span>
           </button>
           <button
             id="clear-btn"
-            class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg text-sm transition-colors"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-2.5 md:px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
           >
-            Clear
+            <i class="ph ph-trash text-base md:hidden"></i>
+            <span class="hidden md:inline">Clear</span>
           </button>
           <div class="flex-1"></div>
           <button
             id="save-btn"
-            class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-2.5 md:px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
           >
-            <i class="ph ph-floppy-disk text-sm"></i> Save
+            <i class="ph ph-floppy-disk text-sm"></i>
+            <span class="hidden md:inline">Save</span>
           </button>
           <button
             id="load-btn"
-            class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-2.5 md:px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
           >
-            <i class="ph ph-folder-open text-sm"></i> Load
+            <i class="ph ph-folder-open text-sm"></i>
+            <span class="hidden md:inline">Load</span>
           </button>
           <button
             id="export-btn"
-            class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg text-sm transition-colors"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-2.5 md:px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
           >
-            Export
+            <i class="ph ph-export text-sm"></i>
+            <span class="hidden md:inline">Export</span>
           </button>
           <button
             id="import-btn"
-            class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg text-sm transition-colors"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-2.5 md:px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
           >
-            Import
+            <i class="ph ph-download-simple text-sm"></i>
+            <span class="hidden md:inline">Import</span>
           </button>
         </div>
 
@@ -348,7 +364,7 @@
         <!-- Bottom Status Bar -->
         <div
           id="status-bar"
-          class="h-7 bg-gray-800 border-t border-gray-700 flex items-center px-4 text-xs text-gray-400"
+          class="h-7 bg-gray-800 border-t border-gray-700 hidden md:flex items-center px-4 text-xs text-gray-400"
         >
           <span id="status-text">Ready</span>
           <div class="flex-1"></div>
@@ -359,7 +375,7 @@
       <!-- RIGHT SIDEBAR: Selected Node Settings -->
       <aside
         id="settings-sidebar"
-        class="w-64 bg-gray-800 border-l border-gray-700 flex flex-col overflow-y-auto flex-shrink-0 hidden"
+        class="w-64 bg-gray-800 border-l border-gray-700 flex flex-col overflow-y-auto flex-shrink-0 hidden max-md:fixed max-md:inset-y-0 max-md:right-0 max-md:z-40 max-md:shadow-2xl"
       >
         <div
           class="p-3 border-b border-gray-700 flex items-center justify-between"
@@ -492,6 +508,47 @@
         >
           OK
         </button>
+      </div>
+    </div>
+
+    <!-- PDF Password Modal -->
+    <div
+      id="pdf-password-modal"
+      class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-gray-800/95 rounded-2xl shadow-2xl border border-gray-600/50 p-5 w-80 mx-4"
+      >
+        <h3 class="text-white font-semibold text-sm mb-1">
+          <i class="ph ph-lock text-sm"></i> Protected PDF
+        </h3>
+        <p
+          id="pdf-password-filename"
+          class="text-gray-400 text-xs mb-3 truncate"
+        ></p>
+        <input
+          type="password"
+          id="pdf-password-input"
+          placeholder="Enter password"
+          class="w-full bg-gray-900 border border-gray-600 text-white rounded-md px-3 py-2 text-xs focus:border-indigo-500 focus:outline-none mb-1"
+        />
+        <p id="pdf-password-error" class="text-red-400 text-xs mb-3 hidden">
+          Incorrect password
+        </p>
+        <div class="flex gap-2">
+          <button
+            id="pdf-password-skip"
+            class="flex-1 bg-gray-700/80 hover:bg-gray-600 text-gray-300 text-xs py-2 rounded-lg transition-colors"
+          >
+            Skip
+          </button>
+          <button
+            id="pdf-password-unlock"
+            class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white text-xs py-2 rounded-lg transition-colors"
+          >
+            Unlock
+          </button>
+        </div>
       </div>
     </div>
 
