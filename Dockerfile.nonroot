@@ -1,8 +1,10 @@
-# Global variable declaration:
-# Build to serve under Subdirectory BASE_URL if provided, eg: "ARG BASE_URL=/pdf/", otherwise leave blank: "ARG BASE_URL="
+# Non-root Dockerfile — supports PUID/PGID environment variables (LSIO-style)
+# Usage: docker build -f Dockerfile.nonroot -t bentopdf .
+#        docker run -d -p 3000:8080 -e PUID=1000 -e PGID=1000 bentopdf
+
 ARG BASE_URL=
 
-# Build stage
+# Build stage (identical to main Dockerfile)
 FROM public.ecr.aws/docker/library/node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
@@ -15,19 +17,14 @@ RUN npm config set fetch-retries 5 && \
     npm ci
 COPY . .
 
-# Build without type checking (vite build only)
-# Pass SIMPLE_MODE environment variable if provided
 ARG SIMPLE_MODE=false
 ENV SIMPLE_MODE=$SIMPLE_MODE
 ARG COMPRESSION_MODE=all
 ENV COMPRESSION_MODE=$COMPRESSION_MODE
 
-# global arg to local arg - BASE_URL is read from env by vite.config.ts
 ARG BASE_URL
 ENV BASE_URL=$BASE_URL
 
-# WASM module URLs (pre-configured defaults)
-# Override these for air-gapped or self-hosted WASM deployments
 ARG VITE_WASM_PYMUPDF_URL
 ARG VITE_WASM_GS_URL
 ARG VITE_WASM_CPDF_URL
@@ -43,22 +40,31 @@ ENV NODE_OPTIONS="--max-old-space-size=3072"
 
 RUN npm run build:with-docs
 
-# Production stage
-FROM quay.io/nginx/nginx-unprivileged:stable-alpine-slim
+# Production stage — uses standard nginx (starts as root, drops to PUID/PGID)
+FROM nginx:stable-alpine-slim
 
 LABEL org.opencontainers.image.source="https://github.com/alam00000/bentopdf"
 LABEL org.opencontainers.image.url="https://github.com/alam00000/bentopdf"
 
-# global arg to local arg
 ARG BASE_URL
 
-# Set this to "true" to disable Nginx listening on IPv6
+ENV PUID=1000
+ENV PGID=1000
 ENV DISABLE_IPV6=false
 
-COPY --chown=nginx:nginx --from=builder /app/dist /usr/share/nginx/html${BASE_URL%/}
-COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
-COPY --chown=nginx:nginx --chmod=755 nginx-ipv6.sh /docker-entrypoint.d/99-disable-ipv6.sh
-RUN mkdir -p /etc/nginx/tmp && chown -R nginx:nginx /etc/nginx/tmp
+RUN apk add --no-cache su-exec
+
+COPY --from=builder /app/dist /usr/share/nginx/html${BASE_URL%/}
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
+
+RUN mkdir -p /etc/nginx/tmp \
+             /var/cache/nginx/client_temp \
+             /var/cache/nginx/proxy_temp \
+             /var/cache/nginx/fastcgi_temp \
+             /var/cache/nginx/uwsgi_temp \
+             /var/cache/nginx/scgi_temp
 
 EXPOSE 8080
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]

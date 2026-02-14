@@ -69,6 +69,11 @@ export const getLanguageFromUrl = (): SupportedLanguage => {
     return storedLang as SupportedLanguage;
   }
 
+  const envLang = import.meta.env.VITE_DEFAULT_LANGUAGE;
+  if (envLang && supportedLanguages.includes(envLang as SupportedLanguage)) {
+    return envLang as SupportedLanguage;
+  }
+
   return 'en';
 };
 

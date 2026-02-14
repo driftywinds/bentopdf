@@ -584,6 +584,14 @@ docker run -p 3000:8080 bentopdf
 # The app will be accessible at http://localhost:3000/bentopdf/
 ```
 
+**Default Language:**
+
+Set the default UI language at build time. Users can still switch languages — this only changes the initial default. Supported: `en`, `ar`, `be`, `fr`, `de`, `es`, `zh`, `zh-TW`, `vi`, `tr`, `id`, `it`, `pt`, `nl`, `da`.
+
+```bash
+docker build --build-arg VITE_DEFAULT_LANGUAGE=fr -t bentopdf .
+```
+
 **Combined with Simple Mode:**
 
 ```bash
@@ -690,6 +698,26 @@ BentoPDF runs as a non-root user using nginx-unprivileged for enhanced security:
 docker build -t bentopdf .
 docker run -p 8080:8080 bentopdf
 ```
+
+#### Custom User ID (PUID/PGID)
+
+For environments that require running as a specific non-root user (e.g., NAS devices, Kubernetes with security contexts), use the non-root Dockerfile:
+
+```bash
+# Build the non-root image
+docker build -f Dockerfile.nonroot -t bentopdf-nonroot .
+
+# Run with custom UID/GID
+docker run -d -p 3000:8080 -e PUID=1000 -e PGID=1000 bentopdf-nonroot
+```
+
+| Variable | Description        | Default |
+| -------- | ------------------ | ------- |
+| `PUID`   | User ID to run as  | `1000`  |
+| `PGID`   | Group ID to run as | `1000`  |
+
+> [!NOTE]
+> The standard `Dockerfile` uses `nginx-unprivileged` (UID 101) and is recommended for most deployments. Use `Dockerfile.nonroot` only when you need a specific UID/GID.
 
 For detailed security configuration, see [SECURITY.md](SECURITY.md).
 

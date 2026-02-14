@@ -95,16 +95,18 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `VITE_WASM_PYMUPDF_URL` | PyMuPDF WASM module URL         | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.14/` |
 | `VITE_WASM_GS_URL`      | Ghostscript WASM module URL     | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/`       |
 | `VITE_WASM_CPDF_URL`    | CoherentPDF WASM module URL     | `https://cdn.jsdelivr.net/npm/coherentpdf/dist/`               |
+| `VITE_DEFAULT_LANGUAGE` | Default UI language             | `en`                                                           |
 
 WASM module URLs are pre-configured with CDN defaults — all advanced features work out of the box. Override these for air-gapped or self-hosted deployments.
+
+`VITE_DEFAULT_LANGUAGE` sets the UI language for first-time visitors. Supported values: `en`, `ar`, `be`, `fr`, `de`, `es`, `zh`, `zh-TW`, `vi`, `tr`, `id`, `it`, `pt`, `nl`, `da`. Users can still switch languages — this only changes the default.
 
 Example:
 
 ```bash
-docker run -d \
-  -e SIMPLE_MODE=true \
-  -p 3000:8080 \
-  ghcr.io/alam00000/bentopdf:latest
+# Build with French as the default language
+docker build --build-arg VITE_DEFAULT_LANGUAGE=fr -t bentopdf .
+docker run -d -p 3000:8080 bentopdf
 ```
 
 ### Custom WASM URLs (Air-Gapped / Self-Hosted)
@@ -146,6 +148,61 @@ docker run -d -p 3000:8080 --restart unless-stopped bentopdf
 ```
 
 Set a variable to empty string to disable that module (users must configure manually via Advanced Settings).
+
+## Custom User ID (PUID/PGID)
+
+For environments that require running as a specific non-root user (NAS devices, Kubernetes with security contexts, organizational policies), BentoPDF provides a separate Dockerfile with LSIO-style PUID/PGID support.
+
+### Build and Run
+
+```bash
+# Build the non-root image
+docker build -f Dockerfile.nonroot -t bentopdf-nonroot .
+
+# Run with custom UID/GID
+docker run -d \
+  --name bentopdf \
+  -p 3000:8080 \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  --restart unless-stopped \
+  bentopdf-nonroot
+```
+
+### Environment Variables
+
+| Variable       | Description           | Default |
+| -------------- | --------------------- | ------- |
+| `PUID`         | User ID to run as     | `1000`  |
+| `PGID`         | Group ID to run as    | `1000`  |
+| `DISABLE_IPV6` | Disable IPv6 listener | `false` |
+
+### Docker Compose
+
+```yaml
+services:
+  bentopdf:
+    build:
+      context: .
+      dockerfile: Dockerfile.nonroot
+    container_name: bentopdf
+    ports:
+      - '3000:8080'
+    environment:
+      - PUID=1000
+      - PGID=1000
+    restart: unless-stopped
+```
+
+### How It Works
+
+The container starts as root, creates a user with the specified PUID/PGID, adjusts ownership on all writable directories, then drops privileges using `su-exec`. The nginx process runs entirely as your specified user.
+
+> [!NOTE]
+> The standard `Dockerfile` uses `nginx-unprivileged` (UID 101) and is recommended for most deployments. Use `Dockerfile.nonroot` only when you need a specific UID/GID.
+
+> [!WARNING]
+> PUID/PGID cannot be `0` (root). The entrypoint validates inputs and will exit with an error for invalid values.
 
 ## With Traefik (Reverse Proxy)
 
