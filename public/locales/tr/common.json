@@ -357,5 +357,9 @@
   },
   "relatedTools": {
     "title": "İlgili PDF Araçları"
+  },
+  "simpleMode": {
+    "title": "PDF Araçları",
+    "subtitle": "Başlamak için bir araç seçin"
   }
 }

@@ -357,5 +357,9 @@
   },
   "relatedTools": {
     "title": "Công cụ PDF liên quan"
+  },
+  "simpleMode": {
+    "title": "Công cụ PDF",
+    "subtitle": "Chọn một công cụ để bắt đầu"
   }
 }

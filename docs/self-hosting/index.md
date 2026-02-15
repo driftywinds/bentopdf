@@ -103,6 +103,36 @@ Deploy to a subdirectory:
 BASE_URL=/pdf-tools/ npm run build
 ```
 
+### Custom Branding
+
+Replace the default BentoPDF logo, name, and footer text with your own at build time:
+
+| Variable           | Description                           | Default                                 |
+| ------------------ | ------------------------------------- | --------------------------------------- |
+| `VITE_BRAND_NAME`  | Brand name shown in header and footer | `BentoPDF`                              |
+| `VITE_BRAND_LOGO`  | Logo path relative to `public/`       | `images/favicon-no-bg.svg`              |
+| `VITE_FOOTER_TEXT` | Custom footer/copyright text          | `© 2026 BentoPDF. All rights reserved.` |
+
+```bash
+# Place your logo in public/, then build
+VITE_BRAND_NAME="AcmePDF" \
+VITE_BRAND_LOGO="images/acme-logo.svg" \
+VITE_FOOTER_TEXT="© 2026 Acme Corp. Internal use only." \
+npm run build
+```
+
+Or via Docker:
+
+```bash
+docker build \
+  --build-arg VITE_BRAND_NAME="AcmePDF" \
+  --build-arg VITE_BRAND_LOGO="images/acme-logo.svg" \
+  --build-arg VITE_FOOTER_TEXT="© 2026 Acme Corp. Internal use only." \
+  -t acmepdf .
+```
+
+Branding works in both full mode and Simple Mode, and can be combined with all other build-time options (`BASE_URL`, `SIMPLE_MODE`, `VITE_DEFAULT_LANGUAGE`).
+
 ## Deployment Guides
 
 Choose your platform:
@@ -166,6 +196,66 @@ Users can also override these defaults at any time via **Advanced Settings** in 
 
 For networks with no internet access (government, healthcare, financial, etc.). The WASM URLs are baked into the JavaScript at **build time** — the actual WASM files are downloaded by the **user's browser** at runtime. So you need to prepare everything on a machine with internet, then transfer it into the isolated network.
 
+#### Automated Script (Recommended)
+
+The included `prepare-airgap.sh` script automates the entire process — downloading WASM packages, building the Docker image, and producing a self-contained bundle with a setup script.
+
+```bash
+git clone https://github.com/alam00000/bentopdf.git
+cd bentopdf
+
+# Interactive mode — prompts for all options
+bash scripts/prepare-airgap.sh
+
+# Or fully automated
+bash scripts/prepare-airgap.sh --wasm-base-url https://internal.example.com/wasm
+```
+
+This produces a bundle directory:
+
+```
+bentopdf-airgap-bundle/
+  bentopdf.tar              # Docker image
+  *.tgz                     # WASM packages (PyMuPDF, Ghostscript, CoherentPDF)
+  setup.sh                  # Setup script for the air-gapped side
+  README.md                 # Instructions
+```
+
+Transfer the bundle into the air-gapped network via USB, internal artifact repo, or approved method. Then run the included setup script:
+
+```bash
+cd bentopdf-airgap-bundle
+bash setup.sh
+```
+
+The setup script loads the Docker image, extracts WASM files, and optionally starts the container.
+
+**Script options:**
+
+| Flag                    | Description                                      | Default                           |
+| ----------------------- | ------------------------------------------------ | --------------------------------- |
+| `--wasm-base-url <url>` | Where WASMs will be hosted internally            | _(required, prompted if missing)_ |
+| `--image-name <name>`   | Docker image tag                                 | `bentopdf`                        |
+| `--output-dir <path>`   | Output bundle directory                          | `./bentopdf-airgap-bundle`        |
+| `--simple-mode`         | Enable Simple Mode                               | off                               |
+| `--base-url <path>`     | Subdirectory base URL (e.g. `/pdf/`)             | `/`                               |
+| `--language <code>`     | Default UI language (e.g. `fr`, `de`)            | _(none)_                          |
+| `--brand-name <name>`   | Custom brand name                                | _(none)_                          |
+| `--brand-logo <path>`   | Logo path relative to `public/`                  | _(none)_                          |
+| `--footer-text <text>`  | Custom footer text                               | _(none)_                          |
+| `--dockerfile <path>`   | Dockerfile to use                                | `Dockerfile`                      |
+| `--skip-docker`         | Skip Docker build and export                     | off                               |
+| `--skip-wasm`           | Skip WASM download (reuse existing `.tgz` files) | off                               |
+
+::: warning Same-Origin Requirement
+WASM files must be served from the **same origin** as the BentoPDF app. Web Workers use `importScripts()` which cannot load scripts cross-origin. For example, if BentoPDF runs at `https://internal.example.com`, the WASM base URL should also be `https://internal.example.com/wasm`.
+:::
+
+#### Manual Steps
+
+<details>
+<summary>If you prefer to do it manually without the script</summary>
+
 **Step 1: Download the WASM packages** (on a machine with internet)
 
 ```bash
@@ -206,17 +296,19 @@ Copy via USB, internal artifact repo, or approved transfer method:
 # Load the Docker image
 docker load -i bentopdf.tar
 
-# Extract WASM packages to your internal web server's document root
-mkdir -p /var/www/wasm/pymupdf /var/www/wasm/gs /var/www/wasm/cpdf
-tar xzf bentopdf-pymupdf-wasm-0.11.14.tgz -C /var/www/wasm/pymupdf --strip-components=1
-tar xzf bentopdf-gs-wasm-*.tgz -C /var/www/wasm/gs --strip-components=1
-tar xzf coherentpdf-*.tgz -C /var/www/wasm/cpdf --strip-components=1
+# Extract WASM packages
+mkdir -p ./wasm/pymupdf ./wasm/gs ./wasm/cpdf
+tar xzf bentopdf-pymupdf-wasm-0.11.14.tgz -C ./wasm/pymupdf --strip-components=1
+tar xzf bentopdf-gs-wasm-*.tgz -C ./wasm/gs --strip-components=1
+tar xzf coherentpdf-*.tgz -C ./wasm/cpdf --strip-components=1
 
 # Run BentoPDF
 docker run -d -p 3000:8080 --restart unless-stopped bentopdf
 ```
 
-Make sure the WASM files are accessible at the URLs you configured in Step 2. Users open their browser and everything works — no internet required.
+Make sure the WASM files are accessible at the URLs you configured in Step 2.
+
+</details>
 
 ::: info Building from source instead of Docker?
 Set the variables in `.env.production` before running `npm run build`:

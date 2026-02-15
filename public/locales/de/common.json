@@ -357,5 +357,9 @@
   },
   "relatedTools": {
     "title": "Verwandte PDF-Tools"
+  },
+  "simpleMode": {
+    "title": "PDF-Werkzeuge",
+    "subtitle": "Wählen Sie ein Werkzeug aus, um zu beginnen"
   }
 }

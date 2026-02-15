@@ -17,6 +17,12 @@ npm install
 npm run build
 ```
 
+To customize branding, set environment variables before building:
+
+```bash
+VITE_BRAND_NAME="AcmePDF" VITE_BRAND_LOGO="images/acme-logo.svg" npm run build
+```
+
 ## Step 2: Copy Files
 
 ```bash
@@ -52,6 +58,9 @@ Create `/etc/apache2/sites-available/bentopdf.conf`:
     # WASM MIME type
     AddType application/wasm .wasm
 
+    # Prevent double-compression of pre-compressed files
+    SetEnvIfNoCase Request_URI "\.gz$" no-gzip
+
     # Compression
     <IfModule mod_deflate.c>
         AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json application/wasm
@@ -67,9 +76,24 @@ Create `/etc/apache2/sites-available/bentopdf.conf`:
         ExpiresByType image/svg+xml "access plus 1 year"
     </IfModule>
 
+    # Required headers for SharedArrayBuffer (LibreOffice WASM)
+    Header always set Cross-Origin-Embedder-Policy "require-corp"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Resource-Policy "cross-origin"
+
     # Security headers
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set X-Content-Type-Options "nosniff"
+
+    # Pre-compressed LibreOffice WASM files
+    <FilesMatch "soffice\.wasm\.gz$">
+        ForceType application/wasm
+        Header set Content-Encoding "gzip"
+    </FilesMatch>
+    <FilesMatch "soffice\.data\.gz$">
+        ForceType application/octet-stream
+        Header set Content-Encoding "gzip"
+    </FilesMatch>
 </VirtualHost>
 ```
 
@@ -190,6 +214,30 @@ Check that mod_rewrite is enabled:
 ```bash
 sudo a2enmod rewrite
 ```
+
+### Word/ODT/Excel to PDF Not Working
+
+LibreOffice WASM requires `SharedArrayBuffer`, which needs these headers:
+
+```apache
+Header always set Cross-Origin-Embedder-Policy "require-corp"
+Header always set Cross-Origin-Opener-Policy "same-origin"
+```
+
+The pre-compressed `.wasm.gz` and `.data.gz` files also need correct `Content-Encoding`:
+
+```apache
+<FilesMatch "soffice\.wasm\.gz$">
+    ForceType application/wasm
+    Header set Content-Encoding "gzip"
+</FilesMatch>
+<FilesMatch "soffice\.data\.gz$">
+    ForceType application/octet-stream
+    Header set Content-Encoding "gzip"
+</FilesMatch>
+```
+
+Ensure `mod_headers` is enabled: `sudo a2enmod headers`
 
 ### Permission Denied
 

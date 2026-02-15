@@ -357,5 +357,9 @@
   },
   "relatedTools": {
     "title": "Herramientas PDF relacionadas"
+  },
+  "simpleMode": {
+    "title": "Herramientas PDF",
+    "subtitle": "Selecciona una herramienta para comenzar"
   }
 }

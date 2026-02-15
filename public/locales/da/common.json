@@ -357,5 +357,9 @@
     "errorRendering": "Kunne ikke rendere side-miniaturer",
     "error": "Fejl",
     "failedToLoad": "Kunne ikke indlæses"
+  },
+  "simpleMode": {
+    "title": "PDF-værktøjer",
+    "subtitle": "Vælg et værktøj for at komme i gang"
   }
 }

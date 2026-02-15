@@ -96,6 +96,9 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `VITE_WASM_GS_URL`      | Ghostscript WASM module URL     | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/`       |
 | `VITE_WASM_CPDF_URL`    | CoherentPDF WASM module URL     | `https://cdn.jsdelivr.net/npm/coherentpdf/dist/`               |
 | `VITE_DEFAULT_LANGUAGE` | Default UI language             | `en`                                                           |
+| `VITE_BRAND_NAME`       | Custom brand name               | `BentoPDF`                                                     |
+| `VITE_BRAND_LOGO`       | Logo path relative to `public/` | `images/favicon-no-bg.svg`                                     |
+| `VITE_FOOTER_TEXT`      | Custom footer/copyright text    | `© 2026 BentoPDF. All rights reserved.`                        |
 
 WASM module URLs are pre-configured with CDN defaults — all advanced features work out of the box. Override these for air-gapped or self-hosted deployments.
 
@@ -108,6 +111,20 @@ Example:
 docker build --build-arg VITE_DEFAULT_LANGUAGE=fr -t bentopdf .
 docker run -d -p 3000:8080 bentopdf
 ```
+
+### Custom Branding
+
+Replace the default BentoPDF logo, name, and footer text with your own. Place your logo file in the `public/` folder (or use an existing image), then pass the branding variables at build time:
+
+```bash
+docker build \
+  --build-arg VITE_BRAND_NAME="AcmePDF" \
+  --build-arg VITE_BRAND_LOGO="images/acme-logo.svg" \
+  --build-arg VITE_FOOTER_TEXT="© 2026 Acme Corp. Internal use only." \
+  -t acmepdf .
+```
+
+Branding works in both full mode and Simple Mode, and can be combined with all other build-time options.
 
 ### Custom WASM URLs (Air-Gapped / Self-Hosted)
 

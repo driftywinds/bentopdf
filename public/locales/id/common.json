@@ -357,5 +357,9 @@
   },
   "relatedTools": {
     "title": "Alat PDF Terkait"
+  },
+  "simpleMode": {
+    "title": "Alat PDF",
+    "subtitle": "Pilih alat untuk memulai"
   }
 }

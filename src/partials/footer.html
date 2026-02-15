@@ -5,14 +5,15 @@
       <div class="mb-8 md:mb-0">
         <div class="flex items-center justify-center md:justify-start mb-4">
           <img
-            src="{{baseUrl}}images/favicon.svg"
-            alt="Bento PDF Logo"
+            id="footer-logo"
+            src="{{baseUrl}}{{#if brandLogo}}{{brandLogo}}{{else}}images/favicon.svg{{/if}}"
+            alt="{{#if brandName}}{{brandName}}{{else}}Bento PDF{{/if}} Logo"
             class="h-10 w-10 mr-3"
           />
-          <span class="text-xl font-bold text-white">BentoPDF</span>
+          <span id="footer-brand" class="text-xl font-bold text-white">{{#if brandName}}{{brandName}}{{else}}BentoPDF{{/if}}</span>
         </div>
-        <p class="text-gray-400 text-sm" data-i18n="footer.copyright">
-          &copy; 2026 BentoPDF. All rights reserved.
+        <p id="footer-copyright" class="text-gray-400 text-sm" {{#unless footerText}}data-i18n="footer.copyright"{{/unless}}>
+          {{#if footerText}}{{footerText}}{{else}}&copy; 2026 BentoPDF. All rights reserved.{{/if}}
         </p>
         <p class="text-gray-500 text-xs mt-2">
           <span data-i18n="footer.version">Version</span>

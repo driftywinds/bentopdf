@@ -133,12 +133,14 @@
         <div class="flex justify-between items-center h-16">
           <div class="flex-shrink-0 flex items-center">
             <img
-              src="/images/favicon-no-bg.svg"
-              alt="Bento PDF Logo"
+              src="{{baseUrl}}{{#if brandLogo}}{{brandLogo}}{{else}}images/favicon-no-bg.svg{{/if}}"
+              alt="{{#if brandName}}{{brandName}}{{else}}Bento PDF{{/if}} Logo"
               class="h-8 w-8"
             />
             <span class="text-white font-bold text-xl ml-2">
-              <a href="/">BentoPDF</a>
+              <a href="/"
+                >{{#if brandName}}{{brandName}}{{else}}BentoPDF{{/if}}</a
+              >
             </span>
             <span class="text-gray-400 ml-3 text-sm sm:text-base"
               >PDF Multi Tool</span

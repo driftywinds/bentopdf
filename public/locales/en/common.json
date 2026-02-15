@@ -357,5 +357,9 @@
     "errorRendering": "Failed to render page thumbnails",
     "error": "Error",
     "failedToLoad": "Failed to load"
+  },
+  "simpleMode": {
+    "title": "PDF Tools",
+    "subtitle": "Select a tool to get started"
   }
 }

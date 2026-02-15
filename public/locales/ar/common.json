@@ -357,5 +357,9 @@
     "errorRendering": "فشل عرض الصور المصغرة للصفحات",
     "error": "خطأ",
     "failedToLoad": "فشل التحميل"
+  },
+  "simpleMode": {
+    "title": "أدوات PDF",
+    "subtitle": "اختر أداة للبدء"
   }
 }

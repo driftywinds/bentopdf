@@ -15,6 +15,7 @@ import {
   createLanguageSwitcher,
   t,
 } from './i18n/index.js';
+declare const __BRAND_NAME__: string;
 
 const init = async () => {
   await initI18n();
@@ -81,18 +82,19 @@ const init = async () => {
         (divider as HTMLElement).style.display = 'none';
       });
 
-      document.title = 'BentoPDF - PDF Tools';
+      const brandName = __BRAND_NAME__ || 'BentoPDF';
+      document.title = `${brandName} - ${t('simpleMode.title')}`;
 
       const toolsHeader = document.getElementById('tools-header');
       if (toolsHeader) {
         const title = toolsHeader.querySelector('h2');
         const subtitle = toolsHeader.querySelector('p');
         if (title) {
-          title.textContent = 'PDF Tools';
+          title.textContent = t('simpleMode.title');
           title.className = 'text-4xl md:text-5xl font-bold text-white mb-3';
         }
         if (subtitle) {
-          subtitle.textContent = 'Select a tool to get started';
+          subtitle.textContent = t('simpleMode.subtitle');
           subtitle.className = 'text-lg text-gray-400';
         }
       }
@@ -805,8 +807,12 @@ const init = async () => {
         left.className = 'flex items-center gap-3';
 
         const icon = document.createElement('i');
-        icon.className = 'w-5 h-5 text-indigo-400';
-        icon.setAttribute('data-lucide', tool.icon);
+        if (tool.icon.startsWith('ph-')) {
+          icon.className = `ph ${tool.icon} w-5 h-5 text-indigo-400`;
+        } else {
+          icon.className = 'w-5 h-5 text-indigo-400';
+          icon.setAttribute('data-lucide', tool.icon);
+        }
 
         const name = document.createElement('span');
         name.className = 'text-gray-200 font-medium';

@@ -357,5 +357,9 @@
   },
   "relatedTools": {
     "title": "相关 PDF 工具"
+  },
+  "simpleMode": {
+    "title": "PDF 工具",
+    "subtitle": "选择一个工具开始使用"
   }
 }
