@@ -30,7 +30,7 @@ ingress:
 ```yaml
 gateway:
   enabled: true
-  gatewayClassName: "cloudflare"  # or your gateway class
+  gatewayClassName: 'cloudflare' # or your gateway class
 
 httpRoute:
   enabled: true
@@ -74,7 +74,7 @@ httpRoute:
 ```yaml
 env:
   - name: DISABLE_IPV6
-    value: "true"
+    value: 'true'
 ```
 
 ## Publish this chart to GHCR (OCI) for testing/deploying
