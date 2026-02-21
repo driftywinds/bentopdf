@@ -60,6 +60,8 @@ httpRoute:
   rules:
     - matches:
         - path:
+            type: PathPrefix
+            value: /
 
 resources: {}
 

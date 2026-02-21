@@ -824,7 +824,7 @@ For detailed security configuration, see [SECURITY.md](SECURITY.md).
 
 ### Digital Signature CORS Proxy (Required)
 
-The **Digital Signature** tool uses a signing library that may need to fetch certificate chain data from certificate authority provider. Since many certificate servers don't include CORS headers, a proxy is required for this feature to work in the browser.
+The **Digital Signature** tool uses a signing library that may need to fetch certificate chain data from certificate authority providers. Since many certificate servers don't include CORS headers (and often serve over HTTP, which is blocked by browsers on HTTPS sites), a proxy is required for this feature to work.
 
 **When is the proxy needed?**
 
@@ -846,30 +846,48 @@ The **Digital Signature** tool uses a signing library that may need to fetch cer
    npx wrangler login
    ```
 
-3. **Deploy the worker:**
+3. **Update allowed origins** — open `cors-proxy-worker.js` and change `ALLOWED_ORIGINS` to your domain:
+
+   ```js
+   const ALLOWED_ORIGINS = [
+     'https://your-domain.com',
+     'https://www.your-domain.com',
+   ];
+   ```
+
+   > [!IMPORTANT]
+   > Without this step, the proxy will reject all requests from your site with a 403 error. The default only allows `bentopdf.com`.
+
+4. **Deploy the worker:**
 
    ```bash
    npx wrangler deploy
    ```
 
-4. **Note your worker URL** (e.g., `https://bentopdf-cors-proxy.your-subdomain.workers.dev`)
+5. **Note your worker URL** (e.g., `https://bentopdf-cors-proxy.your-subdomain.workers.dev`)
 
-5. **Set the environment variable when building:**
+6. **Set the environment variable when building:**
    ```bash
    VITE_CORS_PROXY_URL=https://your-worker-url.workers.dev npm run build
+   ```
+   Or with Docker:
+   ```bash
+   docker build --build-arg VITE_CORS_PROXY_URL="https://your-worker-url.workers.dev" -t your-bentopdf .
    ```
 
 #### Production Security Features
 
 The CORS proxy includes several security measures:
 
-| Feature                 | Description                                                               |
-| ----------------------- | ------------------------------------------------------------------------- |
-| **URL Restrictions**    | Only allows certificate URLs (`.crt`, `.cer`, `.pem`, `/certs/`, `/ocsp`) |
-| **Private IP Blocking** | Blocks requests to localhost, 10.x, 192.168.x, 172.16-31.x                |
-| **File Size Limit**     | Rejects files larger than 10MB                                            |
-| **Rate Limiting**       | 60 requests per IP per minute (requires KV)                               |
-| **HMAC Signatures**     | Optional client-side signing (limited protection)                         |
+| Feature                 | Description                                                                            |
+| ----------------------- | -------------------------------------------------------------------------------------- |
+| **Origin Validation**   | Only allows requests from domains listed in `ALLOWED_ORIGINS`                          |
+| **URL Restrictions**    | Only allows certificate URLs (`.crt`, `.cer`, `.pem`, `/certs/`, `/ocsp`, `/crl`)      |
+| **Private IP Blocking** | Blocks IPv4/IPv6 private ranges, link-local, loopback, decimal IPs, and cloud metadata |
+| **Content-Type Safety** | Only returns safe certificate MIME types, blocks upstream content-type injection       |
+| **File Size Limit**     | Streams response with 10MB limit, aborts mid-download if exceeded                      |
+| **Rate Limiting**       | 60 requests per IP per minute (requires KV)                                            |
+| **HMAC Signatures**     | Optional client-side signing (deters casual abuse)                                     |
 
 #### Enabling Rate Limiting (Recommended)
 
