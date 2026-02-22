@@ -86,6 +86,10 @@
     "name": "Page Numbers",
     "subtitle": "Insert page numbers into your document."
   },
+  "batesNumbering": {
+    "name": "Bates Numbering",
+    "subtitle": "Add sequential Bates numbers across one or more PDF files."
+  },
   "addWatermark": {
     "name": "Add Watermark",
     "subtitle": "Stamp text or an image over your PDF pages."

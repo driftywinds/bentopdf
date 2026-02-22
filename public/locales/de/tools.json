@@ -86,6 +86,10 @@
     "name": "Seitenzahlen",
     "subtitle": "Seitenzahlen in Ihr Dokument einfügen."
   },
+  "batesNumbering": {
+    "name": "Bates-Nummerierung",
+    "subtitle": "Fortlaufende Bates-Nummern über eine oder mehrere PDF-Dateien hinzufügen."
+  },
   "addWatermark": {
     "name": "Wasserzeichen hinzufügen",
     "subtitle": "Text oder ein Bild über Ihre PDF-Seiten stempeln."

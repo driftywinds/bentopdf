@@ -1,7 +1,7 @@
 {
   "name": "bento-pdf",
   "private": true,
-  "version": "2.2.1",
+  "version": "2.3.1",
   "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
@@ -128,7 +128,7 @@
     "tiff": "^7.1.2",
     "utif": "^3.1.0",
     "vite-plugin-static-copy": "^3.1.4",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-latest/xlsx-latest.tgz",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
     "zgapdfsigner": "^2.7.5"
   },
   "lint-staged": {

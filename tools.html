@@ -509,6 +509,12 @@
           icon: 'list-numbers',
         },
         {
+          name: 'bates-numbering',
+          title: 'Bates Numbering',
+          category: 'editor',
+          icon: 'hash',
+        },
+        {
           name: 'background-color',
           title: 'Background Color',
           category: 'editor',
@@ -821,7 +827,7 @@
         grid.innerHTML = filtered
           .map(
             (tool) => `
-                <a href="/src/pages/${tool.name}.html" class="tool-card">
+                <a href="/${tool.name}.html" class="tool-card">
                     <i class="ph ph-${tool.icon} text-4xl text-indigo-400 mb-2"></i>
                     <h3 class="font-semibold text-white text-sm">${tool.title}</h3>
                 </a>

@@ -269,4 +269,7 @@ async function generateI18nPages() {
   console.log('✅ i18n pages generated successfully!');
 }
 
-generateI18nPages().catch(console.error);
+generateI18nPages().catch((err) => {
+  console.error('❌ i18n page generation failed:', err);
+  process.exit(1);
+});

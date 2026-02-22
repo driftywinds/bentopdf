@@ -86,6 +86,10 @@
     "name": "Sidetal",
     "subtitle": "Indsæt sidetal i dokumentet."
   },
+  "batesNumbering": {
+    "name": "Bates-nummerering",
+    "subtitle": "Tilføj sekventielle Bates-numre på tværs af en eller flere PDF-filer."
+  },
   "addWatermark": {
     "name": "Tilføj vandmærke",
     "subtitle": "Placer tekst eller et billede oven på dine PDF-sider."

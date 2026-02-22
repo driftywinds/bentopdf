@@ -86,6 +86,10 @@
     "name": "页码",
     "subtitle": "将页码插入到您的文档中。"
   },
+  "batesNumbering": {
+    "name": "Bates编号",
+    "subtitle": "在一个或多个PDF文件中添加连续的Bates编号。"
+  },
   "addWatermark": {
     "name": "添加水印",
     "subtitle": "在您的 PDF 页面上添加文字或图片水印。"

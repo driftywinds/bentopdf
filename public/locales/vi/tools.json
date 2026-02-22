@@ -86,6 +86,10 @@
     "name": "Số trang",
     "subtitle": "Chèn số trang vào tài liệu của bạn."
   },
+  "batesNumbering": {
+    "name": "Đánh số Bates",
+    "subtitle": "Thêm số Bates tuần tự trên một hoặc nhiều tệp PDF."
+  },
   "addWatermark": {
     "name": "Thêm Watermark",
     "subtitle": "Đóng dấu văn bản hoặc hình ảnh lên các trang PDF của bạn."

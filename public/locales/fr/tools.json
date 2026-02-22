@@ -86,6 +86,10 @@
     "name": "Numéros de page",
     "subtitle": "Insérer une numérotation dans le document."
   },
+  "batesNumbering": {
+    "name": "Numérotation Bates",
+    "subtitle": "Ajouter des numéros Bates séquentiels sur un ou plusieurs fichiers PDF."
+  },
   "addWatermark": {
     "name": "Ajouter un filigrane",
     "subtitle": "Apposer un texte ou une image sur les pages du PDF."

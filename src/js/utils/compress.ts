@@ -83,25 +83,22 @@ export async function performCondenseCompression(
   try {
     const result = await pymupdf.compressPdf(fileBlob, options);
     return result;
-  } catch (error: any) {
-    const errorMessage = error?.message || String(error);
-    if (
-      errorMessage.includes('PatternType') ||
-      errorMessage.includes('pattern')
-    ) {
-      const fallbackOptions = {
-        ...options,
-        images: {
-          ...options.images,
-          enabled: false,
-        },
-      };
+  } catch {
+    const fallbackOptions = {
+      ...options,
+      images: {
+        ...options.images,
+        enabled: false,
+      },
+    };
 
+    try {
       const result = await pymupdf.compressPdf(fileBlob, fallbackOptions);
       return { ...result, usedFallback: true };
+    } catch (fallbackError: any) {
+      const msg = fallbackError?.message || String(fallbackError);
+      throw new Error(`PDF compression failed: ${msg}`);
     }
-
-    throw new Error(`PDF compression failed: ${errorMessage}`);
   }
 }
 

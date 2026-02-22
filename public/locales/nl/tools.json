@@ -86,6 +86,10 @@
     "name": "Paginanummers",
     "subtitle": "Paginanummers aan je document toevoegen."
   },
+  "batesNumbering": {
+    "name": "Bates-nummering",
+    "subtitle": "Voeg opeenvolgende Bates-nummers toe aan een of meer PDF-bestanden."
+  },
   "addWatermark": {
     "name": "Watermerk toevoegen",
     "subtitle": "Tekst of een afbeelding over de pagina's van je PDF stempelen."

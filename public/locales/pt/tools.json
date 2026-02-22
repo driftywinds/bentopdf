@@ -64,6 +64,10 @@
     "name": "Números de Página",
     "subtitle": "Insira números de página no seu documento."
   },
+  "batesNumbering": {
+    "name": "Numeração Bates",
+    "subtitle": "Adicionar números Bates sequenciais em um ou mais arquivos PDF."
+  },
   "addWatermark": {
     "name": "Adicionar Marca d'Água",
     "subtitle": "Carimbe texto ou uma imagem sobre as páginas do seu PDF."

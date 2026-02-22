@@ -49,3 +49,4 @@ export * from './email-to-pdf-type.ts';
 export * from './bookmark-pdf-type.ts';
 export * from './scanner-effect-type.ts';
 export * from './adjust-colors-type.ts';
+export * from './bates-numbering-type.ts';

@@ -64,6 +64,10 @@
     "name": "Sayfa Numaraları",
     "subtitle": "Belgenize sayfa numaraları ekleyin."
   },
+  "batesNumbering": {
+    "name": "Bates Numaralandırma",
+    "subtitle": "Bir veya daha fazla PDF dosyasına sıralı Bates numaraları ekleyin."
+  },
   "addWatermark": {
     "name": "Filigran Ekle",
     "subtitle": "PDF sayfalarınızın üzerine metin veya görsel damgası ekleyin."

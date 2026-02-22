@@ -109,6 +109,12 @@ export const categories = [
         subtitle: 'Insert page numbers into your document.',
       },
       {
+        href: import.meta.env.BASE_URL + 'bates-numbering.html',
+        name: 'Bates Numbering',
+        icon: 'ph-hash',
+        subtitle: 'Add sequential Bates numbers across one or more PDF files.',
+      },
+      {
         href: import.meta.env.BASE_URL + 'add-watermark.html',
         name: 'Add Watermark',
         icon: 'ph-drop',

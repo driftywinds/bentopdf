@@ -86,6 +86,10 @@
     "name": "Nomor Halaman",
     "subtitle": "Sisipkan nomor halaman ke dokumen Anda."
   },
+  "batesNumbering": {
+    "name": "Penomoran Bates",
+    "subtitle": "Tambahkan nomor Bates berurutan pada satu atau lebih file PDF."
+  },
   "addWatermark": {
     "name": "Tambah Watermark",
     "subtitle": "Cap teks atau gambar di atas halaman PDF Anda."
