@@ -103,7 +103,10 @@ export async function renderPageToCanvas(
   canvas.height = viewport.height;
   canvas.width = viewport.width;
 
-  const context = canvas.getContext('2d')!;
+  const context = canvas.getContext('2d');
+  if (!context) {
+    throw new Error(`Failed to get 2D context for page ${pageNumber}`);
+  }
 
   await page.render({
     canvasContext: context,
@@ -115,12 +118,9 @@ export async function renderPageToCanvas(
 }
 
 /**
- * Renders a batch of pages in parallel
+ * Renders a batch of pages
  */
-async function renderPageBatch(
-  tasks: PageTask[],
-  onProgress?: (current: number, total: number) => void
-): Promise<void> {
+async function renderPageBatch(tasks: PageTask[]): Promise<void> {
   for (const task of tasks) {
     try {
       const canvas = await renderPageToCanvas(
@@ -147,6 +147,13 @@ async function renderPageBatch(
         parent.insertBefore(wrapper, placeholder);
         parent.removeChild(placeholder);
       } else {
+        const existingRendered = task.container.querySelector(
+          `[data-page-number="${task.pageNumber}"]:not([data-lazy-load="true"])`
+        );
+        if (existingRendered) {
+          continue;
+        }
+
         const allChildren = Array.from(
           task.container.children
         ) as HTMLElement[];
@@ -207,7 +214,7 @@ function setupLazyRendering(
           task.placeholderElement = placeholder;
 
           // Render this page immediately (not waiting for isRendering flag)
-          renderPageBatch([task], config.onProgress)
+          renderPageBatch([task])
             .then(() => {
               // Trigger callback after lazy load batch
               if (config.onBatchComplete) {
@@ -263,21 +270,19 @@ export async function renderPagesProgressively(
   config: RenderConfig = {}
 ): Promise<void> {
   const {
-    batchSize = 8, // Increased from 5 to 8 for faster initial render
+    batchSize = 8,
     useLazyLoading = true,
-    eagerLoadBatches = 2, // Eagerly load 1 batch ahead by default
+    eagerLoadBatches = 2,
     onProgress,
     onBatchComplete,
   } = config;
 
   const totalPages = pdfjsDoc.numPages;
 
-  // Render more pages initially to reduce lazy loading issues
   const initialRenderCount = useLazyLoading
-    ? Math.min(20, totalPages) // Increased from 12 to 20 pages
+    ? Math.min(20, totalPages)
     : totalPages;
 
-  // CRITICAL FIX: Create placeholders for ALL pages first to maintain order
   const placeholders: HTMLElement[] = [];
   for (let i = 1; i <= totalPages; i++) {
     const placeholder = createPlaceholder(i);
@@ -293,7 +298,7 @@ export async function renderPagesProgressively(
       pageNumber: i,
       pdfjsDoc,
       container,
-      scale: config.useLazyLoading ? 0.3 : 0.5,
+      scale: useLazyLoading ? 0.3 : 0.5,
       createWrapper,
       placeholderElement: placeholders[i - 1],
     });
@@ -330,19 +335,24 @@ export async function renderPagesProgressively(
 
     const batch = initialTasks.slice(i, i + batchSize);
 
-    await new Promise<void>((resolve) => {
-      requestIdleCallbackPolyfill(async () => {
-        await renderPageBatch(batch, onProgress);
+    await new Promise<void>((resolve, reject) => {
+      requestIdleCallbackPolyfill(() => {
+        renderPageBatch(batch)
+          .then(() => {
+            if (onProgress) {
+              onProgress(
+                Math.min(i + batchSize, initialRenderCount),
+                totalPages
+              );
+            }
 
-        if (onProgress) {
-          onProgress(Math.min(i + batchSize, initialRenderCount), totalPages);
-        }
+            if (onBatchComplete) {
+              onBatchComplete();
+            }
 
-        if (onBatchComplete) {
-          onBatchComplete();
-        }
-
-        resolve();
+            resolve();
+          })
+          .catch(reject);
       });
     });
   }
@@ -397,8 +407,11 @@ function renderEagerBatch(config: RenderConfig): void {
   requestIdleCallbackPolyfill(async () => {
     if (config.shouldCancel?.()) return;
 
-    // Remove these tasks from pending since we're rendering them eagerly
-    batch.forEach((task) => {
+    const tasksToRender = batch.filter((task) =>
+      lazyLoadState.pendingTasksByPageNumber.has(task.pageNumber)
+    );
+
+    tasksToRender.forEach((task) => {
       const placeholder = task.placeholderElement;
       if (placeholder && lazyLoadState.observer) {
         lazyLoadState.observer.unobserve(placeholder);
@@ -407,7 +420,18 @@ function renderEagerBatch(config: RenderConfig): void {
       }
     });
 
-    await renderPageBatch(batch, config.onProgress);
+    if (tasksToRender.length === 0) {
+      lazyLoadState.nextEagerIndex = batchEnd;
+      const remainingBatches = Math.ceil(
+        (eagerLoadQueue.length - batchEnd) / batchSize
+      );
+      if (remainingBatches > 0 && remainingBatches < eagerLoadBatches) {
+        renderEagerBatch(config);
+      }
+      return;
+    }
+
+    await renderPageBatch(tasksToRender);
 
     if (config.onBatchComplete) {
       config.onBatchComplete();
@@ -421,7 +445,6 @@ function renderEagerBatch(config: RenderConfig): void {
       (eagerLoadQueue.length - batchEnd) / batchSize
     );
     if (remainingBatches > 0 && remainingBatches < eagerLoadBatches) {
-      // Continue eager loading if we have more batches within the eager threshold
       renderEagerBatch(config);
     }
   });

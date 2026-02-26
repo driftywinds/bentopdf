@@ -207,7 +207,7 @@
     "subtitle": "Converta arquivos PDF para o formato JSON."
   },
   "ocrPdf": {
-    "name": "OCR PDF",
+    "name": "OCR para PDF",
     "subtitle": "Torne um PDF pesquisável e copiável (reconhecimento de texto)."
   },
   "alternateMix": {
@@ -329,192 +329,192 @@
     "subtitle": "Endireite automaticamente páginas digitalizadas inclinadas usando OpenCV."
   },
   "rotateCustom": {
-    "name": "Rotate by Custom Degrees",
-    "subtitle": "Rotate pages by any custom angle."
+    "name": "Rotacionar em Graus Customizáveis",
+    "subtitle": "Rotaciona páginas em qualquer ângulo customizado."
   },
   "odtToPdf": {
-    "name": "ODT to PDF",
-    "subtitle": "Convert OpenDocument Text files to PDF format. Supports multiple files.",
-    "acceptedFormats": "ODT files",
-    "convertButton": "Convert to PDF"
+    "name": "ODT para PDF",
+    "subtitle": "Converte arquivos em formato OpenDocument Text para PDF. Suporta multiplos arquivos.",
+    "acceptedFormats": "Arquivos ODT",
+    "convertButton": "Converter para PDF"
   },
   "csvToPdf": {
-    "name": "CSV to PDF",
-    "subtitle": "Convert CSV spreadsheet files to PDF format. Supports multiple files.",
-    "acceptedFormats": "CSV files",
-    "convertButton": "Convert to PDF"
+    "name": "CSV para PDF",
+    "subtitle": "Converte arquivos de planilhas CSV para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos CSV",
+    "convertButton": "Converter para PDF"
   },
   "rtfToPdf": {
-    "name": "RTF to PDF",
-    "subtitle": "Convert Rich Text Format documents to PDF. Supports multiple files.",
-    "acceptedFormats": "RTF files",
-    "convertButton": "Convert to PDF"
+    "name": "RTF para PDF",
+    "subtitle": "Converte documentos Rich Text Format para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos RTF",
+    "convertButton": "Converter para PDF"
   },
   "wordToPdf": {
-    "name": "Word to PDF",
-    "subtitle": "Convert Word documents (DOCX, DOC, ODT, RTF) to PDF format. Supports multiple files.",
-    "acceptedFormats": "DOCX, DOC, ODT, RTF files",
-    "convertButton": "Convert to PDF"
+    "name": "Word para PDF",
+    "subtitle": "Converte documentos Word documents (DOCX, DOC, ODT, RTF) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos DOCX, DOC, ODT, RTF",
+    "convertButton": "Converter para PDF"
   },
   "excelToPdf": {
-    "name": "Excel to PDF",
-    "subtitle": "Convert Excel spreadsheets (XLSX, XLS, ODS, CSV) to PDF format. Supports multiple files.",
-    "acceptedFormats": "XLSX, XLS, ODS, CSV files",
-    "convertButton": "Convert to PDF"
+    "name": "Excel para PDF",
+    "subtitle": "Converte planilhas Excel (XLSX, XLS, ODS, CSV) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos XLSX, XLS, ODS, CSV",
+    "convertButton": "Converter para PDF"
   },
   "powerpointToPdf": {
-    "name": "PowerPoint to PDF",
-    "subtitle": "Convert PowerPoint presentations (PPTX, PPT, ODP) to PDF format. Supports multiple files.",
-    "acceptedFormats": "PPTX, PPT, ODP files",
-    "convertButton": "Convert to PDF"
+    "name": "PowerPoint para PDF",
+    "subtitle": "Converte apresentações PowerPoint (PPTX, PPT, ODP) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos PPTX, PPT, ODP",
+    "convertButton": "Converter para PDF"
   },
   "markdownToPdf": {
-    "name": "Markdown to PDF",
-    "subtitle": "Write or paste Markdown and export it as a beautifully formatted PDF.",
+    "name": "Markdown para PDF",
+    "subtitle": "Escreva ou cole Markdown e exporte como um belo formato PDF.",
     "paneMarkdown": "Markdown",
-    "panePreview": "Preview",
+    "panePreview": "Pré-visualizar",
     "btnUpload": "Upload",
-    "btnSyncScroll": "Sync Scroll",
-    "btnSettings": "Settings",
-    "btnExportPdf": "Export PDF",
-    "settingsTitle": "Markdown Settings",
-    "settingsPreset": "Preset",
-    "presetDefault": "Default (GFM-like)",
-    "presetCommonmark": "CommonMark (strict)",
-    "presetZero": "Minimal (no features)",
-    "settingsOptions": "Markdown Options",
-    "optAllowHtml": "Allow HTML tags",
-    "optBreaks": "Convert newlines to <br>",
-    "optLinkify": "Auto-convert URLs to links",
-    "optTypographer": "Typographer (smart quotes, etc.)"
+    "btnSyncScroll": "Sincronizar Scroll",
+    "btnSettings": "Configurações",
+    "btnExportPdf": "Exportar PDF",
+    "settingsTitle": "Configurações Markdown",
+    "settingsPreset": "Predefinição",
+    "presetDefault": "Padrão (tipo GFM)",
+    "presetCommonmark": "CommonMark (extrito)",
+    "presetZero": "Mínimo (sem features)",
+    "settingsOptions": "Opções de Markdown",
+    "optAllowHtml": "Permitir tags HTML",
+    "optBreaks": "Converter novas linhas em <br>",
+    "optLinkify": "Auto-converter URLs para links",
+    "optTypographer": "Tipógrafo (aspas inteligentes, etc.)"
   },
   "pdfBooklet": {
     "name": "PDF Booklet",
-    "subtitle": "Rearrange pages for double-sided booklet printing. Fold and staple to create a booklet.",
-    "howItWorks": "How it works:",
-    "step1": "Upload a PDF file.",
-    "step2": "Pages will be rearranged in booklet order.",
-    "step3": "Print double-sided, flip on short edge, fold and staple.",
-    "paperSize": "Paper Size",
-    "orientation": "Orientation",
-    "portrait": "Portrait",
-    "landscape": "Landscape",
-    "pagesPerSheet": "Pages per Sheet",
-    "createBooklet": "Create Booklet",
-    "processing": "Processing...",
-    "pageCount": "Page count will be padded to multiple of 4 if needed."
+    "subtitle": "Reordena páginas para impressão de livreto frente e verso. Dobre e grampeie para criar um livreto.",
+    "howItWorks": "Como funciona:",
+    "step1": "Faça o upload de um arquivo PDF.",
+    "step2": "As páginas serão reordenadas na ordem de livretos.",
+    "step3": "Imprima frente e verso, vire pelo topo, dobre e grampeie.",
+    "paperSize": "Tamanho do Papel",
+    "orientation": "Orientação",
+    "portrait": "Retrato",
+    "landscape": "Paisagem",
+    "pagesPerSheet": "Páginas por Folha",
+    "createBooklet": "Criar Livreto",
+    "processing": "Processando...",
+    "pageCount": "A contagem de páginas será ajustada para um múltiplo de 4, caso necessário."
   },
   "xpsToPdf": {
-    "name": "XPS to PDF",
-    "subtitle": "Convert XPS/OXPS documents to PDF format. Supports multiple files.",
-    "acceptedFormats": "XPS, OXPS files",
-    "convertButton": "Convert to PDF"
+    "name": "XPS para PDF",
+    "subtitle": "Converte XPS/OXPS para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos XPS, OXPS",
+    "convertButton": "Converter para PDF"
   },
   "mobiToPdf": {
-    "name": "MOBI to PDF",
-    "subtitle": "Convert MOBI e-books to PDF format. Supports multiple files.",
-    "acceptedFormats": "MOBI files",
-    "convertButton": "Convert to PDF"
+    "name": "MOBI para PDF",
+    "subtitle": "Converte e-books MOBI para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos MOBI",
+    "convertButton": "Converter para PDF"
   },
   "epubToPdf": {
-    "name": "EPUB to PDF",
-    "subtitle": "Convert EPUB e-books to PDF format. Supports multiple files.",
-    "acceptedFormats": "EPUB files",
-    "convertButton": "Convert to PDF"
+    "name": "EPUB para PDF",
+    "subtitle": "Converte e-books EPUB para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos EPUB",
+    "convertButton": "Converter para PDF"
   },
   "fb2ToPdf": {
-    "name": "FB2 to PDF",
-    "subtitle": "Convert FictionBook (FB2) e-books to PDF format. Supports multiple files.",
-    "acceptedFormats": "FB2 files",
-    "convertButton": "Convert to PDF"
+    "name": "FB2 para PDF",
+    "subtitle": "Converte e-books FictionBook (FB2) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos FB2",
+    "convertButton": "Converter para PDF"
   },
   "cbzToPdf": {
-    "name": "CBZ to PDF",
-    "subtitle": "Convert comic book archives (CBZ/CBR) to PDF format. Supports multiple files.",
-    "acceptedFormats": "CBZ, CBR files",
-    "convertButton": "Convert to PDF"
+    "name": "CBZ para PDF",
+    "subtitle": "Converte comic book archives (CBZ/CBR) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos CBZ, CBR",
+    "convertButton": "Converter para PDF"
   },
   "wpdToPdf": {
-    "name": "WPD to PDF",
-    "subtitle": "Convert WordPerfect documents (WPD) to PDF format. Supports multiple files.",
-    "acceptedFormats": "WPD files",
-    "convertButton": "Convert to PDF"
+    "name": "WPD para PDF",
+    "subtitle": "Converte WordPerfect (WPD) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos WPD",
+    "convertButton": "Converter para PDF"
   },
   "wpsToPdf": {
-    "name": "WPS to PDF",
-    "subtitle": "Convert WPS Office documents to PDF format. Supports multiple files.",
-    "acceptedFormats": "WPS files",
-    "convertButton": "Convert to PDF"
+    "name": "WPS para PDF",
+    "subtitle": "Converte WPS Office para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos WPS",
+    "convertButton": "Converter para PDF"
   },
   "xmlToPdf": {
-    "name": "XML to PDF",
-    "subtitle": "Convert XML documents to PDF format. Supports multiple files.",
-    "acceptedFormats": "XML files",
-    "convertButton": "Convert to PDF"
+    "name": "XML para PDF",
+    "subtitle": "Converte XML para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos XML",
+    "convertButton": "Converter para PDF"
   },
   "pagesToPdf": {
-    "name": "Pages to PDF",
-    "subtitle": "Convert Apple Pages documents to PDF format. Supports multiple files.",
-    "acceptedFormats": "Pages files",
-    "convertButton": "Convert to PDF"
+    "name": "Pages para PDF",
+    "subtitle": "Converte Apple Pages para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos Pages",
+    "convertButton": "Converter para PDF"
   },
   "odgToPdf": {
-    "name": "ODG to PDF",
-    "subtitle": "Convert OpenDocument Graphics (ODG) files to PDF format. Supports multiple files.",
-    "acceptedFormats": "ODG files",
-    "convertButton": "Convert to PDF"
+    "name": "ODG para PDF",
+    "subtitle": "Converte OpenDocument Graphics (ODG) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos ODG",
+    "convertButton": "Converter para PDF"
   },
   "odsToPdf": {
-    "name": "ODS to PDF",
-    "subtitle": "Convert OpenDocument Spreadsheet (ODS) files to PDF format. Supports multiple files.",
-    "acceptedFormats": "ODS files",
-    "convertButton": "Convert to PDF"
+    "name": "ODS para PDF",
+    "subtitle": "Converte OpenDocument Spreadsheet (ODS) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos ODS",
+    "convertButton": "Converter para PDF"
   },
   "odpToPdf": {
-    "name": "ODP to PDF",
-    "subtitle": "Convert OpenDocument Presentation (ODP) files to PDF format. Supports multiple files.",
-    "acceptedFormats": "ODP files",
-    "convertButton": "Convert to PDF"
+    "name": "ODP para PDF",
+    "subtitle": "Converte OpenDocument Presentation (ODP) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos ODP",
+    "convertButton": "Converter para PDF"
   },
   "pubToPdf": {
-    "name": "PUB to PDF",
-    "subtitle": "Convert Microsoft Publisher (PUB) files to PDF format. Supports multiple files.",
-    "acceptedFormats": "PUB files",
-    "convertButton": "Convert to PDF"
+    "name": "PUB para PDF",
+    "subtitle": "Converte Microsoft Publisher (PUB) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos PUB",
+    "convertButton": "Converter para PDF"
   },
   "vsdToPdf": {
-    "name": "VSD to PDF",
-    "subtitle": "Convert Microsoft Visio (VSD, VSDX) files to PDF format. Supports multiple files.",
-    "acceptedFormats": "VSD, VSDX files",
-    "convertButton": "Convert to PDF"
+    "name": "VSD para PDF",
+    "subtitle": "Converte Microsoft Visio (VSD, VSDX) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos VSD, VSDX",
+    "convertButton": "Converter para PDF"
   },
   "psdToPdf": {
-    "name": "PSD to PDF",
-    "subtitle": "Convert Adobe Photoshop (PSD) files to PDF format. Supports multiple files.",
-    "acceptedFormats": "PSD files",
-    "convertButton": "Convert to PDF"
+    "name": "PSD para PDF",
+    "subtitle": "Converte Adobe Photoshop (PSD) para PDF. Suporta múltiplos arquivos.",
+    "acceptedFormats": "Arquivos PSD",
+    "convertButton": "Converter para PDF"
   },
   "pdfToSvg": {
-    "name": "PDF to SVG",
-    "subtitle": "Convert each page of a PDF file into a scalable vector graphic (SVG) for perfect quality at any size."
+    "name": "PDF para SVG",
+    "subtitle": "Converte cada página de um arquivo PDF em um scalable vector graphic (SVG) para qualidade perfeita em qualquer tamanho."
   },
   "extractTables": {
-    "name": "Extract PDF Tables",
-    "subtitle": "Extract tables from PDF files and export as CSV, JSON, or Markdown."
+    "name": "Extrair Tabelas PDF",
+    "subtitle": "Extrai tabelas de arquivos PDF e exporta como CSV, JSON, ou Markdown."
   },
   "pdfToCsv": {
-    "name": "PDF to CSV",
-    "subtitle": "Extract tables from PDF and convert to CSV format."
+    "name": "PDF para CSV",
+    "subtitle": "Extrai tabelas do PDF e converte em CSV."
   },
   "pdfToExcel": {
     "name": "PDF to Excel",
-    "subtitle": "Extract tables from PDF and convert to Excel (XLSX) format."
+    "subtitle": "Extrai tabelas do PDF e converte em Excel (XLSX)."
   },
   "pdfToText": {
-    "name": "PDF to Text",
-    "subtitle": "Extract text from PDF files and save as plain text (.txt). Supports multiple files.",
-    "note": "This tool works ONLY with digitally created PDFs. For scanned documents or image-based PDFs, use our OCR PDF tool instead.",
-    "convertButton": "Extract Text"
+    "name": "PDF para Texto",
+    "subtitle": "Extrai texto de arquivos PDF e salva como texto simples (.txt). Suporta múltiplos arquivos.",
+    "note": "Esta ferrament funciona SOMENTE com PDFs criados digitalmente. Para documentos escaneados ou PDFs baseados em imagens, use nossa ferramenta OCR para PDF no lugar.",
+    "convertButton": "Extrair Texto"
   },
   "digitalSignPdf": {
     "name": "Assinatura Digital PDF",
