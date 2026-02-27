@@ -253,7 +253,7 @@ placeholder="${field.placeholder || ''}" />
           )
           .join('')}
 </select>
-                                ${field.name === 'color' ? '<input type="color" id="modal-color-picker" class="hidden w-full h-10 mt-2 rounded cursor-pointer border border-gray-300" value="#000000" />' : ''}
+                                ${field.name === 'color' ? '<input type="color" id="modal-color-picker" class="hidden mt-2" value="#000000" />' : ''}
 </div>
   `;
         } else if (field.type === 'destination') {

@@ -8,7 +8,7 @@ import { LitPlugin, Presets as LitPresets } from '@retejs/lit-plugin';
 import type { ClassicScheme, LitArea2D } from '@retejs/lit-plugin';
 import { DataflowEngine } from 'rete-engine';
 import type { DataflowEngineScheme } from 'rete-engine';
-import { html } from 'lit';
+import { LitElement, html } from 'lit';
 import type { BaseWorkflowNode } from './nodes/base-node';
 // @ts-ignore -- Vite ?inline import for injecting into Shadow DOM
 import phosphorCSS from '@phosphor-icons/web/regular?inline';
@@ -47,6 +47,175 @@ function getStatusInfo(status: string, connected: boolean) {
     label: connected ? 'Connected' : 'Not connected',
     animate: false,
   };
+}
+
+class WorkflowNodeElement extends LitElement {
+  static properties = {
+    data: { attribute: false },
+    emit: { attribute: false },
+  };
+
+  declare data: BaseWorkflowNode | undefined;
+  declare emit: ((data: unknown) => void) | undefined;
+
+  createRenderRoot(): HTMLElement | ShadowRoot {
+    return this;
+  }
+
+  render() {
+    if (!this.data) return html``;
+    const node = this.data;
+    const inputs = Object.entries(node.inputs || {});
+    const outputs = Object.entries(node.outputs || {});
+    const color = categoryColors[node.category] || '#6b7280';
+    const emitFn = this.emit;
+
+    return html`
+      <div
+        style="
+        position: relative; display: flex; flex-direction: column;
+        align-items: center; width: 280px;
+      "
+      >
+        ${inputs.length > 0
+          ? html`
+              <div
+                style="display: flex; justify-content: center; gap: 8px; position: relative; z-index: 1; margin-bottom: -7px;"
+              >
+                ${inputs.map(([key, input]) =>
+                  input
+                    ? html`
+                        <div
+                          style="display: flex; align-items: center; justify-content: center;"
+                        >
+                          <rete-ref
+                            .data=${{
+                              type: 'socket',
+                              side: 'input',
+                              key,
+                              nodeId: node.id,
+                              payload: input.socket,
+                            }}
+                            .emit=${emitFn}
+                          ></rete-ref>
+                        </div>
+                      `
+                    : null
+                )}
+              </div>
+            `
+          : null}
+        <div
+          style="
+          background: #1f2937; border: 1px solid #374151;
+          border-radius: 12px; width: 100%; overflow: hidden;
+        "
+        >
+          <div
+            style="height: 3px; border-radius: 10px 10px 0 0; overflow: hidden;"
+          >
+            <div
+              data-wf="bar"
+              style="
+              height: 100%; width: 100%;
+              background: #6b7280; opacity: 0.25;
+            "
+            ></div>
+          </div>
+          <div
+            style="padding: 6px 14px; display: flex; align-items: center; gap: 6px;"
+          >
+            <span
+              data-wf="dot"
+              style="
+              width: 7px; height: 7px; border-radius: 50%; background: #6b7280; flex-shrink: 0;
+            "
+            ></span>
+            <span
+              data-wf="label"
+              style="font-size: 10px; color: #6b7280; font-weight: 500; flex: 1;"
+              >Not connected</span
+            >
+            <span
+              data-wf-delete="${node.id}"
+              style="
+              cursor: pointer; display: flex; align-items: center; justify-content: center;
+              width: 18px; height: 18px; border-radius: 4px;
+              color: #6b7280; transition: all 0.15s;
+            "
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </span>
+          </div>
+          <div style="height: 1px; background: #374151; margin: 0 14px;"></div>
+          <div
+            style="padding: 10px 14px 12px; display: flex; align-items: flex-start; gap: 10px;"
+          >
+            <i
+              class="ph ${node.icon}"
+              style="font-size: 18px; color: ${color}; flex-shrink: 0; margin-top: 1px; line-height: 1;"
+            ></i>
+            <div style="flex: 1; min-width: 0;">
+              <div
+                style="font-size: 13px; font-weight: 600; color: #f3f4f6; line-height: 1.3;"
+              >
+                ${node.label}
+              </div>
+              <div
+                style="font-size: 11px; color: #9ca3af; margin-top: 2px; line-height: 1.3;"
+              >
+                ${node.description}
+              </div>
+            </div>
+          </div>
+        </div>
+        ${outputs.length > 0
+          ? html`
+              <div
+                style="display: flex; justify-content: center; gap: 8px; position: relative; z-index: 1; margin-top: -7px;"
+              >
+                ${outputs.map(([key, output]) =>
+                  output
+                    ? html`
+                        <div
+                          style="display: flex; align-items: center; justify-content: center;"
+                        >
+                          <rete-ref
+                            .data=${{
+                              type: 'socket',
+                              side: 'output',
+                              key,
+                              nodeId: node.id,
+                              payload: output.socket,
+                            }}
+                            .emit=${emitFn}
+                          ></rete-ref>
+                        </div>
+                      `
+                    : null
+                )}
+              </div>
+            `
+          : null}
+      </div>
+    `;
+  }
+}
+
+if (!customElements.get('wf-node')) {
+  customElements.define('wf-node', WorkflowNodeElement);
 }
 
 export function updateNodeDisplay(
@@ -111,154 +280,10 @@ export async function createWorkflowEditor(
       customize: {
         node(data) {
           return ({ emit }: { emit: (data: unknown) => void }) => {
-            const node = data.payload as BaseWorkflowNode;
-            const inputs = Object.entries(node.inputs || {});
-            const outputs = Object.entries(node.outputs || {});
-            const color = categoryColors[node.category] || '#6b7280';
-
-            return html`
-              <div
-                style="
-              position: relative; display: flex; flex-direction: column;
-              align-items: center; width: 280px;
-            "
-              >
-                ${inputs.length > 0
-                  ? html`
-                      <div
-                        style="display: flex; justify-content: center; gap: 8px; position: relative; z-index: 1; margin-bottom: -7px;"
-                      >
-                        ${inputs.map(([key, input]) =>
-                          input
-                            ? html`
-                                <div
-                                  style="display: flex; align-items: center; justify-content: center;"
-                                >
-                                  <rete-ref
-                                    .data=${{
-                                      type: 'socket',
-                                      side: 'input',
-                                      key,
-                                      nodeId: node.id,
-                                      payload: input.socket,
-                                    }}
-                                    .emit=${emit}
-                                  ></rete-ref>
-                                </div>
-                              `
-                            : null
-                        )}
-                      </div>
-                    `
-                  : null}
-                <div
-                  style="
-                background: #1f2937; border: 1px solid #374151;
-                border-radius: 12px; width: 100%; overflow: hidden;
-              "
-                >
-                  <div
-                    style="height: 3px; border-radius: 10px 10px 0 0; overflow: hidden;"
-                  >
-                    <div
-                      data-wf="bar"
-                      style="
-                    height: 100%; width: 100%;
-                    background: #6b7280; opacity: 0.25;
-                  "
-                    ></div>
-                  </div>
-                  <div
-                    style="padding: 6px 14px; display: flex; align-items: center; gap: 6px;"
-                  >
-                    <span
-                      data-wf="dot"
-                      style="
-                    width: 7px; height: 7px; border-radius: 50%; background: #6b7280; flex-shrink: 0;
-                  "
-                    ></span>
-                    <span
-                      data-wf="label"
-                      style="font-size: 10px; color: #6b7280; font-weight: 500; flex: 1;"
-                      >Not connected</span
-                    >
-                    <span
-                      data-wf-delete="${node.id}"
-                      style="
-                      cursor: pointer; display: flex; align-items: center; justify-content: center;
-                      width: 18px; height: 18px; border-radius: 4px;
-                      color: #6b7280; transition: all 0.15s;
-                    "
-                    >
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                    </span>
-                  </div>
-                  <div
-                    style="height: 1px; background: #374151; margin: 0 14px;"
-                  ></div>
-                  <div
-                    style="padding: 10px 14px 12px; display: flex; align-items: flex-start; gap: 10px;"
-                  >
-                    <i
-                      class="ph ${node.icon}"
-                      style="font-size: 18px; color: ${color}; flex-shrink: 0; margin-top: 1px; line-height: 1;"
-                    ></i>
-                    <div style="flex: 1; min-width: 0;">
-                      <div
-                        style="font-size: 13px; font-weight: 600; color: #f3f4f6; line-height: 1.3;"
-                      >
-                        ${node.label}
-                      </div>
-                      <div
-                        style="font-size: 11px; color: #9ca3af; margin-top: 2px; line-height: 1.3;"
-                      >
-                        ${node.description}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                ${outputs.length > 0
-                  ? html`
-                      <div
-                        style="display: flex; justify-content: center; gap: 8px; position: relative; z-index: 1; margin-top: -7px;"
-                      >
-                        ${outputs.map(([key, output]) =>
-                          output
-                            ? html`
-                                <div
-                                  style="display: flex; align-items: center; justify-content: center;"
-                                >
-                                  <rete-ref
-                                    .data=${{
-                                      type: 'socket',
-                                      side: 'output',
-                                      key,
-                                      nodeId: node.id,
-                                      payload: output.socket,
-                                    }}
-                                    .emit=${emit}
-                                  ></rete-ref>
-                                </div>
-                              `
-                            : null
-                        )}
-                      </div>
-                    `
-                  : null}
-              </div>
-            `;
+            return html`<wf-node
+              .data=${data.payload}
+              .emit=${emit}
+            ></wf-node>`;
           };
         },
         socket() {

@@ -70,7 +70,8 @@
   },
   "addWatermark": {
     "name": "添加浮水印",
-    "subtitle": "在你的 PDF 頁面上壓印文字或圖片。"
+    "subtitle": "在你的 PDF 頁面上壓印文字或圖片。",
+    "applyToAllPages": "套用至所有頁面"
   },
   "headerFooter": {
     "name": "頁首與頁尾",

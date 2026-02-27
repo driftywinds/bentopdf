@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Watermerk toevoegen",
-    "subtitle": "Tekst of een afbeelding over de pagina's van je PDF stempelen."
+    "subtitle": "Tekst of een afbeelding over de pagina's van je PDF stempelen.",
+    "applyToAllPages": "Toepassen op alle pagina's"
   },
   "headerFooter": {
     "name": "Koptekst & Voettekst",

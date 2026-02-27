@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "إضافة علامة مائية",
-    "subtitle": "ختم نص أو صورة على صفحات PDF الخاصة بك."
+    "subtitle": "ختم نص أو صورة على صفحات PDF الخاصة بك.",
+    "applyToAllPages": "تطبيق على جميع الصفحات"
   },
   "headerFooter": {
     "name": "رأس وتذييل",

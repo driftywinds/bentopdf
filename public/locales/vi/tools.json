@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Thêm Watermark",
-    "subtitle": "Đóng dấu văn bản hoặc hình ảnh lên các trang PDF của bạn."
+    "subtitle": "Đóng dấu văn bản hoặc hình ảnh lên các trang PDF của bạn.",
+    "applyToAllPages": "Áp dụng cho tất cả các trang"
   },
   "headerFooter": {
     "name": "Đầu trang & Chân trang",

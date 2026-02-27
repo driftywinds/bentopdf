@@ -701,6 +701,33 @@ button:disabled,
   pointer-events: none;
 }
 
+/* Color picker */
+input[type='color'] {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 2px solid #4b5563;
+  border-radius: 9999px;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type='color']::-webkit-color-swatch {
+  border: none;
+  border-radius: 9999px;
+}
+
+input[type='color']::-moz-color-swatch {
+  border: none;
+  border-radius: 9999px;
+}
+
 /* Hide spin buttons for number inputs */
 input[type='number'] {
   appearance: none;

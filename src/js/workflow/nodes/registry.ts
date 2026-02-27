@@ -593,7 +593,9 @@ export const nodeRegistry: Record<string, NodeRegistryEntry> = {
 export function createNodeByType(type: string): BaseWorkflowNode | null {
   const entry = nodeRegistry[type];
   if (!entry) return null;
-  return entry.factory();
+  const node = entry.factory();
+  node.nodeType = type;
+  return node;
 }
 
 export function getNodesByCategory(): Record<

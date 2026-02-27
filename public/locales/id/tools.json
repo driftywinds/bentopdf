@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Tambah Watermark",
-    "subtitle": "Cap teks atau gambar di atas halaman PDF Anda."
+    "subtitle": "Cap teks atau gambar di atas halaman PDF Anda.",
+    "applyToAllPages": "Terapkan ke semua halaman"
   },
   "headerFooter": {
     "name": "Header & Footer",

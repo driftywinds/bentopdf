@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Aggiungi Filigrana",
-    "subtitle": "Applica testo o un'immagine sulle pagine del tuo PDF."
+    "subtitle": "Applica testo o un'immagine sulle pagine del tuo PDF.",
+    "applyToAllPages": "Applica a tutte le pagine"
   },
   "headerFooter": {
     "name": "Intestazione e Piè di Pagina",

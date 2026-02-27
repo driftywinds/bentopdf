@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Ajouter un filigrane",
-    "subtitle": "Apposer un texte ou une image sur les pages du PDF."
+    "subtitle": "Apposer un texte ou une image sur les pages du PDF.",
+    "applyToAllPages": "Appliquer à toutes les pages"
   },
   "headerFooter": {
     "name": "En-tête et pied de page",

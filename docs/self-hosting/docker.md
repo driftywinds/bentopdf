@@ -92,7 +92,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | ----------------------- | ------------------------------- | -------------------------------------------------------------- |
 | `SIMPLE_MODE`           | Build without LibreOffice tools | `false`                                                        |
 | `BASE_URL`              | Deploy to subdirectory          | `/`                                                            |
-| `VITE_WASM_PYMUPDF_URL` | PyMuPDF WASM module URL         | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.14/` |
+| `VITE_WASM_PYMUPDF_URL` | PyMuPDF WASM module URL         | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/` |
 | `VITE_WASM_GS_URL`      | Ghostscript WASM module URL     | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/`       |
 | `VITE_WASM_CPDF_URL`    | CoherentPDF WASM module URL     | `https://cdn.jsdelivr.net/npm/coherentpdf/dist/`               |
 | `VITE_DEFAULT_LANGUAGE` | Default UI language             | `en`                                                           |

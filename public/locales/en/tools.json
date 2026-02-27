@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Add Watermark",
-    "subtitle": "Stamp text or an image over your PDF pages."
+    "subtitle": "Stamp text or an image over your PDF pages.",
+    "applyToAllPages": "Apply to all pages"
   },
   "headerFooter": {
     "name": "Header & Footer",

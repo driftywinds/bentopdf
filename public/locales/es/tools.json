@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Agregar Marca de Agua",
-    "subtitle": "Estampa texto o una imagen sobre tus páginas PDF."
+    "subtitle": "Estampa texto o una imagen sobre tus páginas PDF.",
+    "applyToAllPages": "Aplicar a todas las páginas"
   },
   "headerFooter": {
     "name": "Encabezado y Pie de Página",

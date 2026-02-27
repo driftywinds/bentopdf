@@ -931,7 +931,7 @@ function showProperties(field: FormField): void {
         </div>
         <div>
             <label class="block text-xs font-semibold text-gray-300 mb-1">Text Color</label>
-            <input type="color" id="propTextColor" value="${field.textColor}" class="w-full border border-gray-500 rounded px-2 py-1 h-10">
+            <input type="color" id="propTextColor" value="${field.textColor}">
         </div>
         <div>
             <label class="block text-xs font-semibold text-gray-300 mb-1">Alignment</label>
@@ -1169,7 +1169,7 @@ function showProperties(field: FormField): void {
       </div>
       <div>
         <label class="block text-xs font-semibold text-gray-300 mb-1">Border Color</label>
-        <input type="color" id="propBorderColor" value="${field.borderColor || '#000000'}" class="w-full border border-gray-500 rounded px-2 py-1 h-10">
+        <input type="color" id="propBorderColor" value="${field.borderColor || '#000000'}">
       </div>
       <div class="flex items-center">
         <input type="checkbox" id="propHideBorder" ${field.hideBorder ? 'checked' : ''} class="mr-2">

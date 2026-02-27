@@ -138,6 +138,7 @@ const init = async () => {
   };
 
   const toolTranslationKeys: Record<string, string> = {
+    'PDF Workflow Builder': 'tools:pdfWorkflow',
     'PDF Multi Tool': 'tools:pdfMultiTool',
     'Merge PDF': 'tools:mergePdf',
     'Split PDF': 'tools:splitPdf',
@@ -158,6 +159,7 @@ const init = async () => {
     'Background Color': 'tools:backgroundColor',
     'Change Text Color': 'tools:changeTextColor',
     'Add Stamps': 'tools:addStamps',
+    'Bates Numbering': 'tools:batesNumbering',
     'Remove Annotations': 'tools:removeAnnotations',
     'PDF Form Filler': 'tools:pdfFormFiller',
     'Create PDF Form': 'tools:createPdfForm',

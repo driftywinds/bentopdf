@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Wasserzeichen hinzufügen",
-    "subtitle": "Text oder ein Bild über Ihre PDF-Seiten stempeln."
+    "subtitle": "Text oder ein Bild über Ihre PDF-Seiten stempeln.",
+    "applyToAllPages": "Auf alle Seiten anwenden"
   },
   "headerFooter": {
     "name": "Kopf- & Fußzeile",

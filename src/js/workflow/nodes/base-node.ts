@@ -9,6 +9,7 @@ export abstract class BaseWorkflowNode extends ClassicPreset.Node {
   width = 280;
   height = 140;
   execStatus: 'idle' | 'running' | 'completed' | 'error' = 'idle';
+  nodeType: string = '';
 
   constructor(label: string) {
     super(label);

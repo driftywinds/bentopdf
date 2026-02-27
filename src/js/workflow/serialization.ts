@@ -25,8 +25,7 @@ interface SerializedConnection {
 }
 
 function getNodeType(node: BaseWorkflowNode): string | null {
-  const constructorName = node.constructor.name;
-  return constructorName || null;
+  return node.nodeType || null;
 }
 
 function serializeWorkflow(
@@ -79,6 +78,22 @@ async function deserializeWorkflow(
   editor: NodeEditor<ClassicScheme>,
   area: AreaPlugin<ClassicScheme, AreaExtra>
 ): Promise<void> {
+  if (
+    !data ||
+    !Array.isArray((data as any).nodes) ||
+    !Array.isArray((data as any).connections)
+  ) {
+    throw new Error(
+      'Invalid workflow file: missing nodes or connections array.'
+    );
+  }
+
+  if ((data as any).version !== WORKFLOW_VERSION) {
+    console.warn(
+      `Workflow version mismatch: expected ${WORKFLOW_VERSION}, got ${(data as any).version}. Attempting load anyway.`
+    );
+  }
+
   for (const conn of editor.getConnections()) {
     await editor.removeConnection(conn.id);
   }
@@ -129,9 +144,6 @@ async function deserializeWorkflow(
 
   if (skippedTypes.length > 0) {
     console.warn('Skipped unknown node types during load:', skippedTypes);
-    throw new Error(
-      `Some nodes could not be loaded: ${skippedTypes.join(', ')}. They may have been removed or renamed.`
-    );
   }
 }
 
@@ -215,14 +227,11 @@ export function exportWorkflow(
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  try {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'workflow.json';
-    a.click();
-  } finally {
-    URL.revokeObjectURL(url);
-  }
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'workflow.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 export async function importWorkflow(
@@ -233,13 +242,16 @@ export async function importWorkflow(
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
+
+    let settled = false;
+
     input.onchange = async () => {
+      settled = true;
       const file = input.files?.[0];
       if (!file) {
         resolve();
         return;
       }
-
       try {
         const text = await file.text();
         const data = JSON.parse(text) as SerializedWorkflow;
@@ -250,6 +262,15 @@ export async function importWorkflow(
         reject(new Error(`Failed to import workflow: ${message}`));
       }
     };
+
+    const onFocus = () => {
+      window.removeEventListener('focus', onFocus);
+      setTimeout(() => {
+        if (!settled) resolve();
+      }, 300);
+    };
+    window.addEventListener('focus', onFocus);
+
     input.click();
   });
 }

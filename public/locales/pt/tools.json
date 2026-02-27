@@ -70,7 +70,8 @@
   },
   "addWatermark": {
     "name": "Adicionar Marca d'Água",
-    "subtitle": "Carimbe texto ou uma imagem sobre as páginas do seu PDF."
+    "subtitle": "Carimbe texto ou uma imagem sobre as páginas do seu PDF.",
+    "applyToAllPages": "Aplicar a todas as páginas"
   },
   "headerFooter": {
     "name": "Cabeçalho e Rodapé",
@@ -507,7 +508,7 @@
     "subtitle": "Extrai tabelas do PDF e converte em CSV."
   },
   "pdfToExcel": {
-    "name": "PDF to Excel",
+    "name": "PDF para Excel",
     "subtitle": "Extrai tabelas do PDF e converte em Excel (XLSX)."
   },
   "pdfToText": {

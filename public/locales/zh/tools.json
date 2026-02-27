@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "添加水印",
-    "subtitle": "在您的 PDF 页面上添加文字或图片水印。"
+    "subtitle": "在您的 PDF 页面上添加文字或图片水印。",
+    "applyToAllPages": "应用到所有页面"
   },
   "headerFooter": {
     "name": "页眉和页脚",

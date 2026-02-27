@@ -70,7 +70,8 @@
   },
   "addWatermark": {
     "name": "Filigran Ekle",
-    "subtitle": "PDF sayfalarınızın üzerine metin veya görsel damgası ekleyin."
+    "subtitle": "PDF sayfalarınızın üzerine metin veya görsel damgası ekleyin.",
+    "applyToAllPages": "Tüm sayfalara uygula"
   },
   "headerFooter": {
     "name": "Üst Bilgi & Alt Bilgi",

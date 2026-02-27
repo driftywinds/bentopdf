@@ -92,7 +92,8 @@
   },
   "addWatermark": {
     "name": "Tilføj vandmærke",
-    "subtitle": "Placer tekst eller et billede oven på dine PDF-sider."
+    "subtitle": "Placer tekst eller et billede oven på dine PDF-sider.",
+    "applyToAllPages": "Anvend på alle sider"
   },
   "headerFooter": {
     "name": "Sidehoved og sidefod",
