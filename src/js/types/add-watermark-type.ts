@@ -8,3 +8,19 @@ export interface AddWatermarkState {
   watermarkX: number; // 0–1, percentage from left
   watermarkY: number; // 0–1, percentage from top (flipped to bottom for PDF)
 }
+
+export interface PageWatermarkConfig {
+  type: 'text' | 'image';
+  x: number;
+  y: number;
+  text: string;
+  fontSize: number;
+  color: string;
+  opacityText: number;
+  angleText: number;
+  imageDataUrl: string | null;
+  imageFile: File | null;
+  imageScale: number;
+  opacityImage: number;
+  angleImage: number;
+}

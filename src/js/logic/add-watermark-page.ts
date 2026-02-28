@@ -12,29 +12,13 @@ import {
   addImageWatermark,
   parsePageRange,
 } from '../utils/pdf-operations.js';
-import { AddWatermarkState } from '@/types';
+import { AddWatermarkState, PageWatermarkConfig } from '@/types';
 import * as pdfjsLib from 'pdfjs-dist';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url
 ).toString();
-
-interface PageWatermarkConfig {
-  type: 'text' | 'image';
-  x: number;
-  y: number;
-  text: string;
-  fontSize: number;
-  color: string;
-  opacityText: number;
-  angleText: number;
-  imageDataUrl: string | null;
-  imageFile: File | null;
-  imageScale: number;
-  opacityImage: number;
-  angleImage: number;
-}
 
 const pageState: AddWatermarkState = {
   file: null,

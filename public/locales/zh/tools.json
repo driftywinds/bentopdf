@@ -144,7 +144,10 @@
   },
   "addStamps": {
     "name": "添加印章",
-    "subtitle": "使用注释工具栏向您的 PDF 添加图片印章。"
+    "subtitle": "使用注释工具栏向您的 PDF 添加图片印章。",
+    "usernameLabel": "印章用户名",
+    "usernamePlaceholder": "输入您的姓名（用于印章）",
+    "usernameHint": "此名称将显示在您创建的印章上。"
   },
   "removeAnnotations": {
     "name": "移除注释",

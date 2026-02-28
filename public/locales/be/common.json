@@ -67,6 +67,7 @@
     "filesNeverLeave": "Вашы файлы ніколі не пакідаюць прыладу.",
     "addMore": "Дадаць больш файлаў",
     "clearAll": "Ачысціць усё",
+    "clearFiles": "Ачысціць файлы",
     "hints": {
       "singlePdf": "Адзін файл PDF",
       "pdfFile": "Файл PDF",
@@ -253,7 +254,8 @@
     "error": "Памылка",
     "success": "Поспех",
     "file": "Файл",
-    "files": "Файлы"
+    "files": "Файлы",
+    "close": "Зачыніць"
   },
   "about": {
     "hero": {
