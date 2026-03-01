@@ -18,6 +18,7 @@ export const supportedLanguages = [
   'pt',
   'nl',
   'da',
+  'sv',
 ] as const;
 export type SupportedLanguage = (typeof supportedLanguages)[number];
 
@@ -37,6 +38,7 @@ export const languageNames: Record<SupportedLanguage, string> = {
   pt: 'Português',
   nl: 'Nederlands',
   da: 'Dansk',
+  sv: 'Svenska',
 };
 
 export const getLanguageFromUrl = (): SupportedLanguage => {
