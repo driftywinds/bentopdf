@@ -873,7 +873,10 @@ The **Digital Signature** tool uses a signing library that may need to fetch cer
    ```
    Or with Docker:
    ```bash
-   docker build --build-arg VITE_CORS_PROXY_URL="https://your-worker-url.workers.dev" -t your-bentopdf .
+   export VITE_CORS_PROXY_URL="https://your-worker-url.workers.dev"
+   DOCKER_BUILDKIT=1 docker build \
+    --secret id=VITE_CORS_PROXY_URL,env=VITE_CORS_PROXY_URL \
+    -t your-bentopdf .
    ```
 
 #### Production Security Features
@@ -927,6 +930,14 @@ npx wrangler secret put PROXY_SECRET
 
 # Set in build environment
 VITE_CORS_PROXY_SECRET=your-secret npm run build
+
+# Or with Docker (optional; URL secret also shown for completeness)
+export VITE_CORS_PROXY_URL="https://your-worker-url.workers.dev"
+export VITE_CORS_PROXY_SECRET="your-secret"
+DOCKER_BUILDKIT=1 docker build \
+  --secret id=VITE_CORS_PROXY_URL,env=VITE_CORS_PROXY_URL \
+  --secret id=VITE_CORS_PROXY_SECRET,env=VITE_CORS_PROXY_SECRET \
+  -t your-bentopdf .
 ```
 
 ### 📦 Version Management

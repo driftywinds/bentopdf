@@ -1,3 +1,3 @@
 export interface DecryptPdfState {
-    file: File | null;
+  files: File[];
 }

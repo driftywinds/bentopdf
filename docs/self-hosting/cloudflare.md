@@ -142,4 +142,13 @@ npx wrangler deploy
 VITE_CORS_PROXY_URL=https://your-worker.workers.dev npm run build
 ```
 
+Or with Docker:
+
+```bash
+export VITE_CORS_PROXY_URL="https://your-worker.workers.dev"
+DOCKER_BUILDKIT=1 docker build \
+  --secret id=VITE_CORS_PROXY_URL,env=VITE_CORS_PROXY_URL \
+  -t your-bentopdf .
+```
+
 > **Note:** See [README](https://github.com/alam00000/bentopdf#digital-signature-cors-proxy-required) for HMAC signature setup.

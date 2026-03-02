@@ -64,8 +64,9 @@ If you're self-hosting BentoPDF, you'll need to deploy your own CORS proxy for d
    If using Docker:
 
    ```bash
-   docker build \
-     --build-arg VITE_CORS_PROXY_URL="https://your-worker.workers.dev" \
+   export VITE_CORS_PROXY_URL="https://your-worker.workers.dev"
+   DOCKER_BUILDKIT=1 docker build \
+     --secret id=VITE_CORS_PROXY_URL,env=VITE_CORS_PROXY_URL \
      -t your-bentopdf .
    ```
 

@@ -10,11 +10,18 @@ import {
   PDFDict,
   PDFArray,
   PDFRadioGroup,
+  PDFTextField,
+  PDFCheckBox,
+  PDFDropdown,
+  PDFOptionList,
+  PDFButton,
+  PDFSignature,
 } from 'pdf-lib';
 import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js';
 import { downloadFile, hexToRgb, getPDFDocument } from '../utils/helpers.js';
 import { createIcons, icons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
+import * as bwipjs from 'bwip-js/browser';
 import 'pdfjs-dist/web/pdf_viewer.css';
 
 // Initialize PDF.js worker
@@ -33,6 +40,7 @@ const existingRadioGroups: Set<string> = new Set();
 let draggedElement: HTMLElement | null = null;
 let offsetX = 0;
 let offsetY = 0;
+let pendingFieldExtraction = false;
 
 let pages: PageData[] = [];
 let currentPageIndex = 0;
@@ -384,8 +392,18 @@ function createField(type: FormField['type'], x: number, y: number): void {
     type: type,
     x: Math.max(0, Math.min(x, 816 - 150)),
     y: Math.max(0, Math.min(y, 1056 - 30)),
-    width: type === 'checkbox' || type === 'radio' ? 30 : 150,
-    height: type === 'checkbox' || type === 'radio' ? 30 : 30,
+    width:
+      type === 'checkbox' || type === 'radio'
+        ? 30
+        : type === 'barcode'
+          ? 150
+          : 150,
+    height:
+      type === 'checkbox' || type === 'radio'
+        ? 30
+        : type === 'barcode'
+          ? 150
+          : 30,
     name: `${type.charAt(0).toUpperCase() + type.slice(1)}_${fieldCounter}`,
     defaultValue: '',
     fontSize: 12,
@@ -417,6 +435,8 @@ function createField(type: FormField['type'], x: number, y: number): void {
     multiline: type === 'text' ? false : undefined,
     borderColor: '#000000',
     hideBorder: false,
+    barcodeFormat: type === 'barcode' ? 'qrcode' : undefined,
+    barcodeValue: type === 'barcode' ? 'https://example.com' : undefined,
   };
 
   fields.push(field);
@@ -575,6 +595,32 @@ function renderField(field: FormField): void {
       'w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 border border-gray-300';
     contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1"><i data-lucide="image" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">${field.label || 'Click to Upload Image'}</span></div>`;
     setTimeout(() => (window as any).lucide?.createIcons(), 0);
+  } else if (field.type === 'barcode') {
+    contentEl.className =
+      'w-full h-full flex items-center justify-center bg-white';
+    if (field.barcodeValue) {
+      try {
+        const offscreen = document.createElement('canvas');
+        bwipjs.toCanvas(offscreen, {
+          bcid: field.barcodeFormat || 'qrcode',
+          text: field.barcodeValue,
+          scale: 2,
+          includetext:
+            field.barcodeFormat !== 'qrcode' &&
+            field.barcodeFormat !== 'datamatrix',
+        });
+        const img = document.createElement('img');
+        img.src = offscreen.toDataURL('image/png');
+        img.className = 'max-w-full max-h-full object-contain';
+        contentEl.appendChild(img);
+      } catch {
+        contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1 text-gray-400"><i data-lucide="qr-code" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">Invalid data</span></div>`;
+        setTimeout(() => (window as any).lucide?.createIcons(), 0);
+      }
+    } else {
+      contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1 text-gray-400"><i data-lucide="qr-code" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">Barcode</span></div>`;
+      setTimeout(() => (window as any).lucide?.createIcons(), 0);
+    }
   }
 
   fieldContainer.appendChild(contentEl);
@@ -1113,6 +1159,26 @@ function showProperties(field: FormField): void {
         <div class="text-xs text-gray-400 italic mt-2">
             Clicking this field in the PDF will open a file picker to upload an image.
         </div>
+        `;
+  } else if (field.type === 'barcode') {
+    specificProps = `
+        <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-1">Barcode Format</label>
+            <select id="propBarcodeFormat" class="w-full bg-gray-600 border border-gray-500 text-white rounded px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="qrcode" ${field.barcodeFormat === 'qrcode' ? 'selected' : ''}>QR Code</option>
+                <option value="code128" ${field.barcodeFormat === 'code128' ? 'selected' : ''}>Code 128</option>
+                <option value="code39" ${field.barcodeFormat === 'code39' ? 'selected' : ''}>Code 39</option>
+                <option value="ean13" ${field.barcodeFormat === 'ean13' ? 'selected' : ''}>EAN-13</option>
+                <option value="upca" ${field.barcodeFormat === 'upca' ? 'selected' : ''}>UPC-A</option>
+                <option value="datamatrix" ${field.barcodeFormat === 'datamatrix' ? 'selected' : ''}>DataMatrix</option>
+                <option value="pdf417" ${field.barcodeFormat === 'pdf417' ? 'selected' : ''}>PDF417</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-1">Barcode Value</label>
+            <input type="text" id="propBarcodeValue" value="${field.barcodeValue || ''}" class="w-full bg-gray-600 border border-gray-500 text-white rounded px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <div id="barcodeFormatHint" class="text-xs text-gray-400 italic"></div>
         `;
   }
 
@@ -1795,6 +1861,56 @@ function showProperties(field: FormField): void {
       field.label = (e.target as HTMLInputElement).value;
       renderField(field);
     });
+  } else if (field.type === 'barcode') {
+    const propBarcodeFormat = document.getElementById(
+      'propBarcodeFormat'
+    ) as HTMLSelectElement;
+    const propBarcodeValue = document.getElementById(
+      'propBarcodeValue'
+    ) as HTMLInputElement;
+
+    const barcodeSampleValues: Record<string, string> = {
+      qrcode: 'https://example.com',
+      code128: 'ABC-123',
+      code39: 'ABC123',
+      ean13: '590123412345',
+      upca: '01234567890',
+      datamatrix: 'https://example.com',
+      pdf417: 'https://example.com',
+    };
+
+    const barcodeFormatHints: Record<string, string> = {
+      qrcode: 'Any text, URL, or data',
+      code128: 'ASCII characters (letters, numbers, symbols)',
+      code39: 'Uppercase A-Z, digits 0-9, and - . $ / + % SPACE',
+      ean13: 'Exactly 12 or 13 digits',
+      upca: 'Exactly 11 or 12 digits',
+      datamatrix: 'Any text, URL, or data',
+      pdf417: 'Any text, URL, or data',
+    };
+
+    const hintEl = document.getElementById('barcodeFormatHint');
+    if (hintEl)
+      hintEl.textContent =
+        barcodeFormatHints[field.barcodeFormat || 'qrcode'] || '';
+
+    if (propBarcodeFormat) {
+      propBarcodeFormat.addEventListener('change', (e) => {
+        const newFormat = (e.target as HTMLSelectElement).value;
+        field.barcodeFormat = newFormat;
+        field.barcodeValue = barcodeSampleValues[newFormat] || 'hello';
+        if (propBarcodeValue) propBarcodeValue.value = field.barcodeValue;
+        if (hintEl) hintEl.textContent = barcodeFormatHints[newFormat] || '';
+        renderField(field);
+      });
+    }
+
+    if (propBarcodeValue) {
+      propBarcodeValue.addEventListener('input', (e) => {
+        field.barcodeValue = (e.target as HTMLInputElement).value;
+        renderField(field);
+      });
+    }
   }
 }
 
@@ -1910,6 +2026,19 @@ downloadBtn.addEventListener('click', async () => {
     }
 
     const form = pdfDoc.getForm();
+
+    if (extractedFieldNames.size > 0) {
+      for (const fieldName of extractedFieldNames) {
+        try {
+          const existingField = form.getFieldMaybe(fieldName);
+          if (existingField) {
+            form.removeField(existingField);
+          }
+        } catch (e) {
+          console.warn(`Failed to remove existing field "${fieldName}":`, e);
+        }
+      }
+    }
 
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
@@ -2332,6 +2461,32 @@ downloadBtn.addEventListener('click', async () => {
         if (field.tooltip) {
           widgetDict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
         }
+      } else if (field.type === 'barcode') {
+        if (field.barcodeValue) {
+          try {
+            const offscreen = document.createElement('canvas');
+            bwipjs.toCanvas(offscreen, {
+              bcid: field.barcodeFormat || 'qrcode',
+              text: field.barcodeValue,
+              scale: 3,
+              includetext:
+                field.barcodeFormat !== 'qrcode' &&
+                field.barcodeFormat !== 'datamatrix',
+            });
+            const dataUrl = offscreen.toDataURL('image/png');
+            const base64 = dataUrl.split(',')[1];
+            const pngBytes = Uint8Array.from(atob(base64), (c) =>
+              c.charCodeAt(0)
+            );
+            const pngImage = await pdfDoc.embedPng(pngBytes);
+            pdfPage.drawImage(pngImage, { x, y, width, height });
+          } catch (e) {
+            console.warn(
+              `Failed to generate barcode for field "${field.name}":`,
+              e
+            );
+          }
+        }
       }
     }
 
@@ -2429,6 +2584,8 @@ function resetToInitial(): void {
   currentPageIndex = 0;
   uploadedPdfDoc = null;
   selectedField = null;
+  extractedFieldNames.clear();
+  pendingFieldExtraction = false;
 
   canvas.innerHTML = '';
 
@@ -2611,6 +2768,27 @@ async function renderCanvas(): Promise<void> {
                         height: currentPage.height,
                       },
                     });
+
+                    if (pendingFieldExtraction && uploadedPdfDoc) {
+                      pendingFieldExtraction = false;
+                      extractExistingFields(uploadedPdfDoc);
+                      extractedFieldNames.forEach((name) =>
+                        existingFieldNames.delete(name)
+                      );
+
+                      try {
+                        const form = uploadedPdfDoc.getForm();
+                        for (const name of extractedFieldNames) {
+                          try {
+                            const f = form.getFieldMaybe(name);
+                            if (f) form.removeField(f);
+                          } catch {}
+                        }
+                      } catch {}
+
+                      renderCanvas();
+                      updateFieldCount();
+                    }
                   }, 50);
                 }
               }
@@ -2701,6 +2879,235 @@ confirmBlankBtn.addEventListener('click', () => {
   setTimeout(() => createIcons({ icons }), 100);
 });
 
+const extractedFieldNames: Set<string> = new Set();
+
+function extractExistingFields(pdfDoc: PDFDocument): void {
+  try {
+    const form = pdfDoc.getForm();
+    const pdfFields = form.getFields();
+    const pdfPages = pdfDoc.getPages();
+
+    const pageRefToIndex = new Map<any, number>();
+    pdfPages.forEach((page, index) => {
+      pageRefToIndex.set(page.ref, index);
+    });
+
+    for (const pdfField of pdfFields) {
+      const name = pdfField.getName();
+      const widgets = pdfField.acroField.getWidgets();
+
+      if (widgets.length === 0) continue;
+
+      let fieldType: FormField['type'];
+      if (pdfField instanceof PDFTextField) {
+        fieldType = 'text';
+      } else if (pdfField instanceof PDFCheckBox) {
+        fieldType = 'checkbox';
+      } else if (pdfField instanceof PDFRadioGroup) {
+        fieldType = 'radio';
+      } else if (pdfField instanceof PDFDropdown) {
+        fieldType = 'dropdown';
+      } else if (pdfField instanceof PDFOptionList) {
+        fieldType = 'optionlist';
+      } else if (pdfField instanceof PDFButton) {
+        fieldType = 'button';
+      } else if (pdfField instanceof PDFSignature) {
+        fieldType = 'signature';
+      } else {
+        continue;
+      }
+
+      if (fieldType === 'radio') {
+        const radioField = pdfField as PDFRadioGroup;
+        const options = radioField.getOptions();
+
+        for (let wi = 0; wi < widgets.length; wi++) {
+          const widget = widgets[wi];
+          const rect = widget.getRectangle();
+
+          const pageRef = widget.dict.get(PDFName.of('P'));
+          let pageIndex = 0;
+          if (pageRef) {
+            for (let pi = 0; pi < pdfPages.length; pi++) {
+              if (pdfPages[pi].ref === pageRef) {
+                pageIndex = pi;
+                break;
+              }
+            }
+          }
+
+          const page = pdfPages[pageIndex];
+          const { height: pageHeight } = page.getSize();
+
+          const canvasX = rect.x * pdfViewerScale + pdfViewerOffset.x;
+          const canvasY =
+            (pageHeight - rect.y - rect.height) * pdfViewerScale +
+            pdfViewerOffset.y;
+          const canvasWidth = rect.width * pdfViewerScale;
+          const canvasHeight = rect.height * pdfViewerScale;
+
+          fieldCounter++;
+          const exportValue = options[wi] || 'Yes';
+
+          let tooltip = '';
+          try {
+            const tu = widget.dict.get(PDFName.of('TU'));
+            if (tu instanceof PDFString) {
+              tooltip = tu.decodeText();
+            }
+          } catch {}
+
+          const formField: FormField = {
+            id: `field_${fieldCounter}`,
+            type: 'radio',
+            x: canvasX,
+            y: canvasY,
+            width: canvasWidth,
+            height: canvasHeight,
+            name: name,
+            defaultValue: '',
+            fontSize: 12,
+            alignment: 'left',
+            textColor: '#000000',
+            required: radioField.isRequired(),
+            readOnly: radioField.isReadOnly(),
+            tooltip: tooltip,
+            combCells: 0,
+            maxLength: 0,
+            checked: false,
+            exportValue: exportValue,
+            groupName: name,
+            pageIndex: pageIndex,
+            borderColor: '#000000',
+            hideBorder: false,
+          };
+
+          fields.push(formField);
+        }
+
+        extractedFieldNames.add(name);
+        continue;
+      }
+
+      const widget = widgets[0];
+      const rect = widget.getRectangle();
+
+      const pageRef = widget.dict.get(PDFName.of('P'));
+      let pageIndex = 0;
+      if (pageRef) {
+        for (let pi = 0; pi < pdfPages.length; pi++) {
+          if (pdfPages[pi].ref === pageRef) {
+            pageIndex = pi;
+            break;
+          }
+        }
+      }
+
+      const page = pdfPages[pageIndex];
+      const { height: pageHeight } = page.getSize();
+
+      const canvasX = rect.x * pdfViewerScale + pdfViewerOffset.x;
+      const canvasY =
+        (pageHeight - rect.y - rect.height) * pdfViewerScale +
+        pdfViewerOffset.y;
+      const canvasWidth = rect.width * pdfViewerScale;
+      const canvasHeight = rect.height * pdfViewerScale;
+
+      let tooltip = '';
+      try {
+        const tu = widget.dict.get(PDFName.of('TU'));
+        if (tu instanceof PDFString) {
+          tooltip = tu.decodeText();
+        }
+      } catch {}
+
+      fieldCounter++;
+
+      const formField: FormField = {
+        id: `field_${fieldCounter}`,
+        type: fieldType,
+        x: canvasX,
+        y: canvasY,
+        width: canvasWidth,
+        height: canvasHeight,
+        name: name,
+        defaultValue: '',
+        fontSize: 12,
+        alignment: 'left',
+        textColor: '#000000',
+        required: pdfField.isRequired(),
+        readOnly: pdfField.isReadOnly(),
+        tooltip: tooltip,
+        combCells: 0,
+        maxLength: 0,
+        pageIndex: pageIndex,
+        borderColor: '#000000',
+        hideBorder: false,
+      };
+
+      if (pdfField instanceof PDFTextField) {
+        try {
+          formField.defaultValue = pdfField.getText() || '';
+        } catch {}
+        try {
+          formField.multiline = pdfField.isMultiline();
+        } catch {}
+        try {
+          const maxLen = pdfField.getMaxLength();
+          if (maxLen !== undefined) {
+            if (pdfField.isCombed()) {
+              formField.combCells = maxLen;
+            } else {
+              formField.maxLength = maxLen;
+            }
+          }
+        } catch {}
+        try {
+          const alignment = pdfField.getAlignment();
+          if (alignment === TextAlignment.Center)
+            formField.alignment = 'center';
+          else if (alignment === TextAlignment.Right)
+            formField.alignment = 'right';
+          else formField.alignment = 'left';
+        } catch {}
+      } else if (pdfField instanceof PDFCheckBox) {
+        try {
+          formField.checked = pdfField.isChecked();
+        } catch {}
+        formField.exportValue = 'Yes';
+      } else if (pdfField instanceof PDFDropdown) {
+        try {
+          formField.options = pdfField.getOptions();
+        } catch {}
+        try {
+          const selected = pdfField.getSelected();
+          if (selected.length > 0) formField.defaultValue = selected[0];
+        } catch {}
+      } else if (pdfField instanceof PDFOptionList) {
+        try {
+          formField.options = pdfField.getOptions();
+        } catch {}
+        try {
+          const selected = pdfField.getSelected();
+          if (selected.length > 0) formField.defaultValue = selected[0];
+        } catch {}
+      } else if (pdfField instanceof PDFButton) {
+        formField.label = 'Button';
+        formField.action = 'none';
+      }
+
+      fields.push(formField);
+      extractedFieldNames.add(name);
+    }
+
+    console.log(
+      `Extracted ${extractedFieldNames.size} existing fields for editing`
+    );
+  } catch (e) {
+    console.warn('Error extracting existing fields:', e);
+  }
+}
+
 async function handlePdfUpload(file: File) {
   try {
     const arrayBuffer = await file.arrayBuffer();
@@ -2759,6 +3166,9 @@ async function handlePdfUpload(file: File) {
     }
 
     currentPageIndex = 0;
+
+    pendingFieldExtraction = true;
+
     renderCanvas();
     updatePageNavigation();
 
