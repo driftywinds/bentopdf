@@ -193,8 +193,12 @@
               step="5"
               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
             />
-            <p class="text-xs text-gray-400 mt-1">
-              Higher values detect more pages as blank
+            <p
+              class="text-xs text-gray-400 mt-1"
+              data-i18n="tools:removeBlankPages.sensitivityHint"
+            >
+              Higher = stricter, only purely blank pages. Lower = allows pages
+              with some content.
             </p>
           </div>
           <button id="detect-btn" class="btn-gradient w-full mt-4">
@@ -210,7 +214,7 @@
           <p id="preview-info" class="text-gray-400 text-sm mb-4"></p>
           <div
             id="blank-pages-preview"
-            class="grid grid-cols-3 md:grid-cols-4 gap-3 max-h-64 overflow-y-auto p-2 bg-gray-900 rounded-lg border border-gray-700"
+            class="grid grid-cols-3 md:grid-cols-4 gap-3 p-2 bg-gray-900 rounded-lg border border-gray-700"
           ></div>
           <button id="process-btn" class="btn-gradient w-full mt-4">
             Remove Selected Blank Pages

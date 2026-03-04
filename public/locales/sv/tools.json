@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Ta bort tomma sidor",
-    "subtitle": "Automatiskt identifiera och ta bort tomma sidor."
+    "subtitle": "Automatiskt identifiera och ta bort tomma sidor.",
+    "sensitivityHint": "Högre = striktare, bara helt tomma sidor. Lägre = tillåter sidor med visst innehåll."
   },
   "imageToPdf": {
     "name": "Bilder till PDF",

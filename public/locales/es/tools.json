@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Eliminar Páginas en Blanco",
-    "subtitle": "Detecta y elimina automáticamente páginas en blanco."
+    "subtitle": "Detecta y elimina automáticamente páginas en blanco.",
+    "sensitivityHint": "Mayor = más estricto, solo páginas completamente en blanco. Menor = permite páginas con algo de contenido."
   },
   "imageToPdf": {
     "name": "Imágenes a PDF",

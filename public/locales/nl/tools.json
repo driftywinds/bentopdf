@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Blanco pagina's Verwijderen",
-    "subtitle": "Automatisch blanco pagina's detecteren en verwijderen."
+    "subtitle": "Automatisch blanco pagina's detecteren en verwijderen.",
+    "sensitivityHint": "Hoger = strenger, alleen volledig lege pagina's. Lager = staat pagina's met enige inhoud toe."
   },
   "imageToPdf": {
     "name": "Afbeelding naar PDF",

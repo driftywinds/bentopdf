@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Leere Seiten entfernen",
-    "subtitle": "Leere Seiten automatisch erkennen und löschen."
+    "subtitle": "Leere Seiten automatisch erkennen und löschen.",
+    "sensitivityHint": "Höher = strenger, nur rein leere Seiten. Niedriger = erlaubt Seiten mit etwas Inhalt."
   },
   "imageToPdf": {
     "name": "Bilder zu PDF",

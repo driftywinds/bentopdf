@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Fjern tomme sider",
-    "subtitle": "Find og fjern automatisk tomme sider."
+    "subtitle": "Find og fjern automatisk tomme sider.",
+    "sensitivityHint": "Højere = strengere, kun helt tomme sider. Lavere = tillader sider med noget indhold."
   },
   "imageToPdf": {
     "name": "Billeder til PDF",

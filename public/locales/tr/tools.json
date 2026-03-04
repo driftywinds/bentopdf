@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Boş Sayfaları Kaldır",
-    "subtitle": "Boş sayfaları otomatik olarak tespit edin ve silin."
+    "subtitle": "Boş sayfaları otomatik olarak tespit edin ve silin.",
+    "sensitivityHint": "Yüksek = daha katı, yalnızca tamamen boş sayfalar. Düşük = biraz içerik olan sayfalara izin verir."
   },
   "imageToPdf": {
     "name": "Görselden PDF'ye",

@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Supprimer les pages blanches",
-    "subtitle": "Détecter et supprimer automatiquement les pages vides."
+    "subtitle": "Détecter et supprimer automatiquement les pages vides.",
+    "sensitivityHint": "Plus élevé = plus strict, uniquement les pages vierges. Plus bas = autorise les pages avec du contenu."
   },
   "imageToPdf": {
     "name": "Images vers PDF",

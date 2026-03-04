@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Hapus Halaman Kosong",
-    "subtitle": "Deteksi dan hapus halaman kosong secara otomatis."
+    "subtitle": "Deteksi dan hapus halaman kosong secara otomatis.",
+    "sensitivityHint": "Lebih tinggi = lebih ketat, hanya halaman yang benar-benar kosong. Lebih rendah = mengizinkan halaman dengan sedikit konten."
   },
   "imageToPdf": {
     "name": "Gambar ke PDF",

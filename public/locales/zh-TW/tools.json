@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "移除空白頁面",
-    "subtitle": "自動偵測並刪除空白頁面。"
+    "subtitle": "自動偵測並刪除空白頁面。",
+    "sensitivityHint": "越高 = 越嚴格，僅偵測純空白頁面。越低 = 允許包含少量內容的頁面。"
   },
   "imageToPdf": {
     "name": "圖片轉 PDF",

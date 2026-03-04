@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "移除空白页",
-    "subtitle": "自动检测并删除空白页。"
+    "subtitle": "自动检测并删除空白页。",
+    "sensitivityHint": "越高 = 越严格，仅检测纯空白页。越低 = 允许包含少量内容的页面。"
   },
   "imageToPdf": {
     "name": "图片转 PDF",

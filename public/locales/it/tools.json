@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Rimuovi Pagine Vuote",
-    "subtitle": "Rileva e elimina automaticamente le pagine vuote."
+    "subtitle": "Rileva e elimina automaticamente le pagine vuote.",
+    "sensitivityHint": "Più alto = più rigoroso, solo pagine completamente vuote. Più basso = consente pagine con qualche contenuto."
   },
   "imageToPdf": {
     "name": "Immagini in PDF",

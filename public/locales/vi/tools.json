@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Xóa trang trống",
-    "subtitle": "Tự động phát hiện và xóa trang trống."
+    "subtitle": "Tự động phát hiện và xóa trang trống.",
+    "sensitivityHint": "Cao hơn = nghiêm ngặt hơn, chỉ các trang hoàn toàn trống. Thấp hơn = cho phép trang có một số nội dung."
   },
   "imageToPdf": {
     "name": "Hình ảnh sang PDF",

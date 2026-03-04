@@ -163,7 +163,8 @@
   },
   "removeBlankPages": {
     "name": "Remove Blank Pages",
-    "subtitle": "Automatically detect and delete blank pages."
+    "subtitle": "Automatically detect and delete blank pages.",
+    "sensitivityHint": "Higher = stricter, only purely blank pages. Lower = allows pages with some content."
   },
   "imageToPdf": {
     "name": "Images to PDF",
