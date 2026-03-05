@@ -12,7 +12,7 @@ export async function mergePdfs(
     );
     copiedPages.forEach((page) => mergedDoc.addPage(page));
   }
-  return new Uint8Array(await mergedDoc.save());
+  return new Uint8Array(await mergedDoc.save({ addDefaultPage: false }));
 }
 
 export async function splitPdf(
