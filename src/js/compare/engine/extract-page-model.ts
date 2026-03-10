@@ -33,8 +33,10 @@ const textMeasurementCache: Map<string, number> | null = measurementContext
   : null;
 let lastMeasurementFont = '';
 
-const DEFAULT_CHAR_WIDTH = 1;
-const DEFAULT_SPACE_WIDTH = 0.33;
+import { COMPARE_TEXT, COMPARE_GEOMETRY } from '../config.ts';
+
+const DEFAULT_CHAR_WIDTH = COMPARE_TEXT.DEFAULT_CHAR_WIDTH;
+const DEFAULT_SPACE_WIDTH = COMPARE_TEXT.DEFAULT_SPACE_WIDTH;
 
 function shouldJoinTokenWithPrevious(previous: string, current: string) {
   if (!previous) return false;
@@ -261,8 +263,9 @@ function toRect(
 export function sortCompareTextItems(items: CompareTextItem[]) {
   return [...items].sort((left, right) => {
     const lineTolerance = Math.max(
-      Math.min(left.rect.height, right.rect.height) * 0.6,
-      4
+      Math.min(left.rect.height, right.rect.height) *
+        COMPARE_GEOMETRY.LINE_TOLERANCE_FACTOR,
+      COMPARE_GEOMETRY.MIN_LINE_TOLERANCE
     );
     const topDiff = left.rect.y - right.rect.y;
 
@@ -450,8 +453,9 @@ export function mergeIntoLines(
     const anchor = currentLine[0];
     const curr = sortedItems[i];
     const lineTolerance = Math.max(
-      Math.min(anchor.rect.height, curr.rect.height) * 0.6,
-      4
+      Math.min(anchor.rect.height, curr.rect.height) *
+        COMPARE_GEOMETRY.LINE_TOLERANCE_FACTOR,
+      COMPARE_GEOMETRY.MIN_LINE_TOLERANCE
     );
 
     if (Math.abs(curr.rect.y - anchor.rect.y) <= lineTolerance) {
@@ -496,9 +500,7 @@ export async function extractPageModel(
   page: pdfjsLib.PDFPageProxy,
   viewport: pdfjsLib.PageViewport
 ): Promise<ComparePageModel> {
-  const textContent = await page.getTextContent({
-    disableCombineTextItems: true,
-  });
+  const textContent = await page.getTextContent();
   const styles = textContent.styles ?? {};
   const rawItems = sortCompareTextItems(
     textContent.items

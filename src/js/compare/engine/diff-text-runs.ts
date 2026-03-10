@@ -8,6 +8,8 @@ import type {
   CompareTextItem,
   CompareWordToken,
 } from '../types.ts';
+import { calculateBoundingRect } from './text-normalization.ts';
+import { COMPARE_GEOMETRY } from '../config.ts';
 
 interface WordToken {
   word: string;
@@ -86,7 +88,11 @@ function groupAdjacentRects(rects: CompareRectangle[]): CompareRectangle[] {
     const lastRect = prev[prev.length - 1];
     const curr = sorted[i];
     const sameLine =
-      Math.abs(curr.y - lastRect.y) < Math.max(lastRect.height * 0.6, 4);
+      Math.abs(curr.y - lastRect.y) <
+      Math.max(
+        lastRect.height * COMPARE_GEOMETRY.LINE_TOLERANCE_FACTOR,
+        COMPARE_GEOMETRY.MIN_LINE_TOLERANCE
+      );
     const close = curr.x <= lastRect.x + lastRect.width + lastRect.height * 2;
 
     if (sameLine && close) {
@@ -96,13 +102,7 @@ function groupAdjacentRects(rects: CompareRectangle[]): CompareRectangle[] {
     }
   }
 
-  return groups.map((group) => {
-    const minX = Math.min(...group.map((r) => r.x));
-    const minY = Math.min(...group.map((r) => r.y));
-    const maxX = Math.max(...group.map((r) => r.x + r.width));
-    const maxY = Math.max(...group.map((r) => r.y + r.height));
-    return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
-  });
+  return groups.map((group) => calculateBoundingRect(group));
 }
 
 function collapseWords(words: WordToken[]) {

@@ -225,7 +225,7 @@ input[type='file']::file-selector-button {
   color: #39a0ed;
 }
 
-.page-thumbnail,
+#page-organizer .page-thumbnail,
 #file-list > li {
   cursor: grab;
 }

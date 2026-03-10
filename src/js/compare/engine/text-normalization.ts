@@ -1,4 +1,4 @@
-import type { CompareTextItem } from '../types.ts';
+import type { CompareRectangle, CompareTextItem } from '../types.ts';
 
 export function normalizeCompareText(text: string) {
   return text
@@ -61,4 +61,23 @@ export function isLowQualityExtractedText(text: string) {
   }
 
   return false;
+}
+
+export function tokenizeText(text: string): string[] {
+  return text.split(/\s+/).filter(Boolean);
+}
+
+export function tokenizeTextAsSet(text: string): Set<string> {
+  return new Set(tokenizeText(text));
+}
+
+export function calculateBoundingRect(
+  rects: CompareRectangle[]
+): CompareRectangle {
+  if (rects.length === 0) return { x: 0, y: 0, width: 0, height: 0 };
+  const minX = Math.min(...rects.map((r) => r.x));
+  const minY = Math.min(...rects.map((r) => r.y));
+  const maxX = Math.max(...rects.map((r) => r.x + r.width));
+  const maxY = Math.max(...rects.map((r) => r.y + r.height));
+  return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
 }

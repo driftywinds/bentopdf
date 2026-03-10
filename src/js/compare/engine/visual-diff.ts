@@ -1,6 +1,7 @@
 import pixelmatch from 'pixelmatch';
 
 import type { CompareVisualDiff } from '../types.ts';
+import { VISUAL_DIFF as VISUAL_DIFF_CONFIG } from '../config.ts';
 
 type FocusRegion = {
   x: number;
@@ -69,12 +70,16 @@ export function renderVisualDiff(
     width,
     height,
     {
-      threshold: 0.12,
+      threshold: VISUAL_DIFF_CONFIG.PIXELMATCH_THRESHOLD,
       includeAA: false,
-      alpha: 0.2,
+      alpha: VISUAL_DIFF_CONFIG.ALPHA,
       diffMask: false,
-      diffColor: [239, 68, 68],
-      diffColorAlt: [34, 197, 94],
+      diffColor: [...VISUAL_DIFF_CONFIG.DIFF_COLOR] as [number, number, number],
+      diffColorAlt: [...VISUAL_DIFF_CONFIG.DIFF_COLOR_ALT] as [
+        number,
+        number,
+        number,
+      ],
     }
   );
 

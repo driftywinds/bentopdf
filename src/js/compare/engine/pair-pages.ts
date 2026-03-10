@@ -1,8 +1,5 @@
 import type { ComparePagePair, ComparePageSignature } from '../types.ts';
-
-function tokenize(text: string) {
-  return new Set(text.split(/\s+/).filter(Boolean));
-}
+import { tokenizeTextAsSet } from './text-normalization.ts';
 
 function similarityScore(
   left: ComparePageSignature,
@@ -16,8 +13,8 @@ function similarityScore(
     return 0.08;
   }
 
-  const leftTokens = tokenize(left.plainText);
-  const rightTokens = tokenize(right.plainText);
+  const leftTokens = tokenizeTextAsSet(left.plainText);
+  const rightTokens = tokenizeTextAsSet(right.plainText);
   const union = new Set([...leftTokens, ...rightTokens]);
   let intersectionCount = 0;
 

@@ -1,23 +1,28 @@
-import { showLoader, hideLoader, showAlert } from '../ui.js';
-import { getPDFDocument } from '../utils/helpers.js';
+import { showLoader, hideLoader, showAlert } from '../ui.ts';
+import { getPDFDocument } from '../utils/helpers.ts';
 import { icons, createIcons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
 import { CompareState } from '@/types';
 import type {
   CompareFilterType,
-  ComparePageModel,
-  ComparePagePair,
   ComparePageResult,
   CompareTextChange,
 } from '../compare/types.ts';
-import { extractPageModel } from '../compare/engine/extract-page-model.ts';
-import { comparePageModels } from '../compare/engine/compare-page-models.ts';
-import { renderVisualDiff } from '../compare/engine/visual-diff.ts';
 import { extractDocumentSignatures } from '../compare/engine/page-signatures.ts';
 import { pairPages } from '../compare/engine/pair-pages.ts';
-import { recognizePageCanvas } from '../compare/engine/ocr-page.ts';
-import { exportCompareHtmlReport } from '../compare/reporting/export-html-report.ts';
-import { isLowQualityExtractedText } from '../compare/engine/text-normalization.ts';
+import type {
+  ComparePdfExportMode,
+  CompareCaches,
+  CompareRenderContext,
+} from '../compare/types.ts';
+import { exportComparePdf } from '../compare/reporting/export-compare-pdf.ts';
+import { LRUCache } from '../compare/lru-cache.ts';
+import { COMPARE_CACHE_MAX_SIZE } from '../compare/config.ts';
+import {
+  getElement,
+  computeComparisonForPair,
+  getComparisonCacheKey,
+} from './compare-render.ts';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -39,341 +44,29 @@ const pageState: CompareState = {
   ocrLanguage: 'eng',
 };
 
-const pageModelCache = new Map<string, ComparePageModel>();
-const comparisonCache = new Map<string, ComparePageResult>();
-const comparisonResultsCache = new Map<number, ComparePageResult>();
+const caches: CompareCaches = {
+  pageModelCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+  comparisonCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+  comparisonResultsCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+};
 const documentNames = {
   left: 'first.pdf',
   right: 'second.pdf',
 };
 
-type RenderedPage = {
-  model: ComparePageModel | null;
-  exists: boolean;
-};
-
-type ComparisonPageLoad = {
-  model: ComparePageModel | null;
-  exists: boolean;
-};
-
-type DiffFocusRegion = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
-function getElement<T extends HTMLElement>(id: string) {
-  return document.getElementById(id) as T | null;
-}
-
-function clearCanvas(canvas: HTMLCanvasElement) {
-  const context = canvas.getContext('2d');
-  canvas.width = 1;
-  canvas.height = 1;
-  context?.clearRect(0, 0, 1, 1);
-}
-
-function renderMissingPage(
-  canvas: HTMLCanvasElement,
-  placeholderId: string,
-  message: string
-) {
-  clearCanvas(canvas);
-  const placeholder = getElement<HTMLDivElement>(placeholderId);
-  if (placeholder) {
-    placeholder.textContent = message;
-    placeholder.classList.remove('hidden');
-  }
-}
-
-function hidePlaceholder(placeholderId: string) {
-  const placeholder = getElement<HTMLDivElement>(placeholderId);
-  placeholder?.classList.add('hidden');
-}
-
-function getRenderScale(page: pdfjsLib.PDFPageProxy, container: HTMLElement) {
-  const baseViewport = page.getViewport({ scale: 1.0 });
-  const availableWidth = Math.max(
-    container.clientWidth - (pageState.viewMode === 'overlay' ? 96 : 56),
-    320
-  );
-  const fitScale = availableWidth / Math.max(baseViewport.width, 1);
-  const maxScale = pageState.viewMode === 'overlay' ? 2.5 : 2.0;
-
-  return Math.min(Math.max(fitScale, 1.0), maxScale);
-}
-
-function getPageModelCacheKey(
-  cacheKeyPrefix: 'left' | 'right',
-  pageNum: number,
-  scale: number
-) {
-  return `${cacheKeyPrefix}-${pageNum}-${scale.toFixed(3)}`;
-}
-
-function shouldUseOcrForModel(model: ComparePageModel) {
-  return !model.hasText || isLowQualityExtractedText(model.plainText);
-}
-
-function buildDiffFocusRegion(
-  comparison: ComparePageResult,
-  leftCanvas: HTMLCanvasElement,
-  rightCanvas: HTMLCanvasElement
-): DiffFocusRegion | undefined {
-  const leftOffsetX = Math.floor(
-    (Math.max(leftCanvas.width, rightCanvas.width) - leftCanvas.width) / 2
-  );
-  const leftOffsetY = Math.floor(
-    (Math.max(leftCanvas.height, rightCanvas.height) - leftCanvas.height) / 2
-  );
-  const rightOffsetX = Math.floor(
-    (Math.max(leftCanvas.width, rightCanvas.width) - rightCanvas.width) / 2
-  );
-  const rightOffsetY = Math.floor(
-    (Math.max(leftCanvas.height, rightCanvas.height) - rightCanvas.height) / 2
-  );
-  const bounds = {
-    minX: Infinity,
-    minY: Infinity,
-    maxX: -Infinity,
-    maxY: -Infinity,
-  };
-
-  for (const change of comparison.changes) {
-    for (const rect of change.beforeRects) {
-      bounds.minX = Math.min(bounds.minX, rect.x + leftOffsetX);
-      bounds.minY = Math.min(bounds.minY, rect.y + leftOffsetY);
-      bounds.maxX = Math.max(bounds.maxX, rect.x + leftOffsetX + rect.width);
-      bounds.maxY = Math.max(bounds.maxY, rect.y + leftOffsetY + rect.height);
-    }
-
-    for (const rect of change.afterRects) {
-      bounds.minX = Math.min(bounds.minX, rect.x + rightOffsetX);
-      bounds.minY = Math.min(bounds.minY, rect.y + rightOffsetY);
-      bounds.maxX = Math.max(bounds.maxX, rect.x + rightOffsetX + rect.width);
-      bounds.maxY = Math.max(bounds.maxY, rect.y + rightOffsetY + rect.height);
-    }
-  }
-
-  if (!Number.isFinite(bounds.minX)) {
-    return undefined;
-  }
-
-  const fullWidth = Math.max(leftCanvas.width, rightCanvas.width, 1);
-  const fullHeight = Math.max(leftCanvas.height, rightCanvas.height, 1);
-  const padding = 40;
-
-  const x = Math.max(Math.floor(bounds.minX - padding), 0);
-  const y = Math.max(Math.floor(bounds.minY - padding), 0);
-  const maxX = Math.min(Math.ceil(bounds.maxX + padding), fullWidth);
-  const maxY = Math.min(Math.ceil(bounds.maxY + padding), fullHeight);
-
-  return {
-    x,
-    y,
-    width: Math.max(maxX - x, Math.min(320, fullWidth)),
-    height: Math.max(maxY - y, Math.min(200, fullHeight)),
-  };
-}
-
-async function renderPage(
-  pdfDoc: pdfjsLib.PDFDocumentProxy,
-  pageNum: number,
-  canvas: HTMLCanvasElement,
-  container: HTMLElement,
-  placeholderId: string,
-  cacheKeyPrefix: 'left' | 'right'
-): Promise<RenderedPage> {
-  if (pageNum > pdfDoc.numPages) {
-    renderMissingPage(
-      canvas,
-      placeholderId,
-      `Page ${pageNum} does not exist in this PDF.`
-    );
-    return { model: null, exists: false };
-  }
-
-  const page = await pdfDoc.getPage(pageNum);
-
-  const targetScale = getRenderScale(page, container);
-  const scaledViewport = page.getViewport({ scale: targetScale });
-  const dpr = window.devicePixelRatio || 1;
-  const hiResViewport = page.getViewport({ scale: targetScale * dpr });
-
-  hidePlaceholder(placeholderId);
-
-  canvas.width = hiResViewport.width;
-  canvas.height = hiResViewport.height;
-  canvas.style.width = `${scaledViewport.width}px`;
-  canvas.style.height = `${scaledViewport.height}px`;
-
-  const cacheKey = getPageModelCacheKey(cacheKeyPrefix, pageNum, targetScale);
-  const cachedModel = pageModelCache.get(cacheKey);
-  const modelPromise = cachedModel
-    ? Promise.resolve(cachedModel)
-    : extractPageModel(page, scaledViewport);
-  const renderTask = page.render({
-    canvasContext: canvas.getContext('2d')!,
-    viewport: hiResViewport,
-    canvas,
-  }).promise;
-
-  const [model] = await Promise.all([modelPromise, renderTask]);
-
-  let finalModel = model;
-
-  if (!cachedModel && pageState.useOcr && shouldUseOcrForModel(model)) {
-    showLoader(`Running OCR on page ${pageNum}...`);
-    const ocrModel = await recognizePageCanvas(
-      canvas,
-      pageState.ocrLanguage,
-      function (status, progress) {
-        showLoader(`OCR: ${status}`, progress * 100);
-      }
-    );
-    finalModel = {
-      ...ocrModel,
-      pageNumber: pageNum,
-    };
-  }
-
-  pageModelCache.set(cacheKey, finalModel);
-
-  return { model: finalModel, exists: true };
-}
-
-async function loadComparisonPage(
-  pdfDoc: pdfjsLib.PDFDocumentProxy | null,
-  pageNum: number | null,
-  side: 'left' | 'right',
-  renderTarget?: {
-    canvas: HTMLCanvasElement;
-    container: HTMLElement;
-    placeholderId: string;
-  }
-): Promise<ComparisonPageLoad> {
-  if (!pdfDoc || !pageNum) {
-    if (renderTarget) {
-      renderMissingPage(
-        renderTarget.canvas,
-        renderTarget.placeholderId,
-        'No paired page for this side.'
-      );
-    }
-    return { model: null, exists: false };
-  }
-
-  if (renderTarget) {
-    return renderPage(
-      pdfDoc,
-      pageNum,
-      renderTarget.canvas,
-      renderTarget.container,
-      renderTarget.placeholderId,
-      side
-    );
-  }
-
-  const renderScale = 1.2;
-  const cacheKey = getPageModelCacheKey(side, pageNum, renderScale);
-  const cachedModel = pageModelCache.get(cacheKey);
-  if (cachedModel) {
-    return { model: cachedModel, exists: true };
-  }
-
-  const page = await pdfDoc.getPage(pageNum);
-  const viewport = page.getViewport({ scale: renderScale });
-  const canvas = document.createElement('canvas');
-  canvas.width = viewport.width;
-  canvas.height = viewport.height;
-  const context = canvas.getContext('2d');
-
-  if (!context) {
-    throw new Error('Could not create offscreen comparison canvas.');
-  }
-
-  const extractedModel = await extractPageModel(page, viewport);
-  await page.render({
-    canvasContext: context,
-    viewport,
-    canvas,
-  }).promise;
-
-  let finalModel = extractedModel;
-  if (pageState.useOcr && shouldUseOcrForModel(extractedModel)) {
-    const ocrModel = await recognizePageCanvas(canvas, pageState.ocrLanguage);
-    finalModel = {
-      ...ocrModel,
-      pageNumber: pageNum,
-    };
-  }
-
-  pageModelCache.set(cacheKey, finalModel);
-  return { model: finalModel, exists: true };
-}
-
-async function computeComparisonForPair(
-  pair: ComparePagePair,
-  options?: {
-    renderTargets?: {
-      left: {
-        canvas: HTMLCanvasElement;
-        container: HTMLElement;
-        placeholderId: string;
-      };
-      right: {
-        canvas: HTMLCanvasElement;
-        container: HTMLElement;
-        placeholderId: string;
-      };
-      diffCanvas?: HTMLCanvasElement;
-    };
-  }
-) {
-  const renderTargets = options?.renderTargets;
-  const leftPage = await loadComparisonPage(
-    pageState.pdfDoc1,
-    pair.leftPageNumber,
-    'left',
-    renderTargets?.left
-  );
-  const rightPage = await loadComparisonPage(
-    pageState.pdfDoc2,
-    pair.rightPageNumber,
-    'right',
-    renderTargets?.right
-  );
-
-  const comparison = comparePageModels(leftPage.model, rightPage.model);
-  comparison.confidence = pair.confidence;
-
-  if (
-    renderTargets?.diffCanvas &&
-    comparison.status !== 'left-only' &&
-    comparison.status !== 'right-only'
-  ) {
-    const focusRegion = buildDiffFocusRegion(
-      comparison,
-      renderTargets.left.canvas,
-      renderTargets.right.canvas
-    );
-    comparison.visualDiff = renderVisualDiff(
-      renderTargets.left.canvas,
-      renderTargets.right.canvas,
-      renderTargets.diffCanvas,
-      focusRegion
-    );
-  } else if (renderTargets?.diffCanvas) {
-    clearCanvas(renderTargets.diffCanvas);
-  }
-
-  return comparison;
-}
+let renderGeneration = 0;
 
 function getActivePair() {
   return pageState.pagePairs[pageState.currentPage - 1] || null;
+}
+
+function getRenderContext(): CompareRenderContext {
+  return {
+    useOcr: pageState.useOcr,
+    ocrLanguage: pageState.ocrLanguage,
+    viewMode: pageState.viewMode,
+    showLoader,
+  };
 }
 
 function getVisibleChanges(result: ComparePageResult | null) {
@@ -508,14 +201,16 @@ function renderChangeList() {
   const emptyState = getElement<HTMLDivElement>('change-list-empty');
   const prevChangeBtn = getElement<HTMLButtonElement>('prev-change-btn');
   const nextChangeBtn = getElement<HTMLButtonElement>('next-change-btn');
-  const exportReportBtn = getElement<HTMLButtonElement>('export-report-btn');
+  const exportDropdownBtn = getElement<HTMLButtonElement>(
+    'export-dropdown-btn'
+  );
 
   if (
     !list ||
     !emptyState ||
     !prevChangeBtn ||
     !nextChangeBtn ||
-    !exportReportBtn
+    !exportDropdownBtn
   )
     return;
 
@@ -531,7 +226,7 @@ function renderChangeList() {
     list.classList.add('hidden');
     prevChangeBtn.disabled = true;
     nextChangeBtn.disabled = true;
-    exportReportBtn.disabled = pageState.pagePairs.length === 0;
+    exportDropdownBtn.disabled = pageState.pagePairs.length === 0;
     return;
   }
 
@@ -560,7 +255,7 @@ function renderChangeList() {
 
   prevChangeBtn.disabled = false;
   nextChangeBtn.disabled = false;
-  exportReportBtn.disabled = pageState.pagePairs.length === 0;
+  exportDropdownBtn.disabled = pageState.pagePairs.length === 0;
 }
 
 function renderComparisonUI() {
@@ -600,34 +295,31 @@ async function buildPagePairs() {
 
 async function buildReportResults() {
   const results: ComparePageResult[] = [];
+  const ctx = getRenderContext();
 
   for (const pair of pageState.pagePairs) {
-    const cached = comparisonResultsCache.get(pair.pairIndex);
+    const cached = caches.comparisonResultsCache.get(pair.pairIndex);
     if (cached) {
       results.push(cached);
       continue;
     }
 
-    const leftSignatureKey = pair.leftPageNumber
-      ? `left-${pair.leftPageNumber}`
-      : '';
-    const rightSignatureKey = pair.rightPageNumber
-      ? `right-${pair.rightPageNumber}`
-      : '';
-    const cachedResult = comparisonCache.get(
-      `${leftSignatureKey || 'none'}:${rightSignatureKey || 'none'}:${pageState.useOcr ? 'ocr' : 'no-ocr'}`
-    );
+    const cacheKey = getComparisonCacheKey(pair, pageState.useOcr);
+    const cachedResult = caches.comparisonCache.get(cacheKey);
     if (cachedResult) {
       results.push(cachedResult);
       continue;
     }
 
-    const comparison = await computeComparisonForPair(pair);
-    comparisonCache.set(
-      `${leftSignatureKey || 'none'}:${rightSignatureKey || 'none'}:${pageState.useOcr ? 'ocr' : 'no-ocr'}`,
-      comparison
+    const comparison = await computeComparisonForPair(
+      pageState.pdfDoc1,
+      pageState.pdfDoc2,
+      pair,
+      caches,
+      ctx
     );
-    comparisonResultsCache.set(pair.pairIndex, comparison);
+    caches.comparisonCache.set(cacheKey, comparison);
+    caches.comparisonResultsCache.set(pair.pairIndex, comparison);
     results.push(comparison);
   }
 
@@ -639,6 +331,8 @@ async function renderBothPages() {
 
   const pair = getActivePair();
   if (!pair) return;
+
+  const gen = ++renderGeneration;
 
   showLoader(
     `Loading comparison ${pageState.currentPage} of ${pageState.pagePairs.length}...`
@@ -652,27 +346,35 @@ async function renderBothPages() {
   ) as HTMLCanvasElement;
   const panel1 = getElement<HTMLElement>('panel-1') as HTMLElement;
   const panel2 = getElement<HTMLElement>('panel-2') as HTMLElement;
-  const wrapper = getElement<HTMLElement>(
-    'compare-viewer-wrapper'
-  ) as HTMLElement;
 
   const container1 = panel1;
   const container2 = pageState.viewMode === 'overlay' ? panel1 : panel2;
 
-  const comparison = await computeComparisonForPair(pair, {
-    renderTargets: {
-      left: {
-        canvas: canvas1,
-        container: container1,
-        placeholderId: 'placeholder-1',
+  const ctx = getRenderContext();
+
+  const comparison = await computeComparisonForPair(
+    pageState.pdfDoc1,
+    pageState.pdfDoc2,
+    pair,
+    caches,
+    ctx,
+    {
+      renderTargets: {
+        left: {
+          canvas: canvas1,
+          container: container1,
+          placeholderId: 'placeholder-1',
+        },
+        right: {
+          canvas: canvas2,
+          container: container2,
+          placeholderId: 'placeholder-2',
+        },
       },
-      right: {
-        canvas: canvas2,
-        container: container2,
-        placeholderId: 'placeholder-2',
-      },
-    },
-  });
+    }
+  );
+
+  if (gen !== renderGeneration) return;
 
   pageState.currentComparison = comparison;
   pageState.activeChangeIndex = 0;
@@ -815,9 +517,9 @@ async function handleFileInput(
       showLoader(`Loading ${file.name}...`);
       const arrayBuffer = await file.arrayBuffer();
       pageState[docKey] = await getPDFDocument({ data: arrayBuffer }).promise;
-      pageModelCache.clear();
-      comparisonCache.clear();
-      comparisonResultsCache.clear();
+      caches.pageModelCache.clear();
+      caches.comparisonCache.clear();
+      caches.comparisonResultsCache.clear();
       pageState.changeSearchQuery = '';
 
       const searchInput = getElement<HTMLInputElement>('compare-search-input');
@@ -880,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function () {
     prevBtn.addEventListener('click', function () {
       if (pageState.currentPage > 1) {
         pageState.currentPage--;
-        renderBothPages();
+        renderBothPages().catch(console.error);
       }
     });
   }
@@ -895,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function () {
         );
       if (pageState.currentPage < totalPairs) {
         pageState.currentPage++;
-        renderBothPages();
+        renderBothPages().catch(console.error);
       }
     });
   }
@@ -955,7 +657,10 @@ document.addEventListener('DOMContentLoaded', function () {
   ) as HTMLInputElement;
   const prevChangeBtn = getElement<HTMLButtonElement>('prev-change-btn');
   const nextChangeBtn = getElement<HTMLButtonElement>('next-change-btn');
-  const exportReportBtn = getElement<HTMLButtonElement>('export-report-btn');
+  const exportDropdownBtn = getElement<HTMLButtonElement>(
+    'export-dropdown-btn'
+  );
+  const exportDropdownMenu = getElement<HTMLDivElement>('export-dropdown-menu');
   const ocrToggle = getElement<HTMLInputElement>('ocr-toggle');
   const searchInput = getElement<HTMLInputElement>('compare-search-input');
 
@@ -1037,12 +742,17 @@ document.addEventListener('DOMContentLoaded', function () {
   if (ocrToggle) {
     ocrToggle.checked = pageState.useOcr;
     ocrToggle.addEventListener('change', async function () {
-      pageState.useOcr = ocrToggle.checked;
-      pageModelCache.clear();
-      comparisonCache.clear();
-      comparisonResultsCache.clear();
-      if (pageState.pdfDoc1 && pageState.pdfDoc2) {
-        await renderBothPages();
+      try {
+        pageState.useOcr = ocrToggle.checked;
+        caches.pageModelCache.clear();
+        caches.comparisonCache.clear();
+        caches.comparisonResultsCache.clear();
+        if (pageState.pdfDoc1 && pageState.pdfDoc2) {
+          await renderBothPages();
+        }
+      } catch (e) {
+        console.error('OCR toggle failed:', e);
+        hideLoader();
       }
     });
   }
@@ -1063,22 +773,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.cancelAnimationFrame(resizeFrame);
     resizeFrame = window.requestAnimationFrame(function () {
-      renderBothPages();
+      renderBothPages().catch(console.error);
     });
   });
 
-  if (exportReportBtn) {
-    exportReportBtn.addEventListener('click', async function () {
-      if (pageState.pagePairs.length === 0) return;
-      showLoader('Building compare report...');
-      const results = await buildReportResults();
-      exportCompareHtmlReport(
-        documentNames.left,
-        documentNames.right,
-        pageState.pagePairs,
-        results
-      );
-      hideLoader();
+  if (exportDropdownBtn && exportDropdownMenu) {
+    exportDropdownBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      exportDropdownMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', function () {
+      exportDropdownMenu.classList.add('hidden');
+    });
+
+    exportDropdownMenu.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+
+    document.querySelectorAll('.export-menu-item').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        const mode = (btn as HTMLElement).dataset
+          .exportMode as ComparePdfExportMode;
+        if (!mode || pageState.pagePairs.length === 0) return;
+        exportDropdownMenu.classList.add('hidden');
+        try {
+          showLoader('Preparing PDF export...');
+          await exportComparePdf(
+            mode,
+            pageState.pdfDoc1,
+            pageState.pdfDoc2,
+            pageState.pagePairs,
+            function (message, percent) {
+              showLoader(message, percent);
+            }
+          );
+        } catch (e) {
+          console.error('PDF export failed:', e);
+          showAlert('Export Error', 'Could not export comparison PDF.');
+        } finally {
+          hideLoader();
+        }
+      });
     });
   }
 

@@ -1,1 +1,9 @@
-export type { CompareState } from '../compare/types.ts';
+export type {
+  CompareState,
+  ComparePdfExportMode,
+  RenderedPage,
+  ComparisonPageLoad,
+  DiffFocusRegion,
+  CompareCaches,
+  CompareRenderContext,
+} from '../compare/types.ts';

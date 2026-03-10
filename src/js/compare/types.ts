@@ -1,6 +1,39 @@
 import type * as pdfjsLib from 'pdfjs-dist';
+import type { LRUCache } from './lru-cache.ts';
 
 export type CompareViewMode = 'overlay' | 'side-by-side';
+
+export type ComparePdfExportMode = 'split' | 'alternating' | 'left' | 'right';
+
+export interface RenderedPage {
+  model: ComparePageModel | null;
+  exists: boolean;
+}
+
+export interface ComparisonPageLoad {
+  model: ComparePageModel | null;
+  exists: boolean;
+}
+
+export interface DiffFocusRegion {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface CompareCaches {
+  pageModelCache: LRUCache<string, ComparePageModel>;
+  comparisonCache: LRUCache<string, ComparePageResult>;
+  comparisonResultsCache: LRUCache<number, ComparePageResult>;
+}
+
+export interface CompareRenderContext {
+  useOcr: boolean;
+  ocrLanguage: string;
+  viewMode: CompareViewMode;
+  showLoader: (message: string, percent?: number) => void;
+}
 
 export interface CompareRectangle {
   x: number;
