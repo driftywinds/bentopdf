@@ -8,13 +8,19 @@ import type {
   CompareTextItem,
   CompareWordToken,
 } from '../types.ts';
-import { calculateBoundingRect } from './text-normalization.ts';
+import {
+  calculateBoundingRect,
+  containsCJK,
+  segmentCJKText,
+} from './text-normalization.ts';
 import { COMPARE_GEOMETRY } from '../config.ts';
 
 interface WordToken {
   word: string;
   compareWord: string;
   rect: CompareRectangle;
+  fontName?: string;
+  fontSize?: number;
 }
 
 function getCharMap(line: CompareTextItem): CharPosition[] {
@@ -30,11 +36,15 @@ function getCharMap(line: CompareTextItem): CharPosition[] {
 
 function splitLineIntoWords(line: CompareTextItem): WordToken[] {
   if (line.wordTokens && line.wordTokens.length > 0) {
-    return line.wordTokens.map((token: CompareWordToken) => ({
+    const baseTokens = line.wordTokens.map((token: CompareWordToken) => ({
       word: token.word,
       compareWord: token.compareWord,
       rect: token.rect,
+      fontName: token.fontName,
+      fontSize: token.fontSize,
     }));
+    if (!containsCJK(line.normalizedText)) return baseTokens;
+    return baseTokens.flatMap(splitCJKToken);
   }
 
   const words = line.normalizedText.split(/\s+/).filter(Boolean);
@@ -43,7 +53,7 @@ function splitLineIntoWords(line: CompareTextItem): WordToken[] {
   const charMap = getCharMap(line);
   let offset = 0;
 
-  return words.map((word) => {
+  const baseTokens = words.map((word) => {
     const startIndex = line.normalizedText.indexOf(word, offset);
     const endIndex = startIndex + word.length - 1;
     offset = startIndex + word.length;
@@ -73,6 +83,31 @@ function splitLineIntoWords(line: CompareTextItem): WordToken[] {
       word,
       compareWord: word.toLowerCase(),
       rect: { x, y: line.rect.y, width: w, height: line.rect.height },
+    };
+  });
+
+  if (!containsCJK(line.normalizedText)) return baseTokens;
+  return baseTokens.flatMap(splitCJKToken);
+}
+
+function splitCJKToken(token: WordToken): WordToken[] {
+  if (!containsCJK(token.word)) return [token];
+
+  const segments = segmentCJKText(token.word);
+  if (segments.length <= 1) return [token];
+
+  const totalLen = token.word.length;
+  const charWidth = token.rect.width / Math.max(totalLen, 1);
+  let charOffset = 0;
+
+  return segments.map((seg) => {
+    const x = token.rect.x + charOffset * charWidth;
+    const width = seg.length * charWidth;
+    charOffset += seg.length;
+    return {
+      word: seg,
+      compareWord: seg.toLowerCase(),
+      rect: { x, y: token.rect.y, width, height: token.rect.height },
     };
   });
 }
@@ -138,6 +173,7 @@ function createWordChange(
     changes.push({
       id,
       type,
+      category: 'text',
       description: `Replaced "${beforeText}" with "${afterText}"`,
       beforeText,
       afterText,
@@ -148,6 +184,7 @@ function createWordChange(
     changes.push({
       id,
       type,
+      category: 'text',
       description: `Removed "${beforeText}"`,
       beforeText,
       afterText: '',
@@ -158,6 +195,7 @@ function createWordChange(
     changes.push({
       id,
       type,
+      category: 'text',
       description: `Added "${afterText}"`,
       beforeText: '',
       afterText,
@@ -173,9 +211,11 @@ function toSummary(changes: CompareTextChange[]): CompareChangeSummary {
       if (change.type === 'added') summary.added += 1;
       if (change.type === 'removed') summary.removed += 1;
       if (change.type === 'modified') summary.modified += 1;
+      if (change.type === 'moved') summary.moved += 1;
+      if (change.type === 'style-changed') summary.styleChanged += 1;
       return summary;
     },
-    { added: 0, removed: 0, modified: 0 }
+    { added: 0, removed: 0, modified: 0, moved: 0, styleChanged: 0 }
   );
 }
 
@@ -233,5 +273,202 @@ export function diffTextRuns(
     afterIndex += count;
   }
 
+  detectStyleChanges(changes, beforeWords, afterWords, rawChanges);
+  detectMovedText(changes);
+
   return { changes, summary: toSummary(changes) };
+}
+
+function normalizeFontName(name: string): string {
+  return name.replace(/^g_d\d+_/, 'g_d_');
+}
+
+function hasStyleDifference(before: WordToken, after: WordToken): boolean {
+  if (
+    before.fontName &&
+    after.fontName &&
+    normalizeFontName(before.fontName) !== normalizeFontName(after.fontName)
+  )
+    return true;
+  if (
+    before.fontSize &&
+    after.fontSize &&
+    Math.abs(before.fontSize - after.fontSize) > 0.5
+  )
+    return true;
+  return false;
+}
+
+function detectStyleChanges(
+  changes: CompareTextChange[],
+  beforeWords: WordToken[],
+  afterWords: WordToken[],
+  rawChanges: ReturnType<typeof diffArrays<string>>
+) {
+  interface StyleFragment {
+    bFont: string;
+    aFont: string;
+    bSize: number | undefined;
+    aSize: number | undefined;
+    text: string;
+    beforeRects: CompareRectangle[];
+    afterRects: CompareRectangle[];
+  }
+
+  const fragments: StyleFragment[] = [];
+  let beforeIdx = 0;
+  let afterIdx = 0;
+
+  for (const change of rawChanges) {
+    const count = change.value.length;
+    if (change.removed) {
+      beforeIdx += count;
+      continue;
+    }
+    if (change.added) {
+      afterIdx += count;
+      continue;
+    }
+
+    let styleRunStart = -1;
+    for (let k = 0; k < count; k++) {
+      const bw = beforeWords[beforeIdx + k];
+      const aw = afterWords[afterIdx + k];
+      const isDiff = hasStyleDifference(bw, aw);
+
+      if (isDiff && styleRunStart < 0) {
+        styleRunStart = k;
+      }
+      if ((!isDiff || k === count - 1) && styleRunStart >= 0) {
+        const end = isDiff ? k + 1 : k;
+        const bTokens = beforeWords.slice(
+          beforeIdx + styleRunStart,
+          beforeIdx + end
+        );
+        const aTokens = afterWords.slice(
+          afterIdx + styleRunStart,
+          afterIdx + end
+        );
+        fragments.push({
+          bFont: bTokens[0].fontName ?? 'unknown',
+          aFont: aTokens[0].fontName ?? 'unknown',
+          bSize: bTokens[0].fontSize,
+          aSize: aTokens[0].fontSize,
+          text: bTokens.map((w) => w.word).join(' '),
+          beforeRects: groupAdjacentRects(bTokens.map((w) => w.rect)),
+          afterRects: groupAdjacentRects(aTokens.map((w) => w.rect)),
+        });
+        styleRunStart = -1;
+      }
+    }
+
+    beforeIdx += count;
+    afterIdx += count;
+  }
+
+  const groups = new Map<string, StyleFragment[]>();
+  for (const frag of fragments) {
+    const key = `${frag.bFont}→${frag.aFont}|${frag.bSize ?? ''}→${frag.aSize ?? ''}`;
+    const arr = groups.get(key);
+    if (arr) arr.push(frag);
+    else groups.set(key, [frag]);
+  }
+
+  for (const groupFrags of groups.values()) {
+    const bFont = groupFrags[0].bFont;
+    const aFont = groupFrags[0].aFont;
+    const bSize = groupFrags[0].bSize;
+    const aSize = groupFrags[0].aSize;
+    const allText = groupFrags.map((f) => f.text).join(' … ');
+    const allBeforeRects = groupFrags.flatMap((f) => f.beforeRects);
+    const allAfterRects = groupFrags.flatMap((f) => f.afterRects);
+
+    let desc = `Style changed (${groupFrags.length} regions)`;
+    const details: string[] = [];
+    if (bFont !== aFont) details.push(`Font: ${bFont} → ${aFont}`);
+    if (bSize && aSize && Math.abs(bSize - aSize) > 0.5)
+      details.push(`Font size: ${bSize} → ${aSize}`);
+    if (details.length) desc += '\n' + details.map((d) => `• ${d}`).join('\n');
+
+    changes.push({
+      id: `style-changed-${changes.length}`,
+      type: 'style-changed',
+      category: 'formatting',
+      description: desc,
+      beforeText: allText,
+      afterText: allText,
+      beforeRects: allBeforeRects,
+      afterRects: allAfterRects,
+    });
+  }
+}
+
+const MOVE_MIN_WORDS = 3;
+const MOVE_SIMILARITY_THRESHOLD = 0.8;
+
+function normalizeForMove(text: string): string {
+  return text.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function moveSimilarity(a: string, b: string): number {
+  if (a === b) return 1;
+  if (!a || !b) return 0;
+  const aWords = a.split(' ');
+  const bWords = b.split(' ');
+  const bSet = new Set(bWords);
+  let matches = 0;
+  for (const w of aWords) {
+    if (bSet.has(w)) matches++;
+  }
+  return matches / Math.max(aWords.length, bWords.length);
+}
+
+function detectMovedText(changes: CompareTextChange[]) {
+  const removed = changes.filter((c) => c.type === 'removed');
+  const added = changes.filter((c) => c.type === 'added');
+  if (removed.length === 0 || added.length === 0) return;
+
+  const matchedRemoved = new Set<string>();
+  const matchedAdded = new Set<string>();
+
+  for (const rem of removed) {
+    const remNorm = normalizeForMove(rem.beforeText);
+    const remWordCount = remNorm.split(' ').length;
+    if (remWordCount < MOVE_MIN_WORDS) continue;
+
+    let bestMatch: CompareTextChange | null = null;
+    let bestScore = MOVE_SIMILARITY_THRESHOLD;
+
+    for (const add of added) {
+      if (matchedAdded.has(add.id)) continue;
+      const addNorm = normalizeForMove(add.afterText);
+      const score = moveSimilarity(remNorm, addNorm);
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = add;
+      }
+    }
+
+    if (bestMatch) {
+      matchedRemoved.add(rem.id);
+      matchedAdded.add(bestMatch.id);
+
+      changes.push({
+        id: `moved-${changes.length}`,
+        type: 'moved',
+        category: 'text',
+        description: `Moved "${rem.beforeText.slice(0, 80)}"`,
+        beforeText: rem.beforeText,
+        afterText: bestMatch.afterText,
+        beforeRects: rem.beforeRects,
+        afterRects: bestMatch.afterRects,
+      });
+    }
+  }
+
+  for (let i = changes.length - 1; i >= 0; i--) {
+    if (matchedRemoved.has(changes[i].id) || matchedAdded.has(changes[i].id)) {
+      changes.splice(i, 1);
+    }
+  }
 }

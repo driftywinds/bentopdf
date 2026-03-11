@@ -1,6 +1,8 @@
 import * as pdfjsLib from 'pdfjs-dist';
 
 import type {
+  CompareAnnotation,
+  CompareImageRef,
   ComparePageModel,
   CompareTextItem,
   CharPosition,
@@ -9,6 +11,8 @@ import type {
 import {
   joinCompareTextItems,
   normalizeCompareText,
+  containsCJK,
+  segmentCJKText,
 } from './text-normalization.ts';
 
 type PageTextItem = {
@@ -69,11 +73,14 @@ function measureTextWidth(fontSpec: string, text: string): number {
   return width;
 }
 
+type FontNameMap = Map<string, string>;
+
 function buildItemWordTokens(
   viewport: pdfjsLib.PageViewport,
   item: PageTextItem,
   fallbackRect: CompareTextItem['rect'],
-  styles: TextStyles
+  styles: TextStyles,
+  fontNameMap: FontNameMap
 ): CompareWordToken[] {
   const rawText = item.str || '';
   if (!rawText.trim()) {
@@ -216,19 +223,47 @@ function buildItemWordTokens(
         (previousToken
           ? shouldJoinTokenWithPrevious(previousToken.word, normalizedWord)
           : false),
+      fontName: fontNameMap.get(item.fontName) ?? item.fontName ?? undefined,
+      fontSize: fontScale > 0 ? Math.round(fontScale * 100) / 100 : undefined,
     });
 
     previousEnd = endIndex;
   }
 
-  return tokens;
+  if (!containsCJK(rawText)) return tokens;
+  return tokens.flatMap(splitCJKWordToken);
+}
+
+function splitCJKWordToken(token: CompareWordToken): CompareWordToken[] {
+  if (!containsCJK(token.word)) return [token];
+  const segments = segmentCJKText(token.word);
+  if (segments.length <= 1) return [token];
+
+  const totalLen = token.word.length;
+  const charWidth = token.rect.width / Math.max(totalLen, 1);
+  let charOffset = 0;
+
+  return segments.map((seg, i) => {
+    const x = token.rect.x + charOffset * charWidth;
+    const width = seg.length * charWidth;
+    charOffset += seg.length;
+    return {
+      word: seg,
+      compareWord: seg.toLowerCase(),
+      rect: { x, y: token.rect.y, width, height: token.rect.height },
+      joinsWithPrevious: i > 0 ? true : token.joinsWithPrevious,
+      fontName: token.fontName,
+      fontSize: token.fontSize,
+    };
+  });
 }
 
 function toRect(
   viewport: pdfjsLib.PageViewport,
   item: PageTextItem,
   index: number,
-  styles: TextStyles
+  styles: TextStyles,
+  fontNameMap: FontNameMap
 ) {
   const normalizedText = normalizeCompareText(item.str);
 
@@ -256,7 +291,7 @@ function toRect(
     text: item.str,
     normalizedText,
     rect,
-    wordTokens: buildItemWordTokens(viewport, item, rect, styles),
+    wordTokens: buildItemWordTokens(viewport, item, rect, styles, fontNameMap),
   } satisfies CompareTextItem;
 }
 
@@ -387,6 +422,8 @@ function mergeWordTokenRects(
       width: maxX - minX,
       height: maxY - minY,
     },
+    fontName: left.fontName,
+    fontSize: left.fontSize,
   };
 }
 
@@ -431,6 +468,8 @@ function buildMergedWordTokens(lineItems: CompareTextItem[]) {
           word: token.word,
           compareWord: token.compareWord,
           rect: token.rect,
+          fontName: token.fontName,
+          fontSize: token.fontSize,
         });
       }
     });
@@ -496,16 +535,131 @@ export function mergeIntoLines(
   });
 }
 
+function extractAnnotations(
+  rawAnnotations: Array<Record<string, unknown>>,
+  viewport: pdfjsLib.PageViewport
+): CompareAnnotation[] {
+  return rawAnnotations
+    .filter((ann) => {
+      const subtype = ann.subtype as string | undefined;
+      return subtype && subtype !== 'Link' && subtype !== 'Widget';
+    })
+    .map((ann, index) => {
+      const rawRect = ann.rect as number[] | undefined;
+      let rect = { x: 0, y: 0, width: 0, height: 0 };
+      if (rawRect && rawRect.length === 4) {
+        const [p1, p2] = [
+          viewport.convertToViewportPoint(rawRect[0], rawRect[1]),
+          viewport.convertToViewportPoint(rawRect[2], rawRect[3]),
+        ];
+        const x = Math.min(p1[0], p2[0]);
+        const y = Math.min(p1[1], p2[1]);
+        rect = {
+          x,
+          y,
+          width: Math.max(Math.abs(p2[0] - p1[0]), 1),
+          height: Math.max(Math.abs(p2[1] - p1[1]), 1),
+        };
+      }
+      const color = ann.color as number[] | undefined;
+      return {
+        id: `ann-${index}`,
+        subtype: (ann.subtype as string) || 'Unknown',
+        rect,
+        contents: ((ann.contents as string) || '').trim(),
+        title: ((ann.title as string) || '').trim(),
+        color: color ? `rgb(${color.join(',')})` : '',
+      };
+    });
+}
+
+function extractImages(
+  opList: { fnArray: number[]; argsArray: unknown[][] },
+  viewport: pdfjsLib.PageViewport
+): CompareImageRef[] {
+  const OPS_PAINT_IMAGE = 85;
+  const OPS_PAINT_INLINE_IMAGE = 84;
+  const images: CompareImageRef[] = [];
+
+  for (let i = 0; i < opList.fnArray.length; i++) {
+    const op = opList.fnArray[i];
+    if (op !== OPS_PAINT_IMAGE && op !== OPS_PAINT_INLINE_IMAGE) continue;
+
+    const args = opList.argsArray[i];
+    if (!args) continue;
+
+    let imgWidth = 0;
+    let imgHeight = 0;
+
+    if (op === OPS_PAINT_INLINE_IMAGE && args[0]) {
+      const imgData = args[0] as Record<string, unknown>;
+      imgWidth = (imgData.width as number) || 0;
+      imgHeight = (imgData.height as number) || 0;
+    } else if (op === OPS_PAINT_IMAGE) {
+      imgWidth = (args[1] as number) || 0;
+      imgHeight = (args[2] as number) || 0;
+    }
+
+    if (imgWidth < 2 || imgHeight < 2) continue;
+
+    const [vpX, vpY] = viewport.convertToViewportPoint(0, 0);
+    const [vpX2, vpY2] = viewport.convertToViewportPoint(imgWidth, imgHeight);
+    const x = Math.min(vpX, vpX2);
+    const y = Math.min(vpY, vpY2);
+
+    images.push({
+      id: `img-${images.length}`,
+      rect: {
+        x,
+        y,
+        width: Math.abs(vpX2 - vpX) || imgWidth,
+        height: Math.abs(vpY2 - vpY) || imgHeight,
+      },
+      width: imgWidth,
+      height: imgHeight,
+    });
+  }
+
+  return images;
+}
+
 export async function extractPageModel(
   page: pdfjsLib.PDFPageProxy,
   viewport: pdfjsLib.PageViewport
 ): Promise<ComparePageModel> {
-  const textContent = await page.getTextContent();
+  const [textContent, rawAnnotations, opList] = await Promise.all([
+    page.getTextContent(),
+    page
+      .getAnnotations({ intent: 'any' })
+      .catch(() => [] as Array<Record<string, unknown>>),
+    page
+      .getOperatorList()
+      .catch(() => ({ fnArray: [] as number[], argsArray: [] as unknown[][] })),
+  ]);
   const styles = textContent.styles ?? {};
+
+  const fontNameMap: FontNameMap = new Map();
+  const seenFonts = new Set<string>();
+  for (const item of textContent.items) {
+    if ('fontName' in item && typeof item.fontName === 'string') {
+      seenFonts.add(item.fontName);
+    }
+  }
+  for (const internalName of seenFonts) {
+    try {
+      if (page.commonObjs.has(internalName)) {
+        const fontObj = page.commonObjs.get(internalName);
+        if (fontObj?.name && typeof fontObj.name === 'string') {
+          fontNameMap.set(internalName, fontObj.name);
+        }
+      }
+    } catch {}
+  }
+
   const rawItems = sortCompareTextItems(
     textContent.items
       .filter((item): item is PageTextItem => 'str' in item)
-      .map((item, index) => toRect(viewport, item, index, styles))
+      .map((item, index) => toRect(viewport, item, index, styles, fontNameMap))
       .filter((item) => item.normalizedText.length > 0)
   );
   const textItems = mergeIntoLines(rawItems);
@@ -518,5 +672,13 @@ export async function extractPageModel(
     plainText: joinCompareTextItems(textItems),
     hasText: textItems.length > 0,
     source: 'pdfjs',
+    annotations: extractAnnotations(
+      rawAnnotations as Array<Record<string, unknown>>,
+      viewport
+    ),
+    images: extractImages(
+      opList as { fnArray: number[]; argsArray: unknown[][] },
+      viewport
+    ),
   };
 }

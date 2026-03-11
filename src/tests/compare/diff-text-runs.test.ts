@@ -6,7 +6,11 @@ import {
   mergeIntoLines,
   sortCompareTextItems,
 } from '@/js/compare/engine/extract-page-model.ts';
-import type { ComparePageModel, CompareTextItem } from '@/js/compare/types.ts';
+import type {
+  ComparePageModel,
+  CompareTextItem,
+  CompareWordToken,
+} from '@/js/compare/types.ts';
 
 function makeItem(id: string, text: string): CompareTextItem {
   return {
@@ -39,7 +43,13 @@ describe('diffTextRuns', () => {
       [makeItem('a', 'Hello'), makeItem('c', 'there')]
     );
 
-    expect(result.summary).toEqual({ added: 0, removed: 0, modified: 1 });
+    expect(result.summary).toEqual({
+      added: 0,
+      removed: 0,
+      modified: 1,
+      moved: 0,
+      styleChanged: 0,
+    });
     expect(result.changes).toHaveLength(1);
     expect(result.changes[0].type).toBe('modified');
     expect(result.changes[0].beforeText).toBe('world');
@@ -52,7 +62,13 @@ describe('diffTextRuns', () => {
       [makeItem('a', 'Hello'), makeItem('b', 'again')]
     );
 
-    expect(result.summary).toEqual({ added: 1, removed: 0, modified: 0 });
+    expect(result.summary).toEqual({
+      added: 1,
+      removed: 0,
+      modified: 0,
+      moved: 0,
+      styleChanged: 0,
+    });
     expect(result.changes[0].type).toBe('added');
   });
 
@@ -86,7 +102,13 @@ describe('diffTextRuns', () => {
     );
 
     expect(result.changes).toHaveLength(2);
-    expect(result.summary).toEqual({ added: 1, removed: 0, modified: 1 });
+    expect(result.summary).toEqual({
+      added: 1,
+      removed: 0,
+      modified: 1,
+      moved: 0,
+      styleChanged: 0,
+    });
     expect(
       result.changes.some(
         (change) =>
@@ -308,6 +330,221 @@ describe('mergeIntoLines', () => {
     );
 
     expect(result.changes).toHaveLength(0);
-    expect(result.summary).toEqual({ added: 0, removed: 0, modified: 0 });
+    expect(result.summary).toEqual({
+      added: 0,
+      removed: 0,
+      modified: 0,
+      moved: 0,
+      styleChanged: 0,
+    });
+  });
+});
+
+function makeItemWithTokens(
+  id: string,
+  text: string,
+  fontName?: string,
+  fontSize?: number
+): CompareTextItem {
+  const words = text.split(/\s+/).filter(Boolean);
+  const charWidth = 10 / Math.max(text.length, 1);
+  let offset = 0;
+  const wordTokens: CompareWordToken[] = words.map((w) => {
+    const startIndex = text.indexOf(w, offset);
+    offset = startIndex + w.length;
+    return {
+      word: w,
+      compareWord: w.toLowerCase(),
+      rect: {
+        x: startIndex * charWidth,
+        y: 0,
+        width: w.length * charWidth,
+        height: 10,
+      },
+      fontName,
+      fontSize,
+    };
+  });
+  return {
+    id,
+    text,
+    normalizedText: text,
+    rect: { x: 0, y: 0, width: 10, height: 10 },
+    wordTokens,
+  };
+}
+
+describe('detectStyleChanges', () => {
+  it('detects font name change on identical text', () => {
+    const result = diffTextRuns(
+      [makeItemWithTokens('a', 'Hello world test', 'Arial', 12)],
+      [makeItemWithTokens('b', 'Hello world test', 'Times', 12)]
+    );
+
+    expect(result.summary.styleChanged).toBe(1);
+    expect(result.changes.some((c) => c.type === 'style-changed')).toBe(true);
+  });
+
+  it('detects font size change on identical text', () => {
+    const result = diffTextRuns(
+      [makeItemWithTokens('a', 'Hello world test', 'Arial', 12)],
+      [makeItemWithTokens('b', 'Hello world test', 'Arial', 16)]
+    );
+
+    expect(result.summary.styleChanged).toBe(1);
+    const sc = result.changes.find((c) => c.type === 'style-changed')!;
+    expect(sc.beforeText).toBe('Hello world test');
+  });
+
+  it('ignores negligible font size difference', () => {
+    const result = diffTextRuns(
+      [makeItemWithTokens('a', 'Same text here', 'Arial', 12)],
+      [makeItemWithTokens('b', 'Same text here', 'Arial', 12.3)]
+    );
+
+    expect(result.summary.styleChanged).toBe(0);
+  });
+
+  it('reports no style change when fonts match', () => {
+    const result = diffTextRuns(
+      [makeItemWithTokens('a', 'Identical font', 'Arial', 12)],
+      [makeItemWithTokens('b', 'Identical font', 'Arial', 12)]
+    );
+
+    expect(result.changes).toHaveLength(0);
+    expect(result.summary.styleChanged).toBe(0);
+  });
+
+  it('ignores pdfjs document-scoped font name prefixes', () => {
+    const result = diffTextRuns(
+      [makeItemWithTokens('a', 'Same font here', 'g_d0_f3', 12)],
+      [makeItemWithTokens('b', 'Same font here', 'g_d1_f3', 12)]
+    );
+
+    expect(result.changes).toHaveLength(0);
+    expect(result.summary.styleChanged).toBe(0);
+  });
+});
+
+describe('detectMovedText', () => {
+  it('detects moved text block with identical words', () => {
+    const result = diffTextRuns(
+      [
+        makeItem('a', 'Introduction to the topic'),
+        makeItem('b', 'Another paragraph here'),
+      ],
+      [
+        makeItem('c', 'Another paragraph here'),
+        makeItem('d', 'Introduction to the topic'),
+      ]
+    );
+
+    expect(result.summary.moved).toBeGreaterThanOrEqual(1);
+    expect(result.changes.some((c) => c.type === 'moved')).toBe(true);
+    expect(result.changes.some((c) => c.type === 'removed')).toBe(false);
+    expect(result.changes.some((c) => c.type === 'added')).toBe(false);
+  });
+
+  it('does not detect move for short text', () => {
+    const result = diffTextRuns(
+      [makeItem('a', 'Hi'), makeItem('b', 'World')],
+      [makeItem('c', 'World'), makeItem('d', 'Hi')]
+    );
+
+    expect(result.summary.moved).toBe(0);
+  });
+
+  it('does not detect move when text is dissimilar', () => {
+    const result = diffTextRuns(
+      [makeItem('a', 'This is the first paragraph with details')],
+      [makeItem('b', 'Completely different content and wording here')]
+    );
+
+    expect(result.summary.moved).toBe(0);
+  });
+});
+
+describe('CJK segmentation in diffTextRuns', () => {
+  it('segments Chinese text into words', () => {
+    const result = diffTextRuns(
+      [makeItem('a', '日本語テストです')],
+      [makeItem('b', '日本語テストでした')]
+    );
+
+    expect(result.changes.length).toBeGreaterThan(0);
+    expect(result.summary.modified).toBeGreaterThanOrEqual(1);
+  });
+
+  it('reports no changes for identical CJK text', () => {
+    const result = diffTextRuns(
+      [makeItem('a', '日本語テストです')],
+      [makeItem('b', '日本語テストです')]
+    );
+
+    expect(result.changes).toHaveLength(0);
+  });
+});
+
+describe('content categories', () => {
+  it('assigns text category to added/removed/modified changes', () => {
+    const result = diffTextRuns(
+      [makeItem('a', 'Hello world')],
+      [makeItem('b', 'Hello there')]
+    );
+
+    expect(result.changes).toHaveLength(1);
+    expect(result.changes[0].category).toBe('text');
+  });
+
+  it('assigns formatting category to style-changed changes', () => {
+    const result = diffTextRuns(
+      [makeItemWithTokens('a', 'Hello world test', 'Arial', 12)],
+      [makeItemWithTokens('b', 'Hello world test', 'Times', 12)]
+    );
+
+    const styleChange = result.changes.find((c) => c.type === 'style-changed');
+    expect(styleChange).toBeDefined();
+    expect(styleChange!.category).toBe('formatting');
+  });
+
+  it('assigns text category to moved changes', () => {
+    const result = diffTextRuns(
+      [
+        makeItem('a', 'Introduction to the topic'),
+        makeItem('b', 'Another paragraph here'),
+      ],
+      [
+        makeItem('c', 'Another paragraph here'),
+        makeItem('d', 'Introduction to the topic'),
+      ]
+    );
+
+    const movedChange = result.changes.find((c) => c.type === 'moved');
+    expect(movedChange).toBeDefined();
+    expect(movedChange!.category).toBe('text');
+  });
+
+  it('includes categorySummary on page comparison result', () => {
+    const result = comparePageModels(
+      makePage(1, [makeItem('a', 'Hello')]),
+      makePage(1, [makeItem('b', 'World')])
+    );
+
+    expect(result.categorySummary).toBeDefined();
+    const total = Object.values(result.categorySummary).reduce(
+      (a, b) => a + b,
+      0
+    );
+    expect(total).toBeGreaterThanOrEqual(1);
+  });
+
+  it('assigns text category to page-removed changes', () => {
+    const result = comparePageModels(
+      makePage(1, [makeItem('a', 'Only')]),
+      null
+    );
+
+    expect(result.changes[0].category).toBe('text');
+    expect(result.categorySummary.text).toBe(1);
   });
 });

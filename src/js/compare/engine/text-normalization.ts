@@ -71,6 +71,32 @@ export function tokenizeTextAsSet(text: string): Set<string> {
   return new Set(tokenizeText(text));
 }
 
+const CJK_REGEX =
+  /[\u2E80-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\u{20000}-\u{2FA1F}]/u;
+
+export function containsCJK(text: string): boolean {
+  return CJK_REGEX.test(text);
+}
+
+let cachedSegmenter: Intl.Segmenter | null = null;
+
+function getWordSegmenter(): Intl.Segmenter | null {
+  if (cachedSegmenter) return cachedSegmenter;
+  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+    cachedSegmenter = new Intl.Segmenter(undefined, { granularity: 'word' });
+    return cachedSegmenter;
+  }
+  return null;
+}
+
+export function segmentCJKText(text: string): string[] {
+  const segmenter = getWordSegmenter();
+  if (!segmenter) return [text];
+  return [...segmenter.segment(text)]
+    .filter((seg) => seg.isWordLike)
+    .map((seg) => seg.segment);
+}
+
 export function calculateBoundingRect(
   rects: CompareRectangle[]
 ): CompareRectangle {

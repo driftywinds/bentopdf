@@ -7,9 +7,10 @@ import type {
   CompareFilterType,
   ComparePageResult,
   CompareTextChange,
+  CompareCategoryFilterState,
 } from '../compare/types.ts';
 import { extractDocumentSignatures } from '../compare/engine/page-signatures.ts';
-import { pairPages } from '../compare/engine/pair-pages.ts';
+import { pairPagesAsync } from '../compare/worker-api.ts';
 import type {
   ComparePdfExportMode,
   CompareCaches,
@@ -39,15 +40,25 @@ const pageState: CompareState = {
   activeChangeIndex: 0,
   pagePairs: [],
   activeFilter: 'all',
+  categoryFilter: {
+    text: true,
+    image: true,
+    'header-footer': true,
+    annotation: true,
+    formatting: true,
+    background: true,
+  },
   changeSearchQuery: '',
   useOcr: true,
   ocrLanguage: 'eng',
+  zoomLevel: 1.0,
 };
 
 const caches: CompareCaches = {
   pageModelCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
   comparisonCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
   comparisonResultsCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+  ocrModelCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
 };
 const documentNames = {
   left: 'first.pdf',
@@ -65,6 +76,7 @@ function getRenderContext(): CompareRenderContext {
     useOcr: pageState.useOcr,
     ocrLanguage: pageState.ocrLanguage,
     viewMode: pageState.viewMode,
+    zoomLevel: pageState.zoomLevel,
     showLoader,
   };
 }
@@ -79,15 +91,22 @@ function getVisibleChanges(result: ComparePageResult | null) {
           if (pageState.activeFilter === 'removed') {
             return change.type === 'removed' || change.type === 'page-removed';
           }
+          if (pageState.activeFilter === 'added') {
+            return change.type === 'added' || change.type === 'page-added';
+          }
           return change.type === pageState.activeFilter;
         });
 
+  const filteredByCategory = filteredByType.filter(
+    (change) => pageState.categoryFilter[change.category]
+  );
+
   const searchQuery = pageState.changeSearchQuery.trim().toLowerCase();
   if (!searchQuery) {
-    return filteredByType;
+    return filteredByCategory;
   }
 
-  return filteredByType.filter((change) => {
+  return filteredByCategory.filter((change) => {
     const searchableText = [
       change.description,
       change.beforeText,
@@ -104,6 +123,8 @@ function updateFilterButtons() {
     { id: 'filter-modified', filter: 'modified' },
     { id: 'filter-added', filter: 'added' },
     { id: 'filter-removed', filter: 'removed' },
+    { id: 'filter-moved', filter: 'moved' },
+    { id: 'filter-style-changed', filter: 'style-changed' },
   ];
 
   pills.forEach(({ id, filter }) => {
@@ -118,6 +139,10 @@ function updateSummary() {
   const addedCount = getElement<HTMLElement>('summary-added-count');
   const removedCount = getElement<HTMLElement>('summary-removed-count');
   const modifiedCount = getElement<HTMLElement>('summary-modified-count');
+  const movedCount = getElement<HTMLElement>('summary-moved-count');
+  const styleChangedCount = getElement<HTMLElement>(
+    'summary-style-changed-count'
+  );
   const panelLabel1 = getElement<HTMLElement>('compare-panel-label-1');
   const panelLabel2 = getElement<HTMLElement>('compare-panel-label-2');
 
@@ -128,6 +153,9 @@ function updateSummary() {
     if (addedCount) addedCount.textContent = '0';
     if (removedCount) removedCount.textContent = '0';
     if (modifiedCount) modifiedCount.textContent = '0';
+    if (movedCount) movedCount.textContent = '0';
+    if (styleChangedCount) styleChangedCount.textContent = '0';
+    updateCategoryPills(null);
     return;
   }
 
@@ -136,6 +164,34 @@ function updateSummary() {
     removedCount.textContent = comparison.summary.removed.toString();
   if (modifiedCount)
     modifiedCount.textContent = comparison.summary.modified.toString();
+  if (movedCount) movedCount.textContent = comparison.summary.moved.toString();
+  if (styleChangedCount)
+    styleChangedCount.textContent = comparison.summary.styleChanged.toString();
+
+  updateCategoryPills(comparison);
+}
+
+function updateCategoryPills(comparison: ComparePageResult | null) {
+  const categoryKeys: Array<keyof CompareCategoryFilterState> = [
+    'text',
+    'image',
+    'header-footer',
+    'annotation',
+    'formatting',
+    'background',
+  ];
+
+  const summary = comparison?.categorySummary;
+
+  for (const key of categoryKeys) {
+    const countEl = getElement<HTMLElement>(`category-count-${key}`);
+    const pill = getElement<HTMLButtonElement>(`category-${key}`);
+    if (countEl) countEl.textContent = summary ? summary[key].toString() : '0';
+    if (pill) {
+      pill.classList.toggle('active', pageState.categoryFilter[key]);
+      pill.classList.toggle('disabled', !pageState.categoryFilter[key]);
+    }
+  }
 }
 
 function renderHighlights() {
@@ -233,25 +289,59 @@ function renderChangeList() {
   emptyState.classList.add('hidden');
   list.classList.remove('hidden');
 
+  const typeLabels: Record<string, string> = {
+    added: 'Added',
+    removed: 'Deleted',
+    modified: 'Modified',
+    moved: 'Moved',
+    'style-changed': 'Style Changed',
+    'page-added': 'Page Added',
+    'page-removed': 'Page Removed',
+  };
+
+  const grouped = new Map<
+    string,
+    Array<{ change: CompareTextChange; index: number }>
+  >();
   visibleChanges.forEach((change, index) => {
-    const item = document.createElement('div');
-    item.className = `compare-change-item${index === pageState.activeChangeIndex ? ' active' : ''}`;
-    item.innerHTML = `
-            <span class="compare-change-dot ${change.type}"></span>
-            <div class="compare-change-desc">
-                <div class="compare-change-desc-text">${change.description}</div>
-            </div>
-            <span class="compare-change-type ${change.type}">${change.type.replace('-', ' ')}</span>
-        `;
-
-    item.addEventListener('click', function () {
-      pageState.activeChangeIndex = index;
-      renderComparisonUI();
-      scrollToChange(change);
-    });
-
-    list.appendChild(item);
+    const key = change.type;
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key)!.push({ change, index });
   });
+
+  for (const [type, entries] of grouped) {
+    const header = document.createElement('div');
+    header.className = 'compare-section-header';
+    header.innerHTML = `
+      <span class="compare-section-label ${type}">${typeLabels[type] || type}</span>
+      <span class="compare-section-count">${entries.length}</span>
+      <span class="compare-section-line"></span>
+    `;
+    list.appendChild(header);
+
+    const arrowSvg =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" style="display:inline-block;vertical-align:-2px;margin:0 2px;opacity:0.5"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg>';
+
+    for (const { change, index } of entries) {
+      const item = document.createElement('div');
+      item.className = `compare-change-item${index === pageState.activeChangeIndex ? ' active' : ''}`;
+      const safeDesc = change.description
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>')
+        .replace(/→/g, arrowSvg);
+      item.innerHTML = `<div class="compare-change-desc">${safeDesc}</div>`;
+
+      item.addEventListener('click', function () {
+        pageState.activeChangeIndex = index;
+        renderComparisonUI();
+        scrollToChange(change);
+      });
+
+      list.appendChild(item);
+    }
+  }
 
   prevChangeBtn.disabled = false;
   nextChangeBtn.disabled = false;
@@ -289,7 +379,7 @@ async function buildPagePairs() {
     }
   );
 
-  pageState.pagePairs = pairPages(leftSignatures, rightSignatures);
+  pageState.pagePairs = await pairPagesAsync(leftSignatures, rightSignatures);
   pageState.currentPage = 1;
 }
 
@@ -668,6 +758,8 @@ document.addEventListener('DOMContentLoaded', function () {
     { id: 'filter-modified', filter: 'modified' },
     { id: 'filter-added', filter: 'added' },
     { id: 'filter-removed', filter: 'removed' },
+    { id: 'filter-moved', filter: 'moved' },
+    { id: 'filter-style-changed', filter: 'style-changed' },
   ];
 
   if (syncToggle) {
@@ -725,6 +817,59 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  const ZOOM_STEP = 0.25;
+  const ZOOM_MIN = 0.25;
+  const ZOOM_MAX = 5.0;
+  const zoomInBtn = getElement<HTMLButtonElement>('zoom-in-btn');
+  const zoomOutBtn = getElement<HTMLButtonElement>('zoom-out-btn');
+  const zoomResetBtn = getElement<HTMLButtonElement>('zoom-reset-btn');
+  const zoomDisplay = getElement<HTMLElement>('zoom-level-display');
+
+  function updateZoomDisplay() {
+    if (zoomDisplay) {
+      zoomDisplay.textContent = `${Math.round(pageState.zoomLevel * 100)}%`;
+    }
+    if (zoomOutBtn) zoomOutBtn.disabled = pageState.zoomLevel <= ZOOM_MIN;
+    if (zoomInBtn) zoomInBtn.disabled = pageState.zoomLevel >= ZOOM_MAX;
+  }
+
+  function applyZoom() {
+    updateZoomDisplay();
+    caches.pageModelCache.clear();
+    caches.comparisonCache.clear();
+    caches.comparisonResultsCache.clear();
+    if (pageState.pdfDoc1 && pageState.pdfDoc2) {
+      renderBothPages().catch(console.error);
+    }
+  }
+
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', function () {
+      pageState.zoomLevel = Math.min(
+        Math.round((pageState.zoomLevel + ZOOM_STEP) * 100) / 100,
+        ZOOM_MAX
+      );
+      applyZoom();
+    });
+  }
+
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', function () {
+      pageState.zoomLevel = Math.max(
+        Math.round((pageState.zoomLevel - ZOOM_STEP) * 100) / 100,
+        ZOOM_MIN
+      );
+      applyZoom();
+    });
+  }
+
+  if (zoomResetBtn) {
+    zoomResetBtn.addEventListener('click', function () {
+      pageState.zoomLevel = 1.0;
+      applyZoom();
+    });
+  }
+
   filterButtons.forEach(({ id, filter }) => {
     const button = getElement<HTMLButtonElement>(id);
     if (!button) return;
@@ -738,6 +883,26 @@ document.addEventListener('DOMContentLoaded', function () {
       renderComparisonUI();
     });
   });
+
+  const categoryKeys: Array<keyof CompareCategoryFilterState> = [
+    'text',
+    'image',
+    'header-footer',
+    'annotation',
+    'formatting',
+    'background',
+  ];
+
+  for (const key of categoryKeys) {
+    const pill = getElement<HTMLButtonElement>(`category-${key}`);
+    if (pill) {
+      pill.addEventListener('click', function () {
+        pageState.categoryFilter[key] = !pageState.categoryFilter[key];
+        pageState.activeChangeIndex = 0;
+        renderComparisonUI();
+      });
+    }
+  }
 
   if (ocrToggle) {
     ocrToggle.checked = pageState.useOcr;

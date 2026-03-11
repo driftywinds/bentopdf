@@ -2,6 +2,8 @@ export const COMPARE_COLORS = {
   added: { r: 34, g: 197, b: 94 },
   removed: { r: 239, g: 68, b: 68 },
   modified: { r: 245, g: 158, b: 11 },
+  moved: { r: 168, g: 85, b: 247 },
+  'style-changed': { r: 59, g: 130, b: 246 },
 } as const;
 
 export const HIGHLIGHT_OPACITY = 0.28;

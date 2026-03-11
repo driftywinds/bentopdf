@@ -6,7 +6,7 @@ import type {
   ComparePdfExportMode,
 } from '../types.ts';
 import { extractPageModel } from '../engine/extract-page-model.ts';
-import { comparePageModels } from '../engine/compare-page-models.ts';
+import { comparePageModelsAsync } from '../engine/compare-page-models.ts';
 import {
   COMPARE_COLORS,
   HIGHLIGHT_OPACITY,
@@ -40,6 +40,18 @@ const HIGHLIGHT_COLORS: Record<
     r: COMPARE_COLORS.modified.r / 255,
     g: COMPARE_COLORS.modified.g / 255,
     b: COMPARE_COLORS.modified.b / 255,
+    opacity: HIGHLIGHT_OPACITY,
+  },
+  moved: {
+    r: COMPARE_COLORS.moved.r / 255,
+    g: COMPARE_COLORS.moved.g / 255,
+    b: COMPARE_COLORS.moved.b / 255,
+    opacity: HIGHLIGHT_OPACITY,
+  },
+  'style-changed': {
+    r: COMPARE_COLORS['style-changed'].r / 255,
+    g: COMPARE_COLORS['style-changed'].g / 255,
+    b: COMPARE_COLORS['style-changed'].b / 255,
     opacity: HIGHLIGHT_OPACITY,
   },
 };
@@ -124,7 +136,7 @@ export async function exportComparePdf(
         )
       : null;
 
-    const comparison = comparePageModels(leftModel, rightModel);
+    const comparison = await comparePageModelsAsync(leftModel, rightModel);
     const changes = comparison.changes;
 
     if (mode === 'split') {

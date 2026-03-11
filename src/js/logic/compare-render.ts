@@ -3,6 +3,9 @@ import type {
   ComparePageModel,
   ComparePagePair,
   ComparePageResult,
+  CompareRectangle,
+  CompareWordToken,
+  CompareTextItem,
   RenderedPage,
   ComparisonPageLoad,
   DiffFocusRegion,
@@ -10,7 +13,7 @@ import type {
   CompareRenderContext,
 } from '../compare/types.ts';
 import { extractPageModel } from '../compare/engine/extract-page-model.ts';
-import { comparePageModels } from '../compare/engine/compare-page-models.ts';
+import { comparePageModelsAsync } from '../compare/engine/compare-page-models.ts';
 import { renderVisualDiff } from '../compare/engine/visual-diff.ts';
 import { recognizePageCanvas } from '../compare/engine/ocr-page.ts';
 import { isLowQualityExtractedText } from '../compare/engine/text-normalization.ts';
@@ -48,7 +51,8 @@ export function hidePlaceholder(placeholderId: string) {
 export function getRenderScale(
   page: pdfjsLib.PDFPageProxy,
   container: HTMLElement,
-  viewMode: 'overlay' | 'side-by-side'
+  viewMode: 'overlay' | 'side-by-side',
+  zoomLevel = 1.0
 ) {
   const baseViewport = page.getViewport({ scale: 1.0 });
   const availableWidth = Math.max(
@@ -61,7 +65,8 @@ export function getRenderScale(
       ? COMPARE_RENDER.MAX_SCALE_OVERLAY
       : COMPARE_RENDER.MAX_SCALE_SIDE;
 
-  return Math.min(Math.max(fitScale, 1.0), maxScale);
+  const baseScale = Math.min(Math.max(fitScale, 1.0), maxScale);
+  return baseScale * zoomLevel;
 }
 
 export function getPageModelCacheKey(
@@ -74,6 +79,72 @@ export function getPageModelCacheKey(
 
 function shouldUseOcrForModel(model: ComparePageModel) {
   return !model.hasText || isLowQualityExtractedText(model.plainText);
+}
+
+function rescaleRect(
+  rect: CompareRectangle,
+  scaleX: number,
+  scaleY: number
+): CompareRectangle {
+  return {
+    x: rect.x * scaleX,
+    y: rect.y * scaleY,
+    width: rect.width * scaleX,
+    height: rect.height * scaleY,
+  };
+}
+
+function rescaleWordToken(
+  token: CompareWordToken,
+  scaleX: number,
+  scaleY: number
+): CompareWordToken {
+  return {
+    ...token,
+    rect: rescaleRect(token.rect, scaleX, scaleY),
+  };
+}
+
+function rescaleTextItem(
+  item: CompareTextItem,
+  scaleX: number,
+  scaleY: number
+): CompareTextItem {
+  return {
+    ...item,
+    rect: rescaleRect(item.rect, scaleX, scaleY),
+    charMap: item.charMap?.map((c) => ({
+      x: c.x * scaleX,
+      width: c.width * scaleX,
+    })),
+    wordTokens: item.wordTokens?.map((t) =>
+      rescaleWordToken(t, scaleX, scaleY)
+    ),
+    fragments: item.fragments?.map((f) => rescaleTextItem(f, scaleX, scaleY)),
+  };
+}
+
+function rescalePageModel(
+  model: ComparePageModel,
+  cachedWidth: number,
+  cachedHeight: number,
+  targetWidth: number,
+  targetHeight: number
+): ComparePageModel {
+  const scaleX = targetWidth / Math.max(cachedWidth, 1);
+  const scaleY = targetHeight / Math.max(cachedHeight, 1);
+  return {
+    ...model,
+    width: targetWidth,
+    height: targetHeight,
+    textItems: model.textItems.map((item) =>
+      rescaleTextItem(item, scaleX, scaleY)
+    ),
+  };
+}
+
+function getOcrCacheKey(side: string, pageNum: number) {
+  return `${side}-${pageNum}`;
 }
 
 export function buildDiffFocusRegion(
@@ -164,7 +235,12 @@ export async function renderPage(
 
   const page = await pdfDoc.getPage(pageNum);
 
-  const targetScale = getRenderScale(page, container, ctx.viewMode);
+  const targetScale = getRenderScale(
+    page,
+    container,
+    ctx.viewMode,
+    ctx.zoomLevel
+  );
   const scaledViewport = page.getViewport({ scale: targetScale });
   const dpr = window.devicePixelRatio || 1;
   const hiResViewport = page.getViewport({ scale: targetScale * dpr });
@@ -192,18 +268,36 @@ export async function renderPage(
   let finalModel = model;
 
   if (!cachedModel && ctx.useOcr && shouldUseOcrForModel(model)) {
-    ctx.showLoader(`Running OCR on page ${pageNum}...`);
-    const ocrModel = await recognizePageCanvas(
-      canvas,
-      ctx.ocrLanguage,
-      function (status, progress) {
-        ctx.showLoader(`OCR: ${status}`, progress * 100);
-      }
-    );
-    finalModel = {
-      ...ocrModel,
-      pageNumber: pageNum,
-    };
+    const ocrKey = getOcrCacheKey(cacheKeyPrefix, pageNum);
+    const cachedOcr = caches.ocrModelCache.get(ocrKey);
+    if (cachedOcr) {
+      finalModel = rescalePageModel(
+        cachedOcr.model,
+        cachedOcr.width,
+        cachedOcr.height,
+        scaledViewport.width,
+        scaledViewport.height
+      );
+      finalModel.pageNumber = pageNum;
+    } else {
+      ctx.showLoader(`Running OCR on page ${pageNum}...`);
+      const ocrModel = await recognizePageCanvas(
+        canvas,
+        ctx.ocrLanguage,
+        function (status, progress) {
+          ctx.showLoader(`OCR: ${status}`, progress * 100);
+        }
+      );
+      finalModel = {
+        ...ocrModel,
+        pageNumber: pageNum,
+      };
+      caches.ocrModelCache.set(ocrKey, {
+        model: finalModel,
+        width: scaledViewport.width,
+        height: scaledViewport.height,
+      });
+    }
   }
 
   caches.pageModelCache.set(cacheKey, finalModel);
@@ -276,11 +370,29 @@ export async function loadComparisonPage(
 
   let finalModel = extractedModel;
   if (ctx.useOcr && shouldUseOcrForModel(extractedModel)) {
-    const ocrModel = await recognizePageCanvas(canvas, ctx.ocrLanguage);
-    finalModel = {
-      ...ocrModel,
-      pageNumber: pageNum,
-    };
+    const ocrKey = getOcrCacheKey(side, pageNum);
+    const cachedOcr = caches.ocrModelCache.get(ocrKey);
+    if (cachedOcr) {
+      finalModel = rescalePageModel(
+        cachedOcr.model,
+        cachedOcr.width,
+        cachedOcr.height,
+        viewport.width,
+        viewport.height
+      );
+      finalModel.pageNumber = pageNum;
+    } else {
+      const ocrModel = await recognizePageCanvas(canvas, ctx.ocrLanguage);
+      finalModel = {
+        ...ocrModel,
+        pageNumber: pageNum,
+      };
+      caches.ocrModelCache.set(ocrKey, {
+        model: finalModel,
+        width: viewport.width,
+        height: viewport.height,
+      });
+    }
   }
 
   canvas.width = 0;
@@ -330,7 +442,10 @@ export async function computeComparisonForPair(
     ctx
   );
 
-  const comparison = comparePageModels(leftPage.model, rightPage.model);
+  const comparison = await comparePageModelsAsync(
+    leftPage.model,
+    rightPage.model
+  );
   comparison.confidence = pair.confidence;
 
   if (

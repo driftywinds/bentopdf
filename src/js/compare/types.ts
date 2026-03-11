@@ -22,16 +22,24 @@ export interface DiffFocusRegion {
   height: number;
 }
 
+export interface OcrCacheEntry {
+  model: ComparePageModel;
+  width: number;
+  height: number;
+}
+
 export interface CompareCaches {
   pageModelCache: LRUCache<string, ComparePageModel>;
   comparisonCache: LRUCache<string, ComparePageResult>;
   comparisonResultsCache: LRUCache<number, ComparePageResult>;
+  ocrModelCache: LRUCache<string, OcrCacheEntry>;
 }
 
 export interface CompareRenderContext {
   useOcr: boolean;
   ocrLanguage: string;
   viewMode: CompareViewMode;
+  zoomLevel: number;
   showLoader: (message: string, percent?: number) => void;
 }
 
@@ -52,6 +60,8 @@ export interface CompareWordToken {
   compareWord: string;
   rect: CompareRectangle;
   joinsWithPrevious?: boolean;
+  fontName?: string;
+  fontSize?: number;
 }
 
 export interface CompareTextItem {
@@ -72,6 +82,24 @@ export interface ComparePageModel {
   plainText: string;
   hasText: boolean;
   source: 'pdfjs' | 'ocr';
+  annotations?: CompareAnnotation[];
+  images?: CompareImageRef[];
+}
+
+export interface CompareAnnotation {
+  id: string;
+  subtype: string;
+  rect: CompareRectangle;
+  contents: string;
+  title: string;
+  color: string;
+}
+
+export interface CompareImageRef {
+  id: string;
+  rect: CompareRectangle;
+  width: number;
+  height: number;
 }
 
 export interface ComparePageSignature {
@@ -98,12 +126,23 @@ export type CompareChangeType =
   | 'added'
   | 'removed'
   | 'modified'
+  | 'moved'
+  | 'style-changed'
   | 'page-added'
   | 'page-removed';
+
+export type CompareContentCategory =
+  | 'text'
+  | 'image'
+  | 'header-footer'
+  | 'annotation'
+  | 'formatting'
+  | 'background';
 
 export interface CompareTextChange {
   id: string;
   type: CompareChangeType;
+  category: CompareContentCategory;
   description: string;
   beforeText: string;
   afterText: string;
@@ -115,6 +154,17 @@ export interface CompareChangeSummary {
   added: number;
   removed: number;
   modified: number;
+  moved: number;
+  styleChanged: number;
+}
+
+export interface CompareCategorySummary {
+  text: number;
+  image: number;
+  'header-footer': number;
+  annotation: number;
+  formatting: number;
+  background: number;
 }
 
 export interface ComparePageResult {
@@ -123,12 +173,28 @@ export interface ComparePageResult {
   rightPageNumber: number | null;
   changes: CompareTextChange[];
   summary: CompareChangeSummary;
+  categorySummary: CompareCategorySummary;
   visualDiff: CompareVisualDiff | null;
   confidence?: number;
   usedOcr?: boolean;
 }
 
-export type CompareFilterType = 'added' | 'removed' | 'modified' | 'all';
+export type CompareFilterType =
+  | 'added'
+  | 'removed'
+  | 'modified'
+  | 'moved'
+  | 'style-changed'
+  | 'all';
+
+export interface CompareCategoryFilterState {
+  text: boolean;
+  image: boolean;
+  'header-footer': boolean;
+  annotation: boolean;
+  formatting: boolean;
+  background: boolean;
+}
 
 export interface CompareState {
   pdfDoc1: pdfjsLib.PDFDocumentProxy | null;
@@ -140,7 +206,9 @@ export interface CompareState {
   activeChangeIndex: number;
   pagePairs: ComparePagePair[];
   activeFilter: CompareFilterType;
+  categoryFilter: CompareCategoryFilterState;
   changeSearchQuery: string;
   useOcr: boolean;
   ocrLanguage: string;
+  zoomLevel: number;
 }
