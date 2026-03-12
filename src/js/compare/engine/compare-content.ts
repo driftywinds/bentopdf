@@ -41,8 +41,16 @@ export function diffAnnotations(
   baseId: number
 ): CompareTextChange[] {
   const changes: CompareTextChange[] = [];
-  const beforeMap = new Map(before.map((a) => [annotationKey(a), a]));
-  const afterMap = new Map(after.map((a) => [annotationKey(a), a]));
+  const beforeMap = new Map(
+    before
+      .filter(shouldCompareAnnotation)
+      .map((annotation) => [annotationKey(annotation), annotation])
+  );
+  const afterMap = new Map(
+    after
+      .filter(shouldCompareAnnotation)
+      .map((annotation) => [annotationKey(annotation), annotation])
+  );
 
   let idx = baseId;
   for (const [key, ann] of beforeMap) {
@@ -51,8 +59,7 @@ export function diffAnnotations(
         id: `annotation-removed-${idx++}`,
         type: 'removed',
         category: 'annotation',
-        description:
-          `Removed ${ann.subtype} annotation: "${ann.contents || ann.title || ''}"`.trim(),
+        description: formatAnnotationDescription('Removed', ann),
         beforeText: ann.contents || ann.title || '',
         afterText: '',
         beforeRects: [ann.rect],
@@ -67,8 +74,7 @@ export function diffAnnotations(
         id: `annotation-added-${idx++}`,
         type: 'added',
         category: 'annotation',
-        description:
-          `Added ${ann.subtype} annotation: "${ann.contents || ann.title || ''}"`.trim(),
+        description: formatAnnotationDescription('Added', ann),
         beforeText: '',
         afterText: ann.contents || ann.title || '',
         beforeRects: [],
@@ -78,6 +84,26 @@ export function diffAnnotations(
   }
 
   return changes;
+}
+
+function shouldCompareAnnotation(annotation: CompareAnnotation): boolean {
+  if (annotation.subtype !== 'Highlight') {
+    return true;
+  }
+
+  return Boolean(annotation.contents || annotation.title);
+}
+
+function formatAnnotationDescription(
+  action: 'Added' | 'Removed',
+  annotation: CompareAnnotation
+): string {
+  const label = annotation.contents || annotation.title;
+  if (!label) {
+    return `${action} ${annotation.subtype} annotation`;
+  }
+
+  return `${action} ${annotation.subtype} annotation: "${label}"`;
 }
 
 function annotationKey(ann: CompareAnnotation): string {

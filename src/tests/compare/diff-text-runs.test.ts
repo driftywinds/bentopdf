@@ -7,6 +7,7 @@ import {
   sortCompareTextItems,
 } from '@/js/compare/engine/extract-page-model.ts';
 import type {
+  CompareAnnotation,
   ComparePageModel,
   CompareTextItem,
   CompareWordToken,
@@ -23,7 +24,8 @@ function makeItem(id: string, text: string): CompareTextItem {
 
 function makePage(
   pageNumber: number,
-  textItems: CompareTextItem[]
+  textItems: CompareTextItem[],
+  overrides: Partial<ComparePageModel> = {}
 ): ComparePageModel {
   return {
     pageNumber,
@@ -33,6 +35,22 @@ function makePage(
     plainText: textItems.map((item) => item.normalizedText).join(' '),
     hasText: textItems.length > 0,
     source: 'pdfjs',
+    ...overrides,
+  };
+}
+
+function makeAnnotation(
+  subtype: string,
+  overrides: Partial<CompareAnnotation> = {}
+): CompareAnnotation {
+  return {
+    id: `${subtype}-1`,
+    subtype,
+    rect: { x: 0, y: 0, width: 10, height: 10 },
+    contents: '',
+    title: '',
+    color: '',
+    ...overrides,
   };
 }
 
@@ -136,6 +154,25 @@ describe('comparePageModels', () => {
     expect(result.status).toBe('left-only');
     expect(result.summary.removed).toBe(1);
     expect(result.changes[0].type).toBe('page-removed');
+  });
+
+  it('ignores empty highlight annotations in annotation diff output', () => {
+    const result = comparePageModels(
+      makePage(1, [makeItem('a', 'Original')], {
+        annotations: [makeAnnotation('Highlight')],
+      }),
+      makePage(1, [makeItem('b', 'Updated')], {
+        annotations: [makeAnnotation('Highlight', { id: 'highlight-2' })],
+      })
+    );
+
+    expect(
+      result.changes.some(
+        (change) =>
+          change.category === 'annotation' &&
+          change.description.includes('Highlight annotation')
+      )
+    ).toBe(false);
   });
 });
 

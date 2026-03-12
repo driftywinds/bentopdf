@@ -41,7 +41,7 @@
     },
     "noLimits": {
       "title": "Geen beperkingen",
-      "description": "Gebruik het zoveel je wilt, geen verborgen limiet."
+      "description": "Gebruik het zoveel je wilt, geen verborgen beperkingen."
     },
     "batchProcessing": {
       "title": "Reeksen verwerken",
@@ -58,7 +58,7 @@
     "subtitle": "Klik een tool om de bestandslader te openen",
     "searchPlaceholder": "Zoek een tool (bijv. 'splitsen', 'organiseren', ...)",
     "backToTools": "Terug naar Tools",
-    "firstLoadNotice": "De eerste keer duurt het even om onze conversiemachine te laden. Daarna gaat alles meteen."
+    "firstLoadNotice": "De eerste keer duurt het even om onze machinerie te laden. Daarna gaat laadt alles direct."
   },
   "upload": {
     "clickToSelect": "Klik om een bestand te selecteren",
@@ -69,13 +69,13 @@
     "clearAll": "Alles wissen",
     "clearFiles": "Bestanden wissen",
     "hints": {
-      "singlePdf": "Een enkel PDF-bestand",
+      "singlePdf": "Eén enkel PDF-bestand",
       "pdfFile": "PDF-bestand",
       "multiplePdfs2": "Meerdere PDF-bestanden (minimaal 2)",
       "bmpImages": "BMP-afbeeldingen",
-      "oneOrMorePdfs": "Een of meer PDF-bestanden",
+      "oneOrMorePdfs": "Eén of meer PDF-bestanden",
       "pdfDocuments": "PDF-documenten",
-      "oneOrMoreCsv": "Een of meer CSV-bestanden",
+      "oneOrMoreCsv": "Eén of meer CSV-bestanden",
       "multiplePdfsSupported": "Meerdere PDF-bestanden ondersteund",
       "singleOrMultiplePdfs": "Enkel of meerdere PDF-bestanden ondersteund",
       "singlePdfFile": "Enkel PDF-bestand",
@@ -83,13 +83,13 @@
       "heicImages": "HEIC/HEIF-afbeeldingen",
       "jpgImages": "JPG, JPEG, JP2, JPX afbeeldingen",
       "pdfsOrImages": "PDF's of afbeeldingen",
-      "oneOrMoreOdt": "Een of meer ODT-bestanden",
+      "oneOrMoreOdt": "Eén of meer ODT-bestanden",
       "singlePdfOnly": "Alleen een enkel PDF-bestand",
       "pdfFiles": "PDF-bestanden",
       "multiplePdfs": "Meerdere PDF-bestanden",
       "pngImages": "PNG-afbeeldingen",
       "pdfFilesOneOrMore": "PDF-bestanden (een of meer)",
-      "oneOrMoreRtf": "Een of meer RTF-bestanden",
+      "oneOrMoreRtf": "Eén of meer RTF-bestanden",
       "svgGraphics": "SVG-afbeeldingen",
       "tiffImages": "TIFF-afbeeldingen",
       "webpImages": "WebP-afbeeldingen"
@@ -123,7 +123,7 @@
     "displayPreferences": "Voorkeuren weergeven",
     "searchShortcuts": "Sneltoetsen zoeken...",
     "shortcutsInfo": "Houd toetsen ingedrukt om deze in te stellen als sneltoets. Aanpassingen worden automatisch opgeslagen.",
-    "shortcutsWarning": "⚠️ Voorkom algemene sneltoetsen voor browsers (Cmd/Ctrl+W, Cmd/Ctrl+T, Cmd/Ctrl+N etc.) aangezien deze niet betrouwbaar kunnen functioneren.",
+    "shortcutsWarning": "⚠️ Vermijd algemene sneltoetsen voor browsers (Cmd/Ctrl+W, Cmd/Ctrl+T, Cmd/Ctrl+N etc.) aangezien deze niet betrouwbaar kunnen functioneren.",
     "import": "Importeren",
     "export": "Exporteren",
     "resetToDefaults": "Terugzetten naar standaard",
@@ -261,7 +261,7 @@
     "remove": "Verwijderen",
     "loading": "Laden...",
     "error": "Fout",
-    "success": "Success",
+    "success": "Succes",
     "file": "Bestand",
     "files": "Bestanden",
     "close": "Sluiten"
@@ -363,4 +363,3 @@
     "subtitle": "Selecteer een tool om te beginnen"
   }
 }
-
