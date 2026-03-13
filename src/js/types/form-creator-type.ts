@@ -1,16 +1,57 @@
+export const FORM_CREATOR_FIELD_TYPES = [
+  'text',
+  'checkbox',
+  'radio',
+  'dropdown',
+  'optionlist',
+  'button',
+  'signature',
+  'date',
+  'image',
+  'barcode',
+] as const;
+
+export type FormCreatorFieldType = (typeof FORM_CREATOR_FIELD_TYPES)[number];
+
+export interface ExtractionViewportMetrics {
+  pdfViewerOffset: {
+    x: number;
+    y: number;
+  };
+  pdfViewerScale: number;
+}
+
+export interface ExtractExistingFieldsOptions {
+  pdfDoc: import('pdf-lib').PDFDocument;
+  fieldCounterStart: number;
+  metrics: ExtractionViewportMetrics;
+}
+
+export interface ExtractExistingFieldsResult {
+  fields: FormField[];
+  extractedFieldNames: Set<string>;
+  nextFieldCounter: number;
+}
+
+export interface ExtractedFieldLike {
+  type: 'text' | 'radio';
+  name: string;
+  pageIndex: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  tooltip: string;
+  required: boolean;
+  readOnly: boolean;
+  checked?: boolean;
+  exportValue?: string;
+  groupName?: string;
+}
+
 export interface FormField {
   id: string;
-  type:
-    | 'text'
-    | 'checkbox'
-    | 'radio'
-    | 'dropdown'
-    | 'optionlist'
-    | 'button'
-    | 'signature'
-    | 'date'
-    | 'image'
-    | 'barcode';
+  type: FormCreatorFieldType;
   x: number;
   y: number;
   width: number;

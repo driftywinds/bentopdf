@@ -6,21 +6,32 @@ import {
   PDFName,
   PDFString,
   PageSizes,
-  PDFBool,
   PDFDict,
   PDFArray,
   PDFRadioGroup,
-  PDFTextField,
-  PDFCheckBox,
-  PDFDropdown,
-  PDFOptionList,
-  PDFButton,
-  PDFSignature,
 } from 'pdf-lib';
+
+type FormFieldAction = NonNullable<FormField['action']>;
+type FormFieldVisibilityAction = NonNullable<FormField['visibilityAction']>;
+type LucideWindow = Window & {
+  lucide?: {
+    createIcons(): void;
+  };
+};
+type PdfViewerApplicationLike = {
+  pdfViewer?: {
+    pagesCount: number;
+  };
+};
+type PdfViewerWindow = Window & {
+  PDFViewerApplication?: PdfViewerApplicationLike;
+};
+
 import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js';
 import { downloadFile, hexToRgb, getPDFDocument } from '../utils/helpers.js';
 import { createIcons, icons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import * as bwipjs from 'bwip-js/browser';
 import 'pdfjs-dist/web/pdf_viewer.css';
 
@@ -30,7 +41,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-import { FormField, PageData } from '../types/index.js';
+import {
+  ExtractExistingFieldsResult,
+  FormCreatorFieldType,
+  FormField,
+  PageData,
+} from '@/types';
+import { extractExistingFields as extractExistingPdfFields } from './form-creator-extraction.js';
 
 let fields: FormField[] = [];
 let selectedField: FormField | null = null;
@@ -45,7 +62,7 @@ let pendingFieldExtraction = false;
 let pages: PageData[] = [];
 let currentPageIndex = 0;
 let uploadedPdfDoc: PDFDocument | null = null;
-let uploadedPdfjsDoc: any = null;
+let uploadedPdfjsDoc: PDFDocumentProxy | null = null;
 let pageSize: { width: number; height: number } = { width: 612, height: 792 };
 let currentScale = 1.333;
 let pdfViewerOffset = { x: 0, y: 0 };
@@ -340,8 +357,9 @@ toolItems.forEach((item) => {
     ) {
       const x = touch.clientX - canvasRect.left - 75;
       const y = touch.clientY - canvasRect.top - 15;
-      const type = (item as HTMLElement).dataset.type || 'text';
-      createField(type as any, x, y);
+      const type = ((item as HTMLElement).dataset.type ||
+        'text') as FormCreatorFieldType;
+      createField(type, x, y);
     }
   });
 });
@@ -360,8 +378,9 @@ canvas.addEventListener('drop', (e) => {
   const rect = canvas.getBoundingClientRect();
   const x = e.clientX - rect.left - 75;
   const y = e.clientY - rect.top - 15;
-  const type = e.dataTransfer?.getData('text/plain') || 'text';
-  createField(type as any, x, y);
+  const type = (e.dataTransfer?.getData('text/plain') ||
+    'text') as FormCreatorFieldType;
+  createField(type, x, y);
 });
 
 canvas.addEventListener('click', (e) => {
@@ -369,7 +388,7 @@ canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left - 75;
     const y = e.clientY - rect.top - 15;
-    createField(selectedToolType as any, x, y);
+    createField(selectedToolType as FormCreatorFieldType, x, y);
 
     toolItems.forEach((item) =>
       item.classList.remove('ring-2', 'ring-indigo-400', 'bg-indigo-600')
@@ -584,17 +603,17 @@ function renderField(field: FormField): void {
       'w-full h-full flex items-center justify-center bg-gray-50 text-gray-400';
     contentEl.innerHTML =
       '<div class="flex flex-col items-center"><i data-lucide="pen-tool" class="w-6 h-6 mb-1"></i><span class="text-[10px]">Sign Here</span></div>';
-    setTimeout(() => (window as any).lucide?.createIcons(), 0);
+    setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
   } else if (field.type === 'date') {
     contentEl.className =
       'w-full h-full flex items-center justify-center bg-white text-gray-600 border border-gray-300';
     contentEl.innerHTML = `<div class="flex items-center gap-2 px-2"><i data-lucide="calendar" class="w-4 h-4"></i><span class="text-sm date-format-text">${field.dateFormat || 'mm/dd/yyyy'}</span></div>`;
-    setTimeout(() => (window as any).lucide?.createIcons(), 0);
+    setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
   } else if (field.type === 'image') {
     contentEl.className =
       'w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 border border-gray-300';
     contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1"><i data-lucide="image" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">${field.label || 'Click to Upload Image'}</span></div>`;
-    setTimeout(() => (window as any).lucide?.createIcons(), 0);
+    setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
   } else if (field.type === 'barcode') {
     contentEl.className =
       'w-full h-full flex items-center justify-center bg-white';
@@ -613,13 +632,17 @@ function renderField(field: FormField): void {
         img.src = offscreen.toDataURL('image/png');
         img.className = 'max-w-full max-h-full object-contain';
         contentEl.appendChild(img);
-      } catch {
+      } catch (error) {
+        console.warn(
+          `Failed to render barcode preview for field "${field.name}":`,
+          error
+        );
         contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1 text-gray-400"><i data-lucide="qr-code" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">Invalid data</span></div>`;
-        setTimeout(() => (window as any).lucide?.createIcons(), 0);
+        setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
       }
     } else {
       contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1 text-gray-400"><i data-lucide="qr-code" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">Barcode</span></div>`;
-      setTimeout(() => (window as any).lucide?.createIcons(), 0);
+      setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
     }
   }
 
@@ -705,6 +728,17 @@ function renderField(field: FormField): void {
     };
     handle.className += ` ${positions[pos]}`;
     handle.dataset.position = pos;
+    const cursorMap: Record<string, string> = {
+      nw: 'nwse-resize',
+      ne: 'nesw-resize',
+      sw: 'nesw-resize',
+      se: 'nwse-resize',
+      n: 'ns-resize',
+      s: 'ns-resize',
+      e: 'ew-resize',
+      w: 'ew-resize',
+    };
+    handle.style.cursor = cursorMap[pos] || 'pointer';
 
     handle.addEventListener('mousedown', (e) => {
       e.stopPropagation();
@@ -744,6 +778,50 @@ function startResize(e: MouseEvent, field: FormField, pos: string): void {
   e.preventDefault();
 }
 
+function applyResizeWithConstraints(
+  field: FormField,
+  pos: string,
+  dx: number,
+  dy: number
+): void {
+  const isSquareField = field.type === 'checkbox' || field.type === 'radio';
+  const minWidth = isSquareField ? 12 : 50;
+  const minHeight = isSquareField ? 12 : 20;
+
+  if (pos.includes('e')) {
+    field.width = Math.max(minWidth, startWidth + dx);
+  }
+  if (pos.includes('w')) {
+    const newWidth = Math.max(minWidth, startWidth - dx);
+    const widthDiff = startWidth - newWidth;
+    field.width = newWidth;
+    field.x = startLeft + widthDiff;
+  }
+  if (pos.includes('s')) {
+    field.height = Math.max(minHeight, startHeight + dy);
+  }
+  if (pos.includes('n')) {
+    const newHeight = Math.max(minHeight, startHeight - dy);
+    const heightDiff = startHeight - newHeight;
+    field.height = newHeight;
+    field.y = startTop + heightDiff;
+  }
+
+  if (isSquareField) {
+    const size = Math.max(minWidth, Math.min(field.width, field.height));
+
+    if (pos.includes('w')) {
+      field.x = startLeft + (startWidth - size);
+    }
+    if (pos.includes('n')) {
+      field.y = startTop + (startHeight - size);
+    }
+
+    field.width = size;
+    field.height = size;
+  }
+}
+
 // Mouse move for dragging and resizing
 document.addEventListener('mousemove', (e) => {
   if (draggedElement && !resizing) {
@@ -770,24 +848,7 @@ document.addEventListener('mousemove', (e) => {
     const dy = e.clientY - startY;
     const fieldWrapper = document.getElementById(resizeField.id);
 
-    if (resizePos!.includes('e')) {
-      resizeField.width = Math.max(50, startWidth + dx);
-    }
-    if (resizePos!.includes('w')) {
-      const newWidth = Math.max(50, startWidth - dx);
-      const widthDiff = startWidth - newWidth;
-      resizeField.width = newWidth;
-      resizeField.x = startLeft + widthDiff;
-    }
-    if (resizePos!.includes('s')) {
-      resizeField.height = Math.max(20, startHeight + dy);
-    }
-    if (resizePos!.includes('n')) {
-      const newHeight = Math.max(20, startHeight - dy);
-      const heightDiff = startHeight - newHeight;
-      resizeField.height = newHeight;
-      resizeField.y = startTop + heightDiff;
-    }
+    applyResizeWithConstraints(resizeField, resizePos!, dx, dy);
 
     if (fieldWrapper) {
       const container = fieldWrapper.querySelector(
@@ -827,24 +888,7 @@ document.addEventListener(
       const dy = touch.clientY - startY;
       const fieldWrapper = document.getElementById(resizeField.id);
 
-      if (resizePos!.includes('e')) {
-        resizeField.width = Math.max(50, startWidth + dx);
-      }
-      if (resizePos!.includes('w')) {
-        const newWidth = Math.max(50, startWidth - dx);
-        const widthDiff = startWidth - newWidth;
-        resizeField.width = newWidth;
-        resizeField.x = startLeft + widthDiff;
-      }
-      if (resizePos!.includes('s')) {
-        resizeField.height = Math.max(20, startHeight + dy);
-      }
-      if (resizePos!.includes('n')) {
-        const newHeight = Math.max(20, startHeight - dy);
-        const heightDiff = startHeight - newHeight;
-        resizeField.height = newHeight;
-        resizeField.y = startTop + heightDiff;
-      }
+      applyResizeWithConstraints(resizeField, resizePos!, dx, dy);
 
       if (fieldWrapper) {
         const container = fieldWrapper.querySelector(
@@ -1680,7 +1724,9 @@ function showProperties(field: FormField): void {
     ) as HTMLDivElement;
 
     propAction.addEventListener('change', (e) => {
-      field.action = (e.target as HTMLSelectElement).value as any;
+      const actionValue = (e.target as HTMLSelectElement)
+        .value as FormFieldAction;
+      field.action = actionValue;
 
       // Show/hide containers
       propUrlContainer.classList.add('hidden');
@@ -1726,7 +1772,8 @@ function showProperties(field: FormField): void {
     ) as HTMLSelectElement;
     if (propVisibilityAction) {
       propVisibilityAction.addEventListener('change', (e) => {
-        field.visibilityAction = (e.target as HTMLSelectElement).value as any;
+        field.visibilityAction = (e.target as HTMLSelectElement)
+          .value as FormFieldVisibilityAction;
       });
     }
   } else if (field.type === 'signature') {
@@ -1836,7 +1883,7 @@ function showProperties(field: FormField): void {
             textSpan.textContent = field.dateFormat;
           }
         }
-        setTimeout(() => (window as any).lucide?.createIcons(), 0);
+        setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
       });
     }
 
@@ -2047,7 +2094,10 @@ downloadBtn.addEventListener('click', async () => {
     pdfDoc.setAuthor('BentoPDF');
     pdfDoc.setLanguage('en-US');
 
-    const radioGroups = new Map<string, any>(); // Track created radio groups
+    const radioGroups = new Map<
+      string,
+      ReturnType<typeof form.createRadioGroup>
+    >();
 
     for (const field of fields) {
       const pageData = pages[field.pageIndex];
@@ -2166,7 +2216,7 @@ downloadBtn.addEventListener('click', async () => {
         }
 
         const borderRgb = hexToRgb(field.borderColor || '#000000');
-        radioGroup.addOptionToPage(field.exportValue || 'Yes', pdfPage as any, {
+        radioGroup.addOptionToPage(field.exportValue || 'Yes', pdfPage, {
           x: x,
           y: y,
           width: width,
@@ -2179,7 +2229,7 @@ downloadBtn.addEventListener('click', async () => {
         if (field.required) radioGroup.enableRequired();
         if (field.readOnly) radioGroup.enableReadOnly();
         if (field.tooltip) {
-          radioGroup.acroField.getWidgets().forEach((widget: any) => {
+          radioGroup.acroField.getWidgets().forEach((widget) => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
@@ -2263,7 +2313,7 @@ downloadBtn.addEventListener('click', async () => {
           const widgets = button.acroField.getWidgets();
 
           widgets.forEach((widget) => {
-            let actionDict: any;
+            let actionDict: PDFDict | PDFArray | undefined;
 
             if (field.action === 'reset') {
               actionDict = pdfDoc.context.obj({
@@ -2304,7 +2354,7 @@ downloadBtn.addEventListener('click', async () => {
               });
             } else if (field.action === 'showHide' && field.targetFieldName) {
               const target = field.targetFieldName;
-              let script = '';
+              let script: string;
 
               if (field.visibilityAction === 'show') {
                 script = `var f = this.getField("${target}"); if(f) f.display = display.visible;`;
@@ -2661,7 +2711,7 @@ async function renderCanvas(): Promise<void> {
 
       iframe.onload = () => {
         try {
-          const viewerWindow = iframe.contentWindow as any;
+          const viewerWindow = iframe.contentWindow as PdfViewerWindow | null;
           if (viewerWindow && viewerWindow.PDFViewerApplication) {
             const app = viewerWindow.PDFViewerApplication;
 
@@ -2720,7 +2770,7 @@ async function renderCanvas(): Promise<void> {
                 clearInterval(checkRender);
 
                 const pageContainer =
-                  viewerWindow.document.querySelector('.page');
+                  viewerWindow.document.querySelector<HTMLElement>('.page');
                 if (pageContainer) {
                   const initialRect = pageContainer.getBoundingClientRect();
 
@@ -2776,15 +2826,20 @@ async function renderCanvas(): Promise<void> {
                         existingFieldNames.delete(name)
                       );
 
-                      try {
-                        const form = uploadedPdfDoc.getForm();
-                        for (const name of extractedFieldNames) {
-                          try {
-                            const f = form.getFieldMaybe(name);
-                            if (f) form.removeField(f);
-                          } catch {}
+                      const form = uploadedPdfDoc.getForm();
+                      for (const name of extractedFieldNames) {
+                        try {
+                          const existingField = form.getFieldMaybe(name);
+                          if (existingField) {
+                            form.removeField(existingField);
+                          }
+                        } catch (error) {
+                          console.warn(
+                            `Failed to remove extracted field "${name}" after import:`,
+                            error
+                          );
                         }
-                      } catch {}
+                      }
 
                       renderCanvas();
                       updateFieldCount();
@@ -2883,228 +2938,28 @@ const extractedFieldNames: Set<string> = new Set();
 
 function extractExistingFields(pdfDoc: PDFDocument): void {
   try {
-    const form = pdfDoc.getForm();
-    const pdfFields = form.getFields();
-    const pdfPages = pdfDoc.getPages();
+    const extractionResult: ExtractExistingFieldsResult =
+      extractExistingPdfFields({
+        pdfDoc,
+        fieldCounterStart: fieldCounter,
+        metrics: {
+          pdfViewerOffset,
+          pdfViewerScale,
+        },
+      });
 
-    const pageRefToIndex = new Map<any, number>();
-    pdfPages.forEach((page, index) => {
-      pageRefToIndex.set(page.ref, index);
+    fields.push(...extractionResult.fields);
+    fieldCounter = extractionResult.nextFieldCounter;
+
+    extractionResult.extractedFieldNames.forEach((name) => {
+      extractedFieldNames.add(name);
     });
 
-    for (const pdfField of pdfFields) {
-      const name = pdfField.getName();
-      const widgets = pdfField.acroField.getWidgets();
-
-      if (widgets.length === 0) continue;
-
-      let fieldType: FormField['type'];
-      if (pdfField instanceof PDFTextField) {
-        fieldType = 'text';
-      } else if (pdfField instanceof PDFCheckBox) {
-        fieldType = 'checkbox';
-      } else if (pdfField instanceof PDFRadioGroup) {
-        fieldType = 'radio';
-      } else if (pdfField instanceof PDFDropdown) {
-        fieldType = 'dropdown';
-      } else if (pdfField instanceof PDFOptionList) {
-        fieldType = 'optionlist';
-      } else if (pdfField instanceof PDFButton) {
-        fieldType = 'button';
-      } else if (pdfField instanceof PDFSignature) {
-        fieldType = 'signature';
-      } else {
-        continue;
-      }
-
-      if (fieldType === 'radio') {
-        const radioField = pdfField as PDFRadioGroup;
-        const options = radioField.getOptions();
-
-        for (let wi = 0; wi < widgets.length; wi++) {
-          const widget = widgets[wi];
-          const rect = widget.getRectangle();
-
-          const pageRef = widget.dict.get(PDFName.of('P'));
-          let pageIndex = 0;
-          if (pageRef) {
-            for (let pi = 0; pi < pdfPages.length; pi++) {
-              if (pdfPages[pi].ref === pageRef) {
-                pageIndex = pi;
-                break;
-              }
-            }
-          }
-
-          const page = pdfPages[pageIndex];
-          const { height: pageHeight } = page.getSize();
-
-          const canvasX = rect.x * pdfViewerScale + pdfViewerOffset.x;
-          const canvasY =
-            (pageHeight - rect.y - rect.height) * pdfViewerScale +
-            pdfViewerOffset.y;
-          const canvasWidth = rect.width * pdfViewerScale;
-          const canvasHeight = rect.height * pdfViewerScale;
-
-          fieldCounter++;
-          const exportValue = options[wi] || 'Yes';
-
-          let tooltip = '';
-          try {
-            const tu = widget.dict.get(PDFName.of('TU'));
-            if (tu instanceof PDFString) {
-              tooltip = tu.decodeText();
-            }
-          } catch {}
-
-          const formField: FormField = {
-            id: `field_${fieldCounter}`,
-            type: 'radio',
-            x: canvasX,
-            y: canvasY,
-            width: canvasWidth,
-            height: canvasHeight,
-            name: name,
-            defaultValue: '',
-            fontSize: 12,
-            alignment: 'left',
-            textColor: '#000000',
-            required: radioField.isRequired(),
-            readOnly: radioField.isReadOnly(),
-            tooltip: tooltip,
-            combCells: 0,
-            maxLength: 0,
-            checked: false,
-            exportValue: exportValue,
-            groupName: name,
-            pageIndex: pageIndex,
-            borderColor: '#000000',
-            hideBorder: false,
-          };
-
-          fields.push(formField);
-        }
-
-        extractedFieldNames.add(name);
-        continue;
-      }
-
-      const widget = widgets[0];
-      const rect = widget.getRectangle();
-
-      const pageRef = widget.dict.get(PDFName.of('P'));
-      let pageIndex = 0;
-      if (pageRef) {
-        for (let pi = 0; pi < pdfPages.length; pi++) {
-          if (pdfPages[pi].ref === pageRef) {
-            pageIndex = pi;
-            break;
-          }
-        }
-      }
-
-      const page = pdfPages[pageIndex];
-      const { height: pageHeight } = page.getSize();
-
-      const canvasX = rect.x * pdfViewerScale + pdfViewerOffset.x;
-      const canvasY =
-        (pageHeight - rect.y - rect.height) * pdfViewerScale +
-        pdfViewerOffset.y;
-      const canvasWidth = rect.width * pdfViewerScale;
-      const canvasHeight = rect.height * pdfViewerScale;
-
-      let tooltip = '';
-      try {
-        const tu = widget.dict.get(PDFName.of('TU'));
-        if (tu instanceof PDFString) {
-          tooltip = tu.decodeText();
-        }
-      } catch {}
-
-      fieldCounter++;
-
-      const formField: FormField = {
-        id: `field_${fieldCounter}`,
-        type: fieldType,
-        x: canvasX,
-        y: canvasY,
-        width: canvasWidth,
-        height: canvasHeight,
-        name: name,
-        defaultValue: '',
-        fontSize: 12,
-        alignment: 'left',
-        textColor: '#000000',
-        required: pdfField.isRequired(),
-        readOnly: pdfField.isReadOnly(),
-        tooltip: tooltip,
-        combCells: 0,
-        maxLength: 0,
-        pageIndex: pageIndex,
-        borderColor: '#000000',
-        hideBorder: false,
-      };
-
-      if (pdfField instanceof PDFTextField) {
-        try {
-          formField.defaultValue = pdfField.getText() || '';
-        } catch {}
-        try {
-          formField.multiline = pdfField.isMultiline();
-        } catch {}
-        try {
-          const maxLen = pdfField.getMaxLength();
-          if (maxLen !== undefined) {
-            if (pdfField.isCombed()) {
-              formField.combCells = maxLen;
-            } else {
-              formField.maxLength = maxLen;
-            }
-          }
-        } catch {}
-        try {
-          const alignment = pdfField.getAlignment();
-          if (alignment === TextAlignment.Center)
-            formField.alignment = 'center';
-          else if (alignment === TextAlignment.Right)
-            formField.alignment = 'right';
-          else formField.alignment = 'left';
-        } catch {}
-      } else if (pdfField instanceof PDFCheckBox) {
-        try {
-          formField.checked = pdfField.isChecked();
-        } catch {}
-        formField.exportValue = 'Yes';
-      } else if (pdfField instanceof PDFDropdown) {
-        try {
-          formField.options = pdfField.getOptions();
-        } catch {}
-        try {
-          const selected = pdfField.getSelected();
-          if (selected.length > 0) formField.defaultValue = selected[0];
-        } catch {}
-      } else if (pdfField instanceof PDFOptionList) {
-        try {
-          formField.options = pdfField.getOptions();
-        } catch {}
-        try {
-          const selected = pdfField.getSelected();
-          if (selected.length > 0) formField.defaultValue = selected[0];
-        } catch {}
-      } else if (pdfField instanceof PDFButton) {
-        formField.label = 'Button';
-        formField.action = 'none';
-      }
-
-      fields.push(formField);
-      extractedFieldNames.add(name);
-    }
-
     console.log(
-      `Extracted ${extractedFieldNames.size} existing fields for editing`
+      `Extracted ${extractionResult.extractedFieldNames.size} existing fields for editing`
     );
-  } catch (e) {
-    console.warn('Error extracting existing fields:', e);
+  } catch (error) {
+    console.warn('Error extracting existing fields:', error);
   }
 }
 
