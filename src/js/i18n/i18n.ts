@@ -73,7 +73,21 @@ export const getLanguageFromUrl = (): SupportedLanguage => {
     return storedLang as SupportedLanguage;
   }
 
-  const envLang = import.meta.env.VITE_DEFAULT_LANGUAGE;
+  // Check browser language preferences
+  if (typeof navigator !== 'undefined' && navigator.languages) {
+    for (const lang of navigator.languages) {
+      if (supportedLanguages.includes(lang as SupportedLanguage)) {
+        return lang as SupportedLanguage;
+      }
+
+      const primaryLang = lang.split('-')[0];
+      if (supportedLanguages.includes(primaryLang as SupportedLanguage)) {
+        return primaryLang as SupportedLanguage;
+      }
+    }
+  }
+
+  const envLang = import.meta.env?.VITE_DEFAULT_LANGUAGE;
   if (envLang && supportedLanguages.includes(envLang as SupportedLanguage)) {
     return envLang as SupportedLanguage;
   }

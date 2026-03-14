@@ -10,7 +10,9 @@ The easiest way to self-host BentoPDF in a production environment.
 > - `Cross-Origin-Opener-Policy: same-origin`
 > - `Cross-Origin-Embedder-Policy: require-corp`
 >
-> The official container images include these headers. If using a reverse proxy (Traefik, Caddy, etc.), ensure these headers are preserved or added.
+> The page must also be served from a secure context. `http://localhost` works for local testing, but `http://192.168.x.x` or other LAN IPs usually do not qualify, so Office conversion over plain HTTP will fail even if the headers are present.
+>
+> The official container images include these headers. If using a reverse proxy (Traefik, Caddy, etc.), ensure these headers are preserved or added, and use HTTPS for non-loopback access.
 
 > [!TIP]
 > **Podman Users:** All `docker` commands work with Podman by replacing `docker` with `podman` and `docker-compose` with `podman-compose`.

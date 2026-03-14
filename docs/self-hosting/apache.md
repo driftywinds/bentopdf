@@ -224,6 +224,8 @@ Header always set Cross-Origin-Embedder-Policy "require-corp"
 Header always set Cross-Origin-Opener-Policy "same-origin"
 ```
 
+It also needs a secure context. `http://localhost` works for local testing, but `http://192.168.x.x` or other LAN IPs usually require HTTPS. If the headers are present but `window.crossOriginIsolated` is still `false`, check whether the page is being opened over plain HTTP on a non-loopback origin.
+
 The pre-compressed `.wasm.gz` and `.data.gz` files also need correct `Content-Encoding`:
 
 ```apache

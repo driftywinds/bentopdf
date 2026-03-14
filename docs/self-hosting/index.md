@@ -6,6 +6,11 @@ BentoPDF can be self-hosted on your own infrastructure. This guide covers variou
 
 The fastest way to self-host BentoPDF:
 
+> [!IMPORTANT]
+> Office file conversion requires `SharedArrayBuffer`, which means the app must be both cross-origin isolated and served from a secure context. The official image already sends the required COOP/COEP headers, but browsers still disable `SharedArrayBuffer` on plain HTTP local-network origins such as `http://192.168.x.x`.
+>
+> Use `http://localhost` only for same-device testing. If users access BentoPDF through a LAN IP or hostname, terminate it with HTTPS.
+
 ```bash
 # Docker
 docker run -d -p 3000:8080 ghcr.io/alam00000/bentopdf:latest

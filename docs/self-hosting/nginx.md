@@ -176,7 +176,7 @@ types {
 
 ### Word/ODT/Excel to PDF Not Working
 
-LibreOffice WASM requires `SharedArrayBuffer`, which needs `Cross-Origin-Embedder-Policy` and `Cross-Origin-Opener-Policy` headers. Note that nginx `add_header` directives in a `location` block **override** server-level `add_header` directives — they don't merge. Every `location` block with its own `add_header` must include the COEP/COOP headers.
+LibreOffice WASM requires `SharedArrayBuffer`, which needs `Cross-Origin-Embedder-Policy` and `Cross-Origin-Opener-Policy` headers. It also needs a secure context, so `http://localhost` works for local testing but `http://192.168.x.x` or other LAN IPs usually require HTTPS. Note that nginx `add_header` directives in a `location` block **override** server-level `add_header` directives — they don't merge. Every `location` block with its own `add_header` must include the COEP/COOP headers.
 
 Verify with:
 
