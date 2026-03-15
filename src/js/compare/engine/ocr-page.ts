@@ -1,37 +1,39 @@
-import Tesseract from 'tesseract.js';
-
+import type Tesseract from 'tesseract.js';
 import type { ComparePageModel, CompareTextItem } from '../types.ts';
 import { mergeIntoLines, sortCompareTextItems } from './extract-page-model.ts';
 import {
   joinCompareTextItems,
   normalizeCompareText,
 } from './text-normalization.ts';
+import { createConfiguredTesseractWorker } from '../../utils/tesseract-runtime.js';
 
-type OcrWord = {
-  text: string;
-  bbox: {
-    x0: number;
-    y0: number;
-    x1: number;
-    y1: number;
-  };
-};
+type OcrWord = Tesseract.Word;
+type OcrRecognizeResult = Tesseract.RecognizeResult;
+type OcrPageWithWords = Tesseract.Page & { words: OcrWord[] };
 
 export async function recognizePageCanvas(
   canvas: HTMLCanvasElement,
   language: string,
   onProgress?: (status: string, progress: number) => void
 ): Promise<ComparePageModel> {
-  const result = await Tesseract.recognize(canvas, language, {
-    logger(message) {
+  const worker = await createConfiguredTesseractWorker(
+    language,
+    1,
+    (message) => {
       onProgress?.(message.status, message.progress || 0);
-    },
-  });
+    }
+  );
 
-  const ocrData = result.data as unknown as { words?: OcrWord[] };
-  const words = ((ocrData.words || []) as OcrWord[])
+  let result: OcrRecognizeResult;
+  try {
+    result = await worker.recognize(canvas);
+  } finally {
+    await worker.terminate();
+  }
+
+  const words = (result.data as OcrPageWithWords).words
     .map((word, index) => {
-      const normalizedText = normalizeCompareText(word.text || '');
+      const normalizedText = normalizeCompareText(word.text);
       if (!normalizedText) return null;
 
       const item: CompareTextItem = {

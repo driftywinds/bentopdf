@@ -13,6 +13,8 @@ set -euo pipefail
 # Usage:
 #   bash scripts/prepare-airgap.sh --wasm-base-url https://internal.example.com/wasm
 #   bash scripts/prepare-airgap.sh   # interactive mode
+#   bash scripts/prepare-airgap.sh --ocr-languages eng,deu,fra
+#   bash scripts/prepare-airgap.sh --search-ocr-language german
 #
 # See --help for all options.
 # ============================================================
@@ -54,6 +56,110 @@ DOCKERFILE="Dockerfile"
 SKIP_DOCKER=false
 SKIP_WASM=false
 INTERACTIVE=false
+OCR_LANGUAGES="eng"
+TESSDATA_VERSION="4.0.0_best_int"
+LIST_OCR_LANGUAGES=false
+SEARCH_OCR_LANGUAGE_TERM=""
+
+TESSERACT_LANGUAGE_CONFIG="src/js/config/tesseract-languages.ts"
+FONT_MAPPING_CONFIG="src/js/config/font-mappings.ts"
+
+SUPPORTED_OCR_LANGUAGES_RAW=""
+OCR_FONT_MANIFEST_RAW=""
+
+load_supported_ocr_languages() {
+  if [ -n "$SUPPORTED_OCR_LANGUAGES_RAW" ]; then
+    return
+  fi
+
+  if [ ! -f "$TESSERACT_LANGUAGE_CONFIG" ]; then
+    error "Missing OCR language config: ${TESSERACT_LANGUAGE_CONFIG}"
+    exit 1
+  fi
+
+  SUPPORTED_OCR_LANGUAGES_RAW=$(node -e "const fs = require('fs'); const source = fs.readFileSync(process.argv[1], 'utf8'); const languages = []; const pattern = /^\\s*([a-z0-9_]+):\\s*'([^']+)'/gm; let match; while ((match = pattern.exec(source)) !== null) { languages.push(match[1] + '\\t' + match[2]); } process.stdout.write(languages.join('\\n'));" "$TESSERACT_LANGUAGE_CONFIG")
+
+  if [ -z "$SUPPORTED_OCR_LANGUAGES_RAW" ]; then
+    error "Failed to load supported OCR languages from ${TESSERACT_LANGUAGE_CONFIG}"
+    exit 1
+  fi
+}
+
+is_supported_ocr_language() {
+  local code="$1"
+  load_supported_ocr_languages
+  printf '%s\n' "$SUPPORTED_OCR_LANGUAGES_RAW" | awk -F '\t' -v code="$code" '$1 == code { found = 1 } END { exit found ? 0 : 1 }'
+}
+
+show_supported_ocr_languages() {
+  load_supported_ocr_languages
+
+  echo ""
+  echo -e "${BOLD}Supported OCR languages:${NC}"
+  echo "  Use the code in the left column for --ocr-languages."
+  echo ""
+  printf '%s\n' "$SUPPORTED_OCR_LANGUAGES_RAW" | awk -F '\t' '{ printf "  %-12s %s\n", $1, $2 }'
+  echo ""
+  echo "  Example: --ocr-languages eng,deu,fra,spa"
+  echo ""
+}
+
+show_matching_ocr_languages() {
+  local query="$1"
+  load_supported_ocr_languages
+
+  if [ -z "$query" ]; then
+    error "OCR language search requires a non-empty query."
+    exit 1
+  fi
+
+  local matches
+  matches=$(printf '%s\n' "$SUPPORTED_OCR_LANGUAGES_RAW" | awk -F '\t' -v query="$query" '
+    BEGIN {
+      normalized = tolower(query)
+    }
+    {
+      code = tolower($1)
+      name = tolower($2)
+      if (index(code, normalized) || index(name, normalized)) {
+        printf "%s\t%s\n", $1, $2
+      }
+    }
+  ')
+
+  echo ""
+  echo -e "${BOLD}OCR language search:${NC} ${query}"
+
+  if [ -z "$matches" ]; then
+    echo "  No supported OCR languages matched that query."
+    echo "  Tip: run --list-ocr-languages to browse the full list."
+    echo ""
+    return 1
+  fi
+
+  echo "  Matching codes for --ocr-languages:"
+  echo ""
+  printf '%s\n' "$matches" | awk -F '\t' '{ printf "  %-12s %s\n", $1, $2 }'
+  echo ""
+}
+
+load_required_ocr_fonts() {
+  if [ -n "$OCR_FONT_MANIFEST_RAW" ]; then
+    return
+  fi
+
+  if [ ! -f "$FONT_MAPPING_CONFIG" ]; then
+    error "Missing OCR font mapping config: ${FONT_MAPPING_CONFIG}"
+    exit 1
+  fi
+
+  OCR_FONT_MANIFEST_RAW=$(node -e "const fs = require('fs'); const source = fs.readFileSync(process.argv[1], 'utf8'); const selected = (process.argv[2] || '').split(',').map((value) => value.trim()).filter(Boolean); const sections = source.split('export const fontFamilyToUrl'); const languageSection = sections[0] || ''; const fontSection = sections[1] || ''; const languageToFamily = {}; const fontFamilyToUrl = {}; let match; const languagePattern = /^\s*([a-z_]+):\s*'([^']+)',/gm; while ((match = languagePattern.exec(languageSection)) !== null) { languageToFamily[match[1]] = match[2]; } const fontPattern = /^\s*'([^']+)':\s*'([^']+)',/gm; while ((match = fontPattern.exec(fontSection)) !== null) { fontFamilyToUrl[match[1]] = match[2]; } const families = new Set(['Noto Sans']); for (const lang of selected) { families.add(languageToFamily[lang] || 'Noto Sans'); } const lines = Array.from(families).sort().map((family) => { const url = fontFamilyToUrl[family] || fontFamilyToUrl['Noto Sans']; const fileName = url.split('/').pop(); return [family, url, fileName].join('\t'); }); process.stdout.write(lines.join('\n'));" "$FONT_MAPPING_CONFIG" "$OCR_LANGUAGES")
+
+  if [ -z "$OCR_FONT_MANIFEST_RAW" ]; then
+    error "Failed to resolve OCR font assets from ${FONT_MAPPING_CONFIG}"
+    exit 1
+  fi
+}
 
 # --- Usage ---
 usage() {
@@ -80,6 +186,10 @@ OPTIONS:
   --brand-name <name>     Custom brand name
   --brand-logo <path>     Logo path relative to public/
   --footer-text <text>    Custom footer text
+  --ocr-languages <list>  Comma-separated OCR languages to bundle
+                          (default: eng)
+  --list-ocr-languages    Print supported OCR language codes and exit
+  --search-ocr-language   Search supported OCR languages by code or name
   --skip-docker           Skip Docker build and export
   --skip-wasm             Skip WASM download (reuse existing .tgz files)
   --help                  Show this help message
@@ -91,6 +201,7 @@ EXAMPLES:
   # Full automation
   bash scripts/prepare-airgap.sh \
     --wasm-base-url https://internal.example.com/wasm \
+    --ocr-languages eng,deu,fra \
     --brand-name "AcmePDF" \
     --language fr
 
@@ -98,6 +209,12 @@ EXAMPLES:
   bash scripts/prepare-airgap.sh \
     --wasm-base-url https://internal.example.com/wasm \
     --skip-docker
+
+  # Show all supported OCR language codes
+  bash scripts/prepare-airgap.sh --list-ocr-languages
+
+  # Search OCR languages by code or human-readable name
+  bash scripts/prepare-airgap.sh --search-ocr-language german
 EOF
   exit 0
 }
@@ -115,6 +232,9 @@ while [[ $# -gt 0 ]]; do
     --brand-name)     BRAND_NAME="$2"; shift 2 ;;
     --brand-logo)     BRAND_LOGO="$2"; shift 2 ;;
     --footer-text)    FOOTER_TEXT="$2"; shift 2 ;;
+    --ocr-languages)  OCR_LANGUAGES="$2"; shift 2 ;;
+    --list-ocr-languages) LIST_OCR_LANGUAGES=true; shift ;;
+    --search-ocr-language) SEARCH_OCR_LANGUAGE_TERM="$2"; shift 2 ;;
     --dockerfile)     DOCKERFILE="$2"; shift 2 ;;
     --skip-docker)    SKIP_DOCKER=true; shift ;;
     --skip-wasm)      SKIP_WASM=true; shift ;;
@@ -132,12 +252,29 @@ if [ ! -f "package.json" ] || [ ! -f "src/js/const/cdn-version.ts" ]; then
   exit 1
 fi
 
+if [ "$LIST_OCR_LANGUAGES" = true ]; then
+  show_supported_ocr_languages
+  exit 0
+fi
+
+if [ -n "$SEARCH_OCR_LANGUAGE_TERM" ]; then
+  if show_matching_ocr_languages "$SEARCH_OCR_LANGUAGE_TERM"; then
+    exit 0
+  fi
+  exit 1
+fi
+
 # --- Check prerequisites ---
 check_prerequisites() {
   local missing=false
 
   if ! command -v npm &>/dev/null; then
     error "npm is required but not found. Install Node.js first."
+    missing=true
+  fi
+
+  if [ "$SKIP_WASM" = false ] && ! command -v curl &>/dev/null; then
+    error "curl is required to download OCR language data."
     missing=true
   fi
 
@@ -156,9 +293,11 @@ read_versions() {
   PYMUPDF_VERSION=$(grep "pymupdf:" src/js/const/cdn-version.ts | grep -o "'[^']*'" | tr -d "'")
   GS_VERSION=$(grep "ghostscript:" src/js/const/cdn-version.ts | grep -o "'[^']*'" | tr -d "'")
   APP_VERSION=$(node -p "require('./package.json').version")
+  TESSERACT_VERSION=$(node -p "require('./package-lock.json').packages['node_modules/tesseract.js'].version")
+  TESSERACT_CORE_VERSION=$(node -p "require('./package-lock.json').packages['node_modules/tesseract.js-core'].version")
 
-  if [ -z "$PYMUPDF_VERSION" ] || [ -z "$GS_VERSION" ]; then
-    error "Failed to read WASM versions from src/js/const/cdn-version.ts"
+  if [ -z "$PYMUPDF_VERSION" ] || [ -z "$GS_VERSION" ] || [ -z "$TESSERACT_VERSION" ] || [ -z "$TESSERACT_CORE_VERSION" ]; then
+    error "Failed to read external asset versions from the repository metadata"
     exit 1
   fi
 }
@@ -175,6 +314,8 @@ interactive_mode() {
   echo "    PyMuPDF:      ${PYMUPDF_VERSION}"
   echo "    Ghostscript:  ${GS_VERSION}"
   echo "    CoherentPDF:  latest"
+  echo "    Tesseract.js: ${TESSERACT_VERSION}"
+  echo "    OCR Data:     ${TESSDATA_VERSION}"
   echo ""
 
   # [1] WASM base URL (REQUIRED)
@@ -256,8 +397,35 @@ interactive_mode() {
   DOCKERFILE="${input:-$DOCKERFILE}"
   echo ""
 
-  # [8] Output directory (optional)
-  echo -e "${BOLD}[8/8] Output Directory ${GREEN}(optional)${NC}"
+  # [8] OCR languages (optional)
+  echo -e "${BOLD}[8/9] OCR Languages ${GREEN}(optional)${NC}"
+  echo "    Comma-separated traineddata files to bundle for offline OCR."
+  echo "    Enter Tesseract language codes such as: eng,deu,fra,spa"
+  echo "    Type 'list' to print the full supported language list."
+  echo "    Type 'search <term>' to find codes by name or abbreviation."
+  while true; do
+    read -r -p "    OCR languages [${OCR_LANGUAGES}]: " input
+    if [ -z "${input:-}" ]; then
+      break
+    fi
+    if [ "$input" = "list" ]; then
+      show_supported_ocr_languages
+      continue
+    fi
+    if [[ "$input" == search\ * ]]; then
+      search_query="${input#search }"
+      if ! show_matching_ocr_languages "$search_query"; then
+        warn "No OCR language matched '${search_query}'."
+      fi
+      continue
+    fi
+    OCR_LANGUAGES="$input"
+    break
+  done
+  echo ""
+
+  # [9] Output directory (optional)
+  echo -e "${BOLD}[9/9] Output Directory ${GREEN}(optional)${NC}"
   read -r -p "    Path [${OUTPUT_DIR}]: " input
   OUTPUT_DIR="${input:-$OUTPUT_DIR}"
 
@@ -274,6 +442,7 @@ interactive_mode() {
   [ -n "$BRAND_NAME" ] && echo "  Brand Logo:     ${BRAND_LOGO:-images/favicon-no-bg.svg (default)}"
   [ -n "$BRAND_NAME" ] && echo "  Footer Text:    ${FOOTER_TEXT:-(default)}"
   echo "  Base URL:       ${BASE_URL:-/ (root)}"
+  echo "  OCR Languages:  ${OCR_LANGUAGES}"
   echo "  Output:         ${OUTPUT_DIR}"
   echo ""
   read -r -p "  Proceed? (Y/n): " input
@@ -321,6 +490,7 @@ filesize() {
 
 check_prerequisites
 read_versions
+load_supported_ocr_languages
 
 # If no WASM base URL provided, go interactive
 if [ -z "$WASM_BASE_URL" ]; then
@@ -338,6 +508,34 @@ if [ -n "$LANGUAGE" ]; then
   fi
 fi
 
+IFS=',' read -r -a OCR_LANGUAGE_ARRAY <<< "$OCR_LANGUAGES"
+NORMALIZED_OCR_LANGUAGES=()
+for raw_lang in "${OCR_LANGUAGE_ARRAY[@]}"; do
+  lang=$(echo "$raw_lang" | tr -d '[:space:]')
+  if [ -z "$lang" ]; then
+    continue
+  fi
+  if [[ ! "$lang" =~ ^[a-z0-9_]+$ ]]; then
+    error "Invalid OCR language code: ${lang}"
+    error "Use comma-separated Tesseract codes such as eng,deu,fra,chi_sim"
+    exit 1
+  fi
+  if ! is_supported_ocr_language "$lang"; then
+    error "Unsupported OCR language code: ${lang}"
+    error "Run with --list-ocr-languages or --search-ocr-language <term> to find supported Tesseract codes."
+    exit 1
+  fi
+  NORMALIZED_OCR_LANGUAGES+=("$lang")
+done
+
+if [ ${#NORMALIZED_OCR_LANGUAGES[@]} -eq 0 ]; then
+  error "At least one OCR language must be included."
+  exit 1
+fi
+
+OCR_LANGUAGES=$(IFS=','; echo "${NORMALIZED_OCR_LANGUAGES[*]}")
+load_required_ocr_fonts
+
 # Validate WASM base URL format
 if [[ ! "$WASM_BASE_URL" =~ ^https?:// ]]; then
   error "WASM base URL must start with http:// or https://"
@@ -353,11 +551,15 @@ WASM_BASE_URL="${WASM_BASE_URL%/}"
 WASM_PYMUPDF_URL="${WASM_BASE_URL}/pymupdf/"
 WASM_GS_URL="${WASM_BASE_URL}/gs/"
 WASM_CPDF_URL="${WASM_BASE_URL}/cpdf/"
+OCR_TESSERACT_WORKER_URL="${WASM_BASE_URL}/ocr/worker.min.js"
+OCR_TESSERACT_CORE_URL="${WASM_BASE_URL}/ocr/core"
+OCR_TESSERACT_LANG_URL="${WASM_BASE_URL}/ocr/lang-data"
+OCR_FONT_BASE_URL="${WASM_BASE_URL}/ocr/fonts"
 
 echo ""
 echo -e "${BOLD}============================================================${NC}"
 echo -e "${BOLD}  BentoPDF Air-Gapped Bundle Preparation${NC}"
-echo -e "${BOLD}  App: v${APP_VERSION}  |  PyMuPDF: ${PYMUPDF_VERSION}  |  GS: ${GS_VERSION}${NC}"
+echo -e "${BOLD}  App: v${APP_VERSION}  |  PyMuPDF: ${PYMUPDF_VERSION}  |  GS: ${GS_VERSION}  |  OCR: ${TESSERACT_VERSION}${NC}"
 echo -e "${BOLD}============================================================${NC}"
 
 # --- Phase 1: Prepare output directory ---
@@ -398,6 +600,27 @@ if [ "$SKIP_WASM" = true ]; then
     error "Missing: coherentpdf-*.tgz"
     wasm_missing=true
   fi
+  if ! ls "$OUTPUT_DIR"/tesseract.js-*.tgz &>/dev/null; then
+    error "Missing: tesseract.js-*.tgz"
+    wasm_missing=true
+  fi
+  if ! ls "$OUTPUT_DIR"/tesseract.js-core-*.tgz &>/dev/null; then
+    error "Missing: tesseract.js-core-*.tgz"
+    wasm_missing=true
+  fi
+  for lang in "${NORMALIZED_OCR_LANGUAGES[@]}"; do
+    if [ ! -f "$OUTPUT_DIR/tesseract-langdata/${lang}.traineddata.gz" ]; then
+      error "Missing: tesseract-langdata/${lang}.traineddata.gz"
+      wasm_missing=true
+    fi
+  done
+  while IFS=$'\t' read -r font_family font_url font_file; do
+    [ -z "$font_file" ] && continue
+    if [ ! -f "$OUTPUT_DIR/ocr-fonts/${font_file}" ]; then
+      error "Missing: ocr-fonts/${font_file} (${font_family})"
+      wasm_missing=true
+    fi
+  done <<< "$OCR_FONT_MANIFEST_RAW"
   if [ "$wasm_missing" = true ]; then
     error "Run without --skip-wasm first to download the packages."
     exit 1
@@ -430,8 +653,42 @@ else
     exit 1
   fi
 
+  info "Downloading tesseract.js@${TESSERACT_VERSION}..."
+  if ! (cd "$WASM_TMP" && npm pack "tesseract.js@${TESSERACT_VERSION}" --quiet 2>&1); then
+    error "Failed to download tesseract.js@${TESSERACT_VERSION}"
+    exit 1
+  fi
+
+  info "Downloading tesseract.js-core@${TESSERACT_CORE_VERSION}..."
+  if ! (cd "$WASM_TMP" && npm pack "tesseract.js-core@${TESSERACT_CORE_VERSION}" --quiet 2>&1); then
+    error "Failed to download tesseract.js-core@${TESSERACT_CORE_VERSION}"
+    exit 1
+  fi
+
   # Move to output directory
   mv "$WASM_TMP"/*.tgz "$OUTPUT_DIR/"
+
+  mkdir -p "$OUTPUT_DIR/tesseract-langdata"
+  for lang in "${NORMALIZED_OCR_LANGUAGES[@]}"; do
+    info "Downloading OCR language data: ${lang}..."
+    if ! curl -fsSL "https://cdn.jsdelivr.net/npm/@tesseract.js-data/${lang}/${TESSDATA_VERSION}/${lang}.traineddata.gz" -o "$OUTPUT_DIR/tesseract-langdata/${lang}.traineddata.gz"; then
+      error "Failed to download OCR language data for ${lang}"
+      error "Check that the language code exists and that the network can reach jsDelivr."
+      exit 1
+    fi
+  done
+
+  mkdir -p "$OUTPUT_DIR/ocr-fonts"
+  while IFS=$'\t' read -r font_family font_url font_file; do
+    [ -z "$font_file" ] && continue
+    info "Downloading OCR font: ${font_family}..."
+    if ! curl -fsSL "$font_url" -o "$OUTPUT_DIR/ocr-fonts/${font_file}"; then
+      error "Failed to download OCR font '${font_family}'"
+      error "Check that the network can reach the font URL: ${font_url}"
+      exit 1
+    fi
+  done <<< "$OCR_FONT_MANIFEST_RAW"
+
   rm -rf "$WASM_TMP"
   trap - EXIT
 
@@ -443,6 +700,10 @@ else
   info "  PyMuPDF:      $(filesize "$OUTPUT_DIR"/bentopdf-pymupdf-wasm-*.tgz)"
   info "  Ghostscript:  $(filesize "$OUTPUT_DIR"/bentopdf-gs-wasm-*.tgz)"
   info "  CoherentPDF:  $(filesize "$CPDF_TGZ") (v${CPDF_VERSION})"
+  info "  Tesseract.js: $(filesize "$OUTPUT_DIR"/tesseract.js-*.tgz)"
+  info "  OCR Core:     $(filesize "$OUTPUT_DIR"/tesseract.js-core-*.tgz)"
+  info "  OCR Langs:    ${OCR_LANGUAGES}"
+  info "  OCR Fonts:    $(printf '%s\n' "$OCR_FONT_MANIFEST_RAW" | awk -F '\t' 'NF >= 1 { print $1 }' | paste -sd ', ' -)"
 fi
 
 # Resolve CPDF version if we skipped download
@@ -488,6 +749,11 @@ else
   BUILD_ARGS+=(--build-arg "VITE_WASM_PYMUPDF_URL=${WASM_PYMUPDF_URL}")
   BUILD_ARGS+=(--build-arg "VITE_WASM_GS_URL=${WASM_GS_URL}")
   BUILD_ARGS+=(--build-arg "VITE_WASM_CPDF_URL=${WASM_CPDF_URL}")
+  BUILD_ARGS+=(--build-arg "VITE_TESSERACT_WORKER_URL=${OCR_TESSERACT_WORKER_URL}")
+  BUILD_ARGS+=(--build-arg "VITE_TESSERACT_CORE_URL=${OCR_TESSERACT_CORE_URL}")
+  BUILD_ARGS+=(--build-arg "VITE_TESSERACT_LANG_URL=${OCR_TESSERACT_LANG_URL}")
+  BUILD_ARGS+=(--build-arg "VITE_TESSERACT_AVAILABLE_LANGUAGES=${OCR_LANGUAGES}")
+  BUILD_ARGS+=(--build-arg "VITE_OCR_FONT_BASE_URL=${OCR_FONT_BASE_URL}")
 
   [ -n "$SIMPLE_MODE" ]       && BUILD_ARGS+=(--build-arg "SIMPLE_MODE=${SIMPLE_MODE}")
   [ -n "$BASE_URL" ]          && BUILD_ARGS+=(--build-arg "BASE_URL=${BASE_URL}")
@@ -503,6 +769,12 @@ else
   info "  PyMuPDF:     ${WASM_PYMUPDF_URL}"
   info "  Ghostscript: ${WASM_GS_URL}"
   info "  CoherentPDF: ${WASM_CPDF_URL}"
+  info "OCR URLs:"
+  info "  Worker:      ${OCR_TESSERACT_WORKER_URL}"
+  info "  Core:        ${OCR_TESSERACT_CORE_URL}"
+  info "  Lang Data:   ${OCR_TESSERACT_LANG_URL}"
+  info "  Font Base:   ${OCR_FONT_BASE_URL}"
+  info "  Languages:   ${OCR_LANGUAGES}"
   echo ""
   info "Building... this may take a few minutes (npm install + Vite build)."
   echo ""
@@ -582,7 +854,7 @@ fi
 echo ""
 echo "[2/3] Extracting WASM packages to \${WASM_DIR}..."
 
-mkdir -p "\${WASM_DIR}/pymupdf" "\${WASM_DIR}/gs" "\${WASM_DIR}/cpdf"
+mkdir -p "\${WASM_DIR}/pymupdf" "\${WASM_DIR}/gs" "\${WASM_DIR}/cpdf" "\${WASM_DIR}/ocr/core" "\${WASM_DIR}/ocr/lang-data" "\${WASM_DIR}/ocr/fonts"
 
 # PyMuPDF: package has dist/ and assets/ at root
 echo "  Extracting PyMuPDF..."
@@ -610,12 +882,35 @@ else
 fi
 rm -rf "\${TEMP_CPDF}"
 
+# Tesseract worker: browser expects a single worker.min.js file
+echo "  Extracting Tesseract worker..."
+TEMP_TESS="\$(mktemp -d)"
+tar xzf "\${SCRIPT_DIR}"/tesseract.js-*.tgz -C "\${TEMP_TESS}"
+cp "\${TEMP_TESS}/package/dist/worker.min.js" "\${WASM_DIR}/ocr/worker.min.js"
+rm -rf "\${TEMP_TESS}"
+
+# Tesseract core: browser expects the full tesseract.js-core directory
+echo "  Extracting Tesseract core..."
+tar xzf "\${SCRIPT_DIR}"/tesseract.js-core-*.tgz -C "\${WASM_DIR}/ocr/core" --strip-components=1
+
+# OCR language data: copy the bundled traineddata files
+echo "  Installing OCR language data..."
+cp "\${SCRIPT_DIR}"/tesseract-langdata/*.traineddata.gz "\${WASM_DIR}/ocr/lang-data/"
+
+# OCR fonts: copy the bundled font files for searchable text layer rendering
+echo "  Installing OCR fonts..."
+cp "\${SCRIPT_DIR}"/ocr-fonts/* "\${WASM_DIR}/ocr/fonts/"
+
 echo "  WASM files extracted to: \${WASM_DIR}"
 echo ""
 echo "  IMPORTANT: Ensure these paths are served by your internal web server:"
 echo "    \${WASM_BASE_URL}/pymupdf/  ->  \${WASM_DIR}/pymupdf/"
 echo "    \${WASM_BASE_URL}/gs/       ->  \${WASM_DIR}/gs/"
 echo "    \${WASM_BASE_URL}/cpdf/     ->  \${WASM_DIR}/cpdf/"
+echo "    \${WASM_BASE_URL}/ocr/worker.min.js  ->  \${WASM_DIR}/ocr/worker.min.js"
+echo "    \${WASM_BASE_URL}/ocr/core           ->  \${WASM_DIR}/ocr/core/"
+echo "    \${WASM_BASE_URL}/ocr/lang-data      ->  \${WASM_DIR}/ocr/lang-data/"
+echo "    \${WASM_BASE_URL}/ocr/fonts          ->  \${WASM_DIR}/ocr/fonts/"
 
 # --- Step 3: Start BentoPDF ---
 echo ""
@@ -654,6 +949,10 @@ cat > "$OUTPUT_DIR/README.md" <<README_EOF
 | \`bentopdf-pymupdf-wasm-${PYMUPDF_VERSION}.tgz\` | PyMuPDF WASM module |
 | \`bentopdf-gs-wasm-${GS_VERSION}.tgz\` | Ghostscript WASM module |
 | \`coherentpdf-${CPDF_VERSION}.tgz\` | CoherentPDF WASM module |
+| \`tesseract.js-${TESSERACT_VERSION}.tgz\` | Tesseract browser worker package |
+| \`tesseract.js-core-${TESSERACT_CORE_VERSION}.tgz\` | Tesseract core runtime package |
+| \`tesseract-langdata/\` | OCR language data files (${OCR_LANGUAGES}) |
+| \`ocr-fonts/\` | OCR text-layer font files |
 | \`setup.sh\` | Automated setup script |
 | \`README.md\` | This file |
 
@@ -664,6 +963,16 @@ The Docker image was built with these WASM URLs:
 - **PyMuPDF:** \`${WASM_PYMUPDF_URL}\`
 - **Ghostscript:** \`${WASM_GS_URL}\`
 - **CoherentPDF:** \`${WASM_CPDF_URL}\`
+- **OCR Worker:** \`${OCR_TESSERACT_WORKER_URL}\`
+- **OCR Core:** \`${OCR_TESSERACT_CORE_URL}\`
+- **OCR Lang Data:** \`${OCR_TESSERACT_LANG_URL}\`
+- **OCR Font Base:** \`${OCR_FONT_BASE_URL}\`
+
+Bundled OCR languages: **${OCR_LANGUAGES}**
+
+Bundled OCR fonts:
+
+$(printf '%s\n' "$OCR_FONT_MANIFEST_RAW" | awk -F '\t' 'NF >= 3 { printf "- **%s** -> `%s`\n", $1, $3 }')
 
 These URLs are baked into the app at build time. The user's browser fetches
 WASM files from these URLs at runtime.
@@ -694,7 +1003,7 @@ docker load -i bentopdf.tar
 Extract to your internal web server's document root:
 
 \`\`\`bash
-mkdir -p ./wasm/pymupdf ./wasm/gs ./wasm/cpdf
+mkdir -p ./wasm/pymupdf ./wasm/gs ./wasm/cpdf ./wasm/ocr/core ./wasm/ocr/lang-data ./wasm/ocr/fonts
 
 # PyMuPDF
 tar xzf bentopdf-pymupdf-wasm-${PYMUPDF_VERSION}.tgz -C ./wasm/pymupdf --strip-components=1
@@ -710,6 +1019,21 @@ TEMP_CPDF=\$(mktemp -d)
 tar xzf coherentpdf-${CPDF_VERSION}.tgz -C \$TEMP_CPDF
 cp -r \$TEMP_CPDF/package/dist/* ./wasm/cpdf/
 rm -rf \$TEMP_CPDF
+
+# Tesseract worker
+TEMP_TESS=\$(mktemp -d)
+tar xzf tesseract.js-${TESSERACT_VERSION}.tgz -C \$TEMP_TESS
+cp \$TEMP_TESS/package/dist/worker.min.js ./wasm/ocr/worker.min.js
+rm -rf \$TEMP_TESS
+
+# Tesseract core
+tar xzf tesseract.js-core-${TESSERACT_CORE_VERSION}.tgz -C ./wasm/ocr/core --strip-components=1
+
+# OCR language data
+cp ./tesseract-langdata/*.traineddata.gz ./wasm/ocr/lang-data/
+
+# OCR fonts
+cp ./ocr-fonts/* ./wasm/ocr/fonts/
 \`\`\`
 
 ### 3. Configure your web server
@@ -721,6 +1045,10 @@ Ensure these paths are accessible at the configured URLs:
 | \`${WASM_PYMUPDF_URL}\` | \`./wasm/pymupdf/\` |
 | \`${WASM_GS_URL}\` | \`./wasm/gs/\` |
 | \`${WASM_CPDF_URL}\` | \`./wasm/cpdf/\` |
+| \`${OCR_TESSERACT_WORKER_URL}\` | \`./wasm/ocr/worker.min.js\` |
+| \`${OCR_TESSERACT_CORE_URL}\` | \`./wasm/ocr/core/\` |
+| \`${OCR_TESSERACT_LANG_URL}\` | \`./wasm/ocr/lang-data/\` |
+| \`${OCR_FONT_BASE_URL}\` | \`./wasm/ocr/fonts/\` |
 
 ### 4. Run BentoPDF
 

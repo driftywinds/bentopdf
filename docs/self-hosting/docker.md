@@ -90,19 +90,26 @@ docker run -d -p 3000:8080 bentopdf:custom
 
 ## Environment Variables
 
-| Variable                | Description                     | Default                                                        |
-| ----------------------- | ------------------------------- | -------------------------------------------------------------- |
-| `SIMPLE_MODE`           | Build without LibreOffice tools | `false`                                                        |
-| `BASE_URL`              | Deploy to subdirectory          | `/`                                                            |
-| `VITE_WASM_PYMUPDF_URL` | PyMuPDF WASM module URL         | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/` |
-| `VITE_WASM_GS_URL`      | Ghostscript WASM module URL     | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/`       |
-| `VITE_WASM_CPDF_URL`    | CoherentPDF WASM module URL     | `https://cdn.jsdelivr.net/npm/coherentpdf/dist/`               |
-| `VITE_DEFAULT_LANGUAGE` | Default UI language             | `en`                                                           |
-| `VITE_BRAND_NAME`       | Custom brand name               | `BentoPDF`                                                     |
-| `VITE_BRAND_LOGO`       | Logo path relative to `public/` | `images/favicon-no-bg.svg`                                     |
-| `VITE_FOOTER_TEXT`      | Custom footer/copyright text    | `© 2026 BentoPDF. All rights reserved.`                        |
+| Variable                             | Description                                 | Default                                                        |
+| ------------------------------------ | ------------------------------------------- | -------------------------------------------------------------- |
+| `SIMPLE_MODE`                        | Build without LibreOffice tools             | `false`                                                        |
+| `BASE_URL`                           | Deploy to subdirectory                      | `/`                                                            |
+| `VITE_WASM_PYMUPDF_URL`              | PyMuPDF WASM module URL                     | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/` |
+| `VITE_WASM_GS_URL`                   | Ghostscript WASM module URL                 | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm/assets/`       |
+| `VITE_WASM_CPDF_URL`                 | CoherentPDF WASM module URL                 | `https://cdn.jsdelivr.net/npm/coherentpdf/dist/`               |
+| `VITE_TESSERACT_WORKER_URL`          | OCR worker script URL                       | _(empty; use Tesseract.js default CDN)_                        |
+| `VITE_TESSERACT_CORE_URL`            | OCR core runtime directory                  | _(empty; use Tesseract.js default CDN)_                        |
+| `VITE_TESSERACT_LANG_URL`            | OCR traineddata directory                   | _(empty; use Tesseract.js default CDN)_                        |
+| `VITE_TESSERACT_AVAILABLE_LANGUAGES` | Comma-separated OCR languages exposed in UI | _(empty; show full catalog)_                                   |
+| `VITE_OCR_FONT_BASE_URL`             | OCR text-layer font directory               | _(empty; use remote Noto font URLs)_                           |
+| `VITE_DEFAULT_LANGUAGE`              | Default UI language                         | `en`                                                           |
+| `VITE_BRAND_NAME`                    | Custom brand name                           | `BentoPDF`                                                     |
+| `VITE_BRAND_LOGO`                    | Logo path relative to `public/`             | `images/favicon-no-bg.svg`                                     |
+| `VITE_FOOTER_TEXT`                   | Custom footer/copyright text                | `© 2026 BentoPDF. All rights reserved.`                        |
 
 WASM module URLs are pre-configured with CDN defaults — all advanced features work out of the box. Override these for air-gapped or self-hosted deployments.
+
+For OCR, leave the `VITE_TESSERACT_*` variables empty to use the default online assets, or set all three together for self-hosted/offline OCR. Partial OCR overrides are rejected because the worker, core runtime, and traineddata directory must match. For fully offline searchable PDF output, also set `VITE_OCR_FONT_BASE_URL` so the OCR text-layer fonts are loaded from your internal server instead of the public Noto font URLs.
 
 `VITE_DEFAULT_LANGUAGE` sets the UI language for first-time visitors. Supported values: `en`, `ar`, `be`, `fr`, `de`, `es`, `zh`, `zh-TW`, `vi`, `tr`, `id`, `it`, `pt`, `nl`, `da`. Users can still switch languages — this only changes the default.
 
@@ -137,34 +144,58 @@ Branding works in both full mode and Simple Mode, and can be combined with all o
 
 ```bash
 # 1. On a machine WITH internet — download WASM packages
+bash scripts/prepare-airgap.sh --list-ocr-languages
+bash scripts/prepare-airgap.sh --search-ocr-language german
+
+# 2. Download WASM/OCR packages
 npm pack @bentopdf/pymupdf-wasm@0.11.14
 npm pack @bentopdf/gs-wasm
 npm pack coherentpdf
+npm pack tesseract.js@7.0.0
+npm pack tesseract.js-core@7.0.0
+mkdir -p tesseract-langdata
+curl -fsSL https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz -o tesseract-langdata/eng.traineddata.gz
+mkdir -p ocr-fonts
+curl -fsSL https://raw.githack.com/googlefonts/noto-fonts/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf -o ocr-fonts/NotoSans-Regular.ttf
 
-# 2. Build the image with your internal server URLs
+# 3. Build the image with your internal server URLs
 docker build \
   --build-arg VITE_WASM_PYMUPDF_URL=https://internal-server.example.com/wasm/pymupdf/ \
   --build-arg VITE_WASM_GS_URL=https://internal-server.example.com/wasm/gs/ \
   --build-arg VITE_WASM_CPDF_URL=https://internal-server.example.com/wasm/cpdf/ \
+  --build-arg VITE_TESSERACT_WORKER_URL=https://internal-server.example.com/wasm/ocr/worker.min.js \
+  --build-arg VITE_TESSERACT_CORE_URL=https://internal-server.example.com/wasm/ocr/core \
+  --build-arg VITE_TESSERACT_LANG_URL=https://internal-server.example.com/wasm/ocr/lang-data \
+  --build-arg VITE_TESSERACT_AVAILABLE_LANGUAGES=eng,deu \
+  --build-arg VITE_OCR_FONT_BASE_URL=https://internal-server.example.com/wasm/ocr/fonts \
   -t bentopdf .
 
-# 3. Export the image
+# 4. Export the image
 docker save bentopdf -o bentopdf.tar
 
-# 4. Transfer bentopdf.tar + the .tgz WASM packages into the air-gapped network
+# 5. Transfer bentopdf.tar + the .tgz packages + tesseract-langdata/ + ocr-fonts/ into the air-gapped network
 
-# 5. Inside the air-gapped network — load and run
+# 6. Inside the air-gapped network — load and run
 docker load -i bentopdf.tar
 
 # Extract WASM packages to your internal web server
-mkdir -p /var/www/wasm/pymupdf /var/www/wasm/gs /var/www/wasm/cpdf
+mkdir -p /var/www/wasm/pymupdf /var/www/wasm/gs /var/www/wasm/cpdf /var/www/wasm/ocr/core /var/www/wasm/ocr/lang-data /var/www/wasm/ocr/fonts
 tar xzf bentopdf-pymupdf-wasm-0.11.14.tgz -C /var/www/wasm/pymupdf --strip-components=1
 tar xzf bentopdf-gs-wasm-*.tgz -C /var/www/wasm/gs --strip-components=1
 tar xzf coherentpdf-*.tgz -C /var/www/wasm/cpdf --strip-components=1
+TEMP_TESS=$(mktemp -d)
+tar xzf tesseract.js-7.0.0.tgz -C "$TEMP_TESS"
+cp "$TEMP_TESS/package/dist/worker.min.js" /var/www/wasm/ocr/worker.min.js
+rm -rf "$TEMP_TESS"
+tar xzf tesseract.js-core-7.0.0.tgz -C /var/www/wasm/ocr/core --strip-components=1
+cp ./tesseract-langdata/*.traineddata.gz /var/www/wasm/ocr/lang-data/
+cp ./ocr-fonts/* /var/www/wasm/ocr/fonts/
 
 # Run BentoPDF
 docker run -d -p 3000:8080 --restart unless-stopped bentopdf
 ```
+
+Use the codes printed by `bash scripts/prepare-airgap.sh --list-ocr-languages`, or search by name with `bash scripts/prepare-airgap.sh --search-ocr-language <term>`, for `--ocr-languages`. When you build with a restricted OCR subset, pass the same codes to `VITE_TESSERACT_AVAILABLE_LANGUAGES` so the app only shows bundled languages. For full offline OCR output, also host the bundled `ocr-fonts/` directory and point `VITE_OCR_FONT_BASE_URL` at it.
 
 Set a variable to empty string to disable that module (users must configure manually via Advanced Settings).
 

@@ -4,6 +4,11 @@ import { downloadFile, formatBytes } from '../utils/helpers.js';
 import { icons, createIcons } from 'lucide';
 import { OcrState } from '@/types';
 import { performOcr } from '../utils/ocr.js';
+import {
+  getAvailableTesseractLanguageEntries,
+  resolveConfiguredTesseractAvailableLanguages,
+  UnsupportedOcrLanguageError,
+} from '../utils/tesseract-language-availability.js';
 
 const pageState: OcrState = {
   file: null,
@@ -80,6 +85,30 @@ function resetState() {
   if (processBtn) processBtn.disabled = true;
 }
 
+function updateLanguageAvailabilityNotice() {
+  const notice = document.getElementById('lang-availability-note');
+  if (!notice) return;
+
+  const configuredLanguages = resolveConfiguredTesseractAvailableLanguages();
+  if (!configuredLanguages) {
+    notice.classList.add('hidden');
+    notice.textContent = '';
+    return;
+  }
+
+  const availableEntries = getAvailableTesseractLanguageEntries();
+  if (availableEntries.length === 0) {
+    notice.classList.remove('hidden');
+    notice.textContent =
+      'This deployment does not expose any valid OCR languages. Rebuild it with VITE_TESSERACT_AVAILABLE_LANGUAGES set to valid Tesseract codes.';
+    return;
+  }
+
+  const availableNames = availableEntries.map(([, name]) => name).join(', ');
+  notice.classList.remove('hidden');
+  notice.textContent = `This deployment bundles OCR for: ${availableNames}.`;
+}
+
 async function runOCR() {
   const selectedLangs = Array.from(
     document.querySelectorAll('.lang-checkbox:checked')
@@ -142,10 +171,14 @@ async function runOCR() {
     if (textOutput) textOutput.value = result.fullText.trim();
   } catch (e) {
     console.error(e);
-    showAlert(
-      'OCR Error',
-      'An error occurred during the OCR process. The worker may have failed to load. Please try again.'
-    );
+    if (e instanceof UnsupportedOcrLanguageError) {
+      showAlert('OCR Language Not Available', e.message);
+    } else {
+      showAlert(
+        'OCR Error',
+        'An error occurred during the OCR process. The worker may have failed to load. Please try again.'
+      );
+    }
     if (toolOptions) toolOptions.classList.remove('hidden');
     if (ocrProgress) ocrProgress.classList.add('hidden');
   }
@@ -213,10 +246,21 @@ function populateLanguageList() {
 
   langList.innerHTML = '';
 
-  Object.entries(tesseractLanguages).forEach(function ([code, name]) {
+  const availableEntries = getAvailableTesseractLanguageEntries();
+  if (availableEntries.length === 0) {
+    const emptyState = document.createElement('p');
+    emptyState.className = 'text-sm text-yellow-300 p-2';
+    emptyState.textContent =
+      'No OCR languages are available in this deployment.';
+    langList.appendChild(emptyState);
+    return;
+  }
+
+  availableEntries.forEach(function ([code, name]) {
     const label = document.createElement('label');
     label.className =
       'flex items-center gap-2 p-2 rounded-md hover:bg-gray-700 cursor-pointer';
+    label.dataset.search = `${name} ${code}`.toLowerCase();
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -253,6 +297,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const downloadPdfBtn = document.getElementById('download-searchable-pdf');
 
   populateLanguageList();
+  updateLanguageAvailabilityNotice();
 
   if (backBtn) {
     backBtn.addEventListener('click', function () {
@@ -304,9 +349,9 @@ document.addEventListener('DOMContentLoaded', function () {
     langSearch.addEventListener('input', function () {
       const searchTerm = langSearch.value.toLowerCase();
       langList.querySelectorAll('label').forEach(function (label) {
-        (label as HTMLElement).style.display = label.textContent
-          ?.toLowerCase()
-          .includes(searchTerm)
+        (label as HTMLElement).style.display = (
+          label as HTMLElement
+        ).dataset.search?.includes(searchTerm)
           ? ''
           : 'none';
       });

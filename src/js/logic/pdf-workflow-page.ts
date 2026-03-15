@@ -1,7 +1,7 @@
 import { showAlert } from '../ui.js';
-import { tesseractLanguages } from '../config/tesseract-languages.js';
 import { createWorkflowEditor, updateNodeDisplay } from '../workflow/editor';
 import { executeWorkflow } from '../workflow/engine';
+import { getAvailableTesseractLanguageEntries } from '../utils/tesseract-language-availability.js';
 import {
   nodeRegistry,
   getNodesByCategory,
@@ -1194,7 +1194,7 @@ function showNodeSettings(node: BaseWorkflowNode) {
       { label: 'High (288 DPI)', value: '3.0' },
       { label: 'Ultra (384 DPI)', value: '4.0' },
     ],
-    language: Object.entries(tesseractLanguages).map(([code, name]) => ({
+    language: getAvailableTesseractLanguageEntries().map(([code, name]) => ({
       label: name,
       value: code,
     })),

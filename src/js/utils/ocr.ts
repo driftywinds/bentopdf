@@ -1,7 +1,6 @@
 import Tesseract from 'tesseract.js';
 import { PDFDocument, StandardFonts, rgb, PDFFont } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-import * as pdfjsLib from 'pdfjs-dist';
 import { getFontForLanguage } from './font-loader.js';
 import { OcrPage, OcrLine } from '@/types';
 import {
@@ -10,6 +9,7 @@ import {
   calculateSpaceTransform,
 } from './hocr-transform.js';
 import { getPDFDocument } from './helpers.js';
+import { createConfiguredTesseractWorker } from './tesseract-runtime.js';
 
 export interface OcrOptions {
   language: string;
@@ -134,11 +134,13 @@ export async function performOcr(
   const { language, resolution, binarize, whitelist, onProgress } = options;
   const progress = onProgress || (() => {});
 
-  const worker = await Tesseract.createWorker(language, 1, {
-    logger: function (m: { status: string; progress: number }) {
+  const worker = await createConfiguredTesseractWorker(
+    language,
+    1,
+    function (m: { status: string; progress: number }) {
       progress(m.status, m.progress || 0);
-    },
-  });
+    }
+  );
 
   await worker.setParameters({
     tessjs_create_hocr: '1',
