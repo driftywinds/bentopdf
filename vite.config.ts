@@ -17,6 +17,7 @@ const SUPPORTED_LANGUAGES = [
   'ar',
   'be',
   'da',
+  'ru',
   'de',
   'es',
   'fr',

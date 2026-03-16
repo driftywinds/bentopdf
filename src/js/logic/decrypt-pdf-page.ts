@@ -2,9 +2,9 @@ import { showAlert } from '../ui.js';
 import {
   downloadFile,
   formatBytes,
-  initializeQpdf,
   readFileAsArrayBuffer,
 } from '../utils/helpers.js';
+import { decryptPdfBytes } from '../utils/pdf-decrypt.js';
 import { icons, createIcons } from 'lucide';
 import JSZip from 'jszip';
 import { DecryptPdfState } from '@/types';
@@ -115,79 +115,39 @@ async function decryptPdf() {
 
   const loaderModal = document.getElementById('loader-modal');
   const loaderText = document.getElementById('loader-text');
-  let qpdf: any;
 
   try {
     if (loaderModal) loaderModal.classList.remove('hidden');
     if (loaderText) loaderText.textContent = 'Initializing decryption...';
 
-    qpdf = await initializeQpdf();
-
     if (pageState.files.length === 1) {
       // Single file: decrypt and download directly
       const file = pageState.files[0];
-      const inputPath = '/input.pdf';
-      const outputPath = '/output.pdf';
+      if (loaderText) loaderText.textContent = 'Reading encrypted PDF...';
+      const fileBuffer = await readFileAsArrayBuffer(file);
+      const uint8Array = new Uint8Array(fileBuffer as ArrayBuffer);
 
-      try {
-        if (loaderText) loaderText.textContent = 'Reading encrypted PDF...';
-        const fileBuffer = await readFileAsArrayBuffer(file);
-        const uint8Array = new Uint8Array(fileBuffer as ArrayBuffer);
-        qpdf.FS.writeFile(inputPath, uint8Array);
+      if (loaderText) loaderText.textContent = 'Decrypting PDF...';
+      const { bytes: decryptedBytes } = await decryptPdfBytes(
+        uint8Array,
+        password
+      );
 
-        if (loaderText) loaderText.textContent = 'Decrypting PDF...';
-        const args = [
-          inputPath,
-          '--password=' + password,
-          '--decrypt',
-          outputPath,
-        ];
+      if (loaderText) loaderText.textContent = 'Preparing download...';
+      const blob = new Blob([decryptedBytes.slice().buffer], {
+        type: 'application/pdf',
+      });
+      downloadFile(blob, `unlocked-${file.name}`);
 
-        try {
-          qpdf.callMain(args);
-        } catch (qpdfError: any) {
-          if (
-            qpdfError.message?.includes('invalid password') ||
-            qpdfError.message?.includes('password')
-          ) {
-            throw new Error('INVALID_PASSWORD');
-          }
-          throw qpdfError;
+      if (loaderModal) loaderModal.classList.add('hidden');
+      showAlert(
+        'Success',
+        'PDF decrypted successfully! Your download has started.',
+        'success',
+        () => {
+          resetState();
         }
-
-        if (loaderText) loaderText.textContent = 'Preparing download...';
-        const outputFile = qpdf.FS.readFile(outputPath, { encoding: 'binary' });
-
-        if (outputFile.length === 0) {
-          throw new Error('Decryption resulted in an empty file.');
-        }
-
-        const blob = new Blob([new Uint8Array(outputFile)], {
-          type: 'application/pdf',
-        });
-        downloadFile(blob, `unlocked-${file.name}`);
-
-        if (loaderModal) loaderModal.classList.add('hidden');
-        showAlert(
-          'Success',
-          'PDF decrypted successfully! Your download has started.',
-          'success',
-          () => {
-            resetState();
-          }
-        );
-      } finally {
-        try {
-          if (qpdf?.FS) {
-            if (qpdf.FS.analyzePath(inputPath).exists)
-              qpdf.FS.unlink(inputPath);
-            if (qpdf.FS.analyzePath(outputPath).exists)
-              qpdf.FS.unlink(outputPath);
-          }
-        } catch (cleanupError) {
-          console.warn('Failed to cleanup WASM FS:', cleanupError);
-        }
-      }
+      );
     } else {
       // Multiple files: decrypt all and download as ZIP
       const zip = new JSZip();
@@ -196,8 +156,6 @@ async function decryptPdf() {
 
       for (let i = 0; i < pageState.files.length; i++) {
         const file = pageState.files[i];
-        const inputPath = `/input_${i}.pdf`;
-        const outputPath = `/output_${i}.pdf`;
 
         if (loaderText)
           loaderText.textContent = `Decrypting ${file.name} (${i + 1}/${pageState.files.length})...`;
@@ -205,55 +163,16 @@ async function decryptPdf() {
         try {
           const fileBuffer = await readFileAsArrayBuffer(file);
           const uint8Array = new Uint8Array(fileBuffer as ArrayBuffer);
-          qpdf.FS.writeFile(inputPath, uint8Array);
+          const { bytes: decryptedBytes } = await decryptPdfBytes(
+            uint8Array,
+            password
+          );
 
-          const args = [
-            inputPath,
-            '--password=' + password,
-            '--decrypt',
-            outputPath,
-          ];
-
-          try {
-            qpdf.callMain(args);
-          } catch (qpdfError: any) {
-            if (
-              qpdfError.message?.includes('invalid password') ||
-              qpdfError.message?.includes('password')
-            ) {
-              throw new Error(`Invalid password for ${file.name}`);
-            }
-            throw qpdfError;
-          }
-
-          const outputFile = qpdf.FS.readFile(outputPath, {
-            encoding: 'binary',
-          });
-          if (!outputFile || outputFile.length === 0) {
-            throw new Error(
-              `Decryption resulted in an empty file for ${file.name}.`
-            );
-          }
-
-          zip.file(`unlocked-${file.name}`, outputFile, { binary: true });
+          zip.file(`unlocked-${file.name}`, decryptedBytes, { binary: true });
           successCount++;
         } catch (fileError: any) {
           errorCount++;
           console.error(`Failed to decrypt ${file.name}:`, fileError);
-        } finally {
-          try {
-            if (qpdf?.FS) {
-              if (qpdf.FS.analyzePath(inputPath).exists)
-                qpdf.FS.unlink(inputPath);
-              if (qpdf.FS.analyzePath(outputPath).exists)
-                qpdf.FS.unlink(outputPath);
-            }
-          } catch (cleanupError) {
-            console.warn(
-              `Failed to cleanup WASM FS for ${file.name}:`,
-              cleanupError
-            );
-          }
         }
       }
 

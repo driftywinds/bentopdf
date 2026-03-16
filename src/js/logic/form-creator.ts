@@ -454,6 +454,7 @@ function createField(type: FormField['type'], x: number, y: number): void {
     multiline: type === 'text' ? false : undefined,
     borderColor: '#000000',
     hideBorder: false,
+    transparentBackground: false,
     barcodeFormat: type === 'barcode' ? 'qrcode' : undefined,
     barcodeValue: type === 'barcode' ? 'https://example.com' : undefined,
   };
@@ -461,6 +462,105 @@ function createField(type: FormField['type'], x: number, y: number): void {
   fields.push(field);
   renderField(field);
   updateFieldCount();
+}
+
+function hasTransparentBackground(field: FormField): boolean {
+  return Boolean(field.transparentBackground);
+}
+
+function applyFieldContainerState(
+  container: HTMLElement,
+  field: FormField,
+  selected: boolean
+): void {
+  container.classList.remove(
+    'border-indigo-200',
+    'group-hover:border-dashed',
+    'group-hover:border-indigo-300',
+    'border-dashed',
+    'border-indigo-500',
+    'bg-indigo-50',
+    'bg-indigo-50/30',
+    'bg-transparent'
+  );
+
+  if (selected) {
+    container.classList.add('border-dashed', 'border-indigo-500');
+    container.classList.add(
+      hasTransparentBackground(field) ? 'bg-transparent' : 'bg-indigo-50'
+    );
+    return;
+  }
+
+  container.classList.add(
+    'border-indigo-200',
+    'group-hover:border-dashed',
+    'group-hover:border-indigo-300'
+  );
+  container.classList.add(
+    hasTransparentBackground(field) ? 'bg-transparent' : 'bg-indigo-50/30'
+  );
+}
+
+function getPreviewBackgroundColor(
+  field: FormField,
+  fallbackColor: string
+): string {
+  return hasTransparentBackground(field) ? 'transparent' : fallbackColor;
+}
+
+function getPdfBackgroundOptions(
+  field: FormField,
+  red: number,
+  green: number,
+  blue: number
+): { backgroundColor?: ReturnType<typeof rgb> } {
+  if (hasTransparentBackground(field)) {
+    return {};
+  }
+
+  return {
+    backgroundColor: rgb(red, green, blue),
+  };
+}
+
+function clearTransparentWidgetBackground(
+  field: FormField,
+  widgetDict: PDFDict,
+  pdfDoc: PDFDocument
+): void {
+  if (!hasTransparentBackground(field)) {
+    return;
+  }
+
+  widgetDict.delete(PDFName.of('BG'));
+
+  const mk = widgetDict.get(PDFName.of('MK'));
+  const mkDict = mk ? pdfDoc.context.lookupMaybe(mk, PDFDict) : undefined;
+  mkDict?.delete(PDFName.of('BG'));
+}
+
+function clearTransparentFieldWidgetBackgrounds(
+  field: FormField,
+  widgets: Array<{ dict: PDFDict }>,
+  pdfDoc: PDFDocument
+): void {
+  if (!hasTransparentBackground(field)) {
+    return;
+  }
+
+  widgets.forEach((widget) => {
+    clearTransparentWidgetBackground(field, widget.dict, pdfDoc);
+  });
+}
+
+function rerenderSelectedField(field: FormField): void {
+  const shouldReselect = selectedField?.id === field.id;
+  renderField(field);
+
+  if (shouldReselect) {
+    selectField(field);
+  }
 }
 
 // Render field on canvas
@@ -496,9 +596,10 @@ function renderField(field: FormField): void {
   // Create input container - light border by default, dashed on hover
   const fieldContainer = document.createElement('div');
   fieldContainer.className =
-    'field-container relative border-2 border-indigo-200 group-hover:border-dashed group-hover:border-indigo-300 bg-indigo-50/30 rounded transition-all';
+    'field-container relative border-2 rounded transition-all';
   fieldContainer.style.width = '100%';
   fieldContainer.style.height = field.height + 'px';
+  applyFieldContainerState(fieldContainer, field, false);
 
   // Create content based on type
   const contentEl = document.createElement('div');
@@ -544,7 +645,10 @@ function renderField(field: FormField): void {
   } else if (field.type === 'dropdown') {
     contentEl.className =
       'w-full h-full flex items-center px-2 text-sm text-black';
-    contentEl.style.backgroundColor = '#e6f0ff'; // Light blue background like Firefox
+    contentEl.style.backgroundColor = getPreviewBackgroundColor(
+      field,
+      '#e6f0ff'
+    );
 
     // Show selected option or first option or placeholder
     let displayText = 'Select...';
@@ -566,7 +670,11 @@ function renderField(field: FormField): void {
     fieldContainer.appendChild(arrow);
   } else if (field.type === 'optionlist') {
     contentEl.className =
-      'w-full h-full flex flex-col text-sm bg-white overflow-hidden border border-gray-300';
+      'w-full h-full flex flex-col text-sm overflow-hidden border border-gray-300';
+    contentEl.style.backgroundColor = getPreviewBackgroundColor(
+      field,
+      '#ffffff'
+    );
     // Render options as a list
     if (field.options && field.options.length > 0) {
       field.options.forEach((opt, index) => {
@@ -595,28 +703,47 @@ function renderField(field: FormField): void {
     }
   } else if (field.type === 'button') {
     contentEl.className =
-      'field-content w-full h-full flex items-center justify-center bg-gray-200 text-sm font-semibold';
+      'field-content w-full h-full flex items-center justify-center text-sm font-semibold';
+    contentEl.style.backgroundColor = getPreviewBackgroundColor(
+      field,
+      '#e5e7eb'
+    );
     contentEl.style.color = field.textColor || '#000000';
     contentEl.textContent = field.label || 'Button';
   } else if (field.type === 'signature') {
     contentEl.className =
-      'w-full h-full flex items-center justify-center bg-gray-50 text-gray-400';
+      'w-full h-full flex items-center justify-center text-gray-400';
+    contentEl.style.backgroundColor = getPreviewBackgroundColor(
+      field,
+      '#f9fafb'
+    );
     contentEl.innerHTML =
       '<div class="flex flex-col items-center"><i data-lucide="pen-tool" class="w-6 h-6 mb-1"></i><span class="text-[10px]">Sign Here</span></div>';
     setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
   } else if (field.type === 'date') {
     contentEl.className =
-      'w-full h-full flex items-center justify-center bg-white text-gray-600 border border-gray-300';
+      'w-full h-full flex items-center justify-center text-gray-600 border border-gray-300';
+    contentEl.style.backgroundColor = getPreviewBackgroundColor(
+      field,
+      '#ffffff'
+    );
     contentEl.innerHTML = `<div class="flex items-center gap-2 px-2"><i data-lucide="calendar" class="w-4 h-4"></i><span class="text-sm date-format-text">${field.dateFormat || 'mm/dd/yyyy'}</span></div>`;
     setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
   } else if (field.type === 'image') {
     contentEl.className =
-      'w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 border border-gray-300';
+      'w-full h-full flex items-center justify-center text-gray-500 border border-gray-300';
+    contentEl.style.backgroundColor = getPreviewBackgroundColor(
+      field,
+      '#f3f4f6'
+    );
     contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1"><i data-lucide="image" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">${field.label || 'Click to Upload Image'}</span></div>`;
     setTimeout(() => (window as LucideWindow).lucide?.createIcons(), 0);
   } else if (field.type === 'barcode') {
-    contentEl.className =
-      'w-full h-full flex items-center justify-center bg-white';
+    contentEl.className = 'w-full h-full flex items-center justify-center';
+    contentEl.style.backgroundColor = getPreviewBackgroundColor(
+      field,
+      '#ffffff'
+    );
     if (field.barcodeValue) {
       try {
         const offscreen = document.createElement('canvas');
@@ -933,17 +1060,7 @@ function selectField(field: FormField): void {
     const handles = fieldWrapper.querySelectorAll('.resize-handle');
 
     if (container) {
-      // Remove hover classes and add selected classes
-      container.classList.remove(
-        'border-indigo-200',
-        'group-hover:border-dashed',
-        'group-hover:border-indigo-300'
-      );
-      container.classList.add(
-        'border-dashed',
-        'border-indigo-500',
-        'bg-indigo-50'
-      );
+      applyFieldContainerState(container, field, true);
     }
 
     if (label) {
@@ -970,17 +1087,7 @@ function deselectAll(): void {
       const handles = fieldWrapper.querySelectorAll('.resize-handle');
 
       if (container) {
-        // Revert to default/hover state
-        container.classList.remove(
-          'border-dashed',
-          'border-indigo-500',
-          'bg-indigo-50'
-        );
-        container.classList.add(
-          'border-indigo-200',
-          'group-hover:border-dashed',
-          'group-hover:border-indigo-300'
-        );
+        applyFieldContainerState(container, selectedField, false);
       }
 
       if (label) {
@@ -1285,6 +1392,10 @@ function showProperties(field: FormField): void {
         <input type="checkbox" id="propHideBorder" ${field.hideBorder ? 'checked' : ''} class="mr-2">
         <label for="propHideBorder" class="text-xs font-semibold text-gray-300">Hide Border</label>
       </div>
+      <div class="flex items-center">
+        <input type="checkbox" id="propTransparentBackground" ${field.transparentBackground ? 'checked' : ''} class="mr-2">
+        <label for="propTransparentBackground" class="text-xs font-semibold text-gray-300">Transparent Background</label>
+      </div>
       <button id="deleteBtn" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition text-sm font-semibold">
         Delete Field
       </button>
@@ -1400,6 +1511,9 @@ function showProperties(field: FormField): void {
   const propHideBorder = document.getElementById(
     'propHideBorder'
   ) as HTMLInputElement;
+  const propTransparentBackground = document.getElementById(
+    'propTransparentBackground'
+  ) as HTMLInputElement;
 
   propBorderColor.addEventListener('input', (e) => {
     field.borderColor = (e.target as HTMLInputElement).value;
@@ -1407,6 +1521,12 @@ function showProperties(field: FormField): void {
 
   propHideBorder.addEventListener('change', (e) => {
     field.hideBorder = (e.target as HTMLInputElement).checked;
+    rerenderSelectedField(field);
+  });
+
+  propTransparentBackground.addEventListener('change', (e) => {
+    field.transparentBackground = (e.target as HTMLInputElement).checked;
+    rerenderSelectedField(field);
   });
 
   deleteBtn.addEventListener('click', () => {
@@ -2136,7 +2256,7 @@ downloadBtn.addEventListener('click', async () => {
           height: height,
           borderWidth: field.hideBorder ? 0 : 1,
           borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
-          backgroundColor: rgb(1, 1, 1),
+          ...getPdfBackgroundOptions(field, 1, 1, 1),
           textColor: rgb(rgbColor.r, rgbColor.g, rgbColor.b),
         });
 
@@ -2175,6 +2295,11 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          textField.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'checkbox') {
         const checkBox = form.createCheckBox(field.name);
         const borderRgb = hexToRgb(field.borderColor || '#000000');
@@ -2185,7 +2310,7 @@ downloadBtn.addEventListener('click', async () => {
           height: height,
           borderWidth: field.hideBorder ? 0 : 1,
           borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
-          backgroundColor: rgb(1, 1, 1),
+          ...getPdfBackgroundOptions(field, 1, 1, 1),
         });
         if (field.checked) checkBox.check();
         if (field.required) checkBox.enableRequired();
@@ -2195,6 +2320,11 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          checkBox.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'radio') {
         const groupName = field.name;
         let radioGroup;
@@ -2223,7 +2353,7 @@ downloadBtn.addEventListener('click', async () => {
           height: height,
           borderWidth: field.hideBorder ? 0 : 1,
           borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
-          backgroundColor: rgb(1, 1, 1),
+          ...getPdfBackgroundOptions(field, 1, 1, 1),
         });
         if (field.checked) radioGroup.select(field.exportValue || 'Yes');
         if (field.required) radioGroup.enableRequired();
@@ -2233,6 +2363,11 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          radioGroup.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'dropdown') {
         const dropdown = form.createDropdown(field.name);
         const borderRgb = hexToRgb(field.borderColor || '#000000');
@@ -2243,7 +2378,7 @@ downloadBtn.addEventListener('click', async () => {
           height: height,
           borderWidth: field.hideBorder ? 0 : 1,
           borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
-          backgroundColor: rgb(1, 1, 1), // Light blue not supported in standard PDF appearance easily without streams
+          ...getPdfBackgroundOptions(field, 1, 1, 1),
         });
         if (field.options) dropdown.setOptions(field.options);
         if (field.defaultValue && field.options?.includes(field.defaultValue))
@@ -2264,6 +2399,11 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          dropdown.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'optionlist') {
         const optionList = form.createOptionList(field.name);
         const borderRgb = hexToRgb(field.borderColor || '#000000');
@@ -2274,7 +2414,7 @@ downloadBtn.addEventListener('click', async () => {
           height: height,
           borderWidth: field.hideBorder ? 0 : 1,
           borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
-          backgroundColor: rgb(1, 1, 1),
+          ...getPdfBackgroundOptions(field, 1, 1, 1),
         });
         if (field.options) optionList.setOptions(field.options);
         if (field.defaultValue && field.options?.includes(field.defaultValue))
@@ -2295,6 +2435,11 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          optionList.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'button') {
         const button = form.createButton(field.name);
         const borderRgb = hexToRgb(field.borderColor || '#000000');
@@ -2305,7 +2450,7 @@ downloadBtn.addEventListener('click', async () => {
           height: height,
           borderWidth: field.hideBorder ? 0 : 1,
           borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
-          backgroundColor: rgb(0.8, 0.8, 0.8), // Light gray
+          ...getPdfBackgroundOptions(field, 0.8, 0.8, 0.8),
         });
 
         // Add Action
@@ -2383,16 +2528,22 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          button.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'date') {
         const dateField = form.createTextField(field.name);
+        const borderRgb = hexToRgb(field.borderColor || '#000000');
         dateField.addToPage(pdfPage, {
           x: x,
           y: y,
           width: width,
           height: height,
-          borderWidth: 1,
-          borderColor: rgb(0, 0, 0),
-          backgroundColor: rgb(1, 1, 1),
+          borderWidth: field.hideBorder ? 0 : 1,
+          borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
+          ...getPdfBackgroundOptions(field, 1, 1, 1),
         });
 
         // Add Date Format and Keystroke Actions to the FIELD (not widget)
@@ -2424,16 +2575,22 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          dateField.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'image') {
         const imageBtn = form.createButton(field.name);
+        const borderRgb = hexToRgb(field.borderColor || '#000000');
         imageBtn.addToPage(field.label || 'Click to Upload Image', pdfPage, {
           x: x,
           y: y,
           width: width,
           height: height,
-          borderWidth: 1,
-          borderColor: rgb(0, 0, 0),
-          backgroundColor: rgb(0.9, 0.9, 0.9),
+          borderWidth: field.hideBorder ? 0 : 1,
+          borderColor: rgb(borderRgb.r, borderRgb.g, borderRgb.b),
+          ...getPdfBackgroundOptions(field, 0.9, 0.9, 0.9),
         });
 
         // Add Import Icon Action
@@ -2451,7 +2608,6 @@ downloadBtn.addEventListener('click', async () => {
           // IF (Icon Fit) -> SW: A (Always Scale), S: A (Anamorphic/Fill)
           const mkDict = pdfDoc.context.obj({
             TP: 1,
-            BG: [0.9, 0.9, 0.9], // Background color (Light Gray)
             BC: [0, 0, 0], // Border color (Black)
             IF: {
               SW: PDFName.of('A'),
@@ -2459,6 +2615,9 @@ downloadBtn.addEventListener('click', async () => {
               FB: true,
             },
           });
+          if (!hasTransparentBackground(field)) {
+            mkDict.set(PDFName.of('BG'), pdfDoc.context.obj([0.9, 0.9, 0.9]));
+          }
           widget.dict.set(PDFName.of('MK'), mkDict);
         });
 
@@ -2467,6 +2626,11 @@ downloadBtn.addEventListener('click', async () => {
             widget.dict.set(PDFName.of('TU'), PDFString.of(field.tooltip));
           });
         }
+        clearTransparentFieldWidgetBackgrounds(
+          field,
+          imageBtn.acroField.getWidgets(),
+          pdfDoc
+        );
       } else if (field.type === 'signature') {
         const context = pdfDoc.context;
 
@@ -2490,12 +2654,18 @@ downloadBtn.addEventListener('click', async () => {
 
         // Add border and background appearance
         const borderStyle = context.obj({
-          W: 1, // Border width
+          W: field.hideBorder ? 0 : 1, // Border width
           S: PDFName.of('S'), // Solid border
         }) as PDFDict;
         widgetDict.set(PDFName.of('BS'), borderStyle);
-        widgetDict.set(PDFName.of('BC'), context.obj([0, 0, 0])); // Border color (black)
-        widgetDict.set(PDFName.of('BG'), context.obj([0.95, 0.95, 0.95])); // Background color
+        const borderRgb = hexToRgb(field.borderColor || '#000000');
+        widgetDict.set(
+          PDFName.of('BC'),
+          context.obj([borderRgb.r, borderRgb.g, borderRgb.b])
+        ); // Border color
+        if (!hasTransparentBackground(field)) {
+          widgetDict.set(PDFName.of('BG'), context.obj([0.95, 0.95, 0.95]));
+        }
 
         const widgetRef = context.register(widgetDict);
 

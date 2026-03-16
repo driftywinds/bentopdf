@@ -3,7 +3,8 @@ import { BaseWorkflowNode } from './base-node';
 import { pdfSocket } from '../sockets';
 import type { PDFData, SocketData, MultiPDFData } from '../types';
 import { PDFDocument } from 'pdf-lib';
-import { readFileAsArrayBuffer, initializeQpdf } from '../../utils/helpers.js';
+import { readFileAsArrayBuffer } from '../../utils/helpers.js';
+import { decryptPdfBytes } from '../../utils/pdf-decrypt.js';
 
 export class EncryptedPDFError extends Error {
   constructor(public readonly filename: string) {
@@ -63,44 +64,16 @@ export class PDFInputNode extends BaseWorkflowNode {
   async addDecryptedFile(file: File, password: string): Promise<void> {
     const arrayBuffer = await readFileAsArrayBuffer(file);
     const bytes = new Uint8Array(arrayBuffer as ArrayBuffer);
-    const qpdf = await initializeQpdf();
-    const uid = `${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
-    const inputPath = `/tmp/input_decrypt_${uid}.pdf`;
-    const outputPath = `/tmp/output_decrypt_${uid}.pdf`;
-
-    try {
-      qpdf.FS.writeFile(inputPath, bytes);
-      qpdf.callMain([
-        inputPath,
-        '--password=' + password,
-        '--decrypt',
-        outputPath,
-      ]);
-      const decryptedData = qpdf.FS.readFile(outputPath, {
-        encoding: 'binary',
-      });
-      const decryptedBytes = new Uint8Array(decryptedData);
-      const document = await PDFDocument.load(decryptedBytes, {
-        throwOnInvalidObject: false,
-      });
-      this.files.push({
-        type: 'pdf',
-        document,
-        bytes: decryptedBytes,
-        filename: file.name,
-      });
-    } finally {
-      try {
-        qpdf.FS.unlink(inputPath);
-      } catch {
-        /* cleanup */
-      }
-      try {
-        qpdf.FS.unlink(outputPath);
-      } catch {
-        /* cleanup */
-      }
-    }
+    const { bytes: decryptedBytes } = await decryptPdfBytes(bytes, password);
+    const document = await PDFDocument.load(decryptedBytes, {
+      throwOnInvalidObject: false,
+    });
+    this.files.push({
+      type: 'pdf',
+      document,
+      bytes: decryptedBytes,
+      filename: file.name,
+    });
   }
 
   async setFile(file: File): Promise<void> {

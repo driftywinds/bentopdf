@@ -81,6 +81,7 @@ export interface FormField {
   multiline?: boolean;
   borderColor?: string;
   hideBorder?: boolean;
+  transparentBackground?: boolean;
   barcodeFormat?: string;
   barcodeValue?: string;
 }
