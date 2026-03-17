@@ -410,6 +410,10 @@ export default defineConfig(() => {
           'delete-pages': resolve(__dirname, 'src/pages/delete-pages.html'),
           'organize-pdf': resolve(__dirname, 'src/pages/organize-pdf.html'),
           'page-numbers': resolve(__dirname, 'src/pages/page-numbers.html'),
+          'add-page-labels': resolve(
+            __dirname,
+            'src/pages/add-page-labels.html'
+          ),
           'add-watermark': resolve(__dirname, 'src/pages/add-watermark.html'),
           'header-footer': resolve(__dirname, 'src/pages/header-footer.html'),
           'invert-colors': resolve(__dirname, 'src/pages/invert-colors.html'),

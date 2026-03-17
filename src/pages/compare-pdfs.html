@@ -72,14 +72,19 @@
     <style>
       .compare-viewer-wrapper.overlay-mode {
         position: relative;
+        display: flex;
+        align-items: stretch;
         background: #ffffff;
         overflow: hidden;
+        min-height: 0;
         padding: 1.5rem;
       }
 
       .compare-viewer-wrapper.overlay-mode #panel-1 {
+        flex: 1 1 auto;
         width: 100%;
         height: 100%;
+        min-height: 0;
         overflow: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -92,6 +97,7 @@
       .compare-viewer-wrapper.overlay-mode #panel-2 {
         position: absolute;
         inset: 1.5rem;
+        min-height: 0;
         overflow: hidden;
         pointer-events: none;
         background: transparent;
@@ -128,6 +134,12 @@
         gap: 1rem;
         grid-template-columns: minmax(0, 1fr) 20rem;
         align-items: stretch;
+        min-height: clamp(32rem, 72vh, 56rem);
+      }
+
+      .compare-viewer-wrapper {
+        height: 100%;
+        min-height: 0;
       }
 
       .compare-viewer-wrapper.side-by-side-mode #panel-1,
@@ -248,6 +260,7 @@
         border: 1px solid rgba(51, 65, 85, 0.5);
         border-radius: 0.75rem;
         overflow: hidden;
+        height: 100%;
         min-height: 0;
       }
 
@@ -495,11 +508,17 @@
       @media (max-width: 1023px) {
         .compare-workspace {
           grid-template-columns: minmax(0, 1fr);
+          min-height: 0;
         }
 
         .compare-sidebar {
           height: auto;
           max-height: 24rem;
+        }
+
+        .compare-viewer-wrapper {
+          height: auto;
+          min-height: 24rem;
         }
 
         .compare-viewer-wrapper.side-by-side-mode {
@@ -708,12 +727,37 @@
             <div class="flex-1"></div>
 
             <div id="overlay-controls" class="hidden flex items-center gap-2">
+              <div class="bg-gray-700 p-0.5 rounded flex gap-0.5">
+                <button
+                  id="overlay-scope-all"
+                  class="btn bg-indigo-600 px-2.5 py-1 rounded text-xs font-semibold"
+                >
+                  All changes
+                </button>
+                <button
+                  id="overlay-scope-content-only"
+                  class="btn px-2.5 py-1 rounded text-xs font-semibold bg-gray-700"
+                >
+                  Content only
+                </button>
+              </div>
               <button
                 id="flicker-btn"
                 class="btn bg-gray-700 hover:bg-gray-600 px-2.5 py-1 rounded text-xs font-semibold"
               >
                 Flicker
               </button>
+              <label
+                class="flex items-center gap-1.5 text-xs text-gray-300 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  id="overlay-ocr-toggle"
+                  checked
+                  class="w-3.5 h-3.5 rounded text-indigo-600 bg-gray-700 border-gray-600"
+                />
+                OCR
+              </label>
               <input
                 type="range"
                 id="opacity-slider"
@@ -770,29 +814,36 @@
                   Export as PDF
                 </div>
                 <button
+                  data-export-mode="overlay"
+                  class="export-menu-item export-menu-item-overlay w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2 hidden"
+                >
+                  <i data-lucide="layers" class="w-4 h-4 text-gray-400"></i>
+                  Overlay view
+                </button>
+                <button
                   data-export-mode="split"
-                  class="export-menu-item w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
+                  class="export-menu-item export-menu-item-side w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
                 >
                   <i data-lucide="columns-2" class="w-4 h-4 text-gray-400"></i>
                   Split view
                 </button>
                 <button
                   data-export-mode="alternating"
-                  class="export-menu-item w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
+                  class="export-menu-item export-menu-item-side w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
                 >
                   <i data-lucide="layers" class="w-4 h-4 text-gray-400"></i>
                   Alternating
                 </button>
                 <button
                   data-export-mode="left"
-                  class="export-menu-item w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
+                  class="export-menu-item export-menu-item-side w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
                 >
                   <i data-lucide="columns-2" class="w-4 h-4 text-gray-400"></i>
                   Left Document
                 </button>
                 <button
                   data-export-mode="right"
-                  class="export-menu-item w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
+                  class="export-menu-item export-menu-item-side w-full px-3 py-2 text-sm text-left text-gray-200 hover:bg-gray-700 flex items-center gap-2"
                 >
                   <i data-lucide="columns-2" class="w-4 h-4 text-gray-400"></i>
                   Right Document

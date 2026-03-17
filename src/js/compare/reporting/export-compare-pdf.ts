@@ -1,18 +1,20 @@
 import { PDFDocument, rgb } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
 import type {
+  CompareCaches,
   ComparePagePair,
   CompareTextChange,
   ComparePdfExportMode,
 } from '../types.ts';
-import { extractPageModel } from '../engine/extract-page-model.ts';
-import { comparePageModelsAsync } from '../engine/compare-page-models.ts';
 import {
+  COMPARE_CACHE_MAX_SIZE,
   COMPARE_COLORS,
   HIGHLIGHT_OPACITY,
   COMPARE_RENDER,
 } from '../config.ts';
 import { downloadFile } from '../../utils/helpers.ts';
+import { computeComparisonForPair } from '../../logic/compare-render.ts';
+import { LRUCache } from '../lru-cache.ts';
 
 const HIGHLIGHT_COLORS: Record<
   string,
@@ -56,7 +58,7 @@ const HIGHLIGHT_COLORS: Record<
   },
 };
 
-const EXTRACT_SCALE = COMPARE_RENDER.EXPORT_EXTRACT_SCALE;
+const EXTRACT_SCALE = COMPARE_RENDER.OFFLINE_SCALE;
 
 function drawHighlights(
   page: ReturnType<PDFDocument['getPage']>,
@@ -86,7 +88,14 @@ export async function exportComparePdf(
   pdfDoc1: pdfjsLib.PDFDocumentProxy | null,
   pdfDoc2: pdfjsLib.PDFDocumentProxy | null,
   pairs: ComparePagePair[],
-  onProgress?: (message: string, percent: number) => void
+  onProgress?: (message: string, percent: number) => void,
+  options?: {
+    overlayOpacity?: number;
+    includeChange?: (change: CompareTextChange) => boolean;
+    useOcr?: boolean;
+    ocrLanguage?: string;
+    showOverlayDocument?: boolean;
+  }
 ) {
   if (!pdfDoc1 && !pdfDoc2) {
     throw new Error('At least one PDF document is required for export.');
@@ -107,6 +116,25 @@ export async function exportComparePdf(
     bytes2 ? PDFDocument.load(bytes2, { ignoreEncryption: true }) : null,
   ]);
 
+  const includeChange = options?.includeChange ?? (() => true);
+  const overlayOpacity = options?.overlayOpacity ?? 0.5;
+  const showOverlayDocument = options?.showOverlayDocument ?? true;
+  const exportCaches: CompareCaches = {
+    pageModelCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+    comparisonCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+    comparisonResultsCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+    ocrModelCache: new LRUCache(COMPARE_CACHE_MAX_SIZE),
+  };
+  const renderContext = {
+    useOcr: options?.useOcr ?? true,
+    ocrLanguage: options?.ocrLanguage ?? 'eng',
+    viewMode: mode === 'overlay' ? 'overlay' : 'side-by-side',
+    zoomLevel: 1,
+    showLoader: (message: string, percent?: number) => {
+      onProgress?.(message, percent ?? 0);
+    },
+  } as const;
+
   for (let i = 0; i < pairs.length; i++) {
     const pair = pairs[i];
     onProgress?.(
@@ -123,21 +151,83 @@ export async function exportComparePdf(
         ? await pdfDoc2.getPage(pair.rightPageNumber)
         : null;
 
-    const leftModel = leftPdjsPage
-      ? await extractPageModel(
-          leftPdjsPage,
-          leftPdjsPage.getViewport({ scale: EXTRACT_SCALE })
-        )
-      : null;
-    const rightModel = rightPdjsPage
-      ? await extractPageModel(
-          rightPdjsPage,
-          rightPdjsPage.getViewport({ scale: EXTRACT_SCALE })
-        )
-      : null;
+    const comparison = await computeComparisonForPair(
+      pdfDoc1,
+      pdfDoc2,
+      pair,
+      exportCaches,
+      renderContext
+    );
+    const changes = comparison.changes.filter(includeChange);
 
-    const comparison = await comparePageModelsAsync(leftModel, rightModel);
-    const changes = comparison.changes;
+    if (mode === 'overlay') {
+      const leftViewport = leftPdjsPage?.getViewport({ scale: 1.0 }) ?? null;
+      const rightViewport = rightPdjsPage?.getViewport({ scale: 1.0 }) ?? null;
+      const pageWidth = leftViewport?.width ?? rightViewport?.width;
+      const pageHeight = leftViewport?.height ?? rightViewport?.height;
+
+      if (!pageWidth || !pageHeight) {
+        continue;
+      }
+
+      const outPage = outDoc.addPage([pageWidth, pageHeight]);
+
+      if (pair.leftPageNumber && libDoc1) {
+        const [copied] = await outDoc.copyPages(libDoc1, [
+          pair.leftPageNumber - 1,
+        ]);
+        const embedded = await outDoc.embedPage(copied);
+        outPage.drawPage(embedded, {
+          x: 0,
+          y: 0,
+          width: pageWidth,
+          height: pageHeight,
+        });
+      }
+
+      if (pair.rightPageNumber && libDoc2) {
+        const shouldDrawRightPage = !pair.leftPageNumber || showOverlayDocument;
+        if (shouldDrawRightPage) {
+          const [copied] = await outDoc.copyPages(libDoc2, [
+            pair.rightPageNumber - 1,
+          ]);
+          const embedded = await outDoc.embedPage(copied);
+          outPage.drawPage(embedded, {
+            x: 0,
+            y: 0,
+            width: pageWidth,
+            height: pageHeight,
+            opacity:
+              pair.leftPageNumber && pair.rightPageNumber && showOverlayDocument
+                ? overlayOpacity
+                : 1,
+          });
+        }
+      }
+
+      if (changes.length) {
+        for (const change of changes) {
+          const color = HIGHLIGHT_COLORS[change.type];
+          if (!color) continue;
+          for (const rect of [...change.beforeRects, ...change.afterRects]) {
+            outPage.drawRectangle({
+              x: rect.x / EXTRACT_SCALE,
+              y:
+                pageHeight -
+                rect.y / EXTRACT_SCALE -
+                rect.height / EXTRACT_SCALE,
+              width: rect.width / EXTRACT_SCALE,
+              height: rect.height / EXTRACT_SCALE,
+              color: rgb(color.r, color.g, color.b),
+              opacity: color.opacity,
+            });
+          }
+        }
+      }
+
+      await new Promise((r) => setTimeout(r, 0));
+      continue;
+    }
 
     if (mode === 'split') {
       const refPage = leftPdjsPage || rightPdjsPage;

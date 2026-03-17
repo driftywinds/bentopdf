@@ -109,6 +109,13 @@ const baseCategories = [
         subtitle: 'Insert page numbers into your document.',
       },
       {
+        href: import.meta.env.BASE_URL + 'add-page-labels.html',
+        name: 'Add Page Labels',
+        icon: 'ph-text-aa',
+        subtitle:
+          'Apply PDF page labels with Roman numerals, prefixes, and custom starts.',
+      },
+      {
         href: import.meta.env.BASE_URL + 'bates-numbering.html',
         name: 'Bates Numbering',
         icon: 'ph-hash',

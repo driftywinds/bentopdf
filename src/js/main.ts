@@ -153,6 +153,7 @@ const init = async () => {
     'Edit Bookmarks': 'tools:editBookmarks',
     'Table of Contents': 'tools:tableOfContents',
     'Page Numbers': 'tools:pageNumbers',
+    'Add Page Labels': 'tools:addPageLabels',
     'Add Watermark': 'tools:addWatermark',
     'Header & Footer': 'tools:headerFooter',
     'Invert Colors': 'tools:invertColors',

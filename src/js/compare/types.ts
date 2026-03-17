@@ -3,7 +3,14 @@ import type { LRUCache } from './lru-cache.ts';
 
 export type CompareViewMode = 'overlay' | 'side-by-side';
 
-export type ComparePdfExportMode = 'split' | 'alternating' | 'left' | 'right';
+export type ComparePdfExportMode =
+  | 'split'
+  | 'alternating'
+  | 'left'
+  | 'right'
+  | 'overlay';
+
+export type CompareOverlayChangeScope = 'all' | 'content-only';
 
 export interface RenderedPage {
   model: ComparePageModel | null;
@@ -201,6 +208,8 @@ export interface CompareState {
   pdfDoc2: pdfjsLib.PDFDocumentProxy | null;
   currentPage: number;
   viewMode: CompareViewMode;
+  overlayChangeScope: CompareOverlayChangeScope;
+  overlayDocumentVisible: boolean;
   isSyncScroll: boolean;
   currentComparison: ComparePageResult | null;
   activeChangeIndex: number;

@@ -35,6 +35,8 @@ const pageState: CompareState = {
   pdfDoc2: null,
   currentPage: 1,
   viewMode: 'side-by-side',
+  overlayChangeScope: 'all',
+  overlayDocumentVisible: true,
   isSyncScroll: true,
   currentComparison: null,
   activeChangeIndex: 0,
@@ -81,41 +83,76 @@ function getRenderContext(): CompareRenderContext {
   };
 }
 
+function getEffectiveCategoryFilter(): CompareCategoryFilterState {
+  if (
+    pageState.viewMode !== 'overlay' ||
+    pageState.overlayChangeScope !== 'content-only'
+  ) {
+    return pageState.categoryFilter;
+  }
+
+  return {
+    ...pageState.categoryFilter,
+    formatting: false,
+  };
+}
+
+function matchesActiveFilter(change: CompareTextChange) {
+  if (pageState.activeFilter === 'all') {
+    return true;
+  }
+
+  if (pageState.activeFilter === 'removed') {
+    return change.type === 'removed' || change.type === 'page-removed';
+  }
+
+  if (pageState.activeFilter === 'added') {
+    return change.type === 'added' || change.type === 'page-added';
+  }
+
+  return change.type === pageState.activeFilter;
+}
+
+function matchesSearch(change: CompareTextChange, searchQuery: string) {
+  if (!searchQuery) {
+    return true;
+  }
+
+  const searchableText = [
+    change.description,
+    change.beforeText,
+    change.afterText,
+  ]
+    .join(' ')
+    .toLowerCase();
+
+  return searchableText.includes(searchQuery);
+}
+
+function shouldIncludeChange(
+  change: CompareTextChange,
+  options: { includeSearch: boolean }
+) {
+  if (!matchesActiveFilter(change)) {
+    return false;
+  }
+
+  const effectiveCategoryFilter = getEffectiveCategoryFilter();
+  if (!effectiveCategoryFilter[change.category]) {
+    return false;
+  }
+
+  return options.includeSearch
+    ? matchesSearch(change, pageState.changeSearchQuery.trim().toLowerCase())
+    : true;
+}
+
 function getVisibleChanges(result: ComparePageResult | null) {
   if (!result) return [];
 
-  const filteredByType =
-    pageState.activeFilter === 'all'
-      ? result.changes
-      : result.changes.filter((change) => {
-          if (pageState.activeFilter === 'removed') {
-            return change.type === 'removed' || change.type === 'page-removed';
-          }
-          if (pageState.activeFilter === 'added') {
-            return change.type === 'added' || change.type === 'page-added';
-          }
-          return change.type === pageState.activeFilter;
-        });
-
-  const filteredByCategory = filteredByType.filter(
-    (change) => pageState.categoryFilter[change.category]
+  return result.changes.filter((change) =>
+    shouldIncludeChange(change, { includeSearch: true })
   );
-
-  const searchQuery = pageState.changeSearchQuery.trim().toLowerCase();
-  if (!searchQuery) {
-    return filteredByCategory;
-  }
-
-  return filteredByCategory.filter((change) => {
-    const searchableText = [
-      change.description,
-      change.beforeText,
-      change.afterText,
-    ]
-      .join(' ')
-      .toLowerCase();
-    return searchableText.includes(searchQuery);
-  });
 }
 
 function updateFilterButtons() {
@@ -131,7 +168,86 @@ function updateFilterButtons() {
     const button = getElement<HTMLButtonElement>(id);
     if (!button) return;
     button.classList.toggle('active', pageState.activeFilter === filter);
+    const isDisabled =
+      id === 'filter-style-changed' &&
+      pageState.viewMode === 'overlay' &&
+      pageState.overlayChangeScope === 'content-only';
+    button.disabled = isDisabled;
+    button.classList.toggle('opacity-50', isDisabled);
+    button.classList.toggle('cursor-not-allowed', isDisabled);
   });
+}
+
+function updateOverlayScopeButtons() {
+  const allButton = getElement<HTMLButtonElement>('overlay-scope-all');
+  const contentOnlyButton = getElement<HTMLButtonElement>(
+    'overlay-scope-content-only'
+  );
+
+  const applyState = (button: HTMLButtonElement | null, active: boolean) => {
+    if (!button) return;
+    button.classList.toggle('bg-indigo-600', active);
+    button.classList.toggle('bg-gray-700', !active);
+  };
+
+  applyState(allButton, pageState.overlayChangeScope === 'all');
+  applyState(
+    contentOnlyButton,
+    pageState.overlayChangeScope === 'content-only'
+  );
+}
+
+function updateExportMenuForViewMode() {
+  const overlayItems = document.querySelectorAll('.export-menu-item-overlay');
+  const sideItems = document.querySelectorAll('.export-menu-item-side');
+  const isOverlay = pageState.viewMode === 'overlay';
+
+  overlayItems.forEach((item) => {
+    item.classList.toggle('hidden', !isOverlay);
+  });
+  sideItems.forEach((item) => {
+    item.classList.toggle('hidden', isOverlay);
+  });
+}
+
+function updateOverlayPreviewState() {
+  const canvas2 = getElement<HTMLCanvasElement>('canvas-compare-2');
+  const panel2 = getElement<HTMLElement>('panel-2');
+  const opacitySlider = getElement<HTMLInputElement>('opacity-slider');
+  const activePair = getActivePair();
+  const hasLeftPage = Boolean(activePair?.leftPageNumber);
+  const hasRightPage = Boolean(activePair?.rightPageNumber);
+
+  if (!canvas2 || !panel2) {
+    return;
+  }
+
+  if (pageState.viewMode !== 'overlay') {
+    canvas2.style.opacity = '1';
+    panel2.style.opacity = '1';
+    return;
+  }
+
+  panel2.style.opacity = '1';
+
+  if (!hasRightPage) {
+    canvas2.style.opacity = '0';
+    return;
+  }
+
+  if (!hasLeftPage) {
+    canvas2.style.opacity = '1';
+    return;
+  }
+
+  if (pageState.overlayChangeScope === 'content-only') {
+    canvas2.style.opacity = '0';
+    return;
+  }
+
+  canvas2.style.opacity = pageState.overlayDocumentVisible
+    ? opacitySlider?.value || '0.5'
+    : '0';
 }
 
 function updateSummary() {
@@ -182,14 +298,15 @@ function updateCategoryPills(comparison: ComparePageResult | null) {
   ];
 
   const summary = comparison?.categorySummary;
+  const effectiveCategoryFilter = getEffectiveCategoryFilter();
 
   for (const key of categoryKeys) {
     const countEl = getElement<HTMLElement>(`category-count-${key}`);
     const pill = getElement<HTMLButtonElement>(`category-${key}`);
     if (countEl) countEl.textContent = summary ? summary[key].toString() : '0';
     if (pill) {
-      pill.classList.toggle('active', pageState.categoryFilter[key]);
-      pill.classList.toggle('disabled', !pageState.categoryFilter[key]);
+      pill.classList.toggle('active', effectiveCategoryFilter[key]);
+      pill.classList.toggle('disabled', !effectiveCategoryFilter[key]);
     }
   }
 }
@@ -349,10 +466,30 @@ function renderChangeList() {
 }
 
 function renderComparisonUI() {
+  updateOverlayScopeButtons();
+  updateExportMenuForViewMode();
   updateFilterButtons();
   renderHighlights();
   renderChangeList();
   updateSummary();
+  updateOverlayPreviewState();
+  syncComparePaneHeights();
+}
+
+function syncComparePaneHeights() {
+  const wrapper = getElement<HTMLElement>('compare-viewer-wrapper');
+  const sidebar = document.querySelector<HTMLElement>('.compare-sidebar');
+
+  if (!wrapper || !sidebar) {
+    return;
+  }
+
+  if (window.innerWidth <= 1023) {
+    wrapper.style.height = '';
+    return;
+  }
+
+  wrapper.style.height = `${sidebar.offsetHeight}px`;
 }
 
 async function buildPagePairs() {
@@ -528,8 +665,7 @@ function setViewMode(mode: 'overlay' | 'side-by-side') {
       btnSide.classList.add('bg-gray-700');
     }
     if (canvas2 && opacitySlider) {
-      const panel2 = getElement<HTMLElement>('panel-2');
-      if (panel2) panel2.style.opacity = opacitySlider.value;
+      canvas2.style.transition = 'opacity 150ms ease-in-out';
     }
     pageState.isSyncScroll = true;
   } else {
@@ -550,6 +686,11 @@ function setViewMode(mode: 'overlay' | 'side-by-side') {
     const panel2 = getElement<HTMLElement>('panel-2');
     if (panel2) panel2.style.opacity = '1';
   }
+
+  updateOverlayScopeButtons();
+  updateExportMenuForViewMode();
+  updateOverlayPreviewState();
+  syncComparePaneHeights();
 
   const p1 = getElement<HTMLElement>('panel-1');
   const p2 = getElement<HTMLElement>('panel-2');
@@ -715,28 +856,17 @@ document.addEventListener('DOMContentLoaded', function () {
     'opacity-slider'
   ) as HTMLInputElement;
 
-  // Track flicker state
-  let flickerVisible = true;
-
   if (flickerBtn) {
     flickerBtn.addEventListener('click', function () {
-      flickerVisible = !flickerVisible;
-      const p2 = getElement<HTMLElement>('panel-2');
-      if (p2) {
-        p2.style.transition = 'opacity 150ms ease-in-out';
-        p2.style.opacity = flickerVisible ? opacitySlider?.value || '0.5' : '0';
-      }
+      pageState.overlayDocumentVisible = !pageState.overlayDocumentVisible;
+      updateOverlayPreviewState();
     });
   }
 
   if (opacitySlider) {
     opacitySlider.addEventListener('input', function () {
-      flickerVisible = true;
-      const p2 = getElement<HTMLElement>('panel-2');
-      if (p2) {
-        p2.style.transition = '';
-        p2.style.opacity = opacitySlider.value;
-      }
+      pageState.overlayDocumentVisible = true;
+      updateOverlayPreviewState();
     });
   }
 
@@ -752,7 +882,12 @@ document.addEventListener('DOMContentLoaded', function () {
   );
   const exportDropdownMenu = getElement<HTMLDivElement>('export-dropdown-menu');
   const ocrToggle = getElement<HTMLInputElement>('ocr-toggle');
+  const overlayOcrToggle = getElement<HTMLInputElement>('overlay-ocr-toggle');
   const searchInput = getElement<HTMLInputElement>('compare-search-input');
+  const overlayAllBtn = getElement<HTMLButtonElement>('overlay-scope-all');
+  const overlayContentOnlyBtn = getElement<HTMLButtonElement>(
+    'overlay-scope-content-only'
+  );
 
   const filterButtons: Array<{ id: string; filter: CompareFilterType }> = [
     { id: 'filter-modified', filter: 'modified' },
@@ -874,6 +1009,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const button = getElement<HTMLButtonElement>(id);
     if (!button) return;
     button.addEventListener('click', function () {
+      if (
+        filter === 'style-changed' &&
+        pageState.viewMode === 'overlay' &&
+        pageState.overlayChangeScope === 'content-only'
+      ) {
+        return;
+      }
       if (pageState.activeFilter === filter) {
         pageState.activeFilter = 'all';
       } else {
@@ -897,6 +1039,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const pill = getElement<HTMLButtonElement>(`category-${key}`);
     if (pill) {
       pill.addEventListener('click', function () {
+        if (
+          key === 'formatting' &&
+          pageState.viewMode === 'overlay' &&
+          pageState.overlayChangeScope === 'content-only'
+        ) {
+          return;
+        }
         pageState.categoryFilter[key] = !pageState.categoryFilter[key];
         pageState.activeChangeIndex = 0;
         renderComparisonUI();
@@ -904,21 +1053,59 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  if (overlayAllBtn) {
+    overlayAllBtn.addEventListener('click', function () {
+      pageState.overlayChangeScope = 'all';
+      pageState.activeChangeIndex = 0;
+      pageState.overlayDocumentVisible = true;
+      renderComparisonUI();
+    });
+  }
+
+  if (overlayContentOnlyBtn) {
+    overlayContentOnlyBtn.addEventListener('click', function () {
+      pageState.overlayChangeScope = 'content-only';
+      if (pageState.activeFilter === 'style-changed') {
+        pageState.activeFilter = 'all';
+      }
+      pageState.activeChangeIndex = 0;
+      pageState.overlayDocumentVisible = false;
+      renderComparisonUI();
+    });
+  }
+
+  async function handleOcrToggleChange(nextValue: boolean) {
+    try {
+      pageState.useOcr = nextValue;
+      if (ocrToggle) {
+        ocrToggle.checked = nextValue;
+      }
+      if (overlayOcrToggle) {
+        overlayOcrToggle.checked = nextValue;
+      }
+      caches.pageModelCache.clear();
+      caches.comparisonCache.clear();
+      caches.comparisonResultsCache.clear();
+      if (pageState.pdfDoc1 && pageState.pdfDoc2) {
+        await renderBothPages();
+      }
+    } catch (e) {
+      console.error('OCR toggle failed:', e);
+      hideLoader();
+    }
+  }
+
   if (ocrToggle) {
     ocrToggle.checked = pageState.useOcr;
     ocrToggle.addEventListener('change', async function () {
-      try {
-        pageState.useOcr = ocrToggle.checked;
-        caches.pageModelCache.clear();
-        caches.comparisonCache.clear();
-        caches.comparisonResultsCache.clear();
-        if (pageState.pdfDoc1 && pageState.pdfDoc2) {
-          await renderBothPages();
-        }
-      } catch (e) {
-        console.error('OCR toggle failed:', e);
-        hideLoader();
-      }
+      await handleOcrToggleChange(ocrToggle.checked);
+    });
+  }
+
+  if (overlayOcrToggle) {
+    overlayOcrToggle.checked = pageState.useOcr;
+    overlayOcrToggle.addEventListener('change', async function () {
+      await handleOcrToggleChange(overlayOcrToggle.checked);
     });
   }
 
@@ -933,14 +1120,24 @@ document.addEventListener('DOMContentLoaded', function () {
   let resizeFrame = 0;
   window.addEventListener('resize', function () {
     if (!pageState.pdfDoc1 || !pageState.pdfDoc2) {
+      syncComparePaneHeights();
       return;
     }
 
     window.cancelAnimationFrame(resizeFrame);
     resizeFrame = window.requestAnimationFrame(function () {
+      syncComparePaneHeights();
       renderBothPages().catch(console.error);
     });
   });
+
+  const sidebar = document.querySelector<HTMLElement>('.compare-sidebar');
+  if (sidebar && typeof ResizeObserver !== 'undefined') {
+    const resizeObserver = new ResizeObserver(function () {
+      syncComparePaneHeights();
+    });
+    resizeObserver.observe(sidebar);
+  }
 
   if (exportDropdownBtn && exportDropdownMenu) {
     exportDropdownBtn.addEventListener('click', function (e) {
@@ -971,6 +1168,24 @@ document.addEventListener('DOMContentLoaded', function () {
             pageState.pagePairs,
             function (message, percent) {
               showLoader(message, percent);
+            },
+            {
+              useOcr: pageState.useOcr,
+              ocrLanguage: pageState.ocrLanguage,
+              showOverlayDocument:
+                pageState.viewMode === 'overlay'
+                  ? pageState.overlayChangeScope === 'all' &&
+                    pageState.overlayDocumentVisible
+                  : undefined,
+              overlayOpacity:
+                pageState.viewMode === 'overlay'
+                  ? Number.parseFloat(opacitySlider?.value || '0.5')
+                  : undefined,
+              includeChange:
+                pageState.viewMode === 'overlay'
+                  ? (change) =>
+                      shouldIncludeChange(change, { includeSearch: false })
+                  : undefined,
             }
           );
         } catch (e) {
@@ -985,5 +1200,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   createIcons({ icons });
   updateFilterButtons();
+  updateOverlayScopeButtons();
+  updateExportMenuForViewMode();
+  syncComparePaneHeights();
   setViewMode(pageState.viewMode);
 });

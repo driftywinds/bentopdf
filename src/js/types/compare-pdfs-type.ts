@@ -1,6 +1,7 @@
 export type {
   CompareState,
   ComparePdfExportMode,
+  CompareOverlayChangeScope,
   RenderedPage,
   ComparisonPageLoad,
   DiffFocusRegion,

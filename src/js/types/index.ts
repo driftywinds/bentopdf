@@ -51,3 +51,4 @@ export * from './scanner-effect-type.ts';
 export * from './adjust-colors-type.ts';
 export * from './bates-numbering-type.ts';
 export * from './page-preview-type.ts';
+export * from './add-page-labels-type.ts';
