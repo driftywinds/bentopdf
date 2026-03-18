@@ -63,6 +63,19 @@ httpRoute:
             type: PathPrefix
             value: /
 
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 101
+  runAsGroup: 101
+  fsGroup: 101
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
 resources: {}
 
 livenessProbe:

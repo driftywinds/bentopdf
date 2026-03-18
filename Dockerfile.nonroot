@@ -75,7 +75,7 @@ ENV PUID=1000
 ENV PGID=1000
 ENV DISABLE_IPV6=false
 
-RUN apk add --no-cache su-exec
+RUN apk upgrade --no-cache && apk add --no-cache su-exec
 
 COPY --from=builder /app/dist /usr/share/nginx/html${BASE_URL%/}
 COPY nginx.conf /etc/nginx/nginx.conf
