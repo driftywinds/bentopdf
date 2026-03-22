@@ -121,6 +121,9 @@ async function runOCR() {
   );
   const binarize = (document.getElementById('ocr-binarize') as HTMLInputElement)
     .checked;
+  const embedFullFonts = (
+    document.getElementById('ocr-embed-full-fonts') as HTMLInputElement
+  ).checked;
   const whitelist = (
     document.getElementById('ocr-whitelist') as HTMLInputElement
   ).value;
@@ -154,6 +157,7 @@ async function runOCR() {
       resolution: scale,
       binarize,
       whitelist,
+      embedFullFonts,
       onProgress: updateProgress,
     });
 

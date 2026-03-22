@@ -16,6 +16,7 @@ export interface OcrOptions {
   resolution: number;
   binarize: boolean;
   whitelist: string;
+  embedFullFonts?: boolean;
   onProgress?: (status: string, progress: number) => void;
 }
 
@@ -131,7 +132,14 @@ export async function performOcr(
   pdfBytes: Uint8Array | ArrayBuffer,
   options: OcrOptions
 ): Promise<OcrResult> {
-  const { language, resolution, binarize, whitelist, onProgress } = options;
+  const {
+    language,
+    resolution,
+    binarize,
+    whitelist,
+    embedFullFonts,
+    onProgress,
+  } = options;
   const progress = onProgress || (() => {});
 
   const worker = await createConfiguredTesseractWorker(
@@ -198,14 +206,16 @@ export async function performOcr(
         getFontForLanguage('eng'),
       ]);
       primaryFont = await newPdfDoc.embedFont(scriptFontBytes, {
-        subset: false,
+        subset: !embedFullFonts,
       });
       latinFont = await newPdfDoc.embedFont(latinFontBytes, {
-        subset: false,
+        subset: !embedFullFonts,
       });
     } else {
       const fontBytes = await getFontForLanguage(primaryLang);
-      primaryFont = await newPdfDoc.embedFont(fontBytes, { subset: false });
+      primaryFont = await newPdfDoc.embedFont(fontBytes, {
+        subset: !embedFullFonts,
+      });
       latinFont = primaryFont;
     }
   } catch (e) {
