@@ -2,8 +2,6 @@ name: Update EmbedPDF Snippet
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 3 * * 1' # Weekly; adjust as needed
 
 permissions:
   contents: write
