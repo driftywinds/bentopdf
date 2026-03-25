@@ -248,6 +248,7 @@ BentoPDF offers a comprehensive suite of tools to handle all your PDF needs.
 | **PDF to WebP**      | Convert each PDF page into a WebP image.                                       |
 | **PDF to BMP**       | Convert each PDF page into a BMP image.                                        |
 | **PDF to TIFF**      | Convert each PDF page into a TIFF image.                                       |
+| **PDF to CBZ**       | Convert a PDF into a CBZ (Comic Book Archive) for comic readers and Calibre.   |
 | **PDF to SVG**       | Convert each page into a scalable vector graphic (SVG) for perfect quality.    |
 | **PDF to Greyscale** | Convert a color PDF into a black-and-white version.                            |
 | **PDF to Text**      | Extract text from PDF files and save as plain text (.txt).                     |
@@ -1160,6 +1161,10 @@ BentoPDF wouldn't be possible without the amazing open-source tools and librarie
 - **[Tailwind CSS](https://tailwindcss.com/)** – For rapid, flexible, and beautiful UI styling.
 - **[qpdf](https://github.com/qpdf/qpdf)** and **[qpdf-wasm](https://github.com/neslinesli93/qpdf-wasm)** – For inspecting, repairing, and transforming PDF files.
 - **[LibreOffice](https://www.libreoffice.org/)** – For powerful document conversion capabilities.
+- **[wasm-vips](https://github.com/kleisauke/wasm-vips)** – For advanced TIFF encoding with compression (LZW, Deflate, CCITT Group 4).
+- **[pixelmatch](https://github.com/mapbox/pixelmatch)** – For fast, accurate image comparison and diff detection.
+- **[diff](https://github.com/kpdecker/jsdiff)** – For computing text differences.
+- **[microdiff](https://github.com/AsyncBanana/microdiff)** – For lightweight, fast object diffing.
 
 **AGPL Libraries (Pre-configured via CDN):**
 
