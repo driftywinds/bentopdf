@@ -1,10 +1,12 @@
 import { createIcons, icons } from 'lucide';
 import { showAlert, showLoader, hideLoader } from '../ui.js';
 import { downloadFile, hexToRgb, formatBytes } from '../utils/helpers.js';
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { StandardFonts, rgb } from 'pdf-lib';
+import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import JSZip from 'jszip';
 import Sortable from 'sortablejs';
 import { FileEntry, Position, StylePreset } from '@/types';
+import { loadPdfDocument } from '../utils/load-pdf-document.js';
 
 const FONT_MAP: Record<string, keyof typeof StandardFonts> = {
   Helvetica: 'Helvetica',
@@ -178,9 +180,13 @@ async function handleFiles(fileList: FileList) {
   try {
     for (const file of Array.from(fileList)) {
       if (file.type !== 'application/pdf') continue;
-      const arrayBuffer = await file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      files.push({ file, pageCount: pdfDoc.getPageCount() });
+      hideLoader();
+      const result = await loadPdfWithPasswordPrompt(file);
+      if (!result) continue;
+      showLoader('Loading PDFs...');
+      result.pdf.destroy();
+      const pdfDoc = await loadPdfDocument(result.bytes);
+      files.push({ file: result.file, pageCount: pdfDoc.getPageCount() });
     }
 
     if (files.length === 0) {
@@ -468,7 +474,7 @@ async function applyBatesNumbers() {
 
     for (const entry of files) {
       const arrayBuffer = await entry.file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
+      const pdfDoc = await loadPdfDocument(arrayBuffer);
       const font = await pdfDoc.embedFont(StandardFonts[fontName]);
       const pages = pdfDoc.getPages();
       const fileName = entry.file.name.replace(/\.pdf$/i, '');

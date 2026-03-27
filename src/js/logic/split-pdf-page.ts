@@ -2,12 +2,8 @@ import { showLoader, hideLoader, showAlert } from '../ui.js';
 import { t } from '../i18n/i18n';
 import { createIcons, icons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
-import {
-  downloadFile,
-  getPDFDocument,
-  readFileAsArrayBuffer,
-  formatBytes,
-} from '../utils/helpers.js';
+import { downloadFile, getPDFDocument, formatBytes } from '../utils/helpers.js';
+import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import { state } from '../state.js';
 import {
   renderPagesProgressively,
@@ -18,6 +14,7 @@ import { isCpdfAvailable } from '../utils/cpdf-helper.js';
 import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
 import JSZip from 'jszip';
 import { PDFDocument as PDFLibDocument } from 'pdf-lib';
+import { loadPdfDocument } from '../utils/load-pdf-document.js';
 
 // @ts-ignore
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -93,16 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Load PDF Document
         try {
-          if (!state.pdfDoc) {
-            showLoader('Loading PDF...');
-            const arrayBuffer = (await readFileAsArrayBuffer(
-              file
-            )) as ArrayBuffer;
-            state.pdfDoc = await PDFLibDocument.load(arrayBuffer);
-            hideLoader();
+          const result = await loadPdfWithPasswordPrompt(file);
+          if (!result) {
+            state.files = [];
+            updateUI();
+            return;
           }
-          // Update page count
-          metaSpan.textContent = `${formatBytes(file.size)} • ${state.pdfDoc.getPageCount()} pages`;
+          const pageCount = result.pdf.numPages;
+          result.pdf.destroy();
+          state.files[0] = result.file;
+          state.pdfDoc = await loadPdfDocument(result.bytes);
+          metaSpan.textContent = `${formatBytes(file.size)} • ${pageCount} pages`;
         } catch (error) {
           console.error('Error loading PDF:', error);
           showAlert('Error', 'Failed to load PDF file.');
@@ -139,10 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // If pdfDoc is not loaded yet (e.g. page refresh), try to load it from the first file
         if (state.files.length > 0) {
           const file = state.files[0];
-          const arrayBuffer = (await readFileAsArrayBuffer(
-            file
-          )) as ArrayBuffer;
-          state.pdfDoc = await PDFLibDocument.load(arrayBuffer);
+          hideLoader();
+          const result = await loadPdfWithPasswordPrompt(file);
+          if (!result) {
+            showLoader('Rendering page previews...');
+            throw new Error('No PDF document loaded');
+          }
+          result.pdf.destroy();
+          state.files[0] = result.file;
+          state.pdfDoc = await loadPdfDocument(result.bytes);
+          showLoader('Rendering page previews...');
         } else {
           throw new Error('No PDF document loaded');
         }

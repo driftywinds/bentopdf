@@ -29,6 +29,7 @@ type PdfViewerWindow = Window & {
 
 import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js';
 import { downloadFile, hexToRgb, getPDFDocument } from '../utils/helpers.js';
+import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import { createIcons, icons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
@@ -48,6 +49,7 @@ import {
   PageData,
 } from '@/types';
 import { extractExistingFields as extractExistingPdfFields } from './form-creator-extraction.js';
+import { loadPdfDocument } from '../utils/load-pdf-document.js';
 
 let fields: FormField[] = [];
 let selectedField: FormField | null = null;
@@ -3135,8 +3137,11 @@ function extractExistingFields(pdfDoc: PDFDocument): void {
 
 async function handlePdfUpload(file: File) {
   try {
-    const arrayBuffer = await file.arrayBuffer();
-    uploadedPdfDoc = await PDFDocument.load(arrayBuffer);
+    const result = await loadPdfWithPasswordPrompt(file);
+    if (!result) return;
+    const arrayBuffer = result.bytes;
+    uploadedPdfjsDoc = result.pdf;
+    uploadedPdfDoc = await loadPdfDocument(arrayBuffer);
 
     // Check for existing fields and update counter
     existingFieldNames.clear();
@@ -3172,8 +3177,6 @@ async function handlePdfUpload(file: File) {
     } catch (e) {
       console.log('No form fields found or error reading fields:', e);
     }
-
-    uploadedPdfjsDoc = await getPDFDocument({ data: arrayBuffer }).promise;
 
     const pageCount = uploadedPdfDoc.getPageCount();
     pages = [];

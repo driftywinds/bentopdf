@@ -1,15 +1,12 @@
 import { createIcons, icons } from 'lucide';
 import { showAlert, showLoader, hideLoader } from '../ui.js';
-import {
-  readFileAsArrayBuffer,
-  formatBytes,
-  downloadFile,
-  getPDFDocument,
-} from '../utils/helpers.js';
+import { formatBytes, downloadFile } from '../utils/helpers.js';
 import { initPagePreview } from '../utils/page-preview.js';
 import { PDFDocument } from 'pdf-lib';
+import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import * as pdfjsLib from 'pdfjs-dist';
 import Sortable from 'sortablejs';
+import { loadPdfDocument } from '../utils/load-pdf-document.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -173,18 +170,16 @@ async function handleFile(file: File) {
     return;
   }
 
-  showLoader('Loading PDF...');
   organizeState.file = file;
 
   try {
-    const arrayBuffer = await readFileAsArrayBuffer(file);
-    organizeState.pdfDoc = await PDFDocument.load(arrayBuffer as ArrayBuffer, {
-      ignoreEncryption: true,
-      throwOnInvalidObject: false,
-    });
-    organizeState.pdfJsDoc = await getPDFDocument({
-      data: (arrayBuffer as ArrayBuffer).slice(0),
-    }).promise;
+    const result = await loadPdfWithPasswordPrompt(file);
+    if (!result) return;
+    showLoader('Loading PDF...');
+
+    organizeState.pdfDoc = await loadPdfDocument(result.bytes);
+    organizeState.pdfJsDoc = result.pdf;
+    organizeState.file = result.file;
     organizeState.totalPages = organizeState.pdfDoc.getPageCount();
 
     updateFileDisplay();

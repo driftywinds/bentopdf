@@ -1,15 +1,12 @@
 import { createIcons, icons } from 'lucide';
 import { showLoader, hideLoader, showAlert } from '../ui.js';
-import {
-  downloadFile,
-  readFileAsArrayBuffer,
-  formatBytes,
-  getPDFDocument,
-} from '../utils/helpers.js';
+import { downloadFile, formatBytes } from '../utils/helpers.js';
+import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import Cropper from 'cropperjs';
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument as PDFLibDocument } from 'pdf-lib';
 import { CropperState } from '@/types';
+import { loadPdfDocument } from '../utils/load-pdf-document.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -88,16 +85,19 @@ async function handleFile(file: File) {
     return;
   }
 
-  showLoader('Loading PDF...');
   cropperState.file = file;
   cropperState.pageCrops = {};
 
   try {
-    const arrayBuffer = await readFileAsArrayBuffer(file);
-    cropperState.originalPdfBytes = arrayBuffer as ArrayBuffer;
-    cropperState.pdfDoc = await getPDFDocument({
-      data: (arrayBuffer as ArrayBuffer).slice(0),
-    }).promise;
+    const result = await loadPdfWithPasswordPrompt(file);
+    if (!result) {
+      cropperState.file = null;
+      return;
+    }
+    showLoader('Loading PDF...');
+    cropperState.file = result.file;
+    cropperState.originalPdfBytes = result.bytes;
+    cropperState.pdfDoc = result.pdf;
     cropperState.currentPageNum = 1;
 
     updateFileDisplay();
@@ -306,10 +306,7 @@ async function performCrop() {
 async function performMetadataCrop(
   cropData: Record<number, any>
 ): Promise<Uint8Array> {
-  const pdfToModify = await PDFLibDocument.load(
-    cropperState.originalPdfBytes!,
-    { ignoreEncryption: true, throwOnInvalidObject: false }
-  );
+  const pdfToModify = await loadPdfDocument(cropperState.originalPdfBytes!);
 
   for (const pageNum in cropData) {
     const pdfJsPage = await cropperState.pdfDoc.getPage(Number(pageNum));
@@ -350,9 +347,8 @@ async function performFlatteningCrop(
   cropData: Record<number, any>
 ): Promise<Uint8Array> {
   const newPdfDoc = await PDFLibDocument.create();
-  const sourcePdfDocForCopying = await PDFLibDocument.load(
-    cropperState.originalPdfBytes!,
-    { ignoreEncryption: true, throwOnInvalidObject: false }
+  const sourcePdfDocForCopying = await loadPdfDocument(
+    cropperState.originalPdfBytes!
   );
   const totalPages = cropperState.pdfDoc.numPages;
 

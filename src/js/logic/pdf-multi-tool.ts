@@ -4,6 +4,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 import JSZip from 'jszip';
 import Sortable from 'sortablejs';
 import { downloadFile, getPDFDocument } from '../utils/helpers';
+import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import {
   renderPagesProgressively,
   cleanupLazyRendering,
@@ -19,6 +20,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 import { t } from '../i18n/i18n';
+import { loadPdfDocument } from '../utils/load-pdf-document.js';
 
 interface PageData {
   id: string; // Unique ID for DOM reconciliation
@@ -428,10 +430,13 @@ async function loadPdfs(files: File[]) {
           arrayBuffer = await file.arrayBuffer();
         }
 
-        const pdfDoc = await PDFLibDocument.load(arrayBuffer, {
-          ignoreEncryption: true,
-          throwOnInvalidObject: false,
-        });
+        hideLoading();
+        const pwResult = await loadPdfWithPasswordPrompt(file);
+        if (!pwResult) continue;
+        pwResult.pdf.destroy();
+        arrayBuffer = pwResult.bytes as ArrayBuffer;
+
+        const pdfDoc = await loadPdfDocument(arrayBuffer);
         currentPdfDocs.push(pdfDoc);
         const pdfIndex = currentPdfDocs.length - 1;
 
@@ -848,15 +853,14 @@ async function handleInsertPdf(e: Event) {
   if (insertAfterIndex === undefined) return;
 
   try {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdfDoc = await PDFLibDocument.load(arrayBuffer, {
-      ignoreEncryption: true,
-      throwOnInvalidObject: false,
-    });
+    const pwResult = await loadPdfWithPasswordPrompt(file);
+    if (!pwResult) return;
+    pwResult.pdf.destroy();
+
+    const pdfDoc = await loadPdfDocument(pwResult.bytes);
     currentPdfDocs.push(pdfDoc);
     const pdfIndex = currentPdfDocs.length - 1;
 
-    // Load PDF.js document for rendering
     const pdfBytes = await pdfDoc.save();
     const pdfjsDoc = await getPDFDocument({ data: new Uint8Array(pdfBytes) })
       .promise;
