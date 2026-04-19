@@ -19,6 +19,7 @@ type LucideWindow = Window & {
   };
 };
 
+import DOMPurify from 'dompurify';
 import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js';
 import { downloadFile, escapeHtml, hexToRgb } from '../utils/helpers.js';
 import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
@@ -754,7 +755,8 @@ function renderField(field: FormField): void {
         contentEl.appendChild(img);
       } catch (error) {
         console.warn(
-          `Failed to render barcode preview for field "${field.name}":`,
+          'Failed to render barcode preview for field:',
+          String(field.name).replace(/[\r\n]+/g, ' '),
           error
         );
         contentEl.innerHTML = `<div class="flex flex-col items-center text-center p-1 text-gray-400"><i data-lucide="qr-code" class="w-6 h-6 mb-1"></i><span class="text-[10px] leading-tight">Invalid data</span></div>`;
@@ -1326,7 +1328,7 @@ function showProperties(field: FormField): void {
         `;
   }
 
-  propertiesPanel.innerHTML = `
+  const propertiesHtml = `
     <div class="space-y-3">
       <div>
         <label class="block text-xs font-semibold text-gray-300 mb-1">Field Name ${field.type === 'radio' ? '(Group Name)' : ''}</label>
@@ -1397,6 +1399,10 @@ function showProperties(field: FormField): void {
       </button>
     </div>
   `;
+
+  propertiesPanel.innerHTML = DOMPurify.sanitize(propertiesHtml, {
+    ADD_ATTR: ['target'],
+  });
 
   // Common listeners
   const propName = document.getElementById('propName') as HTMLInputElement;
@@ -2320,11 +2326,17 @@ downloadBtn.addEventListener('click', async () => {
           if (existingField) {
             radioGroup = existingField as PDFRadioGroup;
             radioGroups.set(groupName, radioGroup);
-            console.log(`Using existing radio group from PDF: ${groupName}`);
+            console.log(
+              'Using existing radio group from PDF:',
+              String(groupName).replace(/[\r\n]+/g, ' ')
+            );
           } else {
             radioGroup = form.createRadioGroup(groupName);
             radioGroups.set(groupName, radioGroup);
-            console.log(`Created new radio group: ${groupName}`);
+            console.log(
+              'Created new radio group:',
+              String(groupName).replace(/[\r\n]+/g, ' ')
+            );
           }
         }
 
@@ -2690,7 +2702,8 @@ downloadBtn.addEventListener('click', async () => {
             pdfPage.drawImage(pngImage, { x, y, width, height });
           } catch (e) {
             console.warn(
-              `Failed to generate barcode for field "${field.name}":`,
+              'Failed to generate barcode for field:',
+              String(field.name).replace(/[\r\n]+/g, ' '),
               e
             );
           }
