@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 
 const packageJsonPath = path.join(__dirname, '../package.json');
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+const chartYamlPath = path.join(__dirname, '../chart/Chart.yaml');
 
 function getCurrentVersion() {
   return packageJson.version;
@@ -39,6 +40,34 @@ function updateVersion(type) {
     JSON.stringify(packageJson, null, 2) + '\n'
   );
   return newVersion;
+}
+
+function updateHelmChart(newAppVersion) {
+  const lines = fs.readFileSync(chartYamlPath, 'utf8').split('\n');
+  let newChartVersion = null;
+
+  const updated = lines.map((line) => {
+    if (line.startsWith('version:')) {
+      const [maj, min, patch] = line
+        .slice('version:'.length)
+        .trim()
+        .split('.')
+        .map(Number);
+      newChartVersion = `${maj}.${min}.${patch + 1}`;
+      return `version: ${newChartVersion}`;
+    }
+    if (line.startsWith('appVersion:')) {
+      return `appVersion: '${newAppVersion}'`;
+    }
+    return line;
+  });
+
+  if (!newChartVersion) {
+    throw new Error('Could not find chart version line in chart/Chart.yaml');
+  }
+
+  fs.writeFileSync(chartYamlPath, updated.join('\n'));
+  return { chartVersion: newChartVersion, appVersion: newAppVersion };
 }
 
 function createGitTag(version) {
@@ -75,8 +104,14 @@ function main() {
   const newVersion = updateVersion(type);
   console.log(`📦 Updated version to ${newVersion}`);
 
-  // 2. Add and commit changes
-  execSync('git add package.json', {
+  // 2. Bump Helm chart appVersion + chart version
+  const chart = updateHelmChart(newVersion);
+  console.log(
+    `⚓ Updated chart version to ${chart.chartVersion}, appVersion to ${chart.appVersion}`
+  );
+
+  // 3. Add and commit changes
+  execSync('git add package.json chart/Chart.yaml', {
     stdio: 'inherit',
   });
   execSync(`git commit -m "Release v${newVersion}"`, { stdio: 'inherit' });
