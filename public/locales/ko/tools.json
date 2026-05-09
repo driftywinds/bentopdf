@@ -10,6 +10,7 @@
     "input": "입력",
     "output": "출력"
   },
+  "convertToPdf": "PDF로 변환",
   "pdfMultiTool": {
     "name": "PDF 멀티 도구",
     "subtitle": "병합, 분할, 정리, 삭제, 회전, 빈 페이지 추가, 추출, 복제를 하나의 화면에서."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "복제 및 정리",
-    "subtitle": "페이지를 복제하고, 순서를 바꾸고, 삭제합니다."
+    "subtitle": "페이지를 복제하고, 순서를 바꾸고, 삭제합니다.",
+    "saveChanges": "변경 사항 저장"
   },
   "deletePages": {
     "name": "페이지 삭제",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "북마크 편집",
-    "subtitle": "PDF 북마크를 추가, 편집, 가져오기, 삭제, 추출합니다."
+    "subtitle": "PDF 북마크를 추가, 편집, 가져오기, 삭제, 추출합니다.",
+    "autoExtractExisting": "기존 책갈피 자동 추출",
+    "importSectionTitle": "또는 책갈피 가져오기",
+    "csvFormat": "CSV 형식: 제목,페이지,수준",
+    "jsonFormat": "JSON 형식",
+    "uploadCsvAction": "클릭하여 CSV 업로드",
+    "uploadJsonAction": "클릭하여 JSON 업로드",
+    "orDragHere": "또는 여기로 드래그"
   },
   "tableOfContents": {
     "name": "목차 생성",
-    "subtitle": "PDF 북마크를 기반으로 목차 페이지를 만듭니다."
+    "subtitle": "PDF 북마크를 기반으로 목차 페이지를 만듭니다.",
+    "titleLabel": "목차 제목",
+    "fontSize": "글자 크기",
+    "fontFamily": "글꼴 패밀리",
+    "addBookmark": "목차 페이지에 책갈피 추가",
+    "generateButton": "목차 생성",
+    "selectPdfFirst": "먼저 PDF 파일을 선택하세요.",
+    "statusReadingFileMainThread": "파일 읽는 중 (메인 스레드)...",
+    "statusGenerating": "목차 생성 중...",
+    "errorReadingFileWithMessage": "파일 읽기 오류: {{message}}",
+    "successGeneratedDownloadStarted": "목차가 성공적으로 생성되었습니다! 다운로드가 시작되었습니다.",
+    "workerErrorWithMessage": "오류: {{message}}",
+    "workerErrorOccurred": "Worker 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
   },
   "pageNumbers": {
     "name": "페이지 번호",
@@ -210,7 +231,8 @@
     "subtitle": "주석 도구 모음을 사용하여 PDF에 이미지 도장을 추가합니다.",
     "usernameLabel": "도장 사용자 이름",
     "usernamePlaceholder": "이름을 입력하세요 (도장용)",
-    "usernameHint": "이 이름이 도장에 표시됩니다."
+    "usernameHint": "이 이름이 도장에 표시됩니다.",
+    "saveButton": "스탬프 PDF 저장"
   },
   "removeAnnotations": {
     "name": "주석 제거",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "PDF 양식 작성",
-    "subtitle": "브라우저에서 직접 양식을 작성합니다. XFA 양식도 지원됩니다."
+    "subtitle": "브라우저에서 직접 양식을 작성합니다. XFA 양식도 지원됩니다.",
+    "uploadHint": "양식 필드가 있는 PDF를 업로드하세요. 아래 뷰어에서 직접 작성한 후 버튼을 클릭하여 작성된 양식을 저장하고 다운로드하세요. XFA 양식도 지원합니다.",
+    "xfaNoteTitle": "XFA 양식 참고:",
+    "xfaNoteDescription": "XFA(XML Forms Architecture)는 BentoPDF 및 Firefox와 같은 특정 PDF 뷰어에서만 지원되는 레거시 형식입니다. 다른 소프트웨어에서 XFA PDF를 열어 빈 페이지 또는 양식 필드가 보이지 않으면, 해당 뷰어가 XFA를 지원하지 않는다는 의미입니다. XFA 양식을 올바르게 보고 작성하려면 Firefox 또는 BentoPDF의 양식 작성기를 사용하세요."
   },
   "createPdfForm": {
     "name": "PDF 양식 만들기",
-    "subtitle": "드래그 앤 드롭으로 작성 가능한 PDF 양식을 만듭니다."
+    "subtitle": "드래그 앤 드롭으로 작성 가능한 PDF 양식을 만듭니다.",
+    "orSeparator": "또는",
+    "createBlankPdf": "빈 PDF 만들기"
   },
   "removeBlankPages": {
     "name": "빈 페이지 제거",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "텍스트를 PDF로",
-    "subtitle": "일반 텍스트 파일을 PDF로 변환합니다."
+    "subtitle": "일반 텍스트 파일을 PDF로 변환합니다.",
+    "uploadFiles": "파일 업로드",
+    "typeText": "텍스트 입력",
+    "acceptedFormats": "텍스트 파일 (.txt)",
+    "fontFamily": "글꼴 패밀리",
+    "fontSize": "글자 크기",
+    "textColor": "텍스트 색상",
+    "pageSize": "페이지 크기",
+    "rtlAutoDetectNote": "RTL 언어(아랍어, 우르두어, 페르시아어 등)는 자동으로 감지되며 텍스트 방향이 조정됩니다.",
+    "createButton": "PDF 생성"
   },
   "jsonToPdf": {
     "name": "JSON을 PDF로",
-    "subtitle": "JSON 파일을 PDF 형식으로 변환합니다."
+    "subtitle": "JSON 파일을 PDF 형식으로 변환합니다.",
+    "noteLabel": "참고:",
+    "noteText": "PDF→JSON 변환 도구로 만든 JSON 파일만 지원됩니다. 다른 도구의 표준 JSON 파일은 작동하지 않습니다.",
+    "acceptedFormats": "여러 JSON 파일",
+    "status": {
+      "selectAtLeastOne": "JSON 파일을 1개 이상 선택하세요",
+      "selectedReady": "{{count}}개 파일 선택됨. 변환 준비 완료!",
+      "readingFiles": "파일 읽는 중 (메인 스레드)...",
+      "converting": "JSON 파일을 PDF로 변환 중...",
+      "readError": "파일 읽기 오류: {{message}}",
+      "creatingZip": "ZIP 파일 생성 중...",
+      "success": "JSON 파일이 PDF로 변환되었습니다! ZIP 다운로드가 시작되었습니다.",
+      "zipError": "ZIP 생성 오류: {{message}}",
+      "workerError": "Worker 오류: {{message}}",
+      "getStarted": "시작할 JSON 파일 선택"
+    }
   },
   "pdfToJpg": {
     "name": "PDF를 JPG로",
-    "subtitle": "PDF의 각 페이지를 JPG 이미지로 변환합니다."
+    "subtitle": "PDF의 각 페이지를 JPG 이미지로 변환합니다.",
+    "imageQuality": "이미지 품질",
+    "imageQualityExplanation": "품질이 높을수록 파일 크기가 커집니다",
+    "alert": {
+      "invalidFile": "잘못된 파일",
+      "invalidFileExplanation": "PDF 파일을 업로드하세요.",
+      "noFile": "파일 없음",
+      "noFileExplanation": "먼저 PDF 파일을 업로드하세요.",
+      "conversionSuccess": "PDF가 JPG로 변환되었습니다!",
+      "conversionError": "PDF를 JPG로 변환하지 못했습니다. 파일이 손상되었을 수 있습니다."
+    },
+    "loader": {
+      "converting": "JPG로 변환 중..."
+    }
   },
   "pdfToPng": {
     "name": "PDF를 PNG로",
-    "subtitle": "PDF의 각 페이지를 PNG 이미지로 변환합니다."
+    "subtitle": "PDF의 각 페이지를 PNG 이미지로 변환합니다.",
+    "imageScale": "이미지 배율",
+    "imageScaleExplanation": "배율이 높을수록 품질이 좋지만 파일이 커집니다",
+    "alert": {
+      "invalidFile": "잘못된 파일",
+      "invalidFileExplanation": "PDF 파일을 업로드하세요.",
+      "noFile": "파일 없음",
+      "noFileExplanation": "먼저 PDF 파일을 업로드하세요.",
+      "conversionSuccess": "PDF가 PNG로 변환되었습니다!",
+      "conversionError": "PDF를 PNG로 변환하지 못했습니다. 파일이 손상되었을 수 있습니다."
+    },
+    "loader": {
+      "converting": "PNG로 변환 중..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF를 WebP로",
-    "subtitle": "PDF의 각 페이지를 WebP 이미지로 변환합니다."
+    "subtitle": "PDF의 각 페이지를 WebP 이미지로 변환합니다.",
+    "imageQuality": "이미지 품질",
+    "imageQualityExplanation": "품질이 높을수록 파일 크기가 커집니다",
+    "alert": {
+      "invalidFile": "잘못된 파일",
+      "invalidFileExplanation": "PDF 파일을 업로드하세요.",
+      "noFile": "파일 없음",
+      "noFileExplanation": "먼저 PDF 파일을 업로드하세요.",
+      "conversionSuccess": "PDF가 WebP로 변환되었습니다!",
+      "conversionError": "PDF를 WebP로 변환하지 못했습니다. 파일이 손상되었을 수 있습니다."
+    },
+    "loader": {
+      "converting": "WebP로 변환 중..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF를 BMP로",
-    "subtitle": "PDF의 각 페이지를 BMP 이미지로 변환합니다."
+    "subtitle": "PDF의 각 페이지를 BMP 이미지로 변환합니다.",
+    "alert": {
+      "invalidFile": "잘못된 파일",
+      "invalidFileExplanation": "PDF 파일을 업로드하세요.",
+      "noFile": "파일 없음",
+      "noFileExplanation": "먼저 PDF 파일을 업로드하세요.",
+      "conversionSuccess": "PDF가 BMP로 변환되었습니다!",
+      "conversionError": "PDF를 BMP로 변환하지 못했습니다. 파일이 손상되었을 수 있습니다."
+    },
+    "loader": {
+      "converting": "BMP로 변환 중..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF를 TIFF로",
@@ -291,7 +392,15 @@
     "colorMode": "색상 모드",
     "multiPage": "다중 페이지 TIFF로 저장 (단일 파일)",
     "loadingVips": "이미지 프로세서 로드 중...",
-    "converting": "TIFF로 변환 중..."
+    "converting": "TIFF로 변환 중...",
+    "alert": {
+      "invalidFile": "잘못된 파일",
+      "invalidFileExplanation": "PDF 파일을 업로드하세요.",
+      "noFile": "파일 없음",
+      "noFileExplanation": "먼저 PDF 파일을 업로드하세요.",
+      "conversionSuccess": "PDF가 TIFF로 변환되었습니다!",
+      "conversionError": "PDF를 TIFF로 변환하지 못했습니다. 파일이 손상되었을 수 있습니다."
+    }
   },
   "pdfToCbz": {
     "name": "PDF를 CBZ로",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF를 JSON으로",
-    "subtitle": "PDF 파일을 JSON 형식으로 변환합니다."
+    "subtitle": "PDF 파일을 JSON 형식으로 변환합니다.",
+    "convertButton": "JSON으로 변환",
+    "status": {
+      "selectAtLeastOne": "PDF 파일을 1개 이상 선택하세요",
+      "selectedReady": "{{count}}개 파일 선택됨. 변환 준비 완료!",
+      "checkingEncrypted": "암호화된 PDF 확인 중...",
+      "readingFiles": "파일 읽는 중 (메인 스레드)...",
+      "converting": "PDF를 JSON으로 변환 중...",
+      "readError": "파일 읽기 오류: {{message}}",
+      "creatingZip": "ZIP 파일 생성 중...",
+      "success": "PDF가 JSON으로 변환되었습니다! ZIP 다운로드가 시작되었습니다.",
+      "zipError": "ZIP 생성 오류: {{message}}",
+      "workerError": "Worker 오류: {{message}}",
+      "getStarted": "시작할 PDF 파일 선택"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "PDF의 텍스트를 검색하고 복사할 수 있게 만듭니다."
+    "subtitle": "PDF의 텍스트를 검색하고 복사할 수 있게 만듭니다.",
+    "languagesInDocument": "문서 내 언어",
+    "searchLanguagesPlaceholder": "언어 검색...",
+    "selectedLabel": "선택됨:",
+    "none": "없음",
+    "advancedSettingsSummary": "고급 설정 (정확도 향상을 위해 권장)",
+    "resolutionLabel": "해상도",
+    "resolutionStandard": "표준 (192 DPI)",
+    "resolutionHigh": "높음 (288 DPI)",
+    "resolutionUltra": "울트라 (384 DPI)",
+    "binarizeLabel": "이미지 이진화 (깨끗한 스캔을 위한 대비 향상)",
+    "embedFullFontsLabel": "전체 글꼴 포함 (파일 크기 증가, 호환성 향상)",
+    "whitelistPresetLabel": "문자 화이트리스트 사전 설정",
+    "whitelistNone": "없음 (모든 문자)",
+    "whitelistAlphanumeric": "영숫자 + 기본 구두점",
+    "whitelistNumbersCurrency": "숫자 + 통화 기호",
+    "whitelistLettersOnly": "문자만 (A-Z, a-z)",
+    "whitelistNumbersOnly": "숫자만 (0-9)",
+    "whitelistInvoice": "인보이스/영수증 (숫자, $, ., -, /)",
+    "whitelistForms": "양식 (영숫자 + 일반 기호)",
+    "whitelistCustom": "사용자 지정...",
+    "whitelistHelp": "이 문자만 인식됩니다. 모든 문자에는 비워 두세요.",
+    "whitelistInputLabel": "문자 화이트리스트 (선택)",
+    "whitelistInputPlaceholder": "예: abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "OCR 시작",
+    "progressInitializing": "초기화 중...",
+    "resultsTitle": "OCR 완료",
+    "resultsDescription": "검색 가능한 PDF가 준비되었습니다. 추출된 텍스트를 아래에서 복사하거나 다운로드할 수도 있습니다.",
+    "copyToClipboard": "클립보드에 복사",
+    "downloadTxt": ".txt로 다운로드",
+    "downloadSearchablePdf": "검색 가능 PDF 다운로드",
+    "statusPrefix": "상태: {{status}}",
+    "availabilityInvalidConfig": "이 배포에는 유효한 OCR 언어가 노출되어 있지 않습니다. VITE_TESSERACT_AVAILABLE_LANGUAGES를 유효한 Tesseract 코드로 설정하여 다시 빌드하세요.",
+    "availabilityBundles": "이 배포에는 다음 OCR 언어가 포함되어 있습니다: {{languages}}.",
+    "noLanguagesAvailable": "이 배포에 사용 가능한 OCR 언어가 없습니다.",
+    "noLanguagesTitle": "언어가 선택되지 않음",
+    "noLanguagesMessage": "OCR을 위해 적어도 하나의 언어를 선택하세요.",
+    "noFileTitle": "파일 없음",
+    "noFileMessage": "먼저 PDF 파일을 업로드하세요.",
+    "languageUnavailableTitle": "OCR 언어 사용 불가",
+    "ocrErrorTitle": "OCR 오류",
+    "ocrErrorMessage": "OCR 처리 중 오류가 발생했습니다. Worker 로딩에 실패했을 수 있습니다. 다시 시도하세요.",
+    "howItWorksTitle": "작동 방식:",
+    "extractTextLabel": "텍스트 추출:",
+    "extractTextDescription": "Tesseract OCR을 사용하여 스캔된 이미지나 PDF에서 텍스트를 인식합니다.",
+    "searchableOutputLabel": "검색 가능한 출력:",
+    "searchableOutputDescription": "보이지 않는 텍스트 레이어가 있는 새 PDF를 만들어 원본 모양을 유지하면서 문서를 완전히 검색 가능하게 합니다.",
+    "characterFilteringLabel": "문자 필터링:",
+    "characterFilteringDescription": "화이트리스트를 사용하여 원치 않는 문자를 필터링하고 특정 문서 유형(인보이스, 양식 등)의 정확도를 향상시킵니다.",
+    "multiLanguageSupportLabel": "다국어 지원:",
+    "multiLanguageSupportDescription": "혼합된 언어 콘텐츠가 포함된 문서를 위해 여러 언어를 선택하세요."
   },
   "alternateMerge": {
     "name": "페이지 교차 병합",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF를 텍스트로",
     "subtitle": "PDF에서 텍스트를 추출하여 텍스트 파일(.txt)로 저장합니다. 여러 파일 지원.",
-    "note": "이 도구는 디지털로 생성된 PDF에서만 작동합니다. 스캔 문서나 이미지 기반 PDF는 OCR PDF 도구를 사용해 주세요.",
-    "convertButton": "텍스트 추출"
+    "noteLabel": "참고:",
+    "noteText": "이 도구는 디지털로 만든 PDF에서만 작동합니다. 스캔된 문서나 이미지 기반 PDF의 경우 OCR PDF 도구를 사용하세요.",
+    "convertButton": "텍스트 추출",
+    "note": "이 도구는 디지털로 생성된 PDF에서만 작동합니다. 스캔 문서나 이미지 기반 PDF는 OCR PDF 도구를 사용해 주세요."
   },
   "digitalSignPdf": {
     "name": "PDF 디지털 서명",
     "pageTitle": "PDF 디지털 서명 - 암호화 서명 추가 | BentoPDF",
     "subtitle": "X.509 인증서를 사용하여 PDF에 암호화 디지털 서명을 추가합니다. PKCS#12(.pfx, .p12) 및 PEM 형식을 지원합니다. 개인키는 브라우저 밖으로 나가지 않습니다.",
     "certificateSection": "인증서",
-    "uploadCert": "인증서 업로드 (.pfx, .p12)",
+    "uploadCert": "인증서 업로드 (.pfx, .p12, .pem)",
     "certPassword": "인증서 비밀번호",
+    "privateKeyPassword": "개인 키 비밀번호",
     "certPasswordPlaceholder": "인증서 비밀번호 입력",
     "certInfo": "인증서 정보",
     "certSubject": "소유자",
@@ -688,13 +864,85 @@
     "locationPlaceholder": "예: 서울, 대한민국",
     "contactInfo": "연락처",
     "contactPlaceholder": "예: email@example.com",
+    "visibleSignature": "표시되는 서명",
+    "visibleSignatureDescription": "활성화하면 PDF에 표시되는 서명 상자가 나타납니다. 이미지/로고를 업로드하거나 텍스트를 추가할 수 있습니다. 둘 다 제공되지 않으면 인증서의 서명자 이름이 자동으로 표시됩니다.",
+    "signatureImage": "서명 이미지/로고 (선택)",
+    "uploadSignatureImage": "이미지 업로드 (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "서명 미리보기",
+    "remove": "제거",
+    "page": "페이지",
+    "firstPage": "첫 페이지",
+    "lastPage": "마지막 페이지",
+    "allPages": "모든 페이지",
+    "customPage": "사용자 지정 페이지 #",
+    "pageNumber": "페이지 #",
+    "xPosition": "X 위치 (왼쪽)",
+    "yPosition": "Y 위치 (위)",
+    "width": "너비",
+    "height": "높이",
+    "addTextOverlay": "텍스트 오버레이 추가",
+    "text": "텍스트",
+    "textPlaceholder": "예: John Doe가 디지털 서명함",
+    "textColor": "텍스트 색상",
+    "fontSize": "글자 크기",
+    "invalidImageTitle": "잘못된 이미지",
+    "invalidImageMessage": "PNG, JPG 또는 WebP 이미지를 선택하세요.",
+    "invalidFileTitle": "잘못된 파일",
+    "invalidFileMessage": "PDF 파일을 선택하세요.",
+    "invalidCertificateTitle": "잘못된 인증서",
+    "invalidCertificateMessage": ".pfx, .p12 또는 .pem 인증서 파일을 선택하세요.",
+    "certificateLoaded": "인증서 로드됨",
+    "certificateUnlocked": "인증서 잠금 해제됨",
+    "failedParsePem": "PEM 파일을 파싱할 수 없습니다",
+    "enterPasswordToUnlock": "잠금 해제할 비밀번호 입력",
+    "invalidPasswordOrCertificate": "잘못된 비밀번호 또는 인증서",
+    "incorrectPassword": "잘못된 비밀번호",
+    "failedParseCertificate": "인증서를 파싱할 수 없습니다",
+    "missingDataTitle": "데이터 누락",
+    "missingDataMessage": "PDF와 유효한 인증서를 모두 업로드하세요.",
+    "applyingSignature": "디지털 서명 적용 중...",
+    "signingFailedTitle": "서명 실패",
+    "chainFetchFailed": "인증서 체인을 가져올 수 없습니다. 네트워크 문제 또는 인증서 프록시를 사용할 수 없는 경우일 수 있습니다. 인터넷 연결을 확인하고 다시 시도하세요. 문제가 계속되면 지원팀에 문의하세요.",
+    "failedToSignPdf": "PDF 서명 실패: {{message}}",
+    "defaultSignatureText": "{{signer}}이(가) 디지털 서명함\n{{date}}",
+    "pageCount": "{{count}} 페이지",
+    "howToStep1Title": "PDF 업로드",
+    "howToStep1Text": "서명할 PDF 문서 선택",
+    "howToStep2Title": "인증서 업로드",
+    "howToStep2Text": ".pfx 또는 .p12 인증서 파일과 비밀번호 제공",
+    "howToStep3Title": "서명 및 다운로드",
+    "howToStep3Text": "디지털 서명을 적용하고 서명된 PDF 다운로드",
+    "relatedEncryptDesc": "PDF를 비밀번호로 보호",
+    "relatedDecryptDesc": "PDF 비밀번호 제거",
+    "relatedFlattenDesc": "주석을 영구화",
+    "relatedSanitizeDesc": "숨겨진 데이터 제거",
+    "relatedPermissionsDesc": "PDF 권한 설정",
+    "faqWhatIsQuestion": "디지털 서명이란?",
+    "faqWhatIsAnswer": "디지털 서명은 문서의 진위와 무결성을 확인하는 암호화 메커니즘입니다. 그려진 서명과 달리 공개 키 암호화(X.509 인증서)를 사용하여 서명자의 신원을 증명합니다.",
+    "faqFormatsQuestion": "지원되는 인증서 형식은 무엇인가요?",
+    "faqFormatsAnswer": "PKCS#12 형식 인증서(.pfx, .p12)를 지원합니다. 이 형식은 인증서와 개인 키를 단일 암호화된 파일에 포함하며, 보통 인증 기관에서 발급됩니다.",
+    "faqPrivateKeyQuestion": "내 개인 키는 안전한가요?",
+    "faqPrivateKeyAnswer": "예! 모든 처리는 브라우저에서 완전히 이루어집니다. 인증서, 개인 키, PDF 파일은 장치를 떠나거나 서버에 업로드되지 않습니다.",
+    "faqValidReadersQuestion": "PDF 리더에서 서명이 유효합니까?",
+    "faqValidReadersAnswer": "예, 이 도구는 모든 주요 PDF 뷰어에서 인식되는 표준 PKCS#7 분리 서명을 만듭니다. 완전한 검증을 위해서는 신뢰할 수 있는 인증 기관의 인증서를 사용하세요.",
     "applySignature": "디지털 서명 적용",
-    "successMessage": "PDF 서명이 완료되었습니다! 모든 PDF 뷰어에서 서명을 확인할 수 있습니다."
+    "successMessage": "PDF 서명이 완료되었습니다! 모든 PDF 뷰어에서 서명을 확인할 수 있습니다.",
+    "internetRequiredTitle": "인터넷 연결 필요",
+    "internetRequiredDescription": "서명을 검증하기 위해 인증서 발급자 서버에서 인증서 체인 정보를 가져와야 할 수 있습니다."
   },
   "validateSignaturePdf": {
     "name": "PDF 서명 검증",
     "pageTitle": "PDF 서명 검증 - 디지털 서명 확인 | BentoPDF",
     "subtitle": "PDF의 디지털 서명을 검증합니다. 인증서 유효성 확인, 서명자 정보 조회, 문서 무결성 확인이 가능합니다. 모든 처리는 브라우저에서 이루어집니다."
+  },
+  "timestampPdf": {
+    "name": "PDF 타임스탬프",
+    "pageTitle": "PDF 타임스탬프 무료 온라인 - RFC 3161 문서 타임스탬프 | BentoPDF",
+    "subtitle": "신뢰할 수 있는 타임스탬프 기관(TSA) 서버를 사용하여 PDF에 RFC 3161 문서 타임스탬프를 추가합니다. 문서가 특정 시점에 존재했음을 증명합니다. 인증서가 필요하지 않습니다.",
+    "tsaSectionTitle": "타임스탬프 서버 (TSA)",
+    "selectTsa": "TSA 서버 선택",
+    "applyTimestamp": "타임스탬프 적용",
+    "successMessage": "PDF 타임스탬프가 성공적으로 추가되었습니다! 타임스탬프는 모든 PDF 뷰어에서 확인할 수 있습니다."
   },
   "emailToPdf": {
     "name": "이메일을 PDF로",
@@ -837,6 +1085,46 @@
       "failedToImport": "워크플로 가져오기 실패: {{message}}"
     }
   },
+  "wasmSettings": {
+    "title": "고급 기능 설정",
+    "description": "고급 PDF 기능을 활성화하기 위해 외부 처리 모듈을 구성합니다. 이러한 모듈은 선택 사항이며 별도로 라이선스가 부여됩니다.",
+    "status": {
+      "testing": "테스트 중...",
+      "customOverride": "사용자 지정 재정의",
+      "preConfigured": "사전 구성됨",
+      "notConfigured": "구성되지 않음"
+    },
+    "preconfiguredTitle": "사전 구성되어 사용 준비 완료.",
+    "preconfiguredDescription": "고급 처리 모듈은 CDN에서 자동으로 로드됩니다. 사용자 지정 소스를 사용해야 하는 경우(예: 에어갭 또는 셀프 호스팅 배포) 아래의 URL을 재정의할 수 있습니다.",
+    "usingDefault": "기본값 사용 중: {{url}}",
+    "pymupdfSubtitle": "문서 처리 엔진",
+    "pymupdfFeatures": "활성화: PDF→텍스트, Markdown, SVG, DOCX, Excel • 이미지/표 추출 • 형식 변환",
+    "testButton": "테스트",
+    "recommendedLabel": "권장:",
+    "copyTitle": "클립보드에 복사",
+    "ghostscriptSubtitle": "PDF/A 변환 엔진",
+    "ghostscriptFeatures": "활성화: PDF/A-1b, PDF/A-2b, PDF/A-3b 변환 • 글꼴을 윤곽선으로",
+    "cpdfSubtitle": "책갈피 및 메타데이터 엔진",
+    "cpdfFeatures": "활성화: 책갈피로 분할 • 책갈피 편집 • PDF 메타데이터",
+    "saveConfiguration": "구성 저장",
+    "savingConfiguration": "구성 저장 중...",
+    "savedTitle": "저장됨",
+    "savedMessage": "구성이 성공적으로 저장되었습니다!",
+    "errorTitle": "오류",
+    "failedSave": "구성 저장 실패: {{message}}",
+    "emptyUrlTitle": "빈 URL",
+    "emptyUrlMessage": "테스트할 URL을 입력하세요.",
+    "testSuccessTitle": "성공",
+    "connectionSuccess": "{{package}}에 연결 성공!",
+    "connectionFailedTitle": "연결 실패",
+    "connectionFailedMessage": "URL에 연결할 수 없습니다.",
+    "resetDefaults": "기본값으로 재설정",
+    "resetTitle": "재설정",
+    "resetWithDefaults": "사용자 지정 재정의가 지워졌습니다. 사전 구성된 기본값이 활성화되었습니다.",
+    "resetNoDefaults": "모든 구성 및 캐시된 모듈이 지워졌습니다.",
+    "licenseTitle": "라이선스 공지:",
+    "licenseDescription": "외부 모듈(PyMuPDF, Ghostscript, CoherentPDF)은 AGPL-3.0 또는 유사한 카피레프트 라이선스에 따라 라이선스가 부여됩니다. 이러한 모듈을 구성하고 사용함으로써 해당 라이선스 조건에 동의하게 됩니다. BentoPDF는 예상되는 인터페이스를 따르는 모든 Ghostscript WASM 및 PyMuPDF WASM 구현과 호환됩니다."
+  },
   "pdfOverlay": {
     "name": "PDF 오버레이",
     "subtitle": "한 PDF의 페이지를 다른 PDF 위 또는 아래에 겹칩니다.",
@@ -863,14 +1151,5 @@
     "faqSinglePageAnswer": "네! \"반복\" 옵션을 활성화하면 오버레이 페이지가 모든 기본 페이지에 반복됩니다. 단일 페이지 워터마크가 모든 페이지에 적용됩니다.",
     "faqPrivacyQuestion": "내 파일은 비공개이고 안전한가요?",
     "faqPrivacyAnswer": "물론입니다! 모든 처리는 브라우저에서 이루어집니다. 파일이 기기를 떠나지 않아 완전한 개인정보 보호가 보장됩니다."
-  },
-  "timestampPdf": {
-    "name": "PDF 타임스탬프",
-    "pageTitle": "PDF 타임스탬프 무료 온라인 - RFC 3161 문서 타임스탬프 | BentoPDF",
-    "subtitle": "신뢰할 수 있는 타임스탬프 기관(TSA) 서버를 사용하여 PDF에 RFC 3161 문서 타임스탬프를 추가합니다. 문서가 특정 시점에 존재했음을 증명합니다. 인증서가 필요하지 않습니다.",
-    "tsaSectionTitle": "타임스탬프 서버 (TSA)",
-    "selectTsa": "TSA 서버 선택",
-    "applyTimestamp": "타임스탬프 적용",
-    "successMessage": "PDF 타임스탬프가 성공적으로 추가되었습니다! 타임스탬프는 모든 PDF 뷰어에서 확인할 수 있습니다."
   }
 }

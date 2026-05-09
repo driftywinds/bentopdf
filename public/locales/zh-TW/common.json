@@ -7,7 +7,9 @@
     "allTools": "所有工具",
     "docs": "Docs",
     "openMainMenu": "開啟主選單",
-    "language": "語言"
+    "language": "語言",
+    "searchLanguage": "搜尋語言…",
+    "noLanguagesFound": "找不到語言"
   },
   "donation": {
     "message": "喜歡 BentoPDF？幫助我們保持免費和開源！",
@@ -96,6 +98,18 @@
       "webpImages": "WebP 圖片"
     }
   },
+  "howItWorks": {
+    "title": "使用方式",
+    "step1Title": "上傳檔案",
+    "step1": "點擊或拖放您的檔案到此處",
+    "step2Title": "處理",
+    "step2": "點擊處理按鈕開始",
+    "step3Title": "下載",
+    "step3": "立即儲存處理後的檔案"
+  },
+  "relatedTools": {
+    "title": "相關 PDF 工具"
+  },
   "loader": {
     "processing": "正在處理..."
   },
@@ -121,6 +135,10 @@
     "resetToDefaults": "恢復預設值",
     "fullWidthMode": "全寬模式",
     "fullWidthDescription": "使用全螢幕寬度而非置中容器顯示所有工具",
+    "compactMode": "精簡模式",
+    "compactModeDescription": "以精簡列表而非卡片顯示工具",
+    "advancedSettings": "進階設定",
+    "advancedSettingsDescription": "設定外部處理模組（PyMuPDF、Ghostscript、CoherentPDF）",
     "settingsAutoSaved": "設定會自動儲存",
     "clickToSet": "點擊以設定",
     "pressKeys": "按下按鍵...",
@@ -167,6 +185,7 @@
   "faq": {
     "title": "常見",
     "questions": "問題",
+    "sectionTitle": "常見問題",
     "isFree": {
       "question": "BentoPDF 真的是免費的嗎？",
       "answer": "沒錯，完全免費。BentoPDF 上的所有工具均為 100% 免費使用，並且沒有檔案限制、無須註冊且無浮水印。我們相信每個人都值得免費使用簡單且強大的 PDF 工具。"
@@ -198,8 +217,7 @@
     "analytics": {
       "question": "你會使用 Cookies 或網站分析來追蹤我嗎？",
       "answer": "我們在乎你的隱私。BentoPDF 並不追蹤個人資訊。我們僅使用 Simple Analytics 來查看匿名訪問次數。這代表我們能知道有多少使用者造訪過我們的網站，但我們永遠都不會知道你是誰。Simple Analytics 完全符合 GDPR 規範且尊重你的隱私。"
-    },
-    "sectionTitle": "常見問題"
+    }
   },
   "testimonials": {
     "title": "看看我們的",
@@ -252,11 +270,14 @@
     "add": "添加",
     "remove": "移除",
     "loading": "載入中...",
+    "loadingPageCount": "正在加載頁面...",
     "error": "錯誤",
     "success": "成功",
     "file": "檔案",
     "files": "檔案",
-    "close": "關閉"
+    "close": "關閉",
+    "convert": "轉換",
+    "unknownError": "未知錯誤"
   },
   "about": {
     "hero": {
@@ -349,15 +370,6 @@
     "errorRendering": "無法渲染頁面縮圖",
     "error": "錯誤",
     "failedToLoad": "載入失敗"
-  },
-  "howItWorks": {
-    "title": "使用方式",
-    "step1": "點擊或拖放您的檔案到此處",
-    "step2": "點擊處理按鈕開始",
-    "step3": "立即儲存處理後的檔案"
-  },
-  "relatedTools": {
-    "title": "相關 PDF 工具"
   },
   "simpleMode": {
     "title": "PDF 工具",

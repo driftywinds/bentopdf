@@ -10,6 +10,7 @@
     "input": "Giriş",
     "output": "Çıkış"
   },
+  "convertToPdf": "PDF'ye Dönüştür",
   "pdfMultiTool": {
     "name": "PDF Çoklu Araç",
     "subtitle": "Birleştir, Böl, Düzenle, Sil, Döndür, Boş Sayfa Ekle, Çıkar ve Çoğalt işlemlerini tek bir arayüzde yapın."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "Çoğalt & Düzenle",
-    "subtitle": "Sayfaları çoğaltın, yeniden sıralayın ve silin."
+    "subtitle": "Sayfaları çoğaltın, yeniden sıralayın ve silin.",
+    "saveChanges": "Değişiklikleri Kaydet"
   },
   "deletePages": {
     "name": "Sayfaları Sil",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "Yer İşaretlerini Düzenle",
-    "subtitle": "PDF yer imlerini ekleyin, düzenleyin, içe aktarın, silin ve çıkarın."
+    "subtitle": "PDF yer imlerini ekleyin, düzenleyin, içe aktarın, silin ve çıkarın.",
+    "autoExtractExisting": "Mevcut yer imlerini otomatik çıkar",
+    "importSectionTitle": "Veya Yer İmlerini İçe Aktar",
+    "csvFormat": "CSV formatı: başlık,sayfa,seviye",
+    "jsonFormat": "JSON formatı",
+    "uploadCsvAction": "CSV yüklemek için tıklayın",
+    "uploadJsonAction": "JSON yüklemek için tıklayın",
+    "orDragHere": "veya buraya sürükle"
   },
   "tableOfContents": {
     "name": "İçindekiler",
-    "subtitle": "PDF yer imlerinden bir içindekiler sayfası oluşturun."
+    "subtitle": "PDF yer imlerinden bir içindekiler sayfası oluşturun.",
+    "titleLabel": "İçindekiler Başlığı",
+    "fontSize": "Yazı Tipi Boyutu",
+    "fontFamily": "Yazı Tipi Ailesi",
+    "addBookmark": "İçindekiler sayfası için yer imi ekle",
+    "generateButton": "İçindekiler Oluştur",
+    "selectPdfFirst": "Lütfen önce bir PDF dosyası seçin.",
+    "statusReadingFileMainThread": "Dosya okunuyor (Ana Konu)...",
+    "statusGenerating": "İçindekiler oluşturuluyor...",
+    "errorReadingFileWithMessage": "Dosya okuma hatası: {{message}}",
+    "successGeneratedDownloadStarted": "İçindekiler başarıyla oluşturuldu! İndirme başladı.",
+    "workerErrorWithMessage": "Hata: {{message}}",
+    "workerErrorOccurred": "Worker hatası oluştu. Ayrıntılar için konsolu kontrol edin."
   },
   "pageNumbers": {
     "name": "Sayfa Numaraları",
@@ -210,7 +231,8 @@
     "subtitle": "Açıklama araç çubuğunu kullanarak PDF'nize damga ekleyin.",
     "usernameLabel": "Kullanıcı Adı",
     "usernamePlaceholder": "Adınızı girin (damgalar için)",
-    "usernameHint": "Bu isim oluşturduğunuz damgalarda görünecektir."
+    "usernameHint": "Bu isim oluşturduğunuz damgalarda görünecektir.",
+    "saveButton": "Damgalı PDF'yi Kaydet"
   },
   "removeAnnotations": {
     "name": "Açıklamaları Kaldır",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "PDF Form Doldurucu",
-    "subtitle": "Formları doğrudan tarayıcıda doldurun. XFA formlarını da destekler."
+    "subtitle": "Formları doğrudan tarayıcıda doldurun. XFA formlarını da destekler.",
+    "uploadHint": "Form alanları olan bir PDF yükleyin. Aşağıdaki görüntüleyicide doğrudan doldurun, ardından doldurulmuş formu kaydetmek ve indirmek için düğmeye tıklayın. XFA formlarını da destekler.",
+    "xfaNoteTitle": "XFA Formları Hakkında Not:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture), yalnızca BentoPDF ve Firefox gibi belirli PDF görüntüleyicileri tarafından desteklenen eski bir biçimdir. XFA bir PDF'yi başka yazılımda açtığınızda boş sayfalar veya form alanı görmüyorsanız, görüntüleyicinin XFA'yı desteklemediği anlamına gelir. XFA formlarını doğru görüntülemek ve doldurmak için Firefox veya BentoPDF'in Form Doldurucu'yu kullanın."
   },
   "createPdfForm": {
     "name": "PDF Formu Oluştur",
-    "subtitle": "Sürükle-bırak metin alanları ile doldurulabilir PDF formları oluşturun."
+    "subtitle": "Sürükle-bırak metin alanları ile doldurulabilir PDF formları oluşturun.",
+    "orSeparator": "VEYA",
+    "createBlankPdf": "Boş PDF Oluştur"
   },
   "removeBlankPages": {
     "name": "Boş Sayfaları Kaldır",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "Metinden PDF'ye",
-    "subtitle": "Düz metin dosyasını PDF'ye dönüştürün."
+    "subtitle": "Düz metin dosyasını PDF'ye dönüştürün.",
+    "uploadFiles": "Dosya Yükle",
+    "typeText": "Metin Yaz",
+    "acceptedFormats": "Metin dosyaları (.txt)",
+    "fontFamily": "Yazı Tipi Ailesi",
+    "fontSize": "Yazı Tipi Boyutu",
+    "textColor": "Metin Rengi",
+    "pageSize": "Sayfa Boyutu",
+    "rtlAutoDetectNote": "RTL dilleri (Arapça, Urduca, Farsça vb.) otomatik olarak algılanır ve metin yönü ayarlanır.",
+    "createButton": "PDF Oluştur"
   },
   "jsonToPdf": {
     "name": "JSON'dan PDF'ye",
-    "subtitle": "JSON dosyalarını PDF formatına dönüştürün."
+    "subtitle": "JSON dosyalarını PDF formatına dönüştürün.",
+    "noteLabel": "Not:",
+    "noteText": "Yalnızca PDF-JSON dönüştürücü aracıyla oluşturulan JSON dosyaları desteklenir. Diğer araçlardan gelen standart JSON dosyaları çalışmayacaktır.",
+    "acceptedFormats": "Birden fazla JSON dosyası",
+    "status": {
+      "selectAtLeastOne": "Lütfen en az 1 JSON dosyası seçin",
+      "selectedReady": "{{count}} dosya seçildi. Dönüştürmeye hazır!",
+      "readingFiles": "Dosyalar okunuyor (Ana Konu)...",
+      "converting": "JSON dosyaları PDF'ye dönüştürülüyor...",
+      "readError": "Dosya okuma hatası: {{message}}",
+      "creatingZip": "ZIP dosyası oluşturuluyor...",
+      "success": "JSON dosyaları başarıyla PDF'ye dönüştürüldü! ZIP indirme başlatıldı.",
+      "zipError": "ZIP oluşturma hatası: {{message}}",
+      "workerError": "Worker Hatası: {{message}}",
+      "getStarted": "Başlamak için JSON dosyaları seçin"
+    }
   },
   "pdfToJpg": {
     "name": "PDF'den JPG'ye",
-    "subtitle": "Her PDF sayfasını JPG görseline dönüştürün."
+    "subtitle": "Her PDF sayfasını JPG görseline dönüştürün.",
+    "imageQuality": "Görüntü Kalitesi",
+    "imageQualityExplanation": "Daha yüksek kalite = daha büyük dosya boyutu",
+    "alert": {
+      "invalidFile": "Geçersiz Dosya",
+      "invalidFileExplanation": "Lütfen bir PDF dosyası yükleyin.",
+      "noFile": "Dosya Yok",
+      "noFileExplanation": "Lütfen önce bir PDF dosyası yükleyin.",
+      "conversionSuccess": "PDF başarıyla JPG'ye dönüştürüldü!",
+      "conversionError": "PDF JPG'ye dönüştürülemedi. Dosya bozulmuş olabilir."
+    },
+    "loader": {
+      "converting": "JPG'ye dönüştürülüyor..."
+    }
   },
   "pdfToPng": {
     "name": "PDF'den PNG'ye",
-    "subtitle": "Her PDF sayfasını PNG görseline dönüştürün."
+    "subtitle": "Her PDF sayfasını PNG görseline dönüştürün.",
+    "imageScale": "Görüntü Ölçeği",
+    "imageScaleExplanation": "Daha yüksek ölçek = daha iyi kalite ama daha büyük dosya",
+    "alert": {
+      "invalidFile": "Geçersiz Dosya",
+      "invalidFileExplanation": "Lütfen bir PDF dosyası yükleyin.",
+      "noFile": "Dosya Yok",
+      "noFileExplanation": "Lütfen önce bir PDF dosyası yükleyin.",
+      "conversionSuccess": "PDF başarıyla PNG'ye dönüştürüldü!",
+      "conversionError": "PDF PNG'ye dönüştürülemedi. Dosya bozulmuş olabilir."
+    },
+    "loader": {
+      "converting": "PNG'ye dönüştürülüyor..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF'den WebP'ye",
-    "subtitle": "Her PDF sayfasını WebP görseline dönüştürün."
+    "subtitle": "Her PDF sayfasını WebP görseline dönüştürün.",
+    "imageQuality": "Görüntü Kalitesi",
+    "imageQualityExplanation": "Daha yüksek kalite = daha büyük dosya boyutu",
+    "alert": {
+      "invalidFile": "Geçersiz Dosya",
+      "invalidFileExplanation": "Lütfen bir PDF dosyası yükleyin.",
+      "noFile": "Dosya Yok",
+      "noFileExplanation": "Lütfen önce bir PDF dosyası yükleyin.",
+      "conversionSuccess": "PDF başarıyla WebP'ye dönüştürüldü!",
+      "conversionError": "PDF WebP'ye dönüştürülemedi. Dosya bozulmuş olabilir."
+    },
+    "loader": {
+      "converting": "WebP'ye dönüştürülüyor..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF'den BMP'ye",
-    "subtitle": "Her PDF sayfasını BMP görseline dönüştürün."
+    "subtitle": "Her PDF sayfasını BMP görseline dönüştürün.",
+    "alert": {
+      "invalidFile": "Geçersiz Dosya",
+      "invalidFileExplanation": "Lütfen bir PDF dosyası yükleyin.",
+      "noFile": "Dosya Yok",
+      "noFileExplanation": "Lütfen önce bir PDF dosyası yükleyin.",
+      "conversionSuccess": "PDF başarıyla BMP'ye dönüştürüldü!",
+      "conversionError": "PDF BMP'ye dönüştürülemedi. Dosya bozulmuş olabilir."
+    },
+    "loader": {
+      "converting": "BMP'ye dönüştürülüyor..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF'den TIFF'e",
@@ -291,7 +392,15 @@
     "colorMode": "Renk Modu",
     "multiPage": "Çok sayfalı TIFF olarak kaydet (tek dosya)",
     "loadingVips": "Görüntü işlemci yükleniyor...",
-    "converting": "TIFF'e dönüştürülüyor..."
+    "converting": "TIFF'e dönüştürülüyor...",
+    "alert": {
+      "invalidFile": "Geçersiz Dosya",
+      "invalidFileExplanation": "Lütfen bir PDF dosyası yükleyin.",
+      "noFile": "Dosya Yok",
+      "noFileExplanation": "Lütfen önce bir PDF dosyası yükleyin.",
+      "conversionSuccess": "PDF başarıyla TIFF'e dönüştürüldü!",
+      "conversionError": "PDF TIFF'e dönüştürülemedi. Dosya bozulmuş olabilir."
+    }
   },
   "pdfToCbz": {
     "name": "PDF'den CBZ'ye",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF'den JSON'a",
-    "subtitle": "PDF dosyalarını JSON formatına dönüştürün."
+    "subtitle": "PDF dosyalarını JSON formatına dönüştürün.",
+    "convertButton": "JSON'a Dönüştür",
+    "status": {
+      "selectAtLeastOne": "Lütfen en az 1 PDF dosyası seçin",
+      "selectedReady": "{{count}} dosya seçildi. Dönüştürmeye hazır!",
+      "checkingEncrypted": "Şifrelenmiş PDF'ler kontrol ediliyor...",
+      "readingFiles": "Dosyalar okunuyor (Ana Konu)...",
+      "converting": "PDF'ler JSON'a dönüştürülüyor...",
+      "readError": "Dosya okuma hatası: {{message}}",
+      "creatingZip": "ZIP dosyası oluşturuluyor...",
+      "success": "PDF'ler başarıyla JSON'a dönüştürüldü! ZIP indirme başlatıldı.",
+      "zipError": "ZIP oluşturma hatası: {{message}}",
+      "workerError": "Worker Hatası: {{message}}",
+      "getStarted": "Başlamak için PDF dosyaları seçin"
+    }
   },
   "ocrPdf": {
     "name": "PDF'de OCR",
-    "subtitle": "PDF'yi aranabilir ve kopyalanabilir hale getirin."
+    "subtitle": "PDF'yi aranabilir ve kopyalanabilir hale getirin.",
+    "languagesInDocument": "Belgedeki Diller",
+    "searchLanguagesPlaceholder": "Dil ara...",
+    "selectedLabel": "Seçildi:",
+    "none": "Hiçbiri",
+    "advancedSettingsSummary": "Gelişmiş Ayarlar (Doğruluğu artırmak için önerilir)",
+    "resolutionLabel": "Çözünürlük",
+    "resolutionStandard": "Standart (192 DPI)",
+    "resolutionHigh": "Yüksek (288 DPI)",
+    "resolutionUltra": "Ultra (384 DPI)",
+    "binarizeLabel": "Görüntüyü İkiliye Dönüştür (Temiz Taramalar için Kontrastı Artır)",
+    "embedFullFontsLabel": "Tam Yazı Tiplerini Göm (Daha büyük dosya, daha iyi uyumluluk)",
+    "whitelistPresetLabel": "Karakter Beyaz Liste Ön Ayarı",
+    "whitelistNone": "Yok (Tüm karakterler)",
+    "whitelistAlphanumeric": "Alfanümerik + Temel Noktalama",
+    "whitelistNumbersCurrency": "Sayılar + Para Birimi Sembolleri",
+    "whitelistLettersOnly": "Sadece Harfler (A-Z, a-z)",
+    "whitelistNumbersOnly": "Sadece Sayılar (0-9)",
+    "whitelistInvoice": "Fatura/Makbuz (sayılar, $, ., -, /)",
+    "whitelistForms": "Formlar (alfanümerik + yaygın semboller)",
+    "whitelistCustom": "Özel...",
+    "whitelistHelp": "Yalnızca bu karakterler tanınacak. Tüm karakterler için boş bırakın.",
+    "whitelistInputLabel": "Karakter Beyaz Listesi (İsteğe Bağlı)",
+    "whitelistInputPlaceholder": "ör. abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "OCR'yi Başlat",
+    "progressInitializing": "Başlatılıyor...",
+    "resultsTitle": "OCR Tamamlandı",
+    "resultsDescription": "Aranabilir PDF'niz hazır. Çıkarılan metni aşağıda kopyalayabilir veya indirebilirsiniz.",
+    "copyToClipboard": "Panoya Kopyala",
+    "downloadTxt": ".txt olarak indir",
+    "downloadSearchablePdf": "Aranabilir PDF İndir",
+    "statusPrefix": "Durum: {{status}}",
+    "availabilityInvalidConfig": "Bu dağıtım geçerli OCR dilleri ortaya koymuyor. Geçerli Tesseract kodlarına ayarlanmış VITE_TESSERACT_AVAILABLE_LANGUAGES ile yeniden oluşturun.",
+    "availabilityBundles": "Bu dağıtım şu OCR dillerini içerir: {{languages}}.",
+    "noLanguagesAvailable": "Bu dağıtımda mevcut OCR dili yok.",
+    "noLanguagesTitle": "Hiçbir Dil Seçilmedi",
+    "noLanguagesMessage": "Lütfen OCR için en az bir dil seçin.",
+    "noFileTitle": "Dosya Yok",
+    "noFileMessage": "Lütfen önce bir PDF dosyası yükleyin.",
+    "languageUnavailableTitle": "OCR Dili Mevcut Değil",
+    "ocrErrorTitle": "OCR Hatası",
+    "ocrErrorMessage": "OCR işlemi sırasında bir hata oluştu. Worker yüklenememiş olabilir. Lütfen tekrar deneyin.",
+    "howItWorksTitle": "Nasıl çalışır:",
+    "extractTextLabel": "Metni Çıkar:",
+    "extractTextDescription": "Taranmış görüntülerden veya PDF'lerden metni tanımak için Tesseract OCR kullanır.",
+    "searchableOutputLabel": "Aranabilir Çıktı:",
+    "searchableOutputDescription": "Görünmeyen bir metin katmanı içeren yeni bir PDF oluşturarak belgenizi orijinal görünümünü koruyarak tamamen aranabilir hale getirir.",
+    "characterFilteringLabel": "Karakter Filtreleme:",
+    "characterFilteringDescription": "İstenmeyen karakterleri filtrelemek ve belirli belge türleri (faturalar, formlar vb.) için doğruluğu artırmak için beyaz listeler kullanın.",
+    "multiLanguageSupportLabel": "Çok Dilli Destek:",
+    "multiLanguageSupportDescription": "Karışık dil içeriği olan belgeler için birden fazla dil seçin."
   },
   "alternateMerge": {
     "name": "Sayfaları Karıştır & Birleştir",
@@ -368,6 +541,10 @@
   "rotatePdf": {
     "name": "PDF'yi Döndür",
     "subtitle": "Sayfaları 90 derecelik artışlarla döndürün."
+  },
+  "rotateCustom": {
+    "name": "Rotate by Custom Degrees",
+    "subtitle": "Rotate pages by any custom angle."
   },
   "nUpPdf": {
     "name": "N'li PDF",
@@ -480,24 +657,6 @@
   "changePermissions": {
     "name": "İzinleri Değiştir",
     "subtitle": "Bir PDF üzerindeki kullanıcı izinlerini ayarlayın veya değiştirin."
-  },
-  "emailToPdf": {
-    "name": "E-posta'dan PDF'ye",
-    "subtitle": "E-posta dosyalarını (EML, MSG) PDF formatına dönüştürün. Outlook dışa aktarmalarını ve standart e-posta formatlarını destekler.",
-    "acceptedFormats": "EML, MSG Dosyaları",
-    "convertButton": "PDF'ye Dönüştür"
-  },
-  "fontToOutline": {
-    "name": "Yazı Tipi Çerçeveye Dönüştür",
-    "subtitle": "Tüm yazı tiplerini vektör çerçevelere dönüştürün, tüm cihazlarda tutarlı görüntü için."
-  },
-  "deskewPdf": {
-    "name": "PDF Eğriliğini Düzelt",
-    "subtitle": "OpenCV kullanarak eğik taranmış sayfaları otomatik olarak düzeltin."
-  },
-  "rotateCustom": {
-    "name": "Rotate by Custom Degrees",
-    "subtitle": "Rotate pages by any custom angle."
   },
   "odtToPdf": {
     "name": "ODT to PDF",
@@ -680,16 +839,19 @@
   "pdfToText": {
     "name": "PDF to Text",
     "subtitle": "Extract text from PDF files and save as plain text (.txt). Supports multiple files.",
-    "note": "This tool works ONLY with digitally created PDFs. For scanned documents or image-based PDFs, use our OCR PDF tool instead.",
-    "convertButton": "Extract Text"
+    "noteLabel": "Not:",
+    "noteText": "Bu araç YALNIZCA dijital olarak oluşturulmuş PDF'lerle çalışır. Taranmış belgeler veya görüntü tabanlı PDF'ler için bunun yerine OCR PDF aracımızı kullanın.",
+    "convertButton": "Extract Text",
+    "note": "This tool works ONLY with digitally created PDFs. For scanned documents or image-based PDFs, use our OCR PDF tool instead."
   },
   "digitalSignPdf": {
     "name": "Digital Signature PDF",
     "pageTitle": "Digital Signature PDF - Add Cryptographic Signature | BentoPDF",
     "subtitle": "Add a cryptographic digital signature to your PDF using X.509 certificates. Supports PKCS#12 (.pfx, .p12) and PEM formats. Your private key never leaves your browser.",
     "certificateSection": "Certificate",
-    "uploadCert": "Upload certificate (.pfx, .p12)",
+    "uploadCert": "Upload certificate (.pfx, .p12, .pem)",
     "certPassword": "Certificate Password",
+    "privateKeyPassword": "Özel Anahtar Parolası",
     "certPasswordPlaceholder": "Enter certificate password",
     "certInfo": "Certificate Information",
     "certSubject": "Subject",
@@ -702,8 +864,71 @@
     "locationPlaceholder": "e.g., New York, USA",
     "contactInfo": "Contact Info",
     "contactPlaceholder": "e.g., email@example.com",
+    "visibleSignature": "Görünür İmza",
+    "visibleSignatureDescription": "Etkinleştirildiğinde, PDF'de görünür bir imza kutusu görünür. Bir görüntü/logo yükleyebilir veya metin ekleyebilirsiniz. Hiçbiri sağlanmazsa, sertifikadaki imzalayanın adı otomatik olarak gösterilir.",
+    "signatureImage": "İmza Görüntüsü/Logosu (İsteğe Bağlı)",
+    "uploadSignatureImage": "Görüntü yükle (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "İmza önizlemesi",
+    "remove": "Kaldır",
+    "page": "Sayfa",
+    "firstPage": "İlk sayfa",
+    "lastPage": "Son sayfa",
+    "allPages": "Tüm sayfalar",
+    "customPage": "Özel sayfa #",
+    "pageNumber": "Sayfa #",
+    "xPosition": "X Pozisyonu (sol)",
+    "yPosition": "Y Pozisyonu (üst)",
+    "width": "Genişlik",
+    "height": "Yükseklik",
+    "addTextOverlay": "Metin bindirme ekle",
+    "text": "Metin",
+    "textPlaceholder": "ör. Ali Yılmaz tarafından dijital olarak imzalandı",
+    "textColor": "Metin Rengi",
+    "fontSize": "Yazı Tipi Boyutu",
+    "invalidImageTitle": "Geçersiz Görüntü",
+    "invalidImageMessage": "Lütfen PNG, JPG veya WebP görüntüsü seçin.",
+    "invalidFileTitle": "Geçersiz Dosya",
+    "invalidFileMessage": "Lütfen bir PDF dosyası seçin.",
+    "invalidCertificateTitle": "Geçersiz Sertifika",
+    "invalidCertificateMessage": "Lütfen .pfx, .p12 veya .pem sertifika dosyası seçin.",
+    "certificateLoaded": "Sertifika yüklendi",
+    "certificateUnlocked": "Sertifikanın kilidi açıldı",
+    "failedParsePem": "PEM dosyası ayrıştırılamadı",
+    "enterPasswordToUnlock": "Kilit açmak için parolayı girin",
+    "invalidPasswordOrCertificate": "Geçersiz parola veya sertifika",
+    "incorrectPassword": "Yanlış parola",
+    "failedParseCertificate": "Sertifika ayrıştırılamadı",
+    "missingDataTitle": "Eksik Veri",
+    "missingDataMessage": "Lütfen hem PDF hem de geçerli bir sertifika yükleyin.",
+    "applyingSignature": "Dijital imza uygulanıyor...",
+    "signingFailedTitle": "İmzalama Başarısız",
+    "chainFetchFailed": "Sertifika zinciri alınamadı. Bunun nedeni ağ sorunları veya sertifika proxy'sinin kullanılamamış olması olabilir. Lütfen internet bağlantınızı kontrol edip tekrar deneyin. Sorun devam ederse desteğe başvurun.",
+    "failedToSignPdf": "PDF imzalanamadı: {{message}}",
+    "defaultSignatureText": "{{signer}} tarafından dijital olarak imzalandı\n{{date}}",
+    "pageCount": "{{count}} sayfa",
+    "howToStep1Title": "PDF Yükle",
+    "howToStep1Text": "İmzalamak istediğiniz PDF belgesini seçin",
+    "howToStep2Title": "Sertifika Yükle",
+    "howToStep2Text": ".pfx veya .p12 sertifika dosyanızı ve parolanızı sağlayın",
+    "howToStep3Title": "İmzala ve İndir",
+    "howToStep3Text": "Dijital imzayı uygulayın ve imzalanmış PDF'nizi indirin",
+    "relatedEncryptDesc": "PDF'yi parola ile koru",
+    "relatedDecryptDesc": "PDF parolasını kaldır",
+    "relatedFlattenDesc": "Açıklamaları kalıcı yap",
+    "relatedSanitizeDesc": "Gizli verileri kaldır",
+    "relatedPermissionsDesc": "PDF izinlerini ayarla",
+    "faqWhatIsQuestion": "Dijital imza nedir?",
+    "faqWhatIsAnswer": "Dijital imza, bir belgenin gerçekliğini ve bütünlüğünü doğrulayan kriptografik bir mekanizmadır. Çizilen imzanın aksine, imzalayanın kimliğini kanıtlamak için açık anahtar kriptografisi (X.509 sertifikaları) kullanır.",
+    "faqFormatsQuestion": "Hangi sertifika formatları destekleniyor?",
+    "faqFormatsAnswer": "Sertifikanızı ve özel anahtarınızı tek bir şifrelenmiş dosyada içeren PKCS#12 formatlı sertifikaları (.pfx, .p12) destekliyoruz. Bunlar genellikle sertifika otoriteleri tarafından verilir.",
+    "faqPrivateKeyQuestion": "Özel anahtarım güvende mi?",
+    "faqPrivateKeyAnswer": "Evet! Tüm işlemler tamamen tarayıcınızda gerçekleşir. Sertifikanız, özel anahtarınız ve PDF dosyalarınız asla cihazınızdan ayrılmaz veya herhangi bir sunucuya yüklenmez.",
+    "faqValidReadersQuestion": "İmza PDF okuyucularda geçerli olacak mı?",
+    "faqValidReadersAnswer": "Evet, araç tüm büyük PDF okuyucuları tarafından tanınan standart PKCS#7 ayrılmış imzalar oluşturur. Tam doğrulama için güvenilir bir Sertifika Otoritesi'nden bir sertifika kullanın.",
     "applySignature": "Apply Digital Signature",
-    "successMessage": "PDF signed successfully! The signature can be verified in any PDF reader."
+    "successMessage": "PDF signed successfully! The signature can be verified in any PDF reader.",
+    "internetRequiredTitle": "İnternet bağlantısı gerekli",
+    "internetRequiredDescription": "İmzalama, imzayı doğrulamak için sertifika düzenleyicinizin sunucusundan sertifika zinciri bilgilerini almayı gerektirebilir."
   },
   "validateSignaturePdf": {
     "name": "Validate PDF Signature",
@@ -718,6 +943,20 @@
     "selectTsa": "Bir TSA sunucusu seçin",
     "applyTimestamp": "Zaman Damgası Uygula",
     "successMessage": "PDF başarıyla zaman damgalandı! Zaman damgası herhangi bir PDF okuyucuda doğrulanabilir."
+  },
+  "emailToPdf": {
+    "name": "E-posta'dan PDF'ye",
+    "subtitle": "E-posta dosyalarını (EML, MSG) PDF formatına dönüştürün. Outlook dışa aktarmalarını ve standart e-posta formatlarını destekler.",
+    "acceptedFormats": "EML, MSG Dosyaları",
+    "convertButton": "PDF'ye Dönüştür"
+  },
+  "fontToOutline": {
+    "name": "Yazı Tipi Çerçeveye Dönüştür",
+    "subtitle": "Tüm yazı tiplerini vektör çerçevelere dönüştürün, tüm cihazlarda tutarlı görüntü için."
+  },
+  "deskewPdf": {
+    "name": "PDF Eğriliğini Düzelt",
+    "subtitle": "OpenCV kullanarak eğik taranmış sayfaları otomatik olarak düzeltin."
   },
   "pdfToWord": {
     "name": "PDF'den Word'e",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "İş akışı kaydedilemedi: depolama kotası aşıldı. Eski şablonları silmeyi deneyin.",
       "failedToImport": "İş akışı içe aktarılamadı: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "Gelişmiş Özellik Ayarları",
+    "description": "Gelişmiş PDF özelliklerini etkinleştirmek için harici işleme modüllerini yapılandırın. Bu modüller isteğe bağlıdır ve ayrı olarak lisanslanır.",
+    "status": {
+      "testing": "Test ediliyor...",
+      "customOverride": "Özel Geçersiz Kılma",
+      "preConfigured": "Önceden Yapılandırılmış",
+      "notConfigured": "Yapılandırılmamış"
+    },
+    "preconfiguredTitle": "Önceden yapılandırılmış ve kullanıma hazır.",
+    "preconfiguredDescription": "Gelişmiş işleme modülleri otomatik olarak CDN'den yüklenir. Özel bir kaynak kullanmanız gerekiyorsa (ör. air-gapped veya self-hosted dağıtımlar için), aşağıdaki URL'leri geçersiz kılabilirsiniz.",
+    "usingDefault": "Varsayılan kullanılıyor: {{url}}",
+    "pymupdfSubtitle": "Belge İşleme Motoru",
+    "pymupdfFeatures": "Etkinleştirir: PDF'den Metne, Markdown, SVG, DOCX, Excel • Görüntü/Tablo Çıkarma • Format Dönüşümü",
+    "testButton": "Test Et",
+    "recommendedLabel": "Önerilen:",
+    "copyTitle": "Panoya kopyala",
+    "ghostscriptSubtitle": "PDF/A Dönüştürme Motoru",
+    "ghostscriptFeatures": "Etkinleştirir: PDF/A-1b, PDF/A-2b, PDF/A-3b Dönüşümü • Yazı Tipinden Dış Hatta",
+    "cpdfSubtitle": "Yer İmi ve Meta Veri Motoru",
+    "cpdfFeatures": "Etkinleştirir: Yer İmlerine Göre Böl • Yer İmlerini Düzenle • PDF Meta Verileri",
+    "saveConfiguration": "Yapılandırmayı Kaydet",
+    "savingConfiguration": "Yapılandırma kaydediliyor...",
+    "savedTitle": "Kaydedildi",
+    "savedMessage": "Yapılandırma başarıyla kaydedildi!",
+    "errorTitle": "Hata",
+    "failedSave": "Yapılandırma kaydedilemedi: {{message}}",
+    "emptyUrlTitle": "Boş URL",
+    "emptyUrlMessage": "Lütfen test etmek için bir URL girin.",
+    "testSuccessTitle": "Başarılı",
+    "connectionSuccess": "{{package}}'a bağlantı başarılı!",
+    "connectionFailedTitle": "Bağlantı Başarısız",
+    "connectionFailedMessage": "URL'ye bağlanılamadı.",
+    "resetDefaults": "Varsayılanlara Sıfırla",
+    "resetTitle": "Sıfırla",
+    "resetWithDefaults": "Özel geçersiz kılmalar temizlendi. Önceden yapılandırılmış varsayılanlar etkin.",
+    "resetNoDefaults": "Tüm yapılandırmalar ve önbelleğe alınmış modüller temizlendi.",
+    "licenseTitle": "Lisans Bildirimi:",
+    "licenseDescription": "Harici modüller (PyMuPDF, Ghostscript, CoherentPDF), AGPL-3.0 veya benzer copyleft lisansları altında lisanslanmıştır. Bu modülleri yapılandırarak ve kullanarak, ilgili lisans şartlarını kabul etmiş olursunuz. BentoPDF, beklenen arayüzü izleyen herhangi bir Ghostscript WASM ve PyMuPDF WASM uygulamasıyla uyumludur."
   },
   "pdfOverlay": {
     "name": "PDF Katmanlama",

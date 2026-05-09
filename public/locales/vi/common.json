@@ -7,7 +7,9 @@
     "allTools": "Tất cả công cụ",
     "docs": "Docs",
     "openMainMenu": "Mở menu chính",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "searchLanguage": "Tìm ngôn ngữ…",
+    "noLanguagesFound": "Không tìm thấy ngôn ngữ"
   },
   "donation": {
     "message": "Bạn yêu thích BentoPDF? Hãy giúp chúng tôi giữ nó miễn phí và mã nguồn mở!",
@@ -96,6 +98,18 @@
       "webpImages": "Ảnh WebP"
     }
   },
+  "howItWorks": {
+    "title": "Cách thức hoạt động",
+    "step1Title": "Tải tệp lên",
+    "step1": "Nhấp hoặc kéo tệp của bạn vào đây",
+    "step2Title": "Xử lý",
+    "step2": "Nhấp vào nút xử lý để bắt đầu",
+    "step3Title": "Tải xuống",
+    "step3": "Lưu tệp đã xử lý ngay lập tức"
+  },
+  "relatedTools": {
+    "title": "Công cụ PDF liên quan"
+  },
   "loader": {
     "processing": "Đang xử lý..."
   },
@@ -121,6 +135,10 @@
     "resetToDefaults": "Đặt lại về mặc định",
     "fullWidthMode": "Chế độ toàn chiều rộng",
     "fullWidthDescription": "Sử dụng toàn bộ chiều rộng màn hình cho tất cả công cụ thay vì container căn giữa",
+    "compactMode": "Chế độ thu gọn",
+    "compactModeDescription": "Hiển thị công cụ dưới dạng danh sách thu gọn thay vì thẻ",
+    "advancedSettings": "Cài đặt nâng cao",
+    "advancedSettingsDescription": "Cấu hình các mô-đun xử lý bên ngoài (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "Cài đặt được lưu tự động",
     "clickToSet": "Nhấp để đặt",
     "pressKeys": "Nhấn phím...",
@@ -167,6 +185,7 @@
   "faq": {
     "title": "Câu hỏi",
     "questions": "Thường gặp",
+    "sectionTitle": "Câu hỏi thường gặp",
     "isFree": {
       "question": "BentoPDF có thực sự miễn phí không?",
       "answer": "Có, hoàn toàn miễn phí. Tất cả các công cụ trên BentoPDF đều 100% miễn phí sử dụng, không giới hạn tệp, không cần đăng ký và không có watermark. Chúng tôi tin rằng mọi người đều xứng đáng được tiếp cận với các công cụ PDF đơn giản, mạnh mẽ mà không có tường phí."
@@ -198,8 +217,7 @@
     "analytics": {
       "question": "Bạn có sử dụng cookie hoặc phân tích để theo dõi tôi không?",
       "answer": "Chúng tôi quan tâm đến quyền riêng tư của bạn. BentoPDF không theo dõi thông tin cá nhân. Chúng tôi chỉ sử dụng Simple Analytics để xem số lượt truy cập ẩn danh. Điều này có nghĩa là chúng tôi có thể biết có bao nhiêu người dùng truy cập trang web của chúng tôi, nhưng chúng tôi không bao giờ biết bạn là ai. Simple Analytics hoàn toàn tuân thủ GDPR và tôn trọng quyền riêng tư của bạn."
-    },
-    "sectionTitle": "Câu hỏi thường gặp"
+    }
   },
   "testimonials": {
     "title": "Người dùng",
@@ -252,11 +270,14 @@
     "add": "Thêm",
     "remove": "Xóa",
     "loading": "Đang tải...",
+    "loadingPageCount": "Đang tải trang...",
     "error": "Lỗi",
     "success": "Thành công",
     "file": "Tệp",
     "files": "Tệp",
-    "close": "Đóng"
+    "close": "Đóng",
+    "convert": "Chuyển đổi",
+    "unknownError": "Lỗi không xác định"
   },
   "about": {
     "hero": {
@@ -349,15 +370,6 @@
     "errorRendering": "Không thể kết xuất hình thu nhỏ trang",
     "error": "Lỗi",
     "failedToLoad": "Không thể tải"
-  },
-  "howItWorks": {
-    "title": "Cách thức hoạt động",
-    "step1": "Nhấp hoặc kéo tệp của bạn vào đây",
-    "step2": "Nhấp vào nút xử lý để bắt đầu",
-    "step3": "Lưu tệp đã xử lý ngay lập tức"
-  },
-  "relatedTools": {
-    "title": "Công cụ PDF liên quan"
   },
   "simpleMode": {
     "title": "Công cụ PDF",

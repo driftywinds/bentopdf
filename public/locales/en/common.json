@@ -100,8 +100,11 @@
   },
   "howItWorks": {
     "title": "How It Works",
+    "step1Title": "Upload File",
     "step1": "Click or drag and drop your file to begin",
+    "step2Title": "Process",
     "step2": "Click the process button to start",
+    "step3Title": "Download",
     "step3": "Save your processed file instantly"
   },
   "relatedTools": {
@@ -132,6 +135,10 @@
     "resetToDefaults": "Reset to Defaults",
     "fullWidthMode": "Full Width Mode",
     "fullWidthDescription": "Use the full screen width for all tools instead of a centered container",
+    "compactMode": "Compact Mode",
+    "compactModeDescription": "Display tools as a compact list instead of cards",
+    "advancedSettings": "Advanced Settings",
+    "advancedSettingsDescription": "Configure external processing modules (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "Settings are automatically saved",
     "clickToSet": "Click to set",
     "pressKeys": "Press keys...",
@@ -269,7 +276,8 @@
     "file": "File",
     "files": "Files",
     "close": "Close",
-    "convert": "Convert"
+    "convert": "Convert",
+    "unknownError": "Unknown error"
   },
   "about": {
     "hero": {

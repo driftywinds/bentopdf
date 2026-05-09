@@ -10,6 +10,7 @@
     "input": "Entrée",
     "output": "Sortie"
   },
+  "convertToPdf": "Convertir en PDF",
   "pdfMultiTool": {
     "name": "Outil PDF tout-en-un",
     "subtitle": "Fusionner, scinder, organiser, supprimer, faire pivoter, ajouter des pages vierges, extraire et dupliquer dans une interface unifiée."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "Dupliquer et organiser",
-    "subtitle": "Dupliquer, réorganiser et supprimer des pages."
+    "subtitle": "Dupliquer, réorganiser et supprimer des pages.",
+    "saveChanges": "Enregistrer les modifications"
   },
   "deletePages": {
     "name": "Supprimer des pages",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "Modifier les signets",
-    "subtitle": "Ajouter, modifier, importer, supprimer et extraire des signets PDF."
+    "subtitle": "Ajouter, modifier, importer, supprimer et extraire des signets PDF.",
+    "autoExtractExisting": "Extraire automatiquement les signets existants",
+    "importSectionTitle": "Ou importer des signets",
+    "csvFormat": "Format CSV : titre,page,niveau",
+    "jsonFormat": "Format JSON",
+    "uploadCsvAction": "Cliquez pour téléverser CSV",
+    "uploadJsonAction": "Cliquez pour téléverser JSON",
+    "orDragHere": "ou glissez ici"
   },
   "tableOfContents": {
     "name": "Table des matières",
-    "subtitle": "Générer une table des matières à partir des signets du PDF."
+    "subtitle": "Générer une table des matières à partir des signets du PDF.",
+    "titleLabel": "Titre TDM",
+    "fontSize": "Taille de police",
+    "fontFamily": "Famille de polices",
+    "addBookmark": "Ajouter un signet pour la page de TDM",
+    "generateButton": "Générer la table des matières",
+    "selectPdfFirst": "Veuillez d'abord sélectionner un fichier PDF.",
+    "statusReadingFileMainThread": "Lecture du fichier (Thread principal)…",
+    "statusGenerating": "Génération de la table des matières…",
+    "errorReadingFileWithMessage": "Erreur de lecture du fichier : {{message}}",
+    "successGeneratedDownloadStarted": "Table des matières générée avec succès ! Téléchargement démarré.",
+    "workerErrorWithMessage": "Erreur : {{message}}",
+    "workerErrorOccurred": "Une erreur de worker s'est produite. Vérifiez la console pour les détails."
   },
   "pageNumbers": {
     "name": "Numéros de page",
@@ -210,7 +231,8 @@
     "subtitle": "Ajouter des tampons image via la barre d’annotations.",
     "usernameLabel": "Nom du tampon",
     "usernamePlaceholder": "Entrez votre nom (pour les tampons)",
-    "usernameHint": "Ce nom apparaîtra sur les tampons que vous créez."
+    "usernameHint": "Ce nom apparaîtra sur les tampons que vous créez.",
+    "saveButton": "Enregistrer le PDF tamponné"
   },
   "removeAnnotations": {
     "name": "Supprimer les annotations",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "Remplir un formulaire PDF",
-    "subtitle": "Remplir des formulaires directement dans le navigateur, y compris les formulaires XFA."
+    "subtitle": "Remplir des formulaires directement dans le navigateur, y compris les formulaires XFA.",
+    "uploadHint": "Téléversez un PDF avec des champs de formulaire. Remplissez-les directement dans la visionneuse ci-dessous, puis cliquez sur le bouton pour enregistrer et télécharger le formulaire rempli. Prend également en charge les formulaires XFA.",
+    "xfaNoteTitle": "Remarque sur les formulaires XFA :",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) est un format hérité uniquement pris en charge par certaines visionneuses PDF telles que BentoPDF et Firefox. Si vous ouvrez un PDF XFA dans un autre logiciel et voyez des pages blanches ou aucun champ de formulaire, cela signifie que la visionneuse ne prend pas en charge XFA. Pour afficher et remplir correctement les formulaires XFA, utilisez Firefox ou le remplisseur de formulaires de BentoPDF."
   },
   "createPdfForm": {
     "name": "Créer un formulaire PDF",
-    "subtitle": "Créer des formulaires PDF interactifs avec des champs glisser-déposer."
+    "subtitle": "Créer des formulaires PDF interactifs avec des champs glisser-déposer.",
+    "orSeparator": "OU",
+    "createBlankPdf": "Créer un PDF vierge"
   },
   "removeBlankPages": {
     "name": "Supprimer les pages blanches",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "Texte vers PDF",
-    "subtitle": "Convertir un fichier texte en PDF."
+    "subtitle": "Convertir un fichier texte en PDF.",
+    "uploadFiles": "Téléverser des fichiers",
+    "typeText": "Saisir le texte",
+    "acceptedFormats": "Fichiers texte (.txt)",
+    "fontFamily": "Famille de polices",
+    "fontSize": "Taille de police",
+    "textColor": "Couleur du texte",
+    "pageSize": "Taille de page",
+    "rtlAutoDetectNote": "Les langues RTL (arabe, ourdou, persan, etc.) sont détectées automatiquement et la direction du texte est ajustée.",
+    "createButton": "Créer le PDF"
   },
   "jsonToPdf": {
     "name": "JSON vers PDF",
-    "subtitle": "Convertir des fichiers JSON en PDF."
+    "subtitle": "Convertir des fichiers JSON en PDF.",
+    "noteLabel": "Note :",
+    "noteText": "Seuls les fichiers JSON créés par l'outil PDF vers JSON sont pris en charge. Les fichiers JSON standard provenant d'autres outils ne fonctionneront pas.",
+    "acceptedFormats": "Plusieurs fichiers JSON",
+    "status": {
+      "selectAtLeastOne": "Veuillez sélectionner au moins 1 fichier JSON",
+      "selectedReady": "{{count}} fichier(s) sélectionné(s). Prêt à convertir !",
+      "readingFiles": "Lecture des fichiers (Thread principal)…",
+      "converting": "Conversion des fichiers JSON en PDF…",
+      "readError": "Erreur de lecture des fichiers : {{message}}",
+      "creatingZip": "Création du fichier ZIP…",
+      "success": "Fichiers JSON convertis en PDF avec succès ! Téléchargement ZIP démarré.",
+      "zipError": "Erreur lors de la création du ZIP : {{message}}",
+      "workerError": "Erreur de Worker : {{message}}",
+      "getStarted": "Sélectionnez des fichiers JSON pour commencer"
+    }
   },
   "pdfToJpg": {
     "name": "PDF vers JPG",
-    "subtitle": "Convertir chaque page du PDF en image JPG."
+    "subtitle": "Convertir chaque page du PDF en image JPG.",
+    "imageQuality": "Qualité d'image",
+    "imageQualityExplanation": "Qualité supérieure = taille de fichier plus grande",
+    "alert": {
+      "invalidFile": "Fichier invalide",
+      "invalidFileExplanation": "Veuillez téléverser un fichier PDF.",
+      "noFile": "Aucun fichier",
+      "noFileExplanation": "Veuillez d'abord téléverser un fichier PDF.",
+      "conversionSuccess": "PDF converti en JPG avec succès !",
+      "conversionError": "Échec de la conversion du PDF en JPG. Le fichier est peut-être corrompu."
+    },
+    "loader": {
+      "converting": "Conversion en JPG…"
+    }
   },
   "pdfToPng": {
     "name": "PDF vers PNG",
-    "subtitle": "Convertir chaque page du PDF en image PNG."
+    "subtitle": "Convertir chaque page du PDF en image PNG.",
+    "imageScale": "Échelle d'image",
+    "imageScaleExplanation": "Échelle plus élevée = meilleure qualité mais fichier plus grand",
+    "alert": {
+      "invalidFile": "Fichier invalide",
+      "invalidFileExplanation": "Veuillez téléverser un fichier PDF.",
+      "noFile": "Aucun fichier",
+      "noFileExplanation": "Veuillez d'abord téléverser un fichier PDF.",
+      "conversionSuccess": "PDF converti en PNG avec succès !",
+      "conversionError": "Échec de la conversion du PDF en PNG. Le fichier est peut-être corrompu."
+    },
+    "loader": {
+      "converting": "Conversion en PNG…"
+    }
   },
   "pdfToWebp": {
     "name": "PDF vers WebP",
-    "subtitle": "Convertir chaque page du PDF en image WebP."
+    "subtitle": "Convertir chaque page du PDF en image WebP.",
+    "imageQuality": "Qualité d'image",
+    "imageQualityExplanation": "Qualité supérieure = taille de fichier plus grande",
+    "alert": {
+      "invalidFile": "Fichier invalide",
+      "invalidFileExplanation": "Veuillez téléverser un fichier PDF.",
+      "noFile": "Aucun fichier",
+      "noFileExplanation": "Veuillez d'abord téléverser un fichier PDF.",
+      "conversionSuccess": "PDF converti en WebP avec succès !",
+      "conversionError": "Échec de la conversion du PDF en WebP. Le fichier est peut-être corrompu."
+    },
+    "loader": {
+      "converting": "Conversion en WebP…"
+    }
   },
   "pdfToBmp": {
     "name": "PDF vers BMP",
-    "subtitle": "Convertir chaque page du PDF en image BMP."
+    "subtitle": "Convertir chaque page du PDF en image BMP.",
+    "alert": {
+      "invalidFile": "Fichier invalide",
+      "invalidFileExplanation": "Veuillez téléverser un fichier PDF.",
+      "noFile": "Aucun fichier",
+      "noFileExplanation": "Veuillez d'abord téléverser un fichier PDF.",
+      "conversionSuccess": "PDF converti en BMP avec succès !",
+      "conversionError": "Échec de la conversion du PDF en BMP. Le fichier est peut-être corrompu."
+    },
+    "loader": {
+      "converting": "Conversion en BMP…"
+    }
   },
   "pdfToTiff": {
     "name": "PDF vers TIFF",
@@ -291,7 +392,15 @@
     "colorMode": "Mode couleur",
     "multiPage": "Enregistrer en TIFF multipage (fichier unique)",
     "loadingVips": "Chargement du processeur d'images...",
-    "converting": "Conversion en TIFF..."
+    "converting": "Conversion en TIFF...",
+    "alert": {
+      "invalidFile": "Fichier invalide",
+      "invalidFileExplanation": "Veuillez téléverser un fichier PDF.",
+      "noFile": "Aucun fichier",
+      "noFileExplanation": "Veuillez d'abord téléverser un fichier PDF.",
+      "conversionSuccess": "PDF converti en TIFF avec succès !",
+      "conversionError": "Échec de la conversion du PDF en TIFF. Le fichier est peut-être corrompu."
+    }
   },
   "pdfToCbz": {
     "name": "PDF en CBZ",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF vers JSON",
-    "subtitle": "Convertir des fichiers PDF en JSON."
+    "subtitle": "Convertir des fichiers PDF en JSON.",
+    "convertButton": "Convertir en JSON",
+    "status": {
+      "selectAtLeastOne": "Veuillez sélectionner au moins 1 fichier PDF",
+      "selectedReady": "{{count}} fichier(s) sélectionné(s). Prêt à convertir !",
+      "checkingEncrypted": "Vérification des PDF chiffrés…",
+      "readingFiles": "Lecture des fichiers (Thread principal)…",
+      "converting": "Conversion des PDF en JSON…",
+      "readError": "Erreur de lecture des fichiers : {{message}}",
+      "creatingZip": "Création du fichier ZIP…",
+      "success": "PDF convertis en JSON avec succès ! Téléchargement ZIP démarré.",
+      "zipError": "Erreur lors de la création du ZIP : {{message}}",
+      "workerError": "Erreur de Worker : {{message}}",
+      "getStarted": "Sélectionnez des fichiers PDF pour commencer"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "Rendre un PDF consultable et copiable."
+    "subtitle": "Rendre un PDF consultable et copiable.",
+    "languagesInDocument": "Langues dans le document",
+    "searchLanguagesPlaceholder": "Rechercher des langues…",
+    "selectedLabel": "Sélectionné :",
+    "none": "Aucune",
+    "advancedSettingsSummary": "Paramètres avancés (recommandés pour améliorer la précision)",
+    "resolutionLabel": "Résolution",
+    "resolutionStandard": "Standard (192 DPI)",
+    "resolutionHigh": "Élevée (288 DPI)",
+    "resolutionUltra": "Ultra (384 DPI)",
+    "binarizeLabel": "Binariser l'image (améliorer le contraste pour des scans propres)",
+    "embedFullFontsLabel": "Intégrer les polices complètes (fichier plus volumineux, meilleure compatibilité)",
+    "whitelistPresetLabel": "Préréglage de liste blanche de caractères",
+    "whitelistNone": "Aucune (tous les caractères)",
+    "whitelistAlphanumeric": "Alphanumérique + Ponctuation de base",
+    "whitelistNumbersCurrency": "Chiffres + Symboles monétaires",
+    "whitelistLettersOnly": "Lettres uniquement (A-Z, a-z)",
+    "whitelistNumbersOnly": "Chiffres uniquement (0-9)",
+    "whitelistInvoice": "Facture/Reçu (chiffres, $, ., -, /)",
+    "whitelistForms": "Formulaires (alphanumérique + symboles courants)",
+    "whitelistCustom": "Personnalisé…",
+    "whitelistHelp": "Seuls ces caractères seront reconnus. Laissez vide pour tous les caractères.",
+    "whitelistInputLabel": "Liste blanche de caractères (facultative)",
+    "whitelistInputPlaceholder": "p. ex. abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "Démarrer l'OCR",
+    "progressInitializing": "Initialisation…",
+    "resultsTitle": "OCR terminé",
+    "resultsDescription": "Votre PDF interrogeable est prêt. Vous pouvez aussi copier ou télécharger le texte extrait ci-dessous.",
+    "copyToClipboard": "Copier dans le presse-papiers",
+    "downloadTxt": "Télécharger en .txt",
+    "downloadSearchablePdf": "Télécharger le PDF interrogeable",
+    "statusPrefix": "État : {{status}}",
+    "availabilityInvalidConfig": "Ce déploiement n'expose aucune langue OCR valide. Reconstruisez-le avec VITE_TESSERACT_AVAILABLE_LANGUAGES défini sur des codes Tesseract valides.",
+    "availabilityBundles": "Ce déploiement inclut l'OCR pour : {{languages}}.",
+    "noLanguagesAvailable": "Aucune langue OCR n'est disponible dans ce déploiement.",
+    "noLanguagesTitle": "Aucune langue sélectionnée",
+    "noLanguagesMessage": "Veuillez sélectionner au moins une langue pour l'OCR.",
+    "noFileTitle": "Aucun fichier",
+    "noFileMessage": "Veuillez d'abord téléverser un fichier PDF.",
+    "languageUnavailableTitle": "Langue OCR non disponible",
+    "ocrErrorTitle": "Erreur OCR",
+    "ocrErrorMessage": "Une erreur s'est produite pendant le processus OCR. Le worker a peut-être échoué à charger. Veuillez réessayer.",
+    "howItWorksTitle": "Comment ça marche :",
+    "extractTextLabel": "Extraire le texte :",
+    "extractTextDescription": "Utilise Tesseract OCR pour reconnaître le texte des images numérisées ou des PDF.",
+    "searchableOutputLabel": "Sortie interrogeable :",
+    "searchableOutputDescription": "Crée un nouveau PDF avec une couche de texte invisible, rendant votre document entièrement consultable tout en préservant son apparence d'origine.",
+    "characterFilteringLabel": "Filtrage des caractères :",
+    "characterFilteringDescription": "Utilisez les listes blanches pour filtrer les caractères indésirables et améliorer la précision pour des types de documents spécifiques (factures, formulaires, etc.).",
+    "multiLanguageSupportLabel": "Prise en charge multilingue :",
+    "multiLanguageSupportDescription": "Sélectionnez plusieurs langues pour les documents contenant un contenu multilingue."
   },
   "alternateMerge": {
     "name": "Alterner et mélanger les pages",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF vers texte",
     "subtitle": "Extraire le texte des fichiers PDF et l’enregistrer en texte brut (.txt). Prend en charge plusieurs fichiers.",
-    "note": "Cet outil fonctionne UNIQUEMENT avec des PDF créés numériquement. Pour les documents scannés ou les PDF basés sur des images, utilisez plutôt notre outil OCR PDF.",
-    "convertButton": "Extraire le texte"
+    "noteLabel": "Note :",
+    "noteText": "Cet outil ne fonctionne QUE avec des PDF créés numériquement. Pour les documents numérisés ou les PDF basés sur des images, utilisez plutôt notre outil OCR PDF.",
+    "convertButton": "Extraire le texte",
+    "note": "Cet outil fonctionne UNIQUEMENT avec des PDF créés numériquement. Pour les documents scannés ou les PDF basés sur des images, utilisez plutôt notre outil OCR PDF."
   },
   "digitalSignPdf": {
     "name": "Signature numérique PDF",
     "pageTitle": "Signature numérique PDF - Ajouter une signature cryptographique | BentoPDF",
     "subtitle": "Ajouter une signature numérique cryptographique à votre PDF à l’aide de certificats X.509. Prend en charge les formats PKCS#12 (.pfx, .p12) et PEM. Votre clé privée ne quitte jamais votre navigateur.",
     "certificateSection": "Certificat",
-    "uploadCert": "Téléverser un certificat (.pfx, .p12)",
+    "uploadCert": "Téléverser un certificat (.pfx, .p12, .pem)",
     "certPassword": "Mot de passe du certificat",
+    "privateKeyPassword": "Mot de passe de clé privée",
     "certPasswordPlaceholder": "Saisissez le mot de passe du certificat",
     "certInfo": "Informations du certificat",
     "certSubject": "Sujet",
@@ -688,8 +864,71 @@
     "locationPlaceholder": "ex. : Paris, France",
     "contactInfo": "Coordonnées",
     "contactPlaceholder": "ex. : email@exemple.com",
+    "visibleSignature": "Signature visible",
+    "visibleSignatureDescription": "Lorsqu'elle est activée, une zone de signature visible apparaît sur le PDF. Vous pouvez téléverser une image/logo ou ajouter du texte. Si rien n'est fourni, le nom du signataire issu du certificat sera affiché automatiquement.",
+    "signatureImage": "Image/Logo de signature (facultatif)",
+    "uploadSignatureImage": "Téléverser une image (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "Aperçu de la signature",
+    "remove": "Supprimer",
+    "page": "Page",
+    "firstPage": "Première page",
+    "lastPage": "Dernière page",
+    "allPages": "Toutes les pages",
+    "customPage": "Page personnalisée #",
+    "pageNumber": "Page #",
+    "xPosition": "Position X (gauche)",
+    "yPosition": "Position Y (haut)",
+    "width": "Largeur",
+    "height": "Hauteur",
+    "addTextOverlay": "Ajouter une superposition de texte",
+    "text": "Texte",
+    "textPlaceholder": "p. ex. Signé numériquement par Jean Dupont",
+    "textColor": "Couleur du texte",
+    "fontSize": "Taille de police",
+    "invalidImageTitle": "Image invalide",
+    "invalidImageMessage": "Veuillez sélectionner une image PNG, JPG ou WebP.",
+    "invalidFileTitle": "Fichier invalide",
+    "invalidFileMessage": "Veuillez sélectionner un fichier PDF.",
+    "invalidCertificateTitle": "Certificat invalide",
+    "invalidCertificateMessage": "Veuillez sélectionner un fichier de certificat .pfx, .p12 ou .pem.",
+    "certificateLoaded": "Certificat chargé",
+    "certificateUnlocked": "Certificat déverrouillé",
+    "failedParsePem": "Échec de l'analyse du fichier PEM",
+    "enterPasswordToUnlock": "Entrez le mot de passe pour déverrouiller",
+    "invalidPasswordOrCertificate": "Mot de passe ou certificat invalide",
+    "incorrectPassword": "Mot de passe incorrect",
+    "failedParseCertificate": "Échec de l'analyse du certificat",
+    "missingDataTitle": "Données manquantes",
+    "missingDataMessage": "Veuillez téléverser à la fois un PDF et un certificat valide.",
+    "applyingSignature": "Application de la signature numérique…",
+    "signingFailedTitle": "Échec de la signature",
+    "chainFetchFailed": "Échec de la récupération de la chaîne de certificats. Cela peut être dû à des problèmes de réseau ou à l'indisponibilité du proxy de certificats. Veuillez vérifier votre connexion Internet et réessayer. Si le problème persiste, contactez le support.",
+    "failedToSignPdf": "Échec de la signature du PDF : {{message}}",
+    "defaultSignatureText": "Signé numériquement par {{signer}}\n{{date}}",
+    "pageCount": "{{count}} pages",
+    "howToStep1Title": "Téléverser le PDF",
+    "howToStep1Text": "Sélectionnez le document PDF que vous souhaitez signer",
+    "howToStep2Title": "Téléverser le certificat",
+    "howToStep2Text": "Fournissez votre fichier de certificat .pfx ou .p12 et le mot de passe",
+    "howToStep3Title": "Signer et télécharger",
+    "howToStep3Text": "Appliquez la signature numérique et téléchargez votre PDF signé",
+    "relatedEncryptDesc": "Protéger votre PDF par mot de passe",
+    "relatedDecryptDesc": "Supprimer le mot de passe du PDF",
+    "relatedFlattenDesc": "Rendre les annotations permanentes",
+    "relatedSanitizeDesc": "Supprimer les données cachées",
+    "relatedPermissionsDesc": "Définir les autorisations PDF",
+    "faqWhatIsQuestion": "Qu'est-ce qu'une signature numérique ?",
+    "faqWhatIsAnswer": "Une signature numérique est un mécanisme cryptographique qui vérifie l'authenticité et l'intégrité d'un document. Contrairement à une signature dessinée, elle utilise la cryptographie à clé publique (certificats X.509) pour prouver l'identité du signataire.",
+    "faqFormatsQuestion": "Quels formats de certificat sont pris en charge ?",
+    "faqFormatsAnswer": "Nous prenons en charge les certificats au format PKCS#12 (.pfx, .p12) qui contiennent à la fois votre certificat et votre clé privée dans un seul fichier chiffré. Ils sont généralement émis par des autorités de certification.",
+    "faqPrivateKeyQuestion": "Ma clé privée est-elle en sécurité ?",
+    "faqPrivateKeyAnswer": "Oui ! Tout le traitement se fait entièrement dans votre navigateur. Votre certificat, clé privée et fichiers PDF ne quittent jamais votre appareil et ne sont téléchargés sur aucun serveur.",
+    "faqValidReadersQuestion": "La signature sera-t-elle valide dans les lecteurs PDF ?",
+    "faqValidReadersAnswer": "Oui, l'outil crée des signatures détachées PKCS#7 standard reconnues par tous les principaux lecteurs PDF. Pour une validation complète, utilisez un certificat d'une autorité de certification de confiance.",
     "applySignature": "Appliquer la signature numérique",
-    "successMessage": "PDF signé avec succès ! La signature peut être vérifiée dans n’importe quel lecteur PDF."
+    "successMessage": "PDF signé avec succès ! La signature peut être vérifiée dans n’importe quel lecteur PDF.",
+    "internetRequiredTitle": "Connexion Internet requise",
+    "internetRequiredDescription": "La signature peut nécessiter de récupérer les informations de la chaîne de certificats depuis le serveur de votre émetteur pour valider la signature."
   },
   "validateSignaturePdf": {
     "name": "Valider la signature PDF",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "Échec de la sauvegarde du workflow : quota de stockage dépassé. Essayez de supprimer d’anciens modèles.",
       "failedToImport": "Échec de l’importation du workflow : {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "Paramètres des fonctionnalités avancées",
+    "description": "Configurez les modules de traitement externes pour activer les fonctionnalités PDF avancées. Ces modules sont facultatifs et sous licence séparée.",
+    "status": {
+      "testing": "Test…",
+      "customOverride": "Substitution personnalisée",
+      "preConfigured": "Préconfiguré",
+      "notConfigured": "Non configuré"
+    },
+    "preconfiguredTitle": "Préconfiguré et prêt à l'emploi.",
+    "preconfiguredDescription": "Les modules avancés de traitement sont chargés automatiquement depuis le CDN. Vous pouvez remplacer les URL ci-dessous si vous devez utiliser une source personnalisée (p. ex. pour des déploiements air-gapped ou auto-hébergés).",
+    "usingDefault": "Utilisation par défaut : {{url}}",
+    "pymupdfSubtitle": "Moteur de traitement de documents",
+    "pymupdfFeatures": "Active : PDF vers Texte, Markdown, SVG, DOCX, Excel • Extraire Images/Tables • Conversion de format",
+    "testButton": "Tester",
+    "recommendedLabel": "Recommandé :",
+    "copyTitle": "Copier dans le presse-papiers",
+    "ghostscriptSubtitle": "Moteur de conversion PDF/A",
+    "ghostscriptFeatures": "Active : Conversion PDF/A-1b, PDF/A-2b, PDF/A-3b • Police vers contour",
+    "cpdfSubtitle": "Moteur de signets et métadonnées",
+    "cpdfFeatures": "Active : Diviser par signets • Modifier les signets • Métadonnées PDF",
+    "saveConfiguration": "Enregistrer la configuration",
+    "savingConfiguration": "Enregistrement de la configuration…",
+    "savedTitle": "Enregistré",
+    "savedMessage": "Configuration enregistrée avec succès !",
+    "errorTitle": "Erreur",
+    "failedSave": "Échec de l'enregistrement de la configuration : {{message}}",
+    "emptyUrlTitle": "URL vide",
+    "emptyUrlMessage": "Veuillez entrer une URL à tester.",
+    "testSuccessTitle": "Succès",
+    "connectionSuccess": "Connexion à {{package}} réussie !",
+    "connectionFailedTitle": "Échec de la connexion",
+    "connectionFailedMessage": "Impossible de se connecter à l'URL.",
+    "resetDefaults": "Restaurer les valeurs par défaut",
+    "resetTitle": "Réinitialiser",
+    "resetWithDefaults": "Substitutions personnalisées effacées. Les valeurs par défaut préconfigurées sont actives.",
+    "resetNoDefaults": "Toutes les configurations et modules en cache ont été effacés.",
+    "licenseTitle": "Avis de licence :",
+    "licenseDescription": "Les modules externes (PyMuPDF, Ghostscript, CoherentPDF) sont sous licence AGPL-3.0 ou licences copyleft similaires. En configurant et en utilisant ces modules, vous acceptez leurs conditions de licence respectives. BentoPDF est compatible avec toute implémentation Ghostscript WASM et PyMuPDF WASM qui respecte l'interface attendue."
   },
   "pdfOverlay": {
     "name": "Superposition PDF",

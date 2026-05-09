@@ -7,7 +7,9 @@
     "allTools": "Semua Alat",
     "docs": "Docs",
     "openMainMenu": "Buka menu utama",
-    "language": "Bahasa"
+    "language": "Bahasa",
+    "searchLanguage": "Cari bahasa…",
+    "noLanguagesFound": "Bahasa tidak ditemukan"
   },
   "donation": {
     "message": "Suka BentoPDF? Bantu kami menjaganya tetap gratis dan sumber terbuka!",
@@ -96,6 +98,18 @@
       "webpImages": "Gambar WebP"
     }
   },
+  "howItWorks": {
+    "title": "Cara Kerja",
+    "step1Title": "Unggah File",
+    "step1": "Klik atau seret file Anda ke sini",
+    "step2Title": "Proses",
+    "step2": "Klik tombol proses untuk memulai",
+    "step3Title": "Unduh",
+    "step3": "Simpan file yang diproses secara instan"
+  },
+  "relatedTools": {
+    "title": "Alat PDF Terkait"
+  },
   "loader": {
     "processing": "Memproses..."
   },
@@ -121,6 +135,10 @@
     "resetToDefaults": "Atur Ulang ke Default",
     "fullWidthMode": "Mode Lebar Penuh",
     "fullWidthDescription": "Gunakan lebar layar penuh untuk semua alat, bukan wadah yang dipusatkan",
+    "compactMode": "Mode Ringkas",
+    "compactModeDescription": "Tampilkan alat sebagai daftar ringkas, bukan kartu",
+    "advancedSettings": "Pengaturan Lanjutan",
+    "advancedSettingsDescription": "Konfigurasi modul pemrosesan eksternal (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "Pengaturan disimpan secara otomatis",
     "clickToSet": "Klik untuk mengatur",
     "pressKeys": "Tekan tombol...",
@@ -167,6 +185,7 @@
   "faq": {
     "title": "Pertanyaan yang Sering Diajukan",
     "questions": "Pertanyaan",
+    "sectionTitle": "Pertanyaan yang Sering Diajukan",
     "isFree": {
       "question": "Apakah BentoPDF benar-benar gratis?",
       "answer": "Ya, tentu saja. Semua alat di BentoPDF 100% gratis digunakan, tanpa batas file, tanpa pendaftaran, dan tanpa watermark. Kami percaya semua orang berhak mendapatkan akses ke alat PDF sederhana dan kuat tanpa paywall."
@@ -198,8 +217,7 @@
     "analytics": {
       "question": "Apakah Anda menggunakan cookie atau analitik untuk melacak saya?",
       "answer": "Kami peduli dengan privasi Anda. BentoPDF tidak melacak informasi pribadi. Kami menggunakan Simple Analytics hanya untuk melihat jumlah kunjungan anonim. Ini berarti kami dapat mengetahui berapa banyak pengguna yang mengunjungi situs kami, tetapi kami tidak pernah tahu siapa Anda. Simple Analytics sepenuhnya patuh GDPR dan menghormati privasi Anda."
-    },
-    "sectionTitle": "Pertanyaan yang Sering Diajukan"
+    }
   },
   "testimonials": {
     "title": "Apa Kata",
@@ -252,11 +270,14 @@
     "add": "Tambah",
     "remove": "Hapus",
     "loading": "Memuat...",
+    "loadingPageCount": "Memuat halaman...",
     "error": "Kesalahan",
     "success": "Berhasil",
     "file": "File",
     "files": "File",
-    "close": "Tutup"
+    "close": "Tutup",
+    "convert": "Konversi",
+    "unknownError": "Kesalahan tidak diketahui"
   },
   "about": {
     "hero": {
@@ -349,15 +370,6 @@
     "errorRendering": "Gagal merender thumbnail halaman",
     "error": "Kesalahan",
     "failedToLoad": "Gagal memuat"
-  },
-  "howItWorks": {
-    "title": "Cara Kerja",
-    "step1": "Klik atau seret file Anda ke sini",
-    "step2": "Klik tombol proses untuk memulai",
-    "step3": "Simpan file yang diproses secara instan"
-  },
-  "relatedTools": {
-    "title": "Alat PDF Terkait"
   },
   "simpleMode": {
     "title": "Alat PDF",

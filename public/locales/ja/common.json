@@ -7,7 +7,9 @@
     "allTools": "すべてのツール",
     "docs": "ドキュメント",
     "openMainMenu": "メインメニューを開く",
-    "language": "言語"
+    "language": "言語",
+    "searchLanguage": "言語を検索…",
+    "noLanguagesFound": "言語が見つかりません"
   },
   "donation": {
     "message": "BentoPDFは好きですか？無料かつオープンソースを維持するためにご協力ください！",
@@ -98,8 +100,11 @@
   },
   "howItWorks": {
     "title": "仕組み",
+    "step1Title": "ファイルをアップロード",
     "step1": "ファイルをクリックまたはドラッグ&ドロップして始めます",
+    "step2Title": "処理",
     "step2": "プロセスボタンをクリックしてスタートします",
+    "step3Title": "ダウンロード",
     "step3": "処理したファイルをすぐに保存します"
   },
   "relatedTools": {
@@ -130,6 +135,10 @@
     "resetToDefaults": "初期値にリセット",
     "fullWidthMode": "全幅モード",
     "fullWidthDescription": "すべてのツールでコンテナを中央に配置するのではなく、全画面幅を使用します。",
+    "compactMode": "コンパクトモード",
+    "compactModeDescription": "ツールをカード形式ではなくコンパクトなリストで表示",
+    "advancedSettings": "詳細設定",
+    "advancedSettingsDescription": "外部処理モジュール (PyMuPDF、Ghostscript、CoherentPDF) を設定",
     "settingsAutoSaved": "設定は自動的に保存されます",
     "clickToSet": "クリックして設定します",
     "pressKeys": "キーを押してください...",
@@ -267,7 +276,8 @@
     "file": "ファイル",
     "files": "ファイル",
     "close": "閉じる",
-    "convert": "変換"
+    "convert": "変換",
+    "unknownError": "不明なエラー"
   },
   "about": {
     "hero": {

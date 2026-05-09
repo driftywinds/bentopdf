@@ -7,7 +7,9 @@
     "allTools": "جميع الأدوات",
     "docs": "Docs",
     "openMainMenu": "فتح القائمة الرئيسية",
-    "language": "اللغة"
+    "language": "اللغة",
+    "searchLanguage": "البحث عن لغة…",
+    "noLanguagesFound": "لم يتم العثور على لغات"
   },
   "donation": {
     "message": "أعجبك BentoPDF؟ ساعدنا في إبقائه مجانيًا ومفتوح المصدر!",
@@ -98,8 +100,11 @@
   },
   "howItWorks": {
     "title": "كيف يعمل",
+    "step1Title": "تحميل الملف",
     "step1": "انقر أو اسحب وأفلت ملفك للبدء",
+    "step2Title": "معالجة",
     "step2": "انقر زر المعالجة للبدء",
+    "step3Title": "تنزيل",
     "step3": "احفظ ملفك المعالج فورًا"
   },
   "relatedTools": {
@@ -130,6 +135,10 @@
     "resetToDefaults": "إعادة التعيين إلى الافتراضي",
     "fullWidthMode": "وضع العرض الكامل",
     "fullWidthDescription": "استخدم عرض الشاشة الكامل لجميع الأدوات بدلاً من حاوية مركزية",
+    "compactMode": "الوضع المضغوط",
+    "compactModeDescription": "عرض الأدوات كقائمة مضغوطة بدلاً من بطاقات",
+    "advancedSettings": "الإعدادات المتقدمة",
+    "advancedSettingsDescription": "تكوين وحدات المعالجة الخارجية (PyMuPDF، Ghostscript، CoherentPDF)",
     "settingsAutoSaved": "يتم حفظ الإعدادات تلقائيًا",
     "clickToSet": "انقر للتعيين",
     "pressKeys": "اضغط على المفاتيح...",
@@ -261,11 +270,14 @@
     "add": "إضافة",
     "remove": "إزالة",
     "loading": "جارٍ التحميل...",
+    "loadingPageCount": "جارٍ تحميل الصفحات...",
     "error": "خطأ",
     "success": "تم بنجاح",
     "file": "ملف",
     "files": "ملفات",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "convert": "تحويل",
+    "unknownError": "خطأ غير معروف"
   },
   "about": {
     "hero": {

@@ -10,6 +10,7 @@
     "input": "入力",
     "output": "出力"
   },
+  "convertToPdf": "PDFに変換",
   "pdfMultiTool": {
     "name": "PDFマルチツール",
     "subtitle": "統合インターフェースで結合、分割、整理、削除、回転、空白ページの追加、抽出、複製を行えます。"
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "複製と整理",
-    "subtitle": "ページを複製、並べ替え、削除します。"
+    "subtitle": "ページを複製、並べ替え、削除します。",
+    "saveChanges": "変更を保存"
   },
   "deletePages": {
     "name": "ページの削除",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "しおりの編集",
-    "subtitle": "PDFのしおりを追加、編集、インポート、削除、抽出します。"
+    "subtitle": "PDFのしおりを追加、編集、インポート、削除、抽出します。",
+    "autoExtractExisting": "既存のしおりを自動抽出",
+    "importSectionTitle": "またはしおりをインポート",
+    "csvFormat": "CSV形式: タイトル,ページ,レベル",
+    "jsonFormat": "JSON形式",
+    "uploadCsvAction": "クリックしてCSVをアップロード",
+    "uploadJsonAction": "クリックしてJSONをアップロード",
+    "orDragHere": "またはここにドラッグ"
   },
   "tableOfContents": {
     "name": "目次",
-    "subtitle": "PDFのしおりから目次ページを生成します。"
+    "subtitle": "PDFのしおりから目次ページを生成します。",
+    "titleLabel": "目次タイトル",
+    "fontSize": "フォントサイズ",
+    "fontFamily": "フォントファミリー",
+    "addBookmark": "目次ページのしおりを追加",
+    "generateButton": "目次を生成",
+    "selectPdfFirst": "まずPDFファイルを選択してください。",
+    "statusReadingFileMainThread": "ファイルを読み込み中 (メインスレッド)...",
+    "statusGenerating": "目次を生成中...",
+    "errorReadingFileWithMessage": "ファイル読み込みエラー: {{message}}",
+    "successGeneratedDownloadStarted": "目次が正常に生成されました! ダウンロードを開始しました。",
+    "workerErrorWithMessage": "エラー: {{message}}",
+    "workerErrorOccurred": "Workerエラーが発生しました。詳細はコンソールを確認してください。"
   },
   "pageNumbers": {
     "name": "ページ番号",
@@ -210,7 +231,8 @@
     "subtitle": "注釈ツールバーを使用して、画像スタンプをPDFに追加します。",
     "usernameLabel": "スタンプユーザー名",
     "usernamePlaceholder": "名前を入力してください（スタンプ用）",
-    "usernameHint": "この名前は作成したスタンプに表示されます。"
+    "usernameHint": "この名前は作成したスタンプに表示されます。",
+    "saveButton": "スタンプ付きPDFを保存"
   },
   "removeAnnotations": {
     "name": "注釈の削除",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "PDFフォーム入力機能",
-    "subtitle": "ブラウザでフォームに直接入力します。XFAフォームもサポートします。"
+    "subtitle": "ブラウザでフォームに直接入力します。XFAフォームもサポートします。",
+    "uploadHint": "フォームフィールドのあるPDFをアップロードしてください。下のビューアで直接入力し、ボタンをクリックして入力済みフォームを保存・ダウンロードします。XFAフォームにも対応しています。",
+    "xfaNoteTitle": "XFAフォームに関する注意:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) はレガシー形式で、BentoPDFやFirefoxなど特定のPDFビューアーのみが対応しています。他のソフトでXFA PDFを開いて空白ページまたはフォームフィールドが表示されない場合、そのビューアーはXFAに対応していません。XFAフォームを正しく表示・入力するには、FirefoxまたはBentoPDFのフォーム入力ツールを使用してください。"
   },
   "createPdfForm": {
     "name": "PDFフォームの作成",
-    "subtitle": "ドラッグ&ドロップでテキストフィールドを追加できる入力可能なPDFフォームを作成します。"
+    "subtitle": "ドラッグ&ドロップでテキストフィールドを追加できる入力可能なPDFフォームを作成します。",
+    "orSeparator": "または",
+    "createBlankPdf": "空白のPDFを作成"
   },
   "removeBlankPages": {
     "name": "空白ページの削除",
@@ -259,11 +286,35 @@
   },
   "textToPdf": {
     "name": "テキストからPDF",
-    "subtitle": "プレーンテキストファイルをPDFに変換します。"
+    "subtitle": "プレーンテキストファイルをPDFに変換します。",
+    "uploadFiles": "ファイルをアップロード",
+    "typeText": "テキストを入力",
+    "acceptedFormats": "テキストファイル (.txt)",
+    "fontFamily": "フォントファミリー",
+    "fontSize": "フォントサイズ",
+    "textColor": "テキストの色",
+    "pageSize": "ページサイズ",
+    "rtlAutoDetectNote": "RTL言語 (アラビア語、ウルドゥー語、ペルシア語など) は自動的に検出され、テキストの方向が調整されます。",
+    "createButton": "PDFを作成"
   },
   "jsonToPdf": {
     "name": "JSONからPDF",
-    "subtitle": "JSONファイルをPDF形式に変換します。"
+    "subtitle": "JSONファイルをPDF形式に変換します。",
+    "noteLabel": "注:",
+    "noteText": "PDF→JSON変換ツールで作成されたJSONファイルのみをサポートします。他のツールの標準JSONファイルは動作しません。",
+    "acceptedFormats": "複数のJSONファイル",
+    "status": {
+      "selectAtLeastOne": "1つ以上のJSONファイルを選択してください",
+      "selectedReady": "{{count}} ファイル選択済み。変換準備完了!",
+      "readingFiles": "ファイルを読み込み中 (メインスレッド)...",
+      "converting": "JSONファイルをPDFに変換中...",
+      "readError": "ファイル読み込みエラー: {{message}}",
+      "creatingZip": "ZIPファイルを作成中...",
+      "success": "JSONファイルがPDFに変換されました! ZIPダウンロードを開始しました。",
+      "zipError": "ZIP作成エラー: {{message}}",
+      "workerError": "Workerエラー: {{message}}",
+      "getStarted": "開始するJSONファイルを選択"
+    }
   },
   "pdfToJpg": {
     "name": "PDFからJPG",
@@ -387,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDFからJSON",
-    "subtitle": "PDFファイルをJSON形式に変換します。"
+    "subtitle": "PDFファイルをJSON形式に変換します。",
+    "convertButton": "JSONに変換",
+    "status": {
+      "selectAtLeastOne": "1つ以上のPDFファイルを選択してください",
+      "selectedReady": "{{count}} ファイル選択済み。変換準備完了!",
+      "checkingEncrypted": "暗号化されたPDFを確認中...",
+      "readingFiles": "ファイルを読み込み中 (メインスレッド)...",
+      "converting": "PDFをJSONに変換中...",
+      "readError": "ファイル読み込みエラー: {{message}}",
+      "creatingZip": "ZIPファイルを作成中...",
+      "success": "PDFがJSONに変換されました! ZIPダウンロードを開始しました。",
+      "zipError": "ZIP作成エラー: {{message}}",
+      "workerError": "Workerエラー: {{message}}",
+      "getStarted": "開始するPDFファイルを選択"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "PDFを検索およびコピー可能にします。"
+    "subtitle": "PDFを検索およびコピー可能にします。",
+    "languagesInDocument": "文書内の言語",
+    "searchLanguagesPlaceholder": "言語を検索...",
+    "selectedLabel": "選択済み:",
+    "none": "なし",
+    "advancedSettingsSummary": "詳細設定 (精度向上のため推奨)",
+    "resolutionLabel": "解像度",
+    "resolutionStandard": "標準 (192 DPI)",
+    "resolutionHigh": "高 (288 DPI)",
+    "resolutionUltra": "ウルトラ (384 DPI)",
+    "binarizeLabel": "画像を二値化 (クリーンスキャンのコントラストを強化)",
+    "embedFullFontsLabel": "完全なフォントを埋め込む (ファイルサイズ大、互換性向上)",
+    "whitelistPresetLabel": "文字ホワイトリストプリセット",
+    "whitelistNone": "なし (すべての文字)",
+    "whitelistAlphanumeric": "英数字 + 基本句読点",
+    "whitelistNumbersCurrency": "数字 + 通貨記号",
+    "whitelistLettersOnly": "文字のみ (A-Z, a-z)",
+    "whitelistNumbersOnly": "数字のみ (0-9)",
+    "whitelistInvoice": "請求書/領収書 (数字、$、.、-、/)",
+    "whitelistForms": "フォーム (英数字 + 一般的な記号)",
+    "whitelistCustom": "カスタム...",
+    "whitelistHelp": "これらの文字のみが認識されます。すべての文字には空のままにしてください。",
+    "whitelistInputLabel": "文字ホワイトリスト (任意)",
+    "whitelistInputPlaceholder": "例: abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "OCRを開始",
+    "progressInitializing": "初期化中...",
+    "resultsTitle": "OCR完了",
+    "resultsDescription": "検索可能なPDFの準備ができました。下に抽出されたテキストをコピーまたはダウンロードすることもできます。",
+    "copyToClipboard": "クリップボードにコピー",
+    "downloadTxt": ".txtとしてダウンロード",
+    "downloadSearchablePdf": "検索可能PDFをダウンロード",
+    "statusPrefix": "ステータス: {{status}}",
+    "availabilityInvalidConfig": "このデプロイメントは有効なOCR言語を公開していません。VITE_TESSERACT_AVAILABLE_LANGUAGESに有効なTesseractコードを設定して再ビルドしてください。",
+    "availabilityBundles": "このデプロイメントには以下のOCR言語が含まれています: {{languages}}。",
+    "noLanguagesAvailable": "このデプロイメントで利用可能なOCR言語はありません。",
+    "noLanguagesTitle": "言語が選択されていません",
+    "noLanguagesMessage": "OCR用に少なくとも1つの言語を選択してください。",
+    "noFileTitle": "ファイルがありません",
+    "noFileMessage": "まずPDFファイルをアップロードしてください。",
+    "languageUnavailableTitle": "OCR言語が利用できません",
+    "ocrErrorTitle": "OCRエラー",
+    "ocrErrorMessage": "OCR処理中にエラーが発生しました。Workerの読み込みに失敗した可能性があります。再試行してください。",
+    "howItWorksTitle": "仕組み:",
+    "extractTextLabel": "テキスト抽出:",
+    "extractTextDescription": "Tesseract OCRを使用してスキャンした画像やPDFからテキストを認識します。",
+    "searchableOutputLabel": "検索可能な出力:",
+    "searchableOutputDescription": "見えないテキストレイヤーを含む新しいPDFを作成し、元の外観を保ちながら文書を完全に検索可能にします。",
+    "characterFilteringLabel": "文字フィルタリング:",
+    "characterFilteringDescription": "ホワイトリストを使用して不要な文字を除外し、特定の文書タイプ (請求書、フォームなど) の精度を向上させます。",
+    "multiLanguageSupportLabel": "多言語サポート:",
+    "multiLanguageSupportDescription": "複数言語が混在する文書のために複数の言語を選択します。"
   },
   "alternateMerge": {
     "name": "代替ページと混合ページ",
@@ -724,8 +839,10 @@
   "pdfToText": {
     "name": "PDFからテキスト",
     "subtitle": "PDFファイルからテキストを抽出し、プレーンテキスト (.txt) として保存します。複数のファイルをサポートします。",
-    "note": "このツールはデジタルで作成されたPDFでのみ機能します。スキャンされたドキュメントまたは画像ベースのPDFの場合は、代わりにOCR PDFツールを使用してください。",
-    "convertButton": "テキストの抽出"
+    "noteLabel": "注:",
+    "noteText": "このツールはデジタルで作成されたPDFのみで動作します。スキャン文書や画像ベースのPDFには、代わりにOCR PDFツールを使用してください。",
+    "convertButton": "テキストの抽出",
+    "note": "このツールはデジタルで作成されたPDFでのみ機能します。スキャンされたドキュメントまたは画像ベースのPDFの場合は、代わりにOCR PDFツールを使用してください。"
   },
   "digitalSignPdf": {
     "name": "PDFへの電子署名",
@@ -734,6 +851,7 @@
     "certificateSection": "証明書",
     "uploadCert": "証明書のアップロード (.pfx, .p12)",
     "certPassword": "証明書のパスワード",
+    "privateKeyPassword": "秘密鍵のパスワード",
     "certPasswordPlaceholder": "証明書のパスワードを入力してください",
     "certInfo": "証明書情報",
     "certSubject": "証明書の所有者",
@@ -746,8 +864,71 @@
     "locationPlaceholder": "例: アメリカ、ニューヨーク",
     "contactInfo": "連絡先情報",
     "contactPlaceholder": "例: email@example.com",
+    "visibleSignature": "表示される署名",
+    "visibleSignatureDescription": "有効にすると、PDF上に表示される署名ボックスが表示されます。画像/ロゴをアップロードしたり、テキストを追加できます。どちらも指定されていない場合、証明書の署名者名が自動的に表示されます。",
+    "signatureImage": "署名画像/ロゴ (任意)",
+    "uploadSignatureImage": "画像をアップロード (PNG、JPG、WebP)",
+    "signaturePreviewAlt": "署名のプレビュー",
+    "remove": "削除",
+    "page": "ページ",
+    "firstPage": "最初のページ",
+    "lastPage": "最後のページ",
+    "allPages": "すべてのページ",
+    "customPage": "カスタムページ #",
+    "pageNumber": "ページ #",
+    "xPosition": "X位置 (左)",
+    "yPosition": "Y位置 (上)",
+    "width": "幅",
+    "height": "高さ",
+    "addTextOverlay": "テキストオーバーレイを追加",
+    "text": "テキスト",
+    "textPlaceholder": "例: 山田太郎がデジタル署名",
+    "textColor": "テキストの色",
+    "fontSize": "フォントサイズ",
+    "invalidImageTitle": "無効な画像",
+    "invalidImageMessage": "PNG、JPG、またはWebP画像を選択してください。",
+    "invalidFileTitle": "無効なファイル",
+    "invalidFileMessage": "PDFファイルを選択してください。",
+    "invalidCertificateTitle": "無効な証明書",
+    "invalidCertificateMessage": ".pfx、.p12、または.pem証明書ファイルを選択してください。",
+    "certificateLoaded": "証明書が読み込まれました",
+    "certificateUnlocked": "証明書のロックが解除されました",
+    "failedParsePem": "PEMファイルを解析できませんでした",
+    "enterPasswordToUnlock": "ロック解除のパスワードを入力",
+    "invalidPasswordOrCertificate": "無効なパスワードまたは証明書",
+    "incorrectPassword": "パスワードが正しくありません",
+    "failedParseCertificate": "証明書を解析できませんでした",
+    "missingDataTitle": "データが不足",
+    "missingDataMessage": "PDFと有効な証明書の両方をアップロードしてください。",
+    "applyingSignature": "デジタル署名を適用中...",
+    "signingFailedTitle": "署名に失敗",
+    "chainFetchFailed": "証明書チェーンの取得に失敗しました。ネットワークの問題または証明書プロキシが利用できない可能性があります。インターネット接続を確認して再試行してください。問題が続く場合はサポートにお問い合わせください。",
+    "failedToSignPdf": "PDFの署名に失敗しました: {{message}}",
+    "defaultSignatureText": "{{signer}} がデジタル署名\n{{date}}",
+    "pageCount": "{{count}} ページ",
+    "howToStep1Title": "PDFをアップロード",
+    "howToStep1Text": "署名するPDF文書を選択",
+    "howToStep2Title": "証明書をアップロード",
+    "howToStep2Text": ".pfxまたは.p12証明書ファイルとパスワードを提供",
+    "howToStep3Title": "署名してダウンロード",
+    "howToStep3Text": "デジタル署名を適用し、署名されたPDFをダウンロード",
+    "relatedEncryptDesc": "PDFをパスワードで保護",
+    "relatedDecryptDesc": "PDFパスワードを削除",
+    "relatedFlattenDesc": "注釈を恒久化",
+    "relatedSanitizeDesc": "隠しデータを削除",
+    "relatedPermissionsDesc": "PDF権限を設定",
+    "faqWhatIsQuestion": "デジタル署名とは?",
+    "faqWhatIsAnswer": "デジタル署名は、文書の真正性と完全性を検証する暗号メカニズムです。手書き署名と異なり、公開鍵暗号 (X.509証明書) を使用して署名者の身元を証明します。",
+    "faqFormatsQuestion": "サポートされる証明書形式は?",
+    "faqFormatsAnswer": "PKCS#12形式の証明書 (.pfx, .p12) をサポートしています。これには証明書と秘密鍵の両方が単一の暗号化ファイルに含まれており、通常は認証局が発行します。",
+    "faqPrivateKeyQuestion": "秘密鍵は安全ですか?",
+    "faqPrivateKeyAnswer": "はい！すべての処理はブラウザ内で完結します。証明書、秘密鍵、PDFファイルがデバイスから外部に送信されたりサーバーにアップロードされることはありません。",
+    "faqValidReadersQuestion": "署名はPDFリーダーで有効ですか?",
+    "faqValidReadersAnswer": "はい、このツールは標準的なPKCS#7分離署名を作成し、すべての主要なPDFビューアーで認識されます。完全な検証には信頼された認証局の証明書を使用してください。",
     "applySignature": "デジタル署名を適用する",
-    "successMessage": "PDFは正常に署名されました。署名は任意のPDFリーダーで検証できます。"
+    "successMessage": "PDFは正常に署名されました。署名は任意のPDFリーダーで検証できます。",
+    "internetRequiredTitle": "インターネット接続が必要",
+    "internetRequiredDescription": "署名には、署名を検証するために証明書発行者のサーバーから証明書チェーン情報を取得する必要がある場合があります。"
   },
   "validateSignaturePdf": {
     "name": "PDF署名を検証する",
@@ -903,6 +1084,46 @@
       "storageQuotaExceeded": "ワークフローの保存に失敗しました: ストレージ容量を超えました。古いテンプレートを削除してみてください。",
       "failedToImport": "ワークフローのインポートに失敗しました: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "高度な機能設定",
+    "description": "高度なPDF機能を有効にするために外部処理モジュールを設定します。これらのモジュールはオプションで、別途ライセンスされています。",
+    "status": {
+      "testing": "テスト中...",
+      "customOverride": "カスタムオーバーライド",
+      "preConfigured": "事前設定済み",
+      "notConfigured": "未設定"
+    },
+    "preconfiguredTitle": "事前設定済み、すぐに使用可能。",
+    "preconfiguredDescription": "高度な処理モジュールはCDNから自動的に読み込まれます。カスタムソースを使用する必要がある場合 (例: エアギャップまたはセルフホスト展開) は、以下のURLを上書きできます。",
+    "usingDefault": "デフォルトを使用中: {{url}}",
+    "pymupdfSubtitle": "ドキュメント処理エンジン",
+    "pymupdfFeatures": "有効化: PDF→テキスト、Markdown、SVG、DOCX、Excel • 画像/テーブルの抽出 • 形式変換",
+    "testButton": "テスト",
+    "recommendedLabel": "推奨:",
+    "copyTitle": "クリップボードにコピー",
+    "ghostscriptSubtitle": "PDF/A変換エンジン",
+    "ghostscriptFeatures": "有効化: PDF/A-1b、PDF/A-2b、PDF/A-3b変換 • フォントをアウトラインに",
+    "cpdfSubtitle": "しおり・メタデータエンジン",
+    "cpdfFeatures": "有効化: しおりで分割 • しおり編集 • PDFメタデータ",
+    "saveConfiguration": "設定を保存",
+    "savingConfiguration": "設定を保存中...",
+    "savedTitle": "保存済み",
+    "savedMessage": "設定が正常に保存されました!",
+    "errorTitle": "エラー",
+    "failedSave": "設定の保存に失敗しました: {{message}}",
+    "emptyUrlTitle": "URLが空",
+    "emptyUrlMessage": "テストするURLを入力してください。",
+    "testSuccessTitle": "成功",
+    "connectionSuccess": "{{package}} への接続に成功しました!",
+    "connectionFailedTitle": "接続失敗",
+    "connectionFailedMessage": "URLに接続できませんでした。",
+    "resetDefaults": "デフォルトにリセット",
+    "resetTitle": "リセット",
+    "resetWithDefaults": "カスタムオーバーライドをクリアしました。事前設定されたデフォルトがアクティブです。",
+    "resetNoDefaults": "すべての設定とキャッシュされたモジュールがクリアされました。",
+    "licenseTitle": "ライセンス通知:",
+    "licenseDescription": "外部モジュール (PyMuPDF、Ghostscript、CoherentPDF) はAGPL-3.0または同様のコピーレフトライセンスでライセンスされています。これらのモジュールを設定して使用することにより、それぞれのライセンス条件に同意したことになります。BentoPDFは、期待されるインターフェースに従う任意のGhostscript WASMおよびPyMuPDF WASM実装と互換性があります。"
   },
   "pdfOverlay": {
     "name": "PDFオーバーレイ",

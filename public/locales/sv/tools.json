@@ -10,6 +10,7 @@
     "input": "Inmatning",
     "output": "Utdata"
   },
+  "convertToPdf": "Konvertera till PDF",
   "pdfMultiTool": {
     "name": "PDF multiverktyg",
     "subtitle": "Sammanfoga, dela, organisera, ta bort, rotera, lägg till tomma sidor, extrahera och duplicera i ett enhetligt gränssnitt."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "Duplicera & organisera",
-    "subtitle": "Duplicera, ordna om och ta bort sidor."
+    "subtitle": "Duplicera, ordna om och ta bort sidor.",
+    "saveChanges": "Spara ändringar"
   },
   "deletePages": {
     "name": "Ta bort sidor",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "Redigera bokmärken",
-    "subtitle": "Lägg till, redigera, importera, ta bort och extrahera PDF-bokmärken."
+    "subtitle": "Lägg till, redigera, importera, ta bort och extrahera PDF-bokmärken.",
+    "autoExtractExisting": "Auto-extrahera befintliga bokmärken",
+    "importSectionTitle": "Eller importera bokmärken",
+    "csvFormat": "CSV-format: titel,sida,nivå",
+    "jsonFormat": "JSON-format",
+    "uploadCsvAction": "Klicka för att ladda upp CSV",
+    "uploadJsonAction": "Klicka för att ladda upp JSON",
+    "orDragHere": "eller dra hit"
   },
   "tableOfContents": {
     "name": "Innehållsförteckning",
-    "subtitle": "Generera en innehållsförteckningssida från PDF-bokmärken."
+    "subtitle": "Generera en innehållsförteckningssida från PDF-bokmärken.",
+    "titleLabel": "Innehållsförteckningstitel",
+    "fontSize": "Teckenstorlek",
+    "fontFamily": "Teckenfamilj",
+    "addBookmark": "Lägg till bokmärke för innehållsförteckningssida",
+    "generateButton": "Generera innehållsförteckning",
+    "selectPdfFirst": "Välj först en PDF-fil.",
+    "statusReadingFileMainThread": "Läser fil (Huvudtråd)...",
+    "statusGenerating": "Genererar innehållsförteckning...",
+    "errorReadingFileWithMessage": "Fel vid läsning av fil: {{message}}",
+    "successGeneratedDownloadStarted": "Innehållsförteckning genererad! Nedladdning startad.",
+    "workerErrorWithMessage": "Fel: {{message}}",
+    "workerErrorOccurred": "Worker-fel uppstod. Kontrollera konsolen för detaljer."
   },
   "pageNumbers": {
     "name": "Sidnummer",
@@ -210,7 +231,8 @@
     "subtitle": "Lägg till bildstämplar på din PDF med kommentarsverktygsfältet.",
     "usernameLabel": "Stämpelanvändarnamn",
     "usernamePlaceholder": "Ange ditt namn (för stämplar)",
-    "usernameHint": "Detta namn kommer att visas på stämplar du skapar."
+    "usernameHint": "Detta namn kommer att visas på stämplar du skapar.",
+    "saveButton": "Spara stämplad PDF"
   },
   "removeAnnotations": {
     "name": "Ta bort anteckningar",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "PDF-formulärifyllare",
-    "subtitle": "Fyll i formulär direkt i webbläsaren. Stöder även XFA-formulär."
+    "subtitle": "Fyll i formulär direkt i webbläsaren. Stöder även XFA-formulär.",
+    "uploadHint": "Ladda upp en PDF med formulärfält. Fyll i dem direkt i visaren nedan, klicka sedan på knappen för att spara och ladda ner det ifyllda formuläret. Stöder även XFA-formulär.",
+    "xfaNoteTitle": "Anmärkning om XFA-formulär:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) är ett äldre format som bara stöds av vissa PDF-visare som BentoPDF och Firefox. Om du öppnar en XFA-PDF i annan programvara och ser tomma sidor eller inga formulärfält betyder det att visaren inte stöder XFA. För att visa och fylla i XFA-formulär korrekt, använd Firefox eller BentoPDFs formulärifyllare."
   },
   "createPdfForm": {
     "name": "Skapa PDF-formulär",
-    "subtitle": "Skapa ifyllbara PDF-formulär med dra-och-släpp textfält."
+    "subtitle": "Skapa ifyllbara PDF-formulär med dra-och-släpp textfält.",
+    "orSeparator": "ELLER",
+    "createBlankPdf": "Skapa tom PDF"
   },
   "removeBlankPages": {
     "name": "Ta bort tomma sidor",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "Text till PDF",
-    "subtitle": "Konvertera en vanlig textfil till en PDF."
+    "subtitle": "Konvertera en vanlig textfil till en PDF.",
+    "uploadFiles": "Ladda upp filer",
+    "typeText": "Skriv text",
+    "acceptedFormats": "Textfiler (.txt)",
+    "fontFamily": "Teckenfamilj",
+    "fontSize": "Teckenstorlek",
+    "textColor": "Textfärg",
+    "pageSize": "Sidstorlek",
+    "rtlAutoDetectNote": "RTL-språk (arabiska, urdu, persiska osv.) detekteras automatiskt och textriktningen justeras.",
+    "createButton": "Skapa PDF"
   },
   "jsonToPdf": {
     "name": "JSON till PDF",
-    "subtitle": "Konvertera JSON-filer till PDF-format."
+    "subtitle": "Konvertera JSON-filer till PDF-format.",
+    "noteLabel": "Obs:",
+    "noteText": "Endast JSON-filer skapade av PDF-till-JSON-konverteringsverktyget stöds. Vanliga JSON-filer från andra verktyg fungerar inte.",
+    "acceptedFormats": "Flera JSON-filer",
+    "status": {
+      "selectAtLeastOne": "Välj minst 1 JSON-fil",
+      "selectedReady": "{{count}} fil(er) valda. Redo att konvertera!",
+      "readingFiles": "Läser filer (Huvudtråd)...",
+      "converting": "Konverterar JSON-filer till PDF...",
+      "readError": "Fel vid läsning av filer: {{message}}",
+      "creatingZip": "Skapar ZIP-fil...",
+      "success": "JSON-filer konverterade till PDF! ZIP-nedladdning startad.",
+      "zipError": "Fel vid skapande av ZIP: {{message}}",
+      "workerError": "Worker-fel: {{message}}",
+      "getStarted": "Välj JSON-filer för att komma igång"
+    }
   },
   "pdfToJpg": {
     "name": "PDF till JPG",
-    "subtitle": "Konvertera varje PDF-sida till en JPG-bild."
+    "subtitle": "Konvertera varje PDF-sida till en JPG-bild.",
+    "imageQuality": "Bildkvalitet",
+    "imageQualityExplanation": "Högre kvalitet = större filstorlek",
+    "alert": {
+      "invalidFile": "Ogiltig fil",
+      "invalidFileExplanation": "Ladda upp en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Ladda upp en PDF-fil först.",
+      "conversionSuccess": "PDF konverterad till JPG!",
+      "conversionError": "Kunde inte konvertera PDF till JPG. Filen kan vara skadad."
+    },
+    "loader": {
+      "converting": "Konverterar till JPG..."
+    }
   },
   "pdfToPng": {
     "name": "PDF till PNG",
-    "subtitle": "Konvertera varje PDF-sida till en PNG-bild."
+    "subtitle": "Konvertera varje PDF-sida till en PNG-bild.",
+    "imageScale": "Bildskala",
+    "imageScaleExplanation": "Större skala = bättre kvalitet men större fil",
+    "alert": {
+      "invalidFile": "Ogiltig fil",
+      "invalidFileExplanation": "Ladda upp en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Ladda upp en PDF-fil först.",
+      "conversionSuccess": "PDF konverterad till PNG!",
+      "conversionError": "Kunde inte konvertera PDF till PNG. Filen kan vara skadad."
+    },
+    "loader": {
+      "converting": "Konverterar till PNG..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF till WebP",
-    "subtitle": "Konvertera varje PDF-sida till en WebP-bild."
+    "subtitle": "Konvertera varje PDF-sida till en WebP-bild.",
+    "imageQuality": "Bildkvalitet",
+    "imageQualityExplanation": "Högre kvalitet = större filstorlek",
+    "alert": {
+      "invalidFile": "Ogiltig fil",
+      "invalidFileExplanation": "Ladda upp en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Ladda upp en PDF-fil först.",
+      "conversionSuccess": "PDF konverterad till WebP!",
+      "conversionError": "Kunde inte konvertera PDF till WebP. Filen kan vara skadad."
+    },
+    "loader": {
+      "converting": "Konverterar till WebP..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF till BMP",
-    "subtitle": "Konvertera varje PDF-sida till en BMP-bild."
+    "subtitle": "Konvertera varje PDF-sida till en BMP-bild.",
+    "alert": {
+      "invalidFile": "Ogiltig fil",
+      "invalidFileExplanation": "Ladda upp en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Ladda upp en PDF-fil först.",
+      "conversionSuccess": "PDF konverterad till BMP!",
+      "conversionError": "Kunde inte konvertera PDF till BMP. Filen kan vara skadad."
+    },
+    "loader": {
+      "converting": "Konverterar till BMP..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF till TIFF",
@@ -291,7 +392,15 @@
     "colorMode": "Färgläge",
     "multiPage": "Spara som flersidig TIFF (en fil)",
     "loadingVips": "Laddar bildprocessor...",
-    "converting": "Konverterar till TIFF..."
+    "converting": "Konverterar till TIFF...",
+    "alert": {
+      "invalidFile": "Ogiltig fil",
+      "invalidFileExplanation": "Ladda upp en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Ladda upp en PDF-fil först.",
+      "conversionSuccess": "PDF konverterad till TIFF!",
+      "conversionError": "Kunde inte konvertera PDF till TIFF. Filen kan vara skadad."
+    }
   },
   "pdfToCbz": {
     "name": "PDF till CBZ",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF till JSON",
-    "subtitle": "Konvertera PDF-filer till JSON-format."
+    "subtitle": "Konvertera PDF-filer till JSON-format.",
+    "convertButton": "Konvertera till JSON",
+    "status": {
+      "selectAtLeastOne": "Välj minst 1 PDF-fil",
+      "selectedReady": "{{count}} fil(er) valda. Redo att konvertera!",
+      "checkingEncrypted": "Kontrollerar krypterade PDF:er...",
+      "readingFiles": "Läser filer (Huvudtråd)...",
+      "converting": "Konverterar PDF:er till JSON...",
+      "readError": "Fel vid läsning av filer: {{message}}",
+      "creatingZip": "Skapar ZIP-fil...",
+      "success": "PDF:er konverterade till JSON! ZIP-nedladdning startad.",
+      "zipError": "Fel vid skapande av ZIP: {{message}}",
+      "workerError": "Worker-fel: {{message}}",
+      "getStarted": "Välj PDF-filer för att komma igång"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "Gör en PDF sökbar och kopiaerbar."
+    "subtitle": "Gör en PDF sökbar och kopiaerbar.",
+    "languagesInDocument": "Språk i dokumentet",
+    "searchLanguagesPlaceholder": "Sök språk...",
+    "selectedLabel": "Valda:",
+    "none": "Inga",
+    "advancedSettingsSummary": "Avancerade inställningar (rekommenderas för att förbättra noggrannhet)",
+    "resolutionLabel": "Upplösning",
+    "resolutionStandard": "Standard (192 DPI)",
+    "resolutionHigh": "Hög (288 DPI)",
+    "resolutionUltra": "Ultra (384 DPI)",
+    "binarizeLabel": "Binarisera bild (förbättrar kontrast för rena skanningar)",
+    "embedFullFontsLabel": "Bädda in fullständiga teckensnitt (större fil, bättre kompatibilitet)",
+    "whitelistPresetLabel": "Tecken-whitelist förinställning",
+    "whitelistNone": "Inga (alla tecken)",
+    "whitelistAlphanumeric": "Alfanumeriskt + Grundläggande skiljetecken",
+    "whitelistNumbersCurrency": "Siffror + Valutasymboler",
+    "whitelistLettersOnly": "Endast bokstäver (A-Z, a-z)",
+    "whitelistNumbersOnly": "Endast siffror (0-9)",
+    "whitelistInvoice": "Faktura/Kvitto (siffror, $, ., -, /)",
+    "whitelistForms": "Formulär (alfanumeriskt + vanliga symboler)",
+    "whitelistCustom": "Anpassad...",
+    "whitelistHelp": "Endast dessa tecken kommer att kännas igen. Lämna tomt för alla tecken.",
+    "whitelistInputLabel": "Tecken-whitelist (valfritt)",
+    "whitelistInputPlaceholder": "t.ex. abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "Starta OCR",
+    "progressInitializing": "Initialiserar...",
+    "resultsTitle": "OCR slutförd",
+    "resultsDescription": "Din sökbara PDF är klar. Du kan också kopiera eller ladda ner den extraherade texten nedan.",
+    "copyToClipboard": "Kopiera till urklipp",
+    "downloadTxt": "Ladda ner som .txt",
+    "downloadSearchablePdf": "Ladda ner sökbar PDF",
+    "statusPrefix": "Status: {{status}}",
+    "availabilityInvalidConfig": "Denna distribution exponerar inga giltiga OCR-språk. Bygg om den med VITE_TESSERACT_AVAILABLE_LANGUAGES inställt på giltiga Tesseract-koder.",
+    "availabilityBundles": "Denna distribution inkluderar OCR för: {{languages}}.",
+    "noLanguagesAvailable": "Inga OCR-språk tillgängliga i denna distribution.",
+    "noLanguagesTitle": "Inga språk valda",
+    "noLanguagesMessage": "Välj minst ett språk för OCR.",
+    "noFileTitle": "Ingen fil",
+    "noFileMessage": "Ladda upp en PDF-fil först.",
+    "languageUnavailableTitle": "OCR-språk inte tillgängligt",
+    "ocrErrorTitle": "OCR-fel",
+    "ocrErrorMessage": "Ett fel uppstod under OCR-processen. Workern kan ha misslyckats med att laddas. Försök igen.",
+    "howItWorksTitle": "Så fungerar det:",
+    "extractTextLabel": "Extrahera text:",
+    "extractTextDescription": "Använder Tesseract OCR för att känna igen text från skannade bilder eller PDF:er.",
+    "searchableOutputLabel": "Sökbar utdata:",
+    "searchableOutputDescription": "Skapar en ny PDF med ett osynligt textlager, vilket gör ditt dokument fullt sökbart samtidigt som det ursprungliga utseendet bevaras.",
+    "characterFilteringLabel": "Teckenfiltrering:",
+    "characterFilteringDescription": "Använd whitelists för att filtrera bort oönskade tecken och förbättra noggrannheten för specifika dokumenttyper (fakturor, formulär osv.).",
+    "multiLanguageSupportLabel": "Flerspråksstöd:",
+    "multiLanguageSupportDescription": "Välj flera språk för dokument som innehåller blandat språkinnehåll."
   },
   "alternateMerge": {
     "name": "Alternera & blanda sidor",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF till text",
     "subtitle": "Extrahera text från PDF-filer och spara som vanlig text (.txt). Stöder flera filer.",
-    "note": "Detta verktyg fungerar ENDAST med digitalt skapade PDF:er. För scannade dokument eller bildbaserade PDF:er, använd vårt OCR PDF-verktyg istället.",
-    "convertButton": "Extrahera text"
+    "noteLabel": "Obs:",
+    "noteText": "Detta verktyg fungerar ENDAST med digitalt skapade PDF:er. För skannade dokument eller bildbaserade PDF:er, använd istället vårt OCR PDF-verktyg.",
+    "convertButton": "Extrahera text",
+    "note": "Detta verktyg fungerar ENDAST med digitalt skapade PDF:er. För scannade dokument eller bildbaserade PDF:er, använd vårt OCR PDF-verktyg istället."
   },
   "digitalSignPdf": {
     "name": "Digital signatur PDF",
     "pageTitle": "Digital signatur PDF - Lägg till kryptografisk signatur | BentoPDF",
     "subtitle": "Lägg till en kryptografisk digital signatur på din PDF med X.509-certifikat. Stöder PKCS#12 (.pfx, .p12) och PEM-format. Din privata nyckel lämnar aldrig din webbläsare.",
     "certificateSection": "Certifikat",
-    "uploadCert": "Ladda upp certifikat (.pfx, .p12)",
+    "uploadCert": "Ladda upp certifikat (.pfx, .p12, .pem)",
     "certPassword": "Certifikatlösenord",
+    "privateKeyPassword": "Lösenord för privat nyckel",
     "certPasswordPlaceholder": "Ange certifikatlösenord",
     "certInfo": "Certifikatinformation",
     "certSubject": "Ämne",
@@ -688,8 +864,71 @@
     "locationPlaceholder": "t.ex. Stockholm, Sverige",
     "contactInfo": "Kontaktinformation",
     "contactPlaceholder": "t.ex. email@example.com",
+    "visibleSignature": "Synlig signatur",
+    "visibleSignatureDescription": "När aktiverat visas en synlig signaturruta på PDF:en. Du kan ladda upp en bild/logotyp eller lägga till text. Om varken eller anges visas undertecknarens namn från certifikatet automatiskt.",
+    "signatureImage": "Signaturbild/logotyp (valfritt)",
+    "uploadSignatureImage": "Ladda upp bild (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "Signaturförhandsgranskning",
+    "remove": "Ta bort",
+    "page": "Sida",
+    "firstPage": "Första sidan",
+    "lastPage": "Sista sidan",
+    "allPages": "Alla sidor",
+    "customPage": "Anpassad sida #",
+    "pageNumber": "Sida #",
+    "xPosition": "X-position (vänster)",
+    "yPosition": "Y-position (topp)",
+    "width": "Bredd",
+    "height": "Höjd",
+    "addTextOverlay": "Lägg till textöverlägg",
+    "text": "Text",
+    "textPlaceholder": "t.ex. Digitalt signerad av John Doe",
+    "textColor": "Textfärg",
+    "fontSize": "Teckenstorlek",
+    "invalidImageTitle": "Ogiltig bild",
+    "invalidImageMessage": "Välj en PNG-, JPG- eller WebP-bild.",
+    "invalidFileTitle": "Ogiltig fil",
+    "invalidFileMessage": "Välj en PDF-fil.",
+    "invalidCertificateTitle": "Ogiltigt certifikat",
+    "invalidCertificateMessage": "Välj en .pfx-, .p12- eller .pem-certifikatfil.",
+    "certificateLoaded": "Certifikat laddat",
+    "certificateUnlocked": "Certifikat upplåst",
+    "failedParsePem": "Kunde inte tolka PEM-fil",
+    "enterPasswordToUnlock": "Ange lösenord för att låsa upp",
+    "invalidPasswordOrCertificate": "Ogiltigt lösenord eller certifikat",
+    "incorrectPassword": "Felaktigt lösenord",
+    "failedParseCertificate": "Kunde inte tolka certifikat",
+    "missingDataTitle": "Saknad data",
+    "missingDataMessage": "Ladda upp både en PDF och ett giltigt certifikat.",
+    "applyingSignature": "Applicerar digital signatur...",
+    "signingFailedTitle": "Signering misslyckades",
+    "chainFetchFailed": "Kunde inte hämta certifikatkedjan. Det kan bero på nätverksproblem eller att certifikatproxyn inte är tillgänglig. Kontrollera din internetanslutning och försök igen. Kontakta supporten om problemet kvarstår.",
+    "failedToSignPdf": "Kunde inte signera PDF: {{message}}",
+    "defaultSignatureText": "Digitalt signerad av {{signer}}\n{{date}}",
+    "pageCount": "{{count}} sidor",
+    "howToStep1Title": "Ladda upp PDF",
+    "howToStep1Text": "Välj PDF-dokumentet du vill signera",
+    "howToStep2Title": "Ladda upp certifikat",
+    "howToStep2Text": "Tillhandahåll din .pfx- eller .p12-certifikatfil och lösenord",
+    "howToStep3Title": "Signera och ladda ner",
+    "howToStep3Text": "Applicera den digitala signaturen och ladda ner din signerade PDF",
+    "relatedEncryptDesc": "Skydda din PDF med lösenord",
+    "relatedDecryptDesc": "Ta bort PDF-lösenord",
+    "relatedFlattenDesc": "Gör anteckningar permanenta",
+    "relatedSanitizeDesc": "Ta bort dold data",
+    "relatedPermissionsDesc": "Ange PDF-behörigheter",
+    "faqWhatIsQuestion": "Vad är en digital signatur?",
+    "faqWhatIsAnswer": "En digital signatur är en kryptografisk mekanism som verifierar äktheten och integriteten hos ett dokument. Till skillnad från en ritad signatur använder den publik nyckel-kryptografi (X.509-certifikat) för att bevisa undertecknarens identitet.",
+    "faqFormatsQuestion": "Vilka certifikatformat stöds?",
+    "faqFormatsAnswer": "Vi stöder PKCS#12-formatcertifikat (.pfx, .p12) som innehåller både ditt certifikat och din privata nyckel i en enda krypterad fil. Dessa utfärdas vanligtvis av certifikatmyndigheter.",
+    "faqPrivateKeyQuestion": "Är min privata nyckel säker?",
+    "faqPrivateKeyAnswer": "Ja! All bearbetning sker helt i din webbläsare. Ditt certifikat, din privata nyckel och dina PDF-filer lämnar aldrig din enhet eller laddas upp till någon server.",
+    "faqValidReadersQuestion": "Kommer signaturen vara giltig i PDF-läsare?",
+    "faqValidReadersAnswer": "Ja, verktyget skapar standard PKCS#7 detached signaturer som känns igen av alla större PDF-läsare. För full validering, använd ett certifikat från en betrodd certifikatmyndighet.",
     "applySignature": "Applicera digital signatur",
-    "successMessage": "PDF signerad framgångsrikt! Signaturen kan verifieras i vilken PDF-läsare som helst."
+    "successMessage": "PDF signerad framgångsrikt! Signaturen kan verifieras i vilken PDF-läsare som helst.",
+    "internetRequiredTitle": "Internetanslutning krävs",
+    "internetRequiredDescription": "Signering kan behöva hämta certifikatkedjeinformation från din certifikatutfärdares server för att validera signaturen."
   },
   "validateSignaturePdf": {
     "name": "Validera PDF-signatur",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "Kunde inte spara arbetsflöde: lagringskvot överskriden. Försök att ta bort gamla mallar.",
       "failedToImport": "Kunde inte importera arbetsflöde: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "Avancerade funktionsinställningar",
+    "description": "Konfigurera externa behandlingsmoduler för att aktivera avancerade PDF-funktioner. Dessa moduler är valfria och licensierade separat.",
+    "status": {
+      "testing": "Testar...",
+      "customOverride": "Anpassad åsidosättning",
+      "preConfigured": "Förkonfigurerad",
+      "notConfigured": "Inte konfigurerad"
+    },
+    "preconfiguredTitle": "Förkonfigurerad och redo att använda.",
+    "preconfiguredDescription": "Avancerade behandlingsmoduler laddas automatiskt från CDN. Du kan åsidosätta URL:erna nedan om du behöver använda en anpassad källa (t.ex. för air-gapped eller självhostade distributioner).",
+    "usingDefault": "Använder standard: {{url}}",
+    "pymupdfSubtitle": "Dokumentbehandlingsmotor",
+    "pymupdfFeatures": "Aktiverar: PDF till text, Markdown, SVG, DOCX, Excel • Extrahera bilder/tabeller • Formatkonvertering",
+    "testButton": "Testa",
+    "recommendedLabel": "Rekommenderat:",
+    "copyTitle": "Kopiera till urklipp",
+    "ghostscriptSubtitle": "PDF/A-konverteringsmotor",
+    "ghostscriptFeatures": "Aktiverar: PDF/A-1b, PDF/A-2b, PDF/A-3b konvertering • Teckensnitt till kontur",
+    "cpdfSubtitle": "Bokmärks- och metadatamotor",
+    "cpdfFeatures": "Aktiverar: Dela med bokmärken • Redigera bokmärken • PDF-metadata",
+    "saveConfiguration": "Spara konfiguration",
+    "savingConfiguration": "Sparar konfiguration...",
+    "savedTitle": "Sparad",
+    "savedMessage": "Konfiguration sparad!",
+    "errorTitle": "Fel",
+    "failedSave": "Kunde inte spara konfiguration: {{message}}",
+    "emptyUrlTitle": "Tom URL",
+    "emptyUrlMessage": "Ange en URL att testa.",
+    "testSuccessTitle": "Lyckades",
+    "connectionSuccess": "Anslutning till {{package}} lyckades!",
+    "connectionFailedTitle": "Anslutning misslyckades",
+    "connectionFailedMessage": "Kunde inte ansluta till URL.",
+    "resetDefaults": "Återställ till standard",
+    "resetTitle": "Återställ",
+    "resetWithDefaults": "Anpassade åsidosättningar rensade. Förkonfigurerade standardvärden är aktiva.",
+    "resetNoDefaults": "Alla konfigurationer och cachade moduler har rensats.",
+    "licenseTitle": "Licensmeddelande:",
+    "licenseDescription": "De externa modulerna (PyMuPDF, Ghostscript, CoherentPDF) är licensierade under AGPL-3.0 eller liknande copyleft-licenser. Genom att konfigurera och använda dessa moduler godkänner du deras respektive licensvillkor. BentoPDF är kompatibel med alla Ghostscript WASM- och PyMuPDF WASM-implementationer som följer det förväntade gränssnittet."
   },
   "pdfOverlay": {
     "name": "PDF-överlägg",

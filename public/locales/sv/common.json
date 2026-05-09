@@ -7,7 +7,9 @@
     "allTools": "Alla verktyg",
     "docs": "Docs",
     "openMainMenu": "Öppna huvudmenyn",
-    "language": "Språk"
+    "language": "Språk",
+    "searchLanguage": "Sök språk…",
+    "noLanguagesFound": "Inga språk hittades"
   },
   "donation": {
     "message": "Gillar du BentoPDF? Hjälp oss att hålla det gratis och öppen källkod!",
@@ -98,8 +100,11 @@
   },
   "howItWorks": {
     "title": "Så här fungerar det",
+    "step1Title": "Ladda upp fil",
     "step1": "Klicka eller dra och släpp din fil för att börja",
+    "step2Title": "Bearbeta",
     "step2": "Klicka på bearbeta-knappen för att starta",
+    "step3Title": "Ladda ner",
     "step3": "Spara din bearbetade fil direkt"
   },
   "relatedTools": {
@@ -130,6 +135,10 @@
     "resetToDefaults": "Återställ till standard",
     "fullWidthMode": "Fullbreddsläge",
     "fullWidthDescription": "Använd hela skärmbredden för alla verktyg istället för en centrerad behållare",
+    "compactMode": "Kompakt läge",
+    "compactModeDescription": "Visa verktyg som kompakt lista istället för kort",
+    "advancedSettings": "Avancerade inställningar",
+    "advancedSettingsDescription": "Konfigurera externa behandlingsmoduler (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "Inställningar sparas automatiskt",
     "clickToSet": "Klicka för att ställa in",
     "pressKeys": "Tryck tangenter...",
@@ -261,11 +270,14 @@
     "add": "Lägg till",
     "remove": "Ta bort",
     "loading": "Laddar...",
+    "loadingPageCount": "Laddar sidor...",
     "error": "Fel",
     "success": "Klart",
     "file": "Fil",
     "files": "Filer",
-    "close": "Stäng"
+    "close": "Stäng",
+    "convert": "Konvertera",
+    "unknownError": "Okänt fel"
   },
   "about": {
     "hero": {

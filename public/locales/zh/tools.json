@@ -10,6 +10,7 @@
     "input": "输入",
     "output": "输出"
   },
+  "convertToPdf": "转换为 PDF",
   "pdfMultiTool": {
     "name": "PDF 多功能工具",
     "subtitle": "在一个统一的界面中合并、分割、组织、删除、旋转、添加空白页、提取和复制。"
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "复制与组织",
-    "subtitle": "复制、重新排序和删除页面。"
+    "subtitle": "复制、重新排序和删除页面。",
+    "saveChanges": "保存更改"
   },
   "deletePages": {
     "name": "删除页面",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "编辑书签",
-    "subtitle": "添加、编辑、导入、删除和提取 PDF 书签。"
+    "subtitle": "添加、编辑、导入、删除和提取 PDF 书签。",
+    "autoExtractExisting": "自动提取现有书签",
+    "importSectionTitle": "或导入书签",
+    "csvFormat": "CSV 格式：标题,页面,级别",
+    "jsonFormat": "JSON 格式",
+    "uploadCsvAction": "点击上传 CSV",
+    "uploadJsonAction": "点击上传 JSON",
+    "orDragHere": "或拖到这里"
   },
   "tableOfContents": {
     "name": "目录",
-    "subtitle": "根据 PDF 书签生成目录页。"
+    "subtitle": "根据 PDF 书签生成目录页。",
+    "titleLabel": "目录标题",
+    "fontSize": "字体大小",
+    "fontFamily": "字体系列",
+    "addBookmark": "为目录页添加书签",
+    "generateButton": "生成目录",
+    "selectPdfFirst": "请先选择 PDF 文件。",
+    "statusReadingFileMainThread": "正在读取文件（主线程）...",
+    "statusGenerating": "正在生成目录...",
+    "errorReadingFileWithMessage": "读取文件出错：{{message}}",
+    "successGeneratedDownloadStarted": "目录生成成功！下载已开始。",
+    "workerErrorWithMessage": "错误：{{message}}",
+    "workerErrorOccurred": "发生 Worker 错误。请查看控制台获取详细信息。"
   },
   "pageNumbers": {
     "name": "页码",
@@ -210,7 +231,8 @@
     "subtitle": "使用注释工具栏向您的 PDF 添加图片印章。",
     "usernameLabel": "印章用户名",
     "usernamePlaceholder": "输入您的姓名（用于印章）",
-    "usernameHint": "此名称将显示在您创建的印章上。"
+    "usernameHint": "此名称将显示在您创建的印章上。",
+    "saveButton": "保存盖章 PDF"
   },
   "removeAnnotations": {
     "name": "移除注释",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "PDF 表单填写器",
-    "subtitle": "直接在浏览器中填写表单。也支持 XFA 表单。"
+    "subtitle": "直接在浏览器中填写表单。也支持 XFA 表单。",
+    "uploadHint": "上传带有表单字段的 PDF。在下方查看器中直接填写，然后点击按钮保存并下载填写好的表单。也支持 XFA 表单。",
+    "xfaNoteTitle": "关于 XFA 表单的说明：",
+    "xfaNoteDescription": "XFA（XML Forms Architecture）是一种旧版格式，仅 BentoPDF 和 Firefox 等部分 PDF 查看器支持。如果您在其他软件中打开 XFA PDF，看到空白页面或没有表单字段，则表示该查看器不支持 XFA。要正确查看和填写 XFA 表单，请使用 Firefox 或 BentoPDF 的表单填写器。"
   },
   "createPdfForm": {
     "name": "创建 PDF 表单",
-    "subtitle": "使用拖放文本字段创建可填写的 PDF 表单。"
+    "subtitle": "使用拖放文本字段创建可填写的 PDF 表单。",
+    "orSeparator": "或",
+    "createBlankPdf": "创建空白 PDF"
   },
   "removeBlankPages": {
     "name": "移除空白页",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "文本转 PDF",
-    "subtitle": "将纯文本文件转换为 PDF。"
+    "subtitle": "将纯文本文件转换为 PDF。",
+    "uploadFiles": "上传文件",
+    "typeText": "输入文本",
+    "acceptedFormats": "文本文件 (.txt)",
+    "fontFamily": "字体系列",
+    "fontSize": "字体大小",
+    "textColor": "文本颜色",
+    "pageSize": "页面大小",
+    "rtlAutoDetectNote": "自动检测 RTL 语言（阿拉伯语、乌尔都语、波斯语等）并相应调整文本方向。",
+    "createButton": "创建 PDF"
   },
   "jsonToPdf": {
     "name": "JSON 转 PDF",
-    "subtitle": "将 JSON 文件转换为 PDF 格式。"
+    "subtitle": "将 JSON 文件转换为 PDF 格式。",
+    "noteLabel": "注意：",
+    "noteText": "仅支持由 PDF 转 JSON 工具创建的 JSON 文件。来自其他工具的标准 JSON 文件无法使用。",
+    "acceptedFormats": "多个 JSON 文件",
+    "status": {
+      "selectAtLeastOne": "请至少选择 1 个 JSON 文件",
+      "selectedReady": "已选择 {{count}} 个文件。准备转换！",
+      "readingFiles": "正在读取文件（主线程）...",
+      "converting": "正在将 JSON 文件转换为 PDF...",
+      "readError": "读取文件出错：{{message}}",
+      "creatingZip": "正在创建 ZIP 文件...",
+      "success": "JSON 文件已成功转换为 PDF！ZIP 下载已开始。",
+      "zipError": "创建 ZIP 出错：{{message}}",
+      "workerError": "Worker 错误：{{message}}",
+      "getStarted": "选择 JSON 文件以开始"
+    }
   },
   "pdfToJpg": {
     "name": "PDF 转 JPG",
-    "subtitle": "将每一页 PDF 转换为 JPG 图片。"
+    "subtitle": "将每一页 PDF 转换为 JPG 图片。",
+    "imageQuality": "图像质量",
+    "imageQualityExplanation": "质量越高 = 文件越大",
+    "alert": {
+      "invalidFile": "无效文件",
+      "invalidFileExplanation": "请上传 PDF 文件。",
+      "noFile": "无文件",
+      "noFileExplanation": "请先上传 PDF 文件。",
+      "conversionSuccess": "PDF 已成功转换为 JPG！",
+      "conversionError": "无法将 PDF 转换为 JPG。文件可能已损坏。"
+    },
+    "loader": {
+      "converting": "正在转换为 JPG..."
+    }
   },
   "pdfToPng": {
     "name": "PDF 转 PNG",
-    "subtitle": "将每一页 PDF 转换为 PNG 图片。"
+    "subtitle": "将每一页 PDF 转换为 PNG 图片。",
+    "imageScale": "图像比例",
+    "imageScaleExplanation": "比例越大 = 质量越好但文件越大",
+    "alert": {
+      "invalidFile": "无效文件",
+      "invalidFileExplanation": "请上传 PDF 文件。",
+      "noFile": "无文件",
+      "noFileExplanation": "请先上传 PDF 文件。",
+      "conversionSuccess": "PDF 已成功转换为 PNG！",
+      "conversionError": "无法将 PDF 转换为 PNG。文件可能已损坏。"
+    },
+    "loader": {
+      "converting": "正在转换为 PNG..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF 转 WebP",
-    "subtitle": "将每一页 PDF 转换为 WebP 图片。"
+    "subtitle": "将每一页 PDF 转换为 WebP 图片。",
+    "imageQuality": "图像质量",
+    "imageQualityExplanation": "质量越高 = 文件越大",
+    "alert": {
+      "invalidFile": "无效文件",
+      "invalidFileExplanation": "请上传 PDF 文件。",
+      "noFile": "无文件",
+      "noFileExplanation": "请先上传 PDF 文件。",
+      "conversionSuccess": "PDF 已成功转换为 WebP！",
+      "conversionError": "无法将 PDF 转换为 WebP。文件可能已损坏。"
+    },
+    "loader": {
+      "converting": "正在转换为 WebP..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF 转 BMP",
-    "subtitle": "将每一页 PDF 转换为 BMP 图片。"
+    "subtitle": "将每一页 PDF 转换为 BMP 图片。",
+    "alert": {
+      "invalidFile": "无效文件",
+      "invalidFileExplanation": "请上传 PDF 文件。",
+      "noFile": "无文件",
+      "noFileExplanation": "请先上传 PDF 文件。",
+      "conversionSuccess": "PDF 已成功转换为 BMP！",
+      "conversionError": "无法将 PDF 转换为 BMP。文件可能已损坏。"
+    },
+    "loader": {
+      "converting": "正在转换为 BMP..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF 转 TIFF",
@@ -291,7 +392,15 @@
     "colorMode": "色彩模式",
     "multiPage": "保存为多页 TIFF (单个文件)",
     "loadingVips": "正在加载图像处理器...",
-    "converting": "正在转换为 TIFF..."
+    "converting": "正在转换为 TIFF...",
+    "alert": {
+      "invalidFile": "无效文件",
+      "invalidFileExplanation": "请上传 PDF 文件。",
+      "noFile": "无文件",
+      "noFileExplanation": "请先上传 PDF 文件。",
+      "conversionSuccess": "PDF 已成功转换为 TIFF！",
+      "conversionError": "无法将 PDF 转换为 TIFF。文件可能已损坏。"
+    }
   },
   "pdfToCbz": {
     "name": "PDF 转 CBZ",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF 转 JSON",
-    "subtitle": "将 PDF 文件转换为 JSON 格式。"
+    "subtitle": "将 PDF 文件转换为 JSON 格式。",
+    "convertButton": "转换为 JSON",
+    "status": {
+      "selectAtLeastOne": "请至少选择 1 个 PDF 文件",
+      "selectedReady": "已选择 {{count}} 个文件。准备转换！",
+      "checkingEncrypted": "正在检查加密的 PDF...",
+      "readingFiles": "正在读取文件（主线程）...",
+      "converting": "正在将 PDF 转换为 JSON...",
+      "readError": "读取文件出错：{{message}}",
+      "creatingZip": "正在创建 ZIP 文件...",
+      "success": "PDF 已成功转换为 JSON！ZIP 下载已开始。",
+      "zipError": "创建 ZIP 出错：{{message}}",
+      "workerError": "Worker 错误：{{message}}",
+      "getStarted": "选择 PDF 文件以开始"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "使 PDF 可搜索和可复制。"
+    "subtitle": "使 PDF 可搜索和可复制。",
+    "languagesInDocument": "文档中的语言",
+    "searchLanguagesPlaceholder": "搜索语言...",
+    "selectedLabel": "已选择：",
+    "none": "无",
+    "advancedSettingsSummary": "高级设置（建议以提高准确性）",
+    "resolutionLabel": "分辨率",
+    "resolutionStandard": "标准（192 DPI）",
+    "resolutionHigh": "高（288 DPI）",
+    "resolutionUltra": "超高（384 DPI）",
+    "binarizeLabel": "二值化图像（增强对比度以获得清晰扫描）",
+    "embedFullFontsLabel": "嵌入完整字体（文件较大，兼容性更好）",
+    "whitelistPresetLabel": "字符白名单预设",
+    "whitelistNone": "无（所有字符）",
+    "whitelistAlphanumeric": "字母数字 + 基本标点",
+    "whitelistNumbersCurrency": "数字 + 货币符号",
+    "whitelistLettersOnly": "仅字母（A-Z、a-z）",
+    "whitelistNumbersOnly": "仅数字（0-9）",
+    "whitelistInvoice": "发票/收据（数字、$、.、-、/）",
+    "whitelistForms": "表单（字母数字 + 常用符号）",
+    "whitelistCustom": "自定义...",
+    "whitelistHelp": "只识别这些字符。留空则识别所有字符。",
+    "whitelistInputLabel": "字符白名单（可选）",
+    "whitelistInputPlaceholder": "例如：abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "开始 OCR",
+    "progressInitializing": "正在初始化...",
+    "resultsTitle": "OCR 完成",
+    "resultsDescription": "您的可搜索 PDF 已准备好。您也可以在下方复制或下载提取的文本。",
+    "copyToClipboard": "复制到剪贴板",
+    "downloadTxt": "下载为 .txt",
+    "downloadSearchablePdf": "下载可搜索 PDF",
+    "statusPrefix": "状态：{{status}}",
+    "availabilityInvalidConfig": "此部署未公开任何有效的 OCR 语言。请使用有效的 Tesseract 代码设置 VITE_TESSERACT_AVAILABLE_LANGUAGES 后重新构建。",
+    "availabilityBundles": "此部署捆绑了以下 OCR 语言：{{languages}}。",
+    "noLanguagesAvailable": "此部署中没有可用的 OCR 语言。",
+    "noLanguagesTitle": "未选择语言",
+    "noLanguagesMessage": "请至少选择一种语言进行 OCR。",
+    "noFileTitle": "无文件",
+    "noFileMessage": "请先上传 PDF 文件。",
+    "languageUnavailableTitle": "OCR 语言不可用",
+    "ocrErrorTitle": "OCR 错误",
+    "ocrErrorMessage": "OCR 过程中发生错误。Worker 可能加载失败。请重试。",
+    "howItWorksTitle": "工作原理：",
+    "extractTextLabel": "提取文本：",
+    "extractTextDescription": "使用 Tesseract OCR 从扫描的图像或 PDF 中识别文本。",
+    "searchableOutputLabel": "可搜索输出：",
+    "searchableOutputDescription": "创建一个带有不可见文本层的新 PDF，使您的文档完全可搜索，同时保留原始外观。",
+    "characterFilteringLabel": "字符过滤：",
+    "characterFilteringDescription": "使用白名单过滤掉不需要的字符并提高特定文档类型（发票、表单等）的准确性。",
+    "multiLanguageSupportLabel": "多语言支持：",
+    "multiLanguageSupportDescription": "为包含混合语言内容的文档选择多种语言。"
   },
   "alternateMerge": {
     "name": "交替混合页面",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF 转 文本",
     "subtitle": "从 PDF 文件中提取文本并保存为纯文本文件 (.txt)。支持多个文件。",
-    "note": "此工具仅适用于数字创建的 PDF。对于扫描文档或基于图像的 PDF，请使用我们的 OCR PDF 工具。",
-    "convertButton": "提取文本"
+    "noteLabel": "注意：",
+    "noteText": "此工具仅适用于数字创建的 PDF。对于扫描文档或基于图像的 PDF，请改用我们的 OCR PDF 工具。",
+    "convertButton": "提取文本",
+    "note": "此工具仅适用于数字创建的 PDF。对于扫描文档或基于图像的 PDF，请使用我们的 OCR PDF 工具。"
   },
   "digitalSignPdf": {
     "name": "PDF 数字签名",
     "pageTitle": "PDF 数字签名 - 添加加密签名 | BentoPDF",
     "subtitle": "使用 X.509 证书为您的 PDF 添加加密数字签名。支持 PKCS#12 (.pfx, .p12) 和 PEM 格式。您的私钥永远不会离开您的浏览器。",
     "certificateSection": "证书",
-    "uploadCert": "上传证书 (.pfx, .p12)",
+    "uploadCert": "上传证书 (.pfx, .p12, .pem)",
     "certPassword": "证书密码",
+    "privateKeyPassword": "私钥密码",
     "certPasswordPlaceholder": "输入证书密码",
     "certInfo": "证书信息",
     "certSubject": "主体",
@@ -688,8 +864,71 @@
     "locationPlaceholder": "例如：北京，中国",
     "contactInfo": "联系信息",
     "contactPlaceholder": "例如：email@example.com",
+    "visibleSignature": "可见签名",
+    "visibleSignatureDescription": "启用后，PDF 上会出现可见的签名框。您可以上传图像/徽标或添加文本。如果都未提供，将自动显示证书中的签名者姓名。",
+    "signatureImage": "签名图像/徽标（可选）",
+    "uploadSignatureImage": "上传图像（PNG、JPG、WebP）",
+    "signaturePreviewAlt": "签名预览",
+    "remove": "移除",
+    "page": "页面",
+    "firstPage": "首页",
+    "lastPage": "末页",
+    "allPages": "所有页面",
+    "customPage": "自定义页 #",
+    "pageNumber": "页码 #",
+    "xPosition": "X 位置（左）",
+    "yPosition": "Y 位置（上）",
+    "width": "宽度",
+    "height": "高度",
+    "addTextOverlay": "添加文本覆盖",
+    "text": "文本",
+    "textPlaceholder": "例如：由张三数字签名",
+    "textColor": "文本颜色",
+    "fontSize": "字体大小",
+    "invalidImageTitle": "无效图像",
+    "invalidImageMessage": "请选择 PNG、JPG 或 WebP 图像。",
+    "invalidFileTitle": "无效文件",
+    "invalidFileMessage": "请选择 PDF 文件。",
+    "invalidCertificateTitle": "无效证书",
+    "invalidCertificateMessage": "请选择 .pfx、.p12 或 .pem 证书文件。",
+    "certificateLoaded": "证书已加载",
+    "certificateUnlocked": "证书已解锁",
+    "failedParsePem": "无法解析 PEM 文件",
+    "enterPasswordToUnlock": "输入密码以解锁",
+    "invalidPasswordOrCertificate": "无效密码或证书",
+    "incorrectPassword": "密码错误",
+    "failedParseCertificate": "无法解析证书",
+    "missingDataTitle": "数据缺失",
+    "missingDataMessage": "请同时上传 PDF 和有效证书。",
+    "applyingSignature": "正在应用数字签名...",
+    "signingFailedTitle": "签名失败",
+    "chainFetchFailed": "无法获取证书链。这可能是由于网络问题或证书代理不可用。请检查您的互联网连接并重试。如果问题持续存在，请联系支持。",
+    "failedToSignPdf": "无法签署 PDF：{{message}}",
+    "defaultSignatureText": "由 {{signer}} 数字签名\n{{date}}",
+    "pageCount": "{{count}} 页",
+    "howToStep1Title": "上传 PDF",
+    "howToStep1Text": "选择您要签署的 PDF 文档",
+    "howToStep2Title": "上传证书",
+    "howToStep2Text": "提供您的 .pfx 或 .p12 证书文件和密码",
+    "howToStep3Title": "签署并下载",
+    "howToStep3Text": "应用数字签名并下载已签署的 PDF",
+    "relatedEncryptDesc": "用密码保护您的 PDF",
+    "relatedDecryptDesc": "删除 PDF 密码",
+    "relatedFlattenDesc": "使注释永久化",
+    "relatedSanitizeDesc": "删除隐藏数据",
+    "relatedPermissionsDesc": "设置 PDF 权限",
+    "faqWhatIsQuestion": "什么是数字签名？",
+    "faqWhatIsAnswer": "数字签名是一种验证文档真实性和完整性的加密机制。与绘制的签名不同，它使用公钥加密（X.509 证书）来证明签名者的身份。",
+    "faqFormatsQuestion": "支持哪些证书格式？",
+    "faqFormatsAnswer": "我们支持 PKCS#12 格式的证书（.pfx、.p12），其中包含您的证书和私钥（一个加密文件）。这些通常由证书颁发机构颁发。",
+    "faqPrivateKeyQuestion": "我的私钥安全吗？",
+    "faqPrivateKeyAnswer": "是的！所有处理完全在您的浏览器中进行。您的证书、私钥和 PDF 文件永远不会离开您的设备或上传到任何服务器。",
+    "faqValidReadersQuestion": "签名在 PDF 阅读器中有效吗？",
+    "faqValidReadersAnswer": "是的，该工具创建标准的 PKCS#7 分离签名，所有主要 PDF 阅读器都能识别。要进行完整验证，请使用受信任的证书颁发机构的证书。",
     "applySignature": "应用数字签名",
-    "successMessage": "PDF 签名成功！签名可在任何 PDF 阅读器中验证。"
+    "successMessage": "PDF 签名成功！签名可在任何 PDF 阅读器中验证。",
+    "internetRequiredTitle": "需要互联网连接",
+    "internetRequiredDescription": "签名时可能需要从证书颁发者的服务器获取证书链信息以验证签名。"
   },
   "validateSignaturePdf": {
     "name": "验证 PDF 签名",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "保存工作流失败：超出存储配额。请尝试删除旧模板。",
       "failedToImport": "导入工作流失败：{{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "高级功能设置",
+    "description": "配置外部处理模块以启用高级 PDF 功能。这些模块是可选的，并单独授权。",
+    "status": {
+      "testing": "正在测试...",
+      "customOverride": "自定义覆盖",
+      "preConfigured": "预配置",
+      "notConfigured": "未配置"
+    },
+    "preconfiguredTitle": "预配置且可立即使用。",
+    "preconfiguredDescription": "高级处理模块从 CDN 自动加载。如果您需要使用自定义源（例如，对于 air-gapped 或自托管部署），可以覆盖以下 URL。",
+    "usingDefault": "使用默认值：{{url}}",
+    "pymupdfSubtitle": "文档处理引擎",
+    "pymupdfFeatures": "启用：PDF 转文本、Markdown、SVG、DOCX、Excel • 提取图像/表格 • 格式转换",
+    "testButton": "测试",
+    "recommendedLabel": "推荐：",
+    "copyTitle": "复制到剪贴板",
+    "ghostscriptSubtitle": "PDF/A 转换引擎",
+    "ghostscriptFeatures": "启用：PDF/A-1b、PDF/A-2b、PDF/A-3b 转换 • 字体转轮廓",
+    "cpdfSubtitle": "书签和元数据引擎",
+    "cpdfFeatures": "启用：按书签拆分 • 编辑书签 • PDF 元数据",
+    "saveConfiguration": "保存配置",
+    "savingConfiguration": "正在保存配置...",
+    "savedTitle": "已保存",
+    "savedMessage": "配置保存成功！",
+    "errorTitle": "错误",
+    "failedSave": "无法保存配置：{{message}}",
+    "emptyUrlTitle": "URL 为空",
+    "emptyUrlMessage": "请输入要测试的 URL。",
+    "testSuccessTitle": "成功",
+    "connectionSuccess": "连接到 {{package}} 成功！",
+    "connectionFailedTitle": "连接失败",
+    "connectionFailedMessage": "无法连接到 URL。",
+    "resetDefaults": "重置为默认值",
+    "resetTitle": "重置",
+    "resetWithDefaults": "已清除自定义覆盖。预配置的默认值已激活。",
+    "resetNoDefaults": "所有配置和缓存模块均已清除。",
+    "licenseTitle": "许可证通知：",
+    "licenseDescription": "外部模块（PyMuPDF、Ghostscript、CoherentPDF）根据 AGPL-3.0 或类似的 copyleft 许可证授权。配置和使用这些模块即表示您同意各自的许可证条款。BentoPDF 与遵循预期接口的任何 Ghostscript WASM 和 PyMuPDF WASM 实现兼容。"
   },
   "pdfOverlay": {
     "name": "PDF 叠加",

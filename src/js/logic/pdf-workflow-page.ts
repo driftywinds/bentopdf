@@ -1,43 +1,39 @@
-import { showAlert } from '../ui.js';
-import { createWorkflowEditor, updateNodeDisplay } from '../workflow/editor';
-import { executeWorkflow } from '../workflow/engine';
-import { getAvailableTesseractLanguageEntries } from '../utils/tesseract-language-availability.js';
+import { showAlert } from '@/js/ui.js';
+import { createWorkflowEditor, updateNodeDisplay } from '@/js/workflow/editor';
+import type { WorkflowEditor } from '@/js/workflow/editor';
+import { executeWorkflow } from '@/js/workflow/engine';
+import { translateCategory, translateNodeLabel } from '@/js/workflow/i18n';
+import type { NodeCategory } from '@/js/workflow/types';
 import {
+  type BaseWorkflowNode,
   nodeRegistry,
   getNodesByCategory,
   createNodeByType,
-} from '../workflow/nodes/registry';
-import { isToolDisabled } from '../utils/disabled-tools.js';
-import type { BaseWorkflowNode } from '../workflow/nodes/base-node';
-import type { WorkflowEditor } from '../workflow/editor';
-import { translateCategory, translateNodeLabel } from '../workflow/i18n';
-import type { NodeCategory } from '../workflow/types';
-import {
   PDFInputNode,
   EncryptedPDFError,
-} from '../workflow/nodes/pdf-input-node';
-import { ImageInputNode } from '../workflow/nodes/image-input-node';
-import { WordToPdfNode } from '../workflow/nodes/word-to-pdf-node';
-import { ExcelToPdfNode } from '../workflow/nodes/excel-to-pdf-node';
-import { PowerPointToPdfNode } from '../workflow/nodes/powerpoint-to-pdf-node';
-import { TextToPdfNode } from '../workflow/nodes/text-to-pdf-node';
-import { SvgToPdfNode } from '../workflow/nodes/svg-to-pdf-node';
-import { EpubToPdfNode } from '../workflow/nodes/epub-to-pdf-node';
-import { EmailToPdfNode } from '../workflow/nodes/email-to-pdf-node';
-import { DigitalSignNode } from '../workflow/nodes/digital-sign-node';
-import { XpsToPdfNode } from '../workflow/nodes/xps-to-pdf-node';
-import { MobiToPdfNode } from '../workflow/nodes/mobi-to-pdf-node';
-import { Fb2ToPdfNode } from '../workflow/nodes/fb2-to-pdf-node';
-import { CbzToPdfNode } from '../workflow/nodes/cbz-to-pdf-node';
-import { MarkdownToPdfNode } from '../workflow/nodes/markdown-to-pdf-node';
-import { JsonToPdfNode } from '../workflow/nodes/json-to-pdf-node';
-import { XmlToPdfNode } from '../workflow/nodes/xml-to-pdf-node';
-import { WpdToPdfNode } from '../workflow/nodes/wpd-to-pdf-node';
-import { WpsToPdfNode } from '../workflow/nodes/wps-to-pdf-node';
-import { PagesToPdfNode } from '../workflow/nodes/pages-to-pdf-node';
-import { OdgToPdfNode } from '../workflow/nodes/odg-to-pdf-node';
-import { PubToPdfNode } from '../workflow/nodes/pub-to-pdf-node';
-import { VsdToPdfNode } from '../workflow/nodes/vsd-to-pdf-node';
+  ImageInputNode,
+  WordToPdfNode,
+  ExcelToPdfNode,
+  PowerPointToPdfNode,
+  TextToPdfNode,
+  SvgToPdfNode,
+  EpubToPdfNode,
+  EmailToPdfNode,
+  DigitalSignNode,
+  XpsToPdfNode,
+  MobiToPdfNode,
+  Fb2ToPdfNode,
+  CbzToPdfNode,
+  MarkdownToPdfNode,
+  JsonToPdfNode,
+  XmlToPdfNode,
+  WpdToPdfNode,
+  WpsToPdfNode,
+  PagesToPdfNode,
+  OdgToPdfNode,
+  PubToPdfNode,
+  VsdToPdfNode,
+} from '@/js/workflow/nodes';
 import {
   saveWorkflow,
   loadWorkflow,
@@ -46,7 +42,10 @@ import {
   getSavedTemplateNames,
   templateNameExists,
   deleteTemplate,
-} from '../workflow/serialization';
+} from '@/js/workflow/serialization';
+import { getAvailableTesseractLanguageEntries } from '@/js/utils/tesseract-language-availability.js';
+import { isToolDisabled } from '@/js/utils/disabled-tools.js';
+import { IMAGE_ACCEPT } from '@/js/utils/image-input-utils.js';
 
 let workflowEditor: WorkflowEditor | null = null;
 let selectedNodeId: string | null = null;
@@ -760,7 +759,7 @@ function showNodeSettings(node: BaseWorkflowNode) {
 
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
-    fileInput.accept = 'image/*';
+    fileInput.accept = IMAGE_ACCEPT;
     fileInput.multiple = true;
     fileInput.className = 'hidden';
     fileInput.addEventListener('change', async (e) => {

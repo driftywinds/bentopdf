@@ -10,6 +10,7 @@
     "input": "Input",
     "output": "Output"
   },
+  "convertToPdf": "Konvertér til PDF",
   "pdfMultiTool": {
     "name": "PDF Multi-værktøj",
     "subtitle": "Flet, opdel, organisér, slet, roter, tilføj tomme sider, udtræk og duplikér i én samlet grænseflade."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "Duplikér og organisér",
-    "subtitle": "Duplikér, omorganisér og slet sider."
+    "subtitle": "Duplikér, omorganisér og slet sider.",
+    "saveChanges": "Gem ændringer"
   },
   "deletePages": {
     "name": "Slet sider",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "Redigér bogmærker",
-    "subtitle": "Tilføj, redigér, importér, slet og udtræk PDF-bogmærker."
+    "subtitle": "Tilføj, redigér, importér, slet og udtræk PDF-bogmærker.",
+    "autoExtractExisting": "Auto-udtræk eksisterende bogmærker",
+    "importSectionTitle": "Eller importér bogmærker",
+    "csvFormat": "CSV-format: titel,side,niveau",
+    "jsonFormat": "JSON-format",
+    "uploadCsvAction": "Klik for at uploade CSV",
+    "uploadJsonAction": "Klik for at uploade JSON",
+    "orDragHere": "eller træk hertil"
   },
   "tableOfContents": {
     "name": "Indholdsfortegnelse",
-    "subtitle": "Generér en indholdsfortegnelse ud fra PDF-bogmærker."
+    "subtitle": "Generér en indholdsfortegnelse ud fra PDF-bogmærker.",
+    "titleLabel": "Indholdsfortegnelses-titel",
+    "fontSize": "Skriftstørrelse",
+    "fontFamily": "Skriftfamilie",
+    "addBookmark": "Tilføj bogmærke for indholdsfortegnelses-side",
+    "generateButton": "Generér indholdsfortegnelse",
+    "selectPdfFirst": "Vælg venligst en PDF-fil først.",
+    "statusReadingFileMainThread": "Læser fil (Hovedtråd)...",
+    "statusGenerating": "Genererer indholdsfortegnelse...",
+    "errorReadingFileWithMessage": "Fejl ved læsning af fil: {{message}}",
+    "successGeneratedDownloadStarted": "Indholdsfortegnelse genereret! Download startet.",
+    "workerErrorWithMessage": "Fejl: {{message}}",
+    "workerErrorOccurred": "Worker-fejl opstod. Tjek konsollen for detaljer."
   },
   "pageNumbers": {
     "name": "Sidetal",
@@ -210,7 +231,8 @@
     "subtitle": "Tilføj billedstempler til din PDF via annoteringsværktøjet.",
     "usernameLabel": "Stempelbrugernavn",
     "usernamePlaceholder": "Indtast dit navn (til stempler)",
-    "usernameHint": "Dette navn vises på de stempler du opretter."
+    "usernameHint": "Dette navn vises på de stempler du opretter.",
+    "saveButton": "Gem stemplet PDF"
   },
   "removeAnnotations": {
     "name": "Fjern annotationer",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "PDF-formularudfylder",
-    "subtitle": "Udfyld formularer direkte i browseren. Understøtter også XFA-formularer."
+    "subtitle": "Udfyld formularer direkte i browseren. Understøtter også XFA-formularer.",
+    "uploadHint": "Upload en PDF med formularfelter. Udfyld dem direkte i fremviseren nedenfor, og klik derefter på knappen for at gemme og downloade den udfyldte formular. Understøtter også XFA-formularer.",
+    "xfaNoteTitle": "Bemærkning om XFA-formularer:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) er et ældre format, der kun understøttes af visse PDF-fremvisere som BentoPDF og Firefox. Hvis du åbner en XFA-PDF i anden software og ser tomme sider eller ingen formularfelter, betyder det, at fremviseren ikke understøtter XFA. Brug Firefox eller BentoPDFs Form Filler for korrekt visning og udfyldning af XFA-formularer."
   },
   "createPdfForm": {
     "name": "Opret PDF-formular",
-    "subtitle": "Lav udfyldelige PDF-formularer med træk-og-slip tekstfelter."
+    "subtitle": "Lav udfyldelige PDF-formularer med træk-og-slip tekstfelter.",
+    "orSeparator": "ELLER",
+    "createBlankPdf": "Opret tom PDF"
   },
   "removeBlankPages": {
     "name": "Fjern tomme sider",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "Tekst til PDF",
-    "subtitle": "Konverter en almindelig tekstfil til PDF."
+    "subtitle": "Konverter en almindelig tekstfil til PDF.",
+    "uploadFiles": "Upload filer",
+    "typeText": "Skriv tekst",
+    "acceptedFormats": "Tekstfiler (.txt)",
+    "fontFamily": "Skriftfamilie",
+    "fontSize": "Skriftstørrelse",
+    "textColor": "Tekstfarve",
+    "pageSize": "Sidestørrelse",
+    "rtlAutoDetectNote": "RTL-sprog (arabisk, urdu, persisk osv.) registreres automatisk, og tekstretningen justeres.",
+    "createButton": "Opret PDF"
   },
   "jsonToPdf": {
     "name": "JSON til PDF",
-    "subtitle": "Konverter JSON-filer til PDF."
+    "subtitle": "Konverter JSON-filer til PDF.",
+    "noteLabel": "Bemærk:",
+    "noteText": "Kun JSON-filer oprettet af PDF-til-JSON-konverteringsværktøjet understøttes. Standard JSON-filer fra andre værktøjer vil ikke fungere.",
+    "acceptedFormats": "Flere JSON-filer",
+    "status": {
+      "selectAtLeastOne": "Vælg venligst mindst 1 JSON-fil",
+      "selectedReady": "{{count}} fil(er) valgt. Klar til konvertering!",
+      "readingFiles": "Læser filer (Hovedtråd)...",
+      "converting": "Konverterer JSON-filer til PDF...",
+      "readError": "Fejl ved læsning af filer: {{message}}",
+      "creatingZip": "Opretter ZIP-fil...",
+      "success": "JSON-filer konverteret til PDF! ZIP-download startet.",
+      "zipError": "Fejl ved oprettelse af ZIP: {{message}}",
+      "workerError": "Worker-fejl: {{message}}",
+      "getStarted": "Vælg JSON-filer for at komme i gang"
+    }
   },
   "pdfToJpg": {
     "name": "PDF til JPG",
-    "subtitle": "Konverter hver PDF-side til en JPG-billedfil."
+    "subtitle": "Konverter hver PDF-side til en JPG-billedfil.",
+    "imageQuality": "Billedkvalitet",
+    "imageQualityExplanation": "Højere kvalitet = større filstørrelse",
+    "alert": {
+      "invalidFile": "Ugyldig fil",
+      "invalidFileExplanation": "Upload venligst en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Upload venligst en PDF-fil først.",
+      "conversionSuccess": "PDF konverteret til JPG!",
+      "conversionError": "Kunne ikke konvertere PDF til JPG. Filen kan være beskadiget."
+    },
+    "loader": {
+      "converting": "Konverterer til JPG..."
+    }
   },
   "pdfToPng": {
     "name": "PDF til PNG",
-    "subtitle": "Konverter hver PDF-side til en PNG-billedfil."
+    "subtitle": "Konverter hver PDF-side til en PNG-billedfil.",
+    "imageScale": "Billedskala",
+    "imageScaleExplanation": "Højere skala = bedre kvalitet men større fil",
+    "alert": {
+      "invalidFile": "Ugyldig fil",
+      "invalidFileExplanation": "Upload venligst en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Upload venligst en PDF-fil først.",
+      "conversionSuccess": "PDF konverteret til PNG!",
+      "conversionError": "Kunne ikke konvertere PDF til PNG. Filen kan være beskadiget."
+    },
+    "loader": {
+      "converting": "Konverterer til PNG..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF til WebP",
-    "subtitle": "Konverter hver PDF-side til en WebP-billedfil."
+    "subtitle": "Konverter hver PDF-side til en WebP-billedfil.",
+    "imageQuality": "Billedkvalitet",
+    "imageQualityExplanation": "Højere kvalitet = større filstørrelse",
+    "alert": {
+      "invalidFile": "Ugyldig fil",
+      "invalidFileExplanation": "Upload venligst en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Upload venligst en PDF-fil først.",
+      "conversionSuccess": "PDF konverteret til WebP!",
+      "conversionError": "Kunne ikke konvertere PDF til WebP. Filen kan være beskadiget."
+    },
+    "loader": {
+      "converting": "Konverterer til WebP..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF til BMP",
-    "subtitle": "Konverter hver PDF-side til en BMP-billedfil."
+    "subtitle": "Konverter hver PDF-side til en BMP-billedfil.",
+    "alert": {
+      "invalidFile": "Ugyldig fil",
+      "invalidFileExplanation": "Upload venligst en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Upload venligst en PDF-fil først.",
+      "conversionSuccess": "PDF konverteret til BMP!",
+      "conversionError": "Kunne ikke konvertere PDF til BMP. Filen kan være beskadiget."
+    },
+    "loader": {
+      "converting": "Konverterer til BMP..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF til TIFF",
@@ -291,7 +392,15 @@
     "colorMode": "Farvetilstand",
     "multiPage": "Gem som flersidet TIFF (én fil)",
     "loadingVips": "Indlæser billedprocessor...",
-    "converting": "Konverterer til TIFF..."
+    "converting": "Konverterer til TIFF...",
+    "alert": {
+      "invalidFile": "Ugyldig fil",
+      "invalidFileExplanation": "Upload venligst en PDF-fil.",
+      "noFile": "Ingen fil",
+      "noFileExplanation": "Upload venligst en PDF-fil først.",
+      "conversionSuccess": "PDF konverteret til TIFF!",
+      "conversionError": "Kunne ikke konvertere PDF til TIFF. Filen kan være beskadiget."
+    }
   },
   "pdfToCbz": {
     "name": "PDF til CBZ",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF til JSON",
-    "subtitle": "Konverter PDF-filer til JSON-format."
+    "subtitle": "Konverter PDF-filer til JSON-format.",
+    "convertButton": "Konvertér til JSON",
+    "status": {
+      "selectAtLeastOne": "Vælg venligst mindst 1 PDF-fil",
+      "selectedReady": "{{count}} fil(er) valgt. Klar til konvertering!",
+      "checkingEncrypted": "Tjekker for krypterede PDF'er...",
+      "readingFiles": "Læser filer (Hovedtråd)...",
+      "converting": "Konverterer PDF'er til JSON...",
+      "readError": "Fejl ved læsning af filer: {{message}}",
+      "creatingZip": "Opretter ZIP-fil...",
+      "success": "PDF'er konverteret til JSON! ZIP-download startet.",
+      "zipError": "Fejl ved oprettelse af ZIP: {{message}}",
+      "workerError": "Worker-fejl: {{message}}",
+      "getStarted": "Vælg PDF-filer for at komme i gang"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "Gør PDF’en søgbar og kopierbar."
+    "subtitle": "Gør PDF’en søgbar og kopierbar.",
+    "languagesInDocument": "Sprog i dokumentet",
+    "searchLanguagesPlaceholder": "Søg sprog...",
+    "selectedLabel": "Valgt:",
+    "none": "Ingen",
+    "advancedSettingsSummary": "Avancerede indstillinger (anbefales for at forbedre nøjagtigheden)",
+    "resolutionLabel": "Opløsning",
+    "resolutionStandard": "Standard (192 DPI)",
+    "resolutionHigh": "Høj (288 DPI)",
+    "resolutionUltra": "Ultra (384 DPI)",
+    "binarizeLabel": "Binariser billede (forbedrer kontrast for rene scanninger)",
+    "embedFullFontsLabel": "Indlejr fulde skrifttyper (større fil, bedre kompatibilitet)",
+    "whitelistPresetLabel": "Tegn-whitelist forudindstilling",
+    "whitelistNone": "Ingen (alle tegn)",
+    "whitelistAlphanumeric": "Alfanumerisk + Grundlæggende tegnsætning",
+    "whitelistNumbersCurrency": "Tal + Valutasymboler",
+    "whitelistLettersOnly": "Kun bogstaver (A-Z, a-z)",
+    "whitelistNumbersOnly": "Kun tal (0-9)",
+    "whitelistInvoice": "Faktura/kvittering (tal, $, ., -, /)",
+    "whitelistForms": "Formularer (alfanumerisk + almindelige symboler)",
+    "whitelistCustom": "Brugerdefineret...",
+    "whitelistHelp": "Kun disse tegn vil blive genkendt. Lad være tomt for alle tegn.",
+    "whitelistInputLabel": "Tegn-whitelist (valgfrit)",
+    "whitelistInputPlaceholder": "f.eks. abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "Start OCR",
+    "progressInitializing": "Initialiserer...",
+    "resultsTitle": "OCR fuldført",
+    "resultsDescription": "Din søgbare PDF er klar. Du kan også kopiere eller downloade den udtrukne tekst nedenfor.",
+    "copyToClipboard": "Kopiér til udklipsholder",
+    "downloadTxt": "Download som .txt",
+    "downloadSearchablePdf": "Download søgbar PDF",
+    "statusPrefix": "Status: {{status}}",
+    "availabilityInvalidConfig": "Denne deployment udstiller ingen gyldige OCR-sprog. Genopbyg den med VITE_TESSERACT_AVAILABLE_LANGUAGES sat til gyldige Tesseract-koder.",
+    "availabilityBundles": "Denne deployment indeholder OCR for: {{languages}}.",
+    "noLanguagesAvailable": "Ingen OCR-sprog er tilgængelige i denne deployment.",
+    "noLanguagesTitle": "Ingen sprog valgt",
+    "noLanguagesMessage": "Vælg venligst mindst ét sprog til OCR.",
+    "noFileTitle": "Ingen fil",
+    "noFileMessage": "Upload først en PDF-fil.",
+    "languageUnavailableTitle": "OCR-sprog ikke tilgængeligt",
+    "ocrErrorTitle": "OCR-fejl",
+    "ocrErrorMessage": "Der opstod en fejl under OCR-processen. Workeren kan have undladt at indlæse. Prøv igen.",
+    "howItWorksTitle": "Sådan fungerer det:",
+    "extractTextLabel": "Udtræk tekst:",
+    "extractTextDescription": "Bruger Tesseract OCR til at genkende tekst fra scannede billeder eller PDF'er.",
+    "searchableOutputLabel": "Søgbart output:",
+    "searchableOutputDescription": "Opretter en ny PDF med et usynligt tekstlag, så dit dokument bliver fuldt søgbart, mens det oprindelige udseende bevares.",
+    "characterFilteringLabel": "Tegnfiltrering:",
+    "characterFilteringDescription": "Brug whitelister til at filtrere uønskede tegn fra og forbedre nøjagtigheden for specifikke dokumenttyper (fakturaer, formularer osv.).",
+    "multiLanguageSupportLabel": "Flersproget support:",
+    "multiLanguageSupportDescription": "Vælg flere sprog for dokumenter med blandet sprogindhold."
   },
   "alternateMerge": {
     "name": "Alternér og miks sider",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF til tekst",
     "subtitle": "Udtræk tekst fra PDF og gem som almindelig tekst (.txt). Understøtter flere filer.",
-    "note": "Dette værktøj virker KUN med digitalt oprettede PDF’er. Brug OCR PDF til scannede dokumenter.",
-    "convertButton": "Udtræk tekst"
+    "noteLabel": "Bemærk:",
+    "noteText": "Dette værktøj fungerer KUN med digitalt oprettede PDF'er. Brug i stedet vores OCR PDF-værktøj til scannede dokumenter eller billedbaserede PDF'er.",
+    "convertButton": "Udtræk tekst",
+    "note": "Dette værktøj virker KUN med digitalt oprettede PDF’er. Brug OCR PDF til scannede dokumenter."
   },
   "digitalSignPdf": {
     "name": "Digital signatur PDF",
     "pageTitle": "Digital signatur PDF - Tilføj kryptografisk signatur | BentoPDF",
     "subtitle": "Tilføj en digital signatur til din PDF med X.509-certifikater. Understøtter PKCS#12 (.pfx, .p12) og PEM. Din private nøgle forlader aldrig browseren.",
     "certificateSection": "Certifikat",
-    "uploadCert": "Upload certifikat (.pfx, .p12)",
+    "uploadCert": "Upload certifikat (.pfx, .p12, .pem)",
     "certPassword": "Certifikatkodeord",
+    "privateKeyPassword": "Adgangskode til privat nøgle",
     "certPasswordPlaceholder": "Indtast kodeord til certifikat",
     "certInfo": "Certifikatinformation",
     "certSubject": "Emne",
@@ -688,8 +864,71 @@
     "locationPlaceholder": "Fx: København, Danmark",
     "contactInfo": "Kontaktinfo",
     "contactPlaceholder": "Fx: email@example.com",
+    "visibleSignature": "Synlig signatur",
+    "visibleSignatureDescription": "Når aktiveret, vises et synligt signaturfelt på PDF'en. Du kan uploade et billede/logo eller tilføje tekst. Hvis ingen af delene angives, vises underskriverens navn fra certifikatet automatisk.",
+    "signatureImage": "Signatur billede/logo (valgfrit)",
+    "uploadSignatureImage": "Upload billede (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "Signatur forhåndsvisning",
+    "remove": "Fjern",
+    "page": "Side",
+    "firstPage": "Første side",
+    "lastPage": "Sidste side",
+    "allPages": "Alle sider",
+    "customPage": "Brugerdefineret side #",
+    "pageNumber": "Side #",
+    "xPosition": "X-position (venstre)",
+    "yPosition": "Y-position (top)",
+    "width": "Bredde",
+    "height": "Højde",
+    "addTextOverlay": "Tilføj tekstoverlejring",
+    "text": "Tekst",
+    "textPlaceholder": "f.eks. Digitalt signeret af John Doe",
+    "textColor": "Tekstfarve",
+    "fontSize": "Skriftstørrelse",
+    "invalidImageTitle": "Ugyldigt billede",
+    "invalidImageMessage": "Vælg venligst et PNG-, JPG- eller WebP-billede.",
+    "invalidFileTitle": "Ugyldig fil",
+    "invalidFileMessage": "Vælg venligst en PDF-fil.",
+    "invalidCertificateTitle": "Ugyldigt certifikat",
+    "invalidCertificateMessage": "Vælg venligst en .pfx-, .p12- eller .pem-certifikatfil.",
+    "certificateLoaded": "Certifikat indlæst",
+    "certificateUnlocked": "Certifikat låst op",
+    "failedParsePem": "Kunne ikke parse PEM-fil",
+    "enterPasswordToUnlock": "Indtast adgangskode for at låse op",
+    "invalidPasswordOrCertificate": "Ugyldig adgangskode eller certifikat",
+    "incorrectPassword": "Forkert adgangskode",
+    "failedParseCertificate": "Kunne ikke parse certifikat",
+    "missingDataTitle": "Manglende data",
+    "missingDataMessage": "Upload både en PDF og et gyldigt certifikat.",
+    "applyingSignature": "Anvender digital signatur...",
+    "signingFailedTitle": "Signering mislykkedes",
+    "chainFetchFailed": "Kunne ikke hente certifikatkæden. Dette kan skyldes netværksproblemer eller at certifikatproxyen er utilgængelig. Tjek din internetforbindelse og prøv igen. Hvis problemet fortsætter, kontakt support.",
+    "failedToSignPdf": "Kunne ikke signere PDF: {{message}}",
+    "defaultSignatureText": "Digitalt signeret af {{signer}}\n{{date}}",
+    "pageCount": "{{count}} sider",
+    "howToStep1Title": "Upload PDF",
+    "howToStep1Text": "Vælg det PDF-dokument, du vil signere",
+    "howToStep2Title": "Upload certifikat",
+    "howToStep2Text": "Angiv din .pfx- eller .p12-certifikatfil og adgangskode",
+    "howToStep3Title": "Signér og download",
+    "howToStep3Text": "Anvend den digitale signatur og download din signerede PDF",
+    "relatedEncryptDesc": "Beskyt din PDF med adgangskode",
+    "relatedDecryptDesc": "Fjern PDF-adgangskode",
+    "relatedFlattenDesc": "Gør anmærkninger permanente",
+    "relatedSanitizeDesc": "Fjern skjulte data",
+    "relatedPermissionsDesc": "Indstil PDF-tilladelser",
+    "faqWhatIsQuestion": "Hvad er en digital signatur?",
+    "faqWhatIsAnswer": "En digital signatur er en kryptografisk mekanisme, der verificerer ægtheden og integriteten af et dokument. I modsætning til en tegnet signatur bruger den offentlig-nøgle-kryptografi (X.509-certifikater) til at bevise underskriverens identitet.",
+    "faqFormatsQuestion": "Hvilke certifikatformater understøttes?",
+    "faqFormatsAnswer": "Vi understøtter PKCS#12-format certifikater (.pfx, .p12), som indeholder både dit certifikat og din private nøgle i en enkelt krypteret fil. Disse udstedes typisk af certifikatudstedere.",
+    "faqPrivateKeyQuestion": "Er min private nøgle sikker?",
+    "faqPrivateKeyAnswer": "Ja! Al behandling sker udelukkende i din browser. Dit certifikat, private nøgle og PDF-filer forlader aldrig din enhed eller uploades til nogen server.",
+    "faqValidReadersQuestion": "Vil signaturen være gyldig i PDF-læsere?",
+    "faqValidReadersAnswer": "Ja, værktøjet opretter standard PKCS#7 detached signaturer, der genkendes af alle større PDF-læsere. Brug et certifikat fra en betroet certifikatudsteder for fuld validering.",
     "applySignature": "Anvend digital signatur",
-    "successMessage": "PDF signeret! Signaturen kan verificeres i enhver PDF-læser."
+    "successMessage": "PDF signeret! Signaturen kan verificeres i enhver PDF-læser.",
+    "internetRequiredTitle": "Internetforbindelse påkrævet",
+    "internetRequiredDescription": "Signering kan kræve at hente certifikatkædeoplysninger fra din certifikatudsteders server for at validere signaturen."
   },
   "validateSignaturePdf": {
     "name": "Validér PDF-signatur",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "Kunne ikke gemme workflow: lagerkvote overskredet. Prøv at slette gamle skabeloner.",
       "failedToImport": "Kunne ikke importere workflow: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "Avancerede funktionsindstillinger",
+    "description": "Konfigurer eksterne behandlingsmoduler for at aktivere avancerede PDF-funktioner. Disse moduler er valgfrie og licenseret separat.",
+    "status": {
+      "testing": "Tester...",
+      "customOverride": "Brugerdefineret tilsidesættelse",
+      "preConfigured": "Forudkonfigureret",
+      "notConfigured": "Ikke konfigureret"
+    },
+    "preconfiguredTitle": "Forudkonfigureret og klar til brug.",
+    "preconfiguredDescription": "Avancerede behandlingsmoduler indlæses automatisk fra CDN. Du kan tilsidesætte URL'erne nedenfor, hvis du har brug for at bruge en brugerdefineret kilde (f.eks. til air-gapped eller selv-hostede deployments).",
+    "usingDefault": "Bruger standard: {{url}}",
+    "pymupdfSubtitle": "Dokumentbehandlingsmotor",
+    "pymupdfFeatures": "Aktiverer: PDF til tekst, Markdown, SVG, DOCX, Excel • Udtræk billeder/tabeller • Formatkonvertering",
+    "testButton": "Test",
+    "recommendedLabel": "Anbefalet:",
+    "copyTitle": "Kopiér til udklipsholder",
+    "ghostscriptSubtitle": "PDF/A-konverteringsmotor",
+    "ghostscriptFeatures": "Aktiverer: PDF/A-1b, PDF/A-2b, PDF/A-3b konvertering • Skrifttype til kontur",
+    "cpdfSubtitle": "Bogmærke- og metadatamotor",
+    "cpdfFeatures": "Aktiverer: Opdel efter bogmærker • Rediger bogmærker • PDF-metadata",
+    "saveConfiguration": "Gem konfiguration",
+    "savingConfiguration": "Gemmer konfiguration...",
+    "savedTitle": "Gemt",
+    "savedMessage": "Konfiguration gemt!",
+    "errorTitle": "Fejl",
+    "failedSave": "Kunne ikke gemme konfiguration: {{message}}",
+    "emptyUrlTitle": "Tom URL",
+    "emptyUrlMessage": "Indtast venligst en URL at teste.",
+    "testSuccessTitle": "Succes",
+    "connectionSuccess": "Forbindelse til {{package}} lykkedes!",
+    "connectionFailedTitle": "Forbindelse mislykkedes",
+    "connectionFailedMessage": "Kunne ikke forbinde til URL.",
+    "resetDefaults": "Nulstil til standard",
+    "resetTitle": "Nulstil",
+    "resetWithDefaults": "Brugerdefinerede tilsidesættelser ryddet. Forudkonfigurerede standarder er aktive.",
+    "resetNoDefaults": "Alle konfigurationer og cachede moduler er blevet ryddet.",
+    "licenseTitle": "Licensbemærkning:",
+    "licenseDescription": "De eksterne moduler (PyMuPDF, Ghostscript, CoherentPDF) er licenseret under AGPL-3.0 eller lignende copyleft-licenser. Ved at konfigurere og bruge disse moduler accepterer du deres respektive licensvilkår. BentoPDF er kompatibel med enhver Ghostscript WASM- og PyMuPDF WASM-implementering, der følger den forventede grænseflade."
   },
   "pdfOverlay": {
     "name": "PDF-overlejring",

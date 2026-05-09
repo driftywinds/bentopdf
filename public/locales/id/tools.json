@@ -10,6 +10,7 @@
     "input": "Masukan",
     "output": "Keluaran"
   },
+  "convertToPdf": "Konversi ke PDF",
   "pdfMultiTool": {
     "name": "Alat Multi PDF",
     "subtitle": "Gabung, Pisah, Atur, Hapus, Putar, Tambah Halaman Kosong, Ekstrak dan Duplikat dalam antarmuka terpadu."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "Duplikat & Atur",
-    "subtitle": "Duplikat, susun ulang, dan hapus halaman."
+    "subtitle": "Duplikat, susun ulang, dan hapus halaman.",
+    "saveChanges": "Simpan Perubahan"
   },
   "deletePages": {
     "name": "Hapus Halaman",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "Edit Bookmark",
-    "subtitle": "Tambah, edit, impor, hapus dan ekstrak bookmark PDF."
+    "subtitle": "Tambah, edit, impor, hapus dan ekstrak bookmark PDF.",
+    "autoExtractExisting": "Ekstrak otomatis bookmark yang ada",
+    "importSectionTitle": "Atau Impor Bookmark",
+    "csvFormat": "Format CSV: judul,halaman,level",
+    "jsonFormat": "Format JSON",
+    "uploadCsvAction": "Klik untuk unggah CSV",
+    "uploadJsonAction": "Klik untuk unggah JSON",
+    "orDragHere": "atau seret ke sini"
   },
   "tableOfContents": {
     "name": "Daftar Isi",
-    "subtitle": "Hasilkan halaman daftar isi dari bookmark PDF."
+    "subtitle": "Hasilkan halaman daftar isi dari bookmark PDF.",
+    "titleLabel": "Judul Daftar Isi",
+    "fontSize": "Ukuran Font",
+    "fontFamily": "Keluarga Font",
+    "addBookmark": "Tambah bookmark untuk halaman daftar isi",
+    "generateButton": "Buat Daftar Isi",
+    "selectPdfFirst": "Silakan pilih file PDF terlebih dahulu.",
+    "statusReadingFileMainThread": "Membaca file (Thread Utama)...",
+    "statusGenerating": "Membuat daftar isi...",
+    "errorReadingFileWithMessage": "Kesalahan membaca file: {{message}}",
+    "successGeneratedDownloadStarted": "Daftar isi berhasil dibuat! Unduhan dimulai.",
+    "workerErrorWithMessage": "Kesalahan: {{message}}",
+    "workerErrorOccurred": "Kesalahan worker terjadi. Periksa konsol untuk detail."
   },
   "pageNumbers": {
     "name": "Nomor Halaman",
@@ -210,7 +231,8 @@
     "subtitle": "Tambah stempel gambar ke PDF Anda menggunakan toolbar anotasi.",
     "usernameLabel": "Nama Pengguna Stempel",
     "usernamePlaceholder": "Masukkan nama Anda (untuk stempel)",
-    "usernameHint": "Nama ini akan muncul pada stempel yang Anda buat."
+    "usernameHint": "Nama ini akan muncul pada stempel yang Anda buat.",
+    "saveButton": "Simpan PDF yang Distempel"
   },
   "removeAnnotations": {
     "name": "Hapus Anotasi",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "Pengisi Formulir PDF",
-    "subtitle": "Isi formulir langsung di browser. Juga mendukung formulir XFA."
+    "subtitle": "Isi formulir langsung di browser. Juga mendukung formulir XFA.",
+    "uploadHint": "Unggah PDF dengan bidang formulir. Isi langsung di penampil di bawah, lalu klik tombol untuk menyimpan dan mengunduh formulir yang telah diisi. Juga mendukung formulir XFA.",
+    "xfaNoteTitle": "Catatan tentang Formulir XFA:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) adalah format lama yang hanya didukung oleh penampil PDF tertentu seperti BentoPDF dan Firefox. Jika Anda membuka PDF XFA di perangkat lunak lain dan melihat halaman kosong atau tidak ada bidang formulir, itu berarti penampil tersebut tidak mendukung XFA. Untuk melihat dan mengisi formulir XFA dengan benar, gunakan Firefox atau Form Filler BentoPDF."
   },
   "createPdfForm": {
     "name": "Buat Formulir PDF",
-    "subtitle": "Buat formulir PDF yang dapat diisi dengan bidang teks drag-and-drop."
+    "subtitle": "Buat formulir PDF yang dapat diisi dengan bidang teks drag-and-drop.",
+    "orSeparator": "ATAU",
+    "createBlankPdf": "Buat PDF Kosong"
   },
   "removeBlankPages": {
     "name": "Hapus Halaman Kosong",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "Teks ke PDF",
-    "subtitle": "Konversi file teks biasa menjadi PDF."
+    "subtitle": "Konversi file teks biasa menjadi PDF.",
+    "uploadFiles": "Unggah File",
+    "typeText": "Ketik Teks",
+    "acceptedFormats": "File teks (.txt)",
+    "fontFamily": "Keluarga Font",
+    "fontSize": "Ukuran Font",
+    "textColor": "Warna Teks",
+    "pageSize": "Ukuran Halaman",
+    "rtlAutoDetectNote": "Bahasa RTL (Arab, Urdu, Persia, dll.) terdeteksi secara otomatis dan arah teks disesuaikan.",
+    "createButton": "Buat PDF"
   },
   "jsonToPdf": {
     "name": "JSON ke PDF",
-    "subtitle": "Konversi file JSON ke format PDF."
+    "subtitle": "Konversi file JSON ke format PDF.",
+    "noteLabel": "Catatan:",
+    "noteText": "Hanya file JSON yang dibuat oleh alat konverter PDF-ke-JSON yang didukung. File JSON standar dari alat lain tidak akan berfungsi.",
+    "acceptedFormats": "Beberapa file JSON",
+    "status": {
+      "selectAtLeastOne": "Silakan pilih minimal 1 file JSON",
+      "selectedReady": "{{count}} file dipilih. Siap dikonversi!",
+      "readingFiles": "Membaca file (Thread Utama)...",
+      "converting": "Mengonversi file JSON ke PDF...",
+      "readError": "Kesalahan membaca file: {{message}}",
+      "creatingZip": "Membuat file ZIP...",
+      "success": "File JSON berhasil dikonversi ke PDF! Unduhan ZIP dimulai.",
+      "zipError": "Kesalahan membuat ZIP: {{message}}",
+      "workerError": "Kesalahan Worker: {{message}}",
+      "getStarted": "Pilih file JSON untuk memulai"
+    }
   },
   "pdfToJpg": {
     "name": "PDF ke JPG",
-    "subtitle": "Konversi setiap halaman PDF menjadi gambar JPG."
+    "subtitle": "Konversi setiap halaman PDF menjadi gambar JPG.",
+    "imageQuality": "Kualitas Gambar",
+    "imageQualityExplanation": "Kualitas lebih tinggi = ukuran file lebih besar",
+    "alert": {
+      "invalidFile": "File Tidak Valid",
+      "invalidFileExplanation": "Silakan unggah file PDF.",
+      "noFile": "Tidak Ada File",
+      "noFileExplanation": "Silakan unggah file PDF terlebih dahulu.",
+      "conversionSuccess": "PDF berhasil dikonversi ke JPG!",
+      "conversionError": "Gagal mengonversi PDF ke JPG. File mungkin rusak."
+    },
+    "loader": {
+      "converting": "Mengonversi ke JPG..."
+    }
   },
   "pdfToPng": {
     "name": "PDF ke PNG",
-    "subtitle": "Konversi setiap halaman PDF menjadi gambar PNG."
+    "subtitle": "Konversi setiap halaman PDF menjadi gambar PNG.",
+    "imageScale": "Skala Gambar",
+    "imageScaleExplanation": "Skala lebih besar = kualitas lebih baik tapi file lebih besar",
+    "alert": {
+      "invalidFile": "File Tidak Valid",
+      "invalidFileExplanation": "Silakan unggah file PDF.",
+      "noFile": "Tidak Ada File",
+      "noFileExplanation": "Silakan unggah file PDF terlebih dahulu.",
+      "conversionSuccess": "PDF berhasil dikonversi ke PNG!",
+      "conversionError": "Gagal mengonversi PDF ke PNG. File mungkin rusak."
+    },
+    "loader": {
+      "converting": "Mengonversi ke PNG..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF ke WebP",
-    "subtitle": "Konversi setiap halaman PDF menjadi gambar WebP."
+    "subtitle": "Konversi setiap halaman PDF menjadi gambar WebP.",
+    "imageQuality": "Kualitas Gambar",
+    "imageQualityExplanation": "Kualitas lebih tinggi = ukuran file lebih besar",
+    "alert": {
+      "invalidFile": "File Tidak Valid",
+      "invalidFileExplanation": "Silakan unggah file PDF.",
+      "noFile": "Tidak Ada File",
+      "noFileExplanation": "Silakan unggah file PDF terlebih dahulu.",
+      "conversionSuccess": "PDF berhasil dikonversi ke WebP!",
+      "conversionError": "Gagal mengonversi PDF ke WebP. File mungkin rusak."
+    },
+    "loader": {
+      "converting": "Mengonversi ke WebP..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF ke BMP",
-    "subtitle": "Konversi setiap halaman PDF menjadi gambar BMP."
+    "subtitle": "Konversi setiap halaman PDF menjadi gambar BMP.",
+    "alert": {
+      "invalidFile": "File Tidak Valid",
+      "invalidFileExplanation": "Silakan unggah file PDF.",
+      "noFile": "Tidak Ada File",
+      "noFileExplanation": "Silakan unggah file PDF terlebih dahulu.",
+      "conversionSuccess": "PDF berhasil dikonversi ke BMP!",
+      "conversionError": "Gagal mengonversi PDF ke BMP. File mungkin rusak."
+    },
+    "loader": {
+      "converting": "Mengonversi ke BMP..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF ke TIFF",
@@ -291,7 +392,15 @@
     "colorMode": "Mode Warna",
     "multiPage": "Simpan sebagai TIFF multi-halaman (satu file)",
     "loadingVips": "Memuat prosesor gambar...",
-    "converting": "Mengonversi ke TIFF..."
+    "converting": "Mengonversi ke TIFF...",
+    "alert": {
+      "invalidFile": "File Tidak Valid",
+      "invalidFileExplanation": "Silakan unggah file PDF.",
+      "noFile": "Tidak Ada File",
+      "noFileExplanation": "Silakan unggah file PDF terlebih dahulu.",
+      "conversionSuccess": "PDF berhasil dikonversi ke TIFF!",
+      "conversionError": "Gagal mengonversi PDF ke TIFF. File mungkin rusak."
+    }
   },
   "pdfToCbz": {
     "name": "PDF ke CBZ",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF ke JSON",
-    "subtitle": "Konversi file PDF ke format JSON."
+    "subtitle": "Konversi file PDF ke format JSON.",
+    "convertButton": "Konversi ke JSON",
+    "status": {
+      "selectAtLeastOne": "Silakan pilih minimal 1 file PDF",
+      "selectedReady": "{{count}} file dipilih. Siap dikonversi!",
+      "checkingEncrypted": "Memeriksa PDF terenkripsi...",
+      "readingFiles": "Membaca file (Thread Utama)...",
+      "converting": "Mengonversi PDF ke JSON...",
+      "readError": "Kesalahan membaca file: {{message}}",
+      "creatingZip": "Membuat file ZIP...",
+      "success": "PDF berhasil dikonversi ke JSON! Unduhan ZIP dimulai.",
+      "zipError": "Kesalahan membuat ZIP: {{message}}",
+      "workerError": "Kesalahan Worker: {{message}}",
+      "getStarted": "Pilih file PDF untuk memulai"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "Buat PDF dapat dicari dan disalin."
+    "subtitle": "Buat PDF dapat dicari dan disalin.",
+    "languagesInDocument": "Bahasa dalam Dokumen",
+    "searchLanguagesPlaceholder": "Cari bahasa...",
+    "selectedLabel": "Dipilih:",
+    "none": "Tidak ada",
+    "advancedSettingsSummary": "Pengaturan Lanjutan (Direkomendasikan untuk meningkatkan akurasi)",
+    "resolutionLabel": "Resolusi",
+    "resolutionStandard": "Standar (192 DPI)",
+    "resolutionHigh": "Tinggi (288 DPI)",
+    "resolutionUltra": "Ultra (384 DPI)",
+    "binarizeLabel": "Binerkan Gambar (Tingkatkan Kontras untuk Pindaian Bersih)",
+    "embedFullFontsLabel": "Sematkan Font Penuh (File lebih besar, kompatibilitas lebih baik)",
+    "whitelistPresetLabel": "Preset Whitelist Karakter",
+    "whitelistNone": "Tidak ada (Semua karakter)",
+    "whitelistAlphanumeric": "Alfanumerik + Tanda Baca Dasar",
+    "whitelistNumbersCurrency": "Angka + Simbol Mata Uang",
+    "whitelistLettersOnly": "Hanya Huruf (A-Z, a-z)",
+    "whitelistNumbersOnly": "Hanya Angka (0-9)",
+    "whitelistInvoice": "Faktur/Tanda Terima (angka, $, ., -, /)",
+    "whitelistForms": "Formulir (alfanumerik + simbol umum)",
+    "whitelistCustom": "Kustom...",
+    "whitelistHelp": "Hanya karakter ini yang akan dikenali. Kosongkan untuk semua karakter.",
+    "whitelistInputLabel": "Whitelist Karakter (Opsional)",
+    "whitelistInputPlaceholder": "mis., abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "Mulai OCR",
+    "progressInitializing": "Menginisialisasi...",
+    "resultsTitle": "OCR Selesai",
+    "resultsDescription": "PDF yang bisa dicari sudah siap. Anda juga dapat menyalin atau mengunduh teks yang diekstrak di bawah.",
+    "copyToClipboard": "Salin ke Clipboard",
+    "downloadTxt": "Unduh sebagai .txt",
+    "downloadSearchablePdf": "Unduh PDF Bisa Dicari",
+    "statusPrefix": "Status: {{status}}",
+    "availabilityInvalidConfig": "Penyebaran ini tidak mengekspos bahasa OCR yang valid. Bangun ulang dengan VITE_TESSERACT_AVAILABLE_LANGUAGES yang disetel ke kode Tesseract yang valid.",
+    "availabilityBundles": "Penyebaran ini menyertakan OCR untuk: {{languages}}.",
+    "noLanguagesAvailable": "Tidak ada bahasa OCR yang tersedia di penyebaran ini.",
+    "noLanguagesTitle": "Tidak Ada Bahasa Dipilih",
+    "noLanguagesMessage": "Silakan pilih minimal satu bahasa untuk OCR.",
+    "noFileTitle": "Tidak Ada File",
+    "noFileMessage": "Silakan unggah file PDF terlebih dahulu.",
+    "languageUnavailableTitle": "Bahasa OCR Tidak Tersedia",
+    "ocrErrorTitle": "Kesalahan OCR",
+    "ocrErrorMessage": "Kesalahan terjadi selama proses OCR. Worker mungkin gagal dimuat. Silakan coba lagi.",
+    "howItWorksTitle": "Cara kerjanya:",
+    "extractTextLabel": "Ekstrak Teks:",
+    "extractTextDescription": "Menggunakan Tesseract OCR untuk mengenali teks dari gambar atau PDF yang dipindai.",
+    "searchableOutputLabel": "Output Bisa Dicari:",
+    "searchableOutputDescription": "Membuat PDF baru dengan lapisan teks tak terlihat, membuat dokumen Anda sepenuhnya bisa dicari sambil mempertahankan tampilan asli.",
+    "characterFilteringLabel": "Penyaringan Karakter:",
+    "characterFilteringDescription": "Gunakan whitelist untuk memfilter karakter yang tidak diinginkan dan meningkatkan akurasi untuk jenis dokumen tertentu (faktur, formulir, dll.).",
+    "multiLanguageSupportLabel": "Dukungan Multi-bahasa:",
+    "multiLanguageSupportDescription": "Pilih beberapa bahasa untuk dokumen yang berisi konten bahasa campuran."
   },
   "alternateMerge": {
     "name": "Alternatif & Campur Halaman",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF ke Teks",
     "subtitle": "Ekstrak teks dari file PDF dan simpan sebagai teks biasa (.txt). Mendukung beberapa file.",
-    "note": "Alat ini bekerja HANYA dengan PDF yang dibuat secara digital. Untuk dokumen terpindai atau PDF berbasis gambar, gunakan alat OCR PDF kami sebagai gantinya.",
-    "convertButton": "Ekstrak Teks"
+    "noteLabel": "Catatan:",
+    "noteText": "Alat ini HANYA bekerja dengan PDF yang dibuat secara digital. Untuk dokumen pindai atau PDF berbasis gambar, gunakan alat OCR PDF kami sebagai gantinya.",
+    "convertButton": "Ekstrak Teks",
+    "note": "Alat ini bekerja HANYA dengan PDF yang dibuat secara digital. Untuk dokumen terpindai atau PDF berbasis gambar, gunakan alat OCR PDF kami sebagai gantinya."
   },
   "digitalSignPdf": {
     "name": "Tanda Tangan Digital PDF",
     "pageTitle": "Tanda Tangan Digital PDF - Tambah Tanda Tangan Kriptografi | BentoPDF",
     "subtitle": "Tambah tanda tangan digital kriptografi ke PDF Anda menggunakan sertifikat X.509. Mendukung format PKCS#12 (.pfx, .p12) dan PEM. Kunci pribadi Anda tidak pernah meninggalkan browser Anda.",
     "certificateSection": "Sertifikat",
-    "uploadCert": "Unggah sertifikat (.pfx, .p12)",
+    "uploadCert": "Unggah sertifikat (.pfx, .p12, .pem)",
     "certPassword": "Kata Sandi Sertifikat",
+    "privateKeyPassword": "Kata Sandi Kunci Pribadi",
     "certPasswordPlaceholder": "Masukkan kata sandi sertifikat",
     "certInfo": "Informasi Sertifikat",
     "certSubject": "Subjek",
@@ -688,8 +864,71 @@
     "locationPlaceholder": "misalnya, Jakarta, Indonesia",
     "contactInfo": "Info Kontak",
     "contactPlaceholder": "misalnya, email@contoh.com",
+    "visibleSignature": "Tanda Tangan Terlihat",
+    "visibleSignatureDescription": "Saat diaktifkan, kotak tanda tangan terlihat muncul di PDF. Anda dapat mengunggah gambar/logo atau menambahkan teks. Jika tidak ada yang diberikan, nama penanda tangan dari sertifikat akan ditampilkan secara otomatis.",
+    "signatureImage": "Gambar/Logo Tanda Tangan (Opsional)",
+    "uploadSignatureImage": "Unggah gambar (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "Pratinjau tanda tangan",
+    "remove": "Hapus",
+    "page": "Halaman",
+    "firstPage": "Halaman pertama",
+    "lastPage": "Halaman terakhir",
+    "allPages": "Semua halaman",
+    "customPage": "Halaman kustom #",
+    "pageNumber": "Halaman #",
+    "xPosition": "Posisi X (kiri)",
+    "yPosition": "Posisi Y (atas)",
+    "width": "Lebar",
+    "height": "Tinggi",
+    "addTextOverlay": "Tambah hamparan teks",
+    "text": "Teks",
+    "textPlaceholder": "Mis., Ditandatangani secara digital oleh Budi",
+    "textColor": "Warna Teks",
+    "fontSize": "Ukuran Font",
+    "invalidImageTitle": "Gambar Tidak Valid",
+    "invalidImageMessage": "Silakan pilih gambar PNG, JPG, atau WebP.",
+    "invalidFileTitle": "File Tidak Valid",
+    "invalidFileMessage": "Silakan pilih file PDF.",
+    "invalidCertificateTitle": "Sertifikat Tidak Valid",
+    "invalidCertificateMessage": "Silakan pilih file sertifikat .pfx, .p12, atau .pem.",
+    "certificateLoaded": "Sertifikat dimuat",
+    "certificateUnlocked": "Sertifikat tidak terkunci",
+    "failedParsePem": "Gagal mengurai file PEM",
+    "enterPasswordToUnlock": "Masukkan kata sandi untuk membuka kunci",
+    "invalidPasswordOrCertificate": "Kata sandi atau sertifikat tidak valid",
+    "incorrectPassword": "Kata sandi salah",
+    "failedParseCertificate": "Gagal mengurai sertifikat",
+    "missingDataTitle": "Data Hilang",
+    "missingDataMessage": "Silakan unggah PDF dan sertifikat yang valid.",
+    "applyingSignature": "Menerapkan tanda tangan digital...",
+    "signingFailedTitle": "Penandatanganan Gagal",
+    "chainFetchFailed": "Gagal mengambil rantai sertifikat. Mungkin karena masalah jaringan atau proxy sertifikat tidak tersedia. Periksa koneksi internet Anda dan coba lagi. Jika masalah berlanjut, hubungi dukungan.",
+    "failedToSignPdf": "Gagal menandatangani PDF: {{message}}",
+    "defaultSignatureText": "Ditandatangani secara digital oleh {{signer}}\n{{date}}",
+    "pageCount": "{{count}} halaman",
+    "howToStep1Title": "Unggah PDF",
+    "howToStep1Text": "Pilih dokumen PDF yang ingin Anda tandatangani",
+    "howToStep2Title": "Unggah Sertifikat",
+    "howToStep2Text": "Berikan file sertifikat .pfx atau .p12 dan kata sandi",
+    "howToStep3Title": "Tandatangani & Unduh",
+    "howToStep3Text": "Terapkan tanda tangan digital dan unduh PDF Anda yang ditandatangani",
+    "relatedEncryptDesc": "Lindungi PDF dengan kata sandi",
+    "relatedDecryptDesc": "Hapus kata sandi PDF",
+    "relatedFlattenDesc": "Buat anotasi permanen",
+    "relatedSanitizeDesc": "Hapus data tersembunyi",
+    "relatedPermissionsDesc": "Tetapkan izin PDF",
+    "faqWhatIsQuestion": "Apa itu tanda tangan digital?",
+    "faqWhatIsAnswer": "Tanda tangan digital adalah mekanisme kriptografis yang memverifikasi keaslian dan integritas dokumen. Tidak seperti tanda tangan yang digambar, ia menggunakan kriptografi kunci publik (sertifikat X.509) untuk membuktikan identitas penanda tangan.",
+    "faqFormatsQuestion": "Format sertifikat apa yang didukung?",
+    "faqFormatsAnswer": "Kami mendukung sertifikat format PKCS#12 (.pfx, .p12) yang berisi sertifikat dan kunci pribadi Anda dalam satu file terenkripsi. Biasanya diterbitkan oleh otoritas sertifikasi.",
+    "faqPrivateKeyQuestion": "Apakah kunci pribadi saya aman?",
+    "faqPrivateKeyAnswer": "Ya! Semua pemrosesan terjadi sepenuhnya di browser Anda. Sertifikat, kunci pribadi, dan file PDF Anda tidak pernah meninggalkan perangkat atau diunggah ke server mana pun.",
+    "faqValidReadersQuestion": "Apakah tanda tangan akan valid di pembaca PDF?",
+    "faqValidReadersAnswer": "Ya, alat ini membuat tanda tangan terpisah PKCS#7 standar yang dikenali oleh semua pembaca PDF utama. Untuk validasi penuh, gunakan sertifikat dari Otoritas Sertifikasi yang terpercaya.",
     "applySignature": "Terapkan Tanda Tangan Digital",
-    "successMessage": "PDF berhasil ditandatangani! Tanda tangan dapat diverifikasi di pembaca PDF apa pun."
+    "successMessage": "PDF berhasil ditandatangani! Tanda tangan dapat diverifikasi di pembaca PDF apa pun.",
+    "internetRequiredTitle": "Koneksi internet diperlukan",
+    "internetRequiredDescription": "Penandatanganan mungkin perlu mengambil informasi rantai sertifikat dari server penerbit sertifikat untuk memvalidasi tanda tangan."
   },
   "validateSignaturePdf": {
     "name": "Validasi Tanda Tangan PDF",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "Gagal menyimpan alur kerja: kuota penyimpanan terlampaui. Coba hapus template lama.",
       "failedToImport": "Gagal mengimpor alur kerja: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "Pengaturan Fitur Lanjutan",
+    "description": "Konfigurasi modul pemrosesan eksternal untuk mengaktifkan fitur PDF lanjutan. Modul-modul ini opsional dan dilisensikan secara terpisah.",
+    "status": {
+      "testing": "Menguji...",
+      "customOverride": "Penimpaan Kustom",
+      "preConfigured": "Sudah Dikonfigurasi",
+      "notConfigured": "Belum Dikonfigurasi"
+    },
+    "preconfiguredTitle": "Sudah dikonfigurasi dan siap digunakan.",
+    "preconfiguredDescription": "Modul pemrosesan lanjutan dimuat secara otomatis dari CDN. Anda dapat menimpa URL di bawah ini jika perlu menggunakan sumber kustom (mis., untuk penyebaran air-gapped atau self-hosted).",
+    "usingDefault": "Menggunakan default: {{url}}",
+    "pymupdfSubtitle": "Mesin Pemrosesan Dokumen",
+    "pymupdfFeatures": "Mengaktifkan: PDF ke Teks, Markdown, SVG, DOCX, Excel • Ekstrak Gambar/Tabel • Konversi Format",
+    "testButton": "Uji",
+    "recommendedLabel": "Direkomendasikan:",
+    "copyTitle": "Salin ke clipboard",
+    "ghostscriptSubtitle": "Mesin Konversi PDF/A",
+    "ghostscriptFeatures": "Mengaktifkan: Konversi PDF/A-1b, PDF/A-2b, PDF/A-3b • Font ke Outline",
+    "cpdfSubtitle": "Mesin Bookmark & Metadata",
+    "cpdfFeatures": "Mengaktifkan: Pisah berdasarkan Bookmark • Edit Bookmark • Metadata PDF",
+    "saveConfiguration": "Simpan Konfigurasi",
+    "savingConfiguration": "Menyimpan konfigurasi...",
+    "savedTitle": "Disimpan",
+    "savedMessage": "Konfigurasi berhasil disimpan!",
+    "errorTitle": "Kesalahan",
+    "failedSave": "Gagal menyimpan konfigurasi: {{message}}",
+    "emptyUrlTitle": "URL Kosong",
+    "emptyUrlMessage": "Silakan masukkan URL untuk diuji.",
+    "testSuccessTitle": "Berhasil",
+    "connectionSuccess": "Koneksi ke {{package}} berhasil!",
+    "connectionFailedTitle": "Koneksi Gagal",
+    "connectionFailedMessage": "Tidak dapat terhubung ke URL.",
+    "resetDefaults": "Setel Ulang ke Default",
+    "resetTitle": "Setel Ulang",
+    "resetWithDefaults": "Penimpaan kustom dihapus. Default yang dikonfigurasi sebelumnya aktif.",
+    "resetNoDefaults": "Semua konfigurasi dan modul yang di-cache telah dihapus.",
+    "licenseTitle": "Pemberitahuan Lisensi:",
+    "licenseDescription": "Modul eksternal (PyMuPDF, Ghostscript, CoherentPDF) dilisensikan di bawah AGPL-3.0 atau lisensi copyleft serupa. Dengan mengonfigurasi dan menggunakan modul-modul ini, Anda menyetujui ketentuan lisensi masing-masing. BentoPDF kompatibel dengan implementasi Ghostscript WASM dan PyMuPDF WASM apa pun yang mengikuti antarmuka yang diharapkan."
   },
   "pdfOverlay": {
     "name": "Overlay PDF",

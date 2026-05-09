@@ -5,8 +5,11 @@
     "contact": "Контакти",
     "licensing": "Ліцензія",
     "allTools": "Усі інструменти",
+    "docs": "Документація",
     "openMainMenu": "Відкрити головне меню",
-    "language": "Мова"
+    "language": "Мова",
+    "searchLanguage": "Пошук мови…",
+    "noLanguagesFound": "Мови не знайдено"
   },
   "donation": {
     "message": "Подобається BentoPDF? Допоможіть нам залишатися безкоштовними та з відкритим кодом!",
@@ -97,8 +100,11 @@
   },
   "howItWorks": {
     "title": "Як це працює",
+    "step1Title": "Завантажити файл",
     "step1": "Натисніть або перетягніть файл, щоб почати",
+    "step2Title": "Обробити",
     "step2": "Натисніть кнопку обробки",
+    "step3Title": "Завантажити",
     "step3": "Одразу збережіть готовий файл"
   },
   "relatedTools": {
@@ -129,6 +135,10 @@
     "resetToDefaults": "Скинути до стандартних",
     "fullWidthMode": "Повна ширина",
     "fullWidthDescription": "Використовувати всю ширину екрана замість центрування інтерфейсу",
+    "compactMode": "Компактний режим",
+    "compactModeDescription": "Показувати інструменти у вигляді компактного списку замість карток",
+    "advancedSettings": "Додаткові налаштування",
+    "advancedSettingsDescription": "Налаштувати зовнішні модулі обробки (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "Налаштування зберігаються автоматично",
     "clickToSet": "Натисніть, щоб задати",
     "pressKeys": "Натисніть клавіші...",
@@ -266,7 +276,8 @@
     "file": "Файл",
     "files": "Файли",
     "close": "Закрити",
-    "convert": "Конвертувати"
+    "convert": "Конвертувати",
+    "unknownError": "Невідома помилка"
   },
   "about": {
     "hero": {

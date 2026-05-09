@@ -10,6 +10,7 @@
     "input": "Đầu vào",
     "output": "Đầu ra"
   },
+  "convertToPdf": "Chuyển đổi sang PDF",
   "pdfMultiTool": {
     "name": "Công cụ đa năng PDF",
     "subtitle": "Gộp, Chia, Sắp xếp, Xóa, Xoay, Thêm trang trống, Trích xuất và Nhân đôi trong một giao diện thống nhất."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "Nhân đôi & Sắp xếp",
-    "subtitle": "Nhân đôi, sắp xếp lại và xóa trang."
+    "subtitle": "Nhân đôi, sắp xếp lại và xóa trang.",
+    "saveChanges": "Lưu thay đổi"
   },
   "deletePages": {
     "name": "Xóa trang",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "Chỉnh sửa Bookmark",
-    "subtitle": "Thêm, chỉnh sửa, nhập, xóa và trích xuất bookmark PDF."
+    "subtitle": "Thêm, chỉnh sửa, nhập, xóa và trích xuất bookmark PDF.",
+    "autoExtractExisting": "Tự động trích xuất dấu trang hiện có",
+    "importSectionTitle": "Hoặc nhập dấu trang",
+    "csvFormat": "Định dạng CSV: tiêu đề,trang,cấp",
+    "jsonFormat": "Định dạng JSON",
+    "uploadCsvAction": "Nhấp để tải lên CSV",
+    "uploadJsonAction": "Nhấp để tải lên JSON",
+    "orDragHere": "hoặc kéo vào đây"
   },
   "tableOfContents": {
     "name": "Mục lục",
-    "subtitle": "Tạo trang mục lục từ bookmark PDF."
+    "subtitle": "Tạo trang mục lục từ bookmark PDF.",
+    "titleLabel": "Tiêu đề Mục lục",
+    "fontSize": "Cỡ chữ",
+    "fontFamily": "Họ phông chữ",
+    "addBookmark": "Thêm dấu trang cho trang Mục lục",
+    "generateButton": "Tạo Mục lục",
+    "selectPdfFirst": "Vui lòng chọn tệp PDF trước.",
+    "statusReadingFileMainThread": "Đang đọc tệp (Luồng chính)...",
+    "statusGenerating": "Đang tạo mục lục...",
+    "errorReadingFileWithMessage": "Lỗi đọc tệp: {{message}}",
+    "successGeneratedDownloadStarted": "Đã tạo mục lục thành công! Tải xuống đã bắt đầu.",
+    "workerErrorWithMessage": "Lỗi: {{message}}",
+    "workerErrorOccurred": "Đã xảy ra lỗi worker. Kiểm tra console để biết chi tiết."
   },
   "pageNumbers": {
     "name": "Số trang",
@@ -210,7 +231,8 @@
     "subtitle": "Thêm tem hình ảnh vào PDF của bạn bằng thanh công cụ ghi chú.",
     "usernameLabel": "Tên người dùng tem",
     "usernamePlaceholder": "Nhập tên của bạn (cho tem)",
-    "usernameHint": "Tên này sẽ xuất hiện trên các tem bạn tạo."
+    "usernameHint": "Tên này sẽ xuất hiện trên các tem bạn tạo.",
+    "saveButton": "Lưu PDF đã đóng dấu"
   },
   "removeAnnotations": {
     "name": "Xóa ghi chú",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "Điền form PDF",
-    "subtitle": "Điền form trực tiếp trong trình duyệt. Cũng hỗ trợ form XFA."
+    "subtitle": "Điền form trực tiếp trong trình duyệt. Cũng hỗ trợ form XFA.",
+    "uploadHint": "Tải lên PDF có trường biểu mẫu. Điền trực tiếp vào trình xem bên dưới, sau đó nhấp vào nút để lưu và tải xuống biểu mẫu đã điền. Cũng hỗ trợ biểu mẫu XFA.",
+    "xfaNoteTitle": "Lưu ý về biểu mẫu XFA:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) là định dạng cũ chỉ được hỗ trợ bởi một số trình xem PDF nhất định như BentoPDF và Firefox. Nếu bạn mở PDF XFA trong phần mềm khác và thấy trang trống hoặc không có trường biểu mẫu, có nghĩa là trình xem đó không hỗ trợ XFA. Để xem và điền biểu mẫu XFA đúng cách, hãy sử dụng Firefox hoặc Form Filler của BentoPDF."
   },
   "createPdfForm": {
     "name": "Tạo form PDF",
-    "subtitle": "Tạo form PDF có thể điền với các trường văn bản kéo và thả."
+    "subtitle": "Tạo form PDF có thể điền với các trường văn bản kéo và thả.",
+    "orSeparator": "HOẶC",
+    "createBlankPdf": "Tạo PDF trống"
   },
   "removeBlankPages": {
     "name": "Xóa trang trống",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "Văn bản sang PDF",
-    "subtitle": "Chuyển đổi tệp văn bản thuần túy thành PDF."
+    "subtitle": "Chuyển đổi tệp văn bản thuần túy thành PDF.",
+    "uploadFiles": "Tải lên tệp",
+    "typeText": "Nhập văn bản",
+    "acceptedFormats": "Tệp văn bản (.txt)",
+    "fontFamily": "Họ phông chữ",
+    "fontSize": "Cỡ chữ",
+    "textColor": "Màu văn bản",
+    "pageSize": "Cỡ trang",
+    "rtlAutoDetectNote": "Các ngôn ngữ RTL (Ả Rập, Urdu, Ba Tư, v.v.) được tự động phát hiện và hướng văn bản được điều chỉnh.",
+    "createButton": "Tạo PDF"
   },
   "jsonToPdf": {
     "name": "JSON sang PDF",
-    "subtitle": "Chuyển đổi tệp JSON sang định dạng PDF."
+    "subtitle": "Chuyển đổi tệp JSON sang định dạng PDF.",
+    "noteLabel": "Lưu ý:",
+    "noteText": "Chỉ hỗ trợ các tệp JSON được tạo bởi công cụ chuyển đổi PDF sang JSON. Các tệp JSON tiêu chuẩn từ các công cụ khác sẽ không hoạt động.",
+    "acceptedFormats": "Nhiều tệp JSON",
+    "status": {
+      "selectAtLeastOne": "Vui lòng chọn ít nhất 1 tệp JSON",
+      "selectedReady": "Đã chọn {{count}} tệp. Sẵn sàng chuyển đổi!",
+      "readingFiles": "Đang đọc tệp (Luồng chính)...",
+      "converting": "Đang chuyển đổi tệp JSON sang PDF...",
+      "readError": "Lỗi đọc tệp: {{message}}",
+      "creatingZip": "Đang tạo tệp ZIP...",
+      "success": "Đã chuyển đổi thành công tệp JSON sang PDF! Tải xuống ZIP đã bắt đầu.",
+      "zipError": "Lỗi tạo ZIP: {{message}}",
+      "workerError": "Lỗi Worker: {{message}}",
+      "getStarted": "Chọn tệp JSON để bắt đầu"
+    }
   },
   "pdfToJpg": {
     "name": "PDF sang JPG",
-    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh JPG."
+    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh JPG.",
+    "imageQuality": "Chất lượng hình ảnh",
+    "imageQualityExplanation": "Chất lượng cao hơn = kích thước tệp lớn hơn",
+    "alert": {
+      "invalidFile": "Tệp không hợp lệ",
+      "invalidFileExplanation": "Vui lòng tải lên tệp PDF.",
+      "noFile": "Không có tệp",
+      "noFileExplanation": "Vui lòng tải lên tệp PDF trước.",
+      "conversionSuccess": "Đã chuyển đổi PDF thành JPG thành công!",
+      "conversionError": "Không thể chuyển đổi PDF sang JPG. Tệp có thể bị hỏng."
+    },
+    "loader": {
+      "converting": "Đang chuyển đổi sang JPG..."
+    }
   },
   "pdfToPng": {
     "name": "PDF sang PNG",
-    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh PNG."
+    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh PNG.",
+    "imageScale": "Tỷ lệ hình ảnh",
+    "imageScaleExplanation": "Tỷ lệ lớn hơn = chất lượng tốt hơn nhưng tệp lớn hơn",
+    "alert": {
+      "invalidFile": "Tệp không hợp lệ",
+      "invalidFileExplanation": "Vui lòng tải lên tệp PDF.",
+      "noFile": "Không có tệp",
+      "noFileExplanation": "Vui lòng tải lên tệp PDF trước.",
+      "conversionSuccess": "Đã chuyển đổi PDF thành PNG thành công!",
+      "conversionError": "Không thể chuyển đổi PDF sang PNG. Tệp có thể bị hỏng."
+    },
+    "loader": {
+      "converting": "Đang chuyển đổi sang PNG..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF sang WebP",
-    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh WebP."
+    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh WebP.",
+    "imageQuality": "Chất lượng hình ảnh",
+    "imageQualityExplanation": "Chất lượng cao hơn = kích thước tệp lớn hơn",
+    "alert": {
+      "invalidFile": "Tệp không hợp lệ",
+      "invalidFileExplanation": "Vui lòng tải lên tệp PDF.",
+      "noFile": "Không có tệp",
+      "noFileExplanation": "Vui lòng tải lên tệp PDF trước.",
+      "conversionSuccess": "Đã chuyển đổi PDF thành WebP thành công!",
+      "conversionError": "Không thể chuyển đổi PDF sang WebP. Tệp có thể bị hỏng."
+    },
+    "loader": {
+      "converting": "Đang chuyển đổi sang WebP..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF sang BMP",
-    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh BMP."
+    "subtitle": "Chuyển đổi mỗi trang PDF thành hình ảnh BMP.",
+    "alert": {
+      "invalidFile": "Tệp không hợp lệ",
+      "invalidFileExplanation": "Vui lòng tải lên tệp PDF.",
+      "noFile": "Không có tệp",
+      "noFileExplanation": "Vui lòng tải lên tệp PDF trước.",
+      "conversionSuccess": "Đã chuyển đổi PDF thành BMP thành công!",
+      "conversionError": "Không thể chuyển đổi PDF sang BMP. Tệp có thể bị hỏng."
+    },
+    "loader": {
+      "converting": "Đang chuyển đổi sang BMP..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF sang TIFF",
@@ -291,7 +392,15 @@
     "colorMode": "Chế độ màu",
     "multiPage": "Lưu dưới dạng TIFF nhiều trang (một tệp)",
     "loadingVips": "Đang tải bộ xử lý hình ảnh...",
-    "converting": "Đang chuyển đổi sang TIFF..."
+    "converting": "Đang chuyển đổi sang TIFF...",
+    "alert": {
+      "invalidFile": "Tệp không hợp lệ",
+      "invalidFileExplanation": "Vui lòng tải lên tệp PDF.",
+      "noFile": "Không có tệp",
+      "noFileExplanation": "Vui lòng tải lên tệp PDF trước.",
+      "conversionSuccess": "Đã chuyển đổi PDF thành TIFF thành công!",
+      "conversionError": "Không thể chuyển đổi PDF sang TIFF. Tệp có thể bị hỏng."
+    }
   },
   "pdfToCbz": {
     "name": "PDF sang CBZ",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF sang JSON",
-    "subtitle": "Chuyển đổi tệp PDF sang định dạng JSON."
+    "subtitle": "Chuyển đổi tệp PDF sang định dạng JSON.",
+    "convertButton": "Chuyển đổi sang JSON",
+    "status": {
+      "selectAtLeastOne": "Vui lòng chọn ít nhất 1 tệp PDF",
+      "selectedReady": "Đã chọn {{count}} tệp. Sẵn sàng chuyển đổi!",
+      "checkingEncrypted": "Đang kiểm tra PDF mã hóa...",
+      "readingFiles": "Đang đọc tệp (Luồng chính)...",
+      "converting": "Đang chuyển đổi PDF sang JSON...",
+      "readError": "Lỗi đọc tệp: {{message}}",
+      "creatingZip": "Đang tạo tệp ZIP...",
+      "success": "Đã chuyển đổi PDF thành JSON thành công! Tải xuống ZIP đã bắt đầu.",
+      "zipError": "Lỗi tạo ZIP: {{message}}",
+      "workerError": "Lỗi Worker: {{message}}",
+      "getStarted": "Chọn tệp PDF để bắt đầu"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "Làm cho PDF có thể tìm kiếm và sao chép được."
+    "subtitle": "Làm cho PDF có thể tìm kiếm và sao chép được.",
+    "languagesInDocument": "Ngôn ngữ trong tài liệu",
+    "searchLanguagesPlaceholder": "Tìm ngôn ngữ...",
+    "selectedLabel": "Đã chọn:",
+    "none": "Không có",
+    "advancedSettingsSummary": "Cài đặt nâng cao (Khuyến nghị để cải thiện độ chính xác)",
+    "resolutionLabel": "Độ phân giải",
+    "resolutionStandard": "Tiêu chuẩn (192 DPI)",
+    "resolutionHigh": "Cao (288 DPI)",
+    "resolutionUltra": "Siêu (384 DPI)",
+    "binarizeLabel": "Nhị phân hóa Hình ảnh (Tăng cường độ tương phản cho bản quét sạch)",
+    "embedFullFontsLabel": "Nhúng phông chữ đầy đủ (Tệp lớn hơn, tương thích tốt hơn)",
+    "whitelistPresetLabel": "Cài đặt sẵn danh sách trắng ký tự",
+    "whitelistNone": "Không có (Tất cả ký tự)",
+    "whitelistAlphanumeric": "Chữ và số + Dấu câu cơ bản",
+    "whitelistNumbersCurrency": "Số + Ký hiệu tiền tệ",
+    "whitelistLettersOnly": "Chỉ chữ cái (A-Z, a-z)",
+    "whitelistNumbersOnly": "Chỉ số (0-9)",
+    "whitelistInvoice": "Hóa đơn/Biên lai (số, $, ., -, /)",
+    "whitelistForms": "Biểu mẫu (chữ và số + ký hiệu phổ biến)",
+    "whitelistCustom": "Tùy chỉnh...",
+    "whitelistHelp": "Chỉ những ký tự này sẽ được nhận diện. Để trống cho tất cả ký tự.",
+    "whitelistInputLabel": "Danh sách trắng ký tự (Tùy chọn)",
+    "whitelistInputPlaceholder": "ví dụ: abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "Bắt đầu OCR",
+    "progressInitializing": "Đang khởi tạo...",
+    "resultsTitle": "OCR hoàn thành",
+    "resultsDescription": "PDF có thể tìm kiếm của bạn đã sẵn sàng. Bạn cũng có thể sao chép hoặc tải xuống văn bản đã trích xuất bên dưới.",
+    "copyToClipboard": "Sao chép vào Clipboard",
+    "downloadTxt": "Tải xuống dưới dạng .txt",
+    "downloadSearchablePdf": "Tải xuống PDF có thể tìm kiếm",
+    "statusPrefix": "Trạng thái: {{status}}",
+    "availabilityInvalidConfig": "Triển khai này không cung cấp ngôn ngữ OCR hợp lệ. Xây dựng lại với VITE_TESSERACT_AVAILABLE_LANGUAGES được đặt thành mã Tesseract hợp lệ.",
+    "availabilityBundles": "Triển khai này bao gồm OCR cho: {{languages}}.",
+    "noLanguagesAvailable": "Không có ngôn ngữ OCR nào khả dụng trong triển khai này.",
+    "noLanguagesTitle": "Chưa chọn ngôn ngữ",
+    "noLanguagesMessage": "Vui lòng chọn ít nhất một ngôn ngữ cho OCR.",
+    "noFileTitle": "Không có tệp",
+    "noFileMessage": "Vui lòng tải lên tệp PDF trước.",
+    "languageUnavailableTitle": "Ngôn ngữ OCR không khả dụng",
+    "ocrErrorTitle": "Lỗi OCR",
+    "ocrErrorMessage": "Đã xảy ra lỗi trong quá trình OCR. Worker có thể đã không tải được. Vui lòng thử lại.",
+    "howItWorksTitle": "Cách hoạt động:",
+    "extractTextLabel": "Trích xuất văn bản:",
+    "extractTextDescription": "Sử dụng Tesseract OCR để nhận diện văn bản từ hình ảnh quét hoặc PDF.",
+    "searchableOutputLabel": "Đầu ra có thể tìm kiếm:",
+    "searchableOutputDescription": "Tạo PDF mới với lớp văn bản vô hình, làm cho tài liệu của bạn có thể tìm kiếm hoàn toàn trong khi vẫn giữ được hình thức ban đầu.",
+    "characterFilteringLabel": "Lọc ký tự:",
+    "characterFilteringDescription": "Sử dụng danh sách trắng để lọc các ký tự không mong muốn và cải thiện độ chính xác cho các loại tài liệu cụ thể (hóa đơn, biểu mẫu, v.v.).",
+    "multiLanguageSupportLabel": "Hỗ trợ đa ngôn ngữ:",
+    "multiLanguageSupportDescription": "Chọn nhiều ngôn ngữ cho tài liệu chứa nội dung ngôn ngữ hỗn hợp."
   },
   "alternateMerge": {
     "name": "Xen kẽ & Trộn trang",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF sang Văn bản",
     "subtitle": "Trích xuất văn bản từ tệp PDF và lưu dưới dạng tệp văn bản (.txt). Hỗ trợ nhiều tệp.",
-    "note": "Công cụ này CHỈ hoạt động với các tệp PDF được tạo kỹ thuật số. Đối với tài liệu quét hoặc PDF dựa trên hình ảnh, hãy sử dụng công cụ OCR PDF của chúng tôi.",
-    "convertButton": "Trích xuất văn bản"
+    "noteLabel": "Lưu ý:",
+    "noteText": "Công cụ này CHỈ hoạt động với PDF được tạo kỹ thuật số. Đối với tài liệu quét hoặc PDF dựa trên hình ảnh, hãy sử dụng công cụ OCR PDF của chúng tôi thay thế.",
+    "convertButton": "Trích xuất văn bản",
+    "note": "Công cụ này CHỈ hoạt động với các tệp PDF được tạo kỹ thuật số. Đối với tài liệu quét hoặc PDF dựa trên hình ảnh, hãy sử dụng công cụ OCR PDF của chúng tôi."
   },
   "digitalSignPdf": {
     "name": "Chữ ký số PDF",
     "pageTitle": "Chữ ký số PDF - Thêm chữ ký mật mã | BentoPDF",
     "subtitle": "Thêm chữ ký số mật mã vào PDF của bạn bằng chứng chỉ X.509. Hỗ trợ định dạng PKCS#12 (.pfx, .p12) và PEM. Khóa riêng của bạn không bao giờ rời khỏi trình duyệt.",
     "certificateSection": "Chứng chỉ",
-    "uploadCert": "Tải lên chứng chỉ (.pfx, .p12)",
+    "uploadCert": "Tải lên chứng chỉ (.pfx, .p12, .pem)",
     "certPassword": "Mật khẩu chứng chỉ",
+    "privateKeyPassword": "Mật khẩu khóa riêng",
     "certPasswordPlaceholder": "Nhập mật khẩu chứng chỉ",
     "certInfo": "Thông tin chứng chỉ",
     "certSubject": "Chủ thể",
@@ -688,8 +864,71 @@
     "locationPlaceholder": "ví dụ: Hà Nội, Việt Nam",
     "contactInfo": "Thông tin liên hệ",
     "contactPlaceholder": "ví dụ: email@example.com",
+    "visibleSignature": "Chữ ký hiển thị",
+    "visibleSignatureDescription": "Khi được bật, một hộp chữ ký hiển thị xuất hiện trên PDF. Bạn có thể tải lên ảnh/logo hoặc thêm văn bản. Nếu không cung cấp, tên người ký từ chứng chỉ sẽ được hiển thị tự động.",
+    "signatureImage": "Ảnh/Logo chữ ký (Tùy chọn)",
+    "uploadSignatureImage": "Tải lên ảnh (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "Xem trước chữ ký",
+    "remove": "Xóa",
+    "page": "Trang",
+    "firstPage": "Trang đầu",
+    "lastPage": "Trang cuối",
+    "allPages": "Tất cả trang",
+    "customPage": "Trang tùy chỉnh #",
+    "pageNumber": "Trang #",
+    "xPosition": "Vị trí X (trái)",
+    "yPosition": "Vị trí Y (trên)",
+    "width": "Chiều rộng",
+    "height": "Chiều cao",
+    "addTextOverlay": "Thêm lớp phủ văn bản",
+    "text": "Văn bản",
+    "textPlaceholder": "ví dụ: Đã ký số bởi Nguyễn Văn A",
+    "textColor": "Màu văn bản",
+    "fontSize": "Cỡ chữ",
+    "invalidImageTitle": "Ảnh không hợp lệ",
+    "invalidImageMessage": "Vui lòng chọn ảnh PNG, JPG hoặc WebP.",
+    "invalidFileTitle": "Tệp không hợp lệ",
+    "invalidFileMessage": "Vui lòng chọn tệp PDF.",
+    "invalidCertificateTitle": "Chứng chỉ không hợp lệ",
+    "invalidCertificateMessage": "Vui lòng chọn tệp chứng chỉ .pfx, .p12 hoặc .pem.",
+    "certificateLoaded": "Đã tải chứng chỉ",
+    "certificateUnlocked": "Đã mở khóa chứng chỉ",
+    "failedParsePem": "Không thể phân tích tệp PEM",
+    "enterPasswordToUnlock": "Nhập mật khẩu để mở khóa",
+    "invalidPasswordOrCertificate": "Mật khẩu hoặc chứng chỉ không hợp lệ",
+    "incorrectPassword": "Mật khẩu không đúng",
+    "failedParseCertificate": "Không thể phân tích chứng chỉ",
+    "missingDataTitle": "Thiếu dữ liệu",
+    "missingDataMessage": "Vui lòng tải lên cả PDF và chứng chỉ hợp lệ.",
+    "applyingSignature": "Đang áp dụng chữ ký số...",
+    "signingFailedTitle": "Ký thất bại",
+    "chainFetchFailed": "Không thể lấy chuỗi chứng chỉ. Có thể do sự cố mạng hoặc proxy chứng chỉ không khả dụng. Vui lòng kiểm tra kết nối Internet và thử lại. Nếu sự cố vẫn tiếp diễn, hãy liên hệ với bộ phận hỗ trợ.",
+    "failedToSignPdf": "Không thể ký PDF: {{message}}",
+    "defaultSignatureText": "Đã ký số bởi {{signer}}\n{{date}}",
+    "pageCount": "{{count}} trang",
+    "howToStep1Title": "Tải lên PDF",
+    "howToStep1Text": "Chọn tài liệu PDF bạn muốn ký",
+    "howToStep2Title": "Tải lên chứng chỉ",
+    "howToStep2Text": "Cung cấp tệp chứng chỉ .pfx hoặc .p12 và mật khẩu",
+    "howToStep3Title": "Ký & Tải xuống",
+    "howToStep3Text": "Áp dụng chữ ký số và tải xuống PDF đã ký",
+    "relatedEncryptDesc": "Bảo vệ PDF của bạn bằng mật khẩu",
+    "relatedDecryptDesc": "Xóa mật khẩu PDF",
+    "relatedFlattenDesc": "Làm cho chú thích vĩnh viễn",
+    "relatedSanitizeDesc": "Xóa dữ liệu ẩn",
+    "relatedPermissionsDesc": "Đặt quyền PDF",
+    "faqWhatIsQuestion": "Chữ ký số là gì?",
+    "faqWhatIsAnswer": "Chữ ký số là một cơ chế mật mã xác minh tính xác thực và toàn vẹn của tài liệu. Khác với chữ ký vẽ, nó sử dụng mật mã khóa công khai (chứng chỉ X.509) để chứng minh danh tính của người ký.",
+    "faqFormatsQuestion": "Định dạng chứng chỉ nào được hỗ trợ?",
+    "faqFormatsAnswer": "Chúng tôi hỗ trợ chứng chỉ định dạng PKCS#12 (.pfx, .p12) chứa cả chứng chỉ và khóa riêng của bạn trong một tệp được mã hóa duy nhất. Chúng thường được phát hành bởi các cơ quan chứng nhận.",
+    "faqPrivateKeyQuestion": "Khóa riêng của tôi có an toàn không?",
+    "faqPrivateKeyAnswer": "Có! Tất cả quá trình xử lý diễn ra hoàn toàn trong trình duyệt của bạn. Chứng chỉ, khóa riêng và tệp PDF của bạn không bao giờ rời khỏi thiết bị hoặc tải lên bất kỳ máy chủ nào.",
+    "faqValidReadersQuestion": "Chữ ký có hợp lệ trong các trình đọc PDF không?",
+    "faqValidReadersAnswer": "Có, công cụ tạo chữ ký tách rời PKCS#7 chuẩn được nhận dạng bởi tất cả các trình đọc PDF chính. Để xác thực đầy đủ, hãy sử dụng chứng chỉ từ một Cơ quan Chứng nhận đáng tin cậy.",
     "applySignature": "Áp dụng chữ ký số",
-    "successMessage": "Ký PDF thành công! Chữ ký có thể được xác minh trong bất kỳ trình đọc PDF nào."
+    "successMessage": "Ký PDF thành công! Chữ ký có thể được xác minh trong bất kỳ trình đọc PDF nào.",
+    "internetRequiredTitle": "Yêu cầu kết nối Internet",
+    "internetRequiredDescription": "Việc ký có thể cần lấy thông tin chuỗi chứng chỉ từ máy chủ của nhà phát hành chứng chỉ để xác thực chữ ký."
   },
   "validateSignaturePdf": {
     "name": "Xác minh chữ ký PDF",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "Không thể lưu quy trình: đã vượt quá dung lượng lưu trữ. Hãy thử xóa các mẫu cũ.",
       "failedToImport": "Không thể nhập quy trình: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "Cài đặt tính năng nâng cao",
+    "description": "Cấu hình các mô-đun xử lý bên ngoài để kích hoạt các tính năng PDF nâng cao. Các mô-đun này là tùy chọn và được cấp phép riêng.",
+    "status": {
+      "testing": "Đang kiểm tra...",
+      "customOverride": "Ghi đè tùy chỉnh",
+      "preConfigured": "Đã cấu hình sẵn",
+      "notConfigured": "Chưa cấu hình"
+    },
+    "preconfiguredTitle": "Đã cấu hình sẵn và sẵn sàng sử dụng.",
+    "preconfiguredDescription": "Các mô-đun xử lý nâng cao được tải tự động từ CDN. Bạn có thể ghi đè các URL bên dưới nếu cần sử dụng nguồn tùy chỉnh (ví dụ: cho triển khai air-gapped hoặc tự lưu trữ).",
+    "usingDefault": "Sử dụng mặc định: {{url}}",
+    "pymupdfSubtitle": "Engine xử lý tài liệu",
+    "pymupdfFeatures": "Kích hoạt: PDF sang văn bản, Markdown, SVG, DOCX, Excel • Trích xuất hình ảnh/bảng • Chuyển đổi định dạng",
+    "testButton": "Kiểm tra",
+    "recommendedLabel": "Khuyến nghị:",
+    "copyTitle": "Sao chép vào clipboard",
+    "ghostscriptSubtitle": "Engine chuyển đổi PDF/A",
+    "ghostscriptFeatures": "Kích hoạt: Chuyển đổi PDF/A-1b, PDF/A-2b, PDF/A-3b • Phông chữ thành đường viền",
+    "cpdfSubtitle": "Engine Dấu trang & Siêu dữ liệu",
+    "cpdfFeatures": "Kích hoạt: Chia theo Dấu trang • Chỉnh sửa Dấu trang • Siêu dữ liệu PDF",
+    "saveConfiguration": "Lưu cấu hình",
+    "savingConfiguration": "Đang lưu cấu hình...",
+    "savedTitle": "Đã lưu",
+    "savedMessage": "Đã lưu cấu hình thành công!",
+    "errorTitle": "Lỗi",
+    "failedSave": "Không thể lưu cấu hình: {{message}}",
+    "emptyUrlTitle": "URL trống",
+    "emptyUrlMessage": "Vui lòng nhập URL để kiểm tra.",
+    "testSuccessTitle": "Thành công",
+    "connectionSuccess": "Kết nối đến {{package}} thành công!",
+    "connectionFailedTitle": "Kết nối thất bại",
+    "connectionFailedMessage": "Không thể kết nối đến URL.",
+    "resetDefaults": "Đặt lại về mặc định",
+    "resetTitle": "Đặt lại",
+    "resetWithDefaults": "Đã xóa các ghi đè tùy chỉnh. Các giá trị mặc định đã cấu hình sẵn đang hoạt động.",
+    "resetNoDefaults": "Tất cả cấu hình và mô-đun được lưu trong bộ nhớ đệm đã được xóa.",
+    "licenseTitle": "Thông báo giấy phép:",
+    "licenseDescription": "Các mô-đun bên ngoài (PyMuPDF, Ghostscript, CoherentPDF) được cấp phép theo AGPL-3.0 hoặc các giấy phép copyleft tương tự. Bằng cách cấu hình và sử dụng các mô-đun này, bạn đồng ý với các điều khoản giấy phép tương ứng. BentoPDF tương thích với bất kỳ triển khai Ghostscript WASM và PyMuPDF WASM nào tuân theo giao diện mong đợi."
   },
   "pdfOverlay": {
     "name": "Chồng PDF",

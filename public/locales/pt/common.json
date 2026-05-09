@@ -7,7 +7,9 @@
     "allTools": "Todas as Ferramentas",
     "docs": "Docs",
     "openMainMenu": "Abrir menu principal",
-    "language": "Idioma"
+    "language": "Idioma",
+    "searchLanguage": "Buscar idioma…",
+    "noLanguagesFound": "Nenhum idioma encontrado"
   },
   "donation": {
     "message": "Adora o BentoPDF? Ajude-nos a mantê-lo gratuito e de código aberto!",
@@ -96,6 +98,18 @@
       "webpImages": "Imagens WebP"
     }
   },
+  "howItWorks": {
+    "title": "Como funciona",
+    "step1Title": "Carregar arquivo",
+    "step1": "Clique ou arraste seu arquivo aqui",
+    "step2Title": "Processar",
+    "step2": "Clique no botão de processamento",
+    "step3Title": "Baixar",
+    "step3": "Salve seu arquivo processado instantaneamente"
+  },
+  "relatedTools": {
+    "title": "Ferramentas PDF relacionadas"
+  },
   "loader": {
     "processing": "Processando..."
   },
@@ -121,6 +135,10 @@
     "resetToDefaults": "Restaurar Padrões",
     "fullWidthMode": "Modo Largura Total",
     "fullWidthDescription": "Usa toda a largura da tela para as ferramentas em vez de um container centralizado",
+    "compactMode": "Modo compacto",
+    "compactModeDescription": "Exibir ferramentas como lista compacta em vez de cartões",
+    "advancedSettings": "Configurações avançadas",
+    "advancedSettingsDescription": "Configurar módulos de processamento externos (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "As configurações são salvas automaticamente",
     "clickToSet": "Clique para definir",
     "pressKeys": "Pressione as teclas...",
@@ -167,6 +185,7 @@
   "faq": {
     "title": "Perguntas",
     "questions": "Frequentes",
+    "sectionTitle": "Perguntas frequentes",
     "isFree": {
       "question": "O BentoPDF é realmente grátis?",
       "answer": "Sim, com certeza. Todas as ferramentas do BentoPDF são 100% gratuitas, sem limites de arquivos, sem cadastros e sem marcas d'água. Acreditamos que todos merecem acesso a ferramentas PDF poderosas sem barreiras financeiras."
@@ -198,8 +217,7 @@
     "analytics": {
       "question": "Vocês usam cookies ou rastreamento?",
       "answer": "Usamos apenas o Simple Analytics para contar visitas de forma anônima. Sabemos quantos usuários nos visitam, mas nunca quem você é. O sistema respeita totalmente a GDPR."
-    },
-    "sectionTitle": "Perguntas frequentes"
+    }
   },
   "testimonials": {
     "title": "O que nossos",
@@ -252,11 +270,14 @@
     "add": "Adicionar",
     "remove": "Remover",
     "loading": "Carregando...",
+    "loadingPageCount": "Carregando páginas...",
     "error": "Erro",
     "success": "Sucesso",
     "file": "Arquivo",
     "files": "Arquivos",
-    "close": "Fechar"
+    "close": "Fechar",
+    "convert": "Converter",
+    "unknownError": "Erro desconhecido"
   },
   "about": {
     "hero": {
@@ -349,15 +370,6 @@
     "errorRendering": "Falha ao renderizar miniaturas das páginas",
     "error": "Erro",
     "failedToLoad": "Falha ao carregar"
-  },
-  "howItWorks": {
-    "title": "Como funciona",
-    "step1": "Clique ou arraste seu arquivo aqui",
-    "step2": "Clique no botão de processamento",
-    "step3": "Salve seu arquivo processado instantaneamente"
-  },
-  "relatedTools": {
-    "title": "Ferramentas PDF relacionadas"
   },
   "simpleMode": {
     "title": "Ferramentas PDF",

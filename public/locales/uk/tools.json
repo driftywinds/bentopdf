@@ -10,6 +10,7 @@
     "input": "Ввід",
     "output": "Вивід"
   },
+  "convertToPdf": "Конвертувати в PDF",
   "pdfMultiTool": {
     "name": "PDF мультиінструмент",
     "subtitle": "Об’єднання, розділення, впорядкування, видалення, обертання, додавання порожніх сторінок, витяг та дублювання — все в одному інтерфейсі."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "Дублювати та впорядкувати",
-    "subtitle": "Дублювати, змінювати порядок і видаляти сторінки."
+    "subtitle": "Дублювати, змінювати порядок і видаляти сторінки.",
+    "saveChanges": "Зберегти зміни"
   },
   "deletePages": {
     "name": "Видалити сторінки",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "Редагувати закладки",
-    "subtitle": "Додавати, змінювати, імпортувати, видаляти та витягувати закладки PDF."
+    "subtitle": "Додавати, змінювати, імпортувати, видаляти та витягувати закладки PDF.",
+    "autoExtractExisting": "Автоматично витягувати наявні закладки",
+    "importSectionTitle": "Або імпортувати закладки",
+    "csvFormat": "Формат CSV: заголовок,сторінка,рівень",
+    "jsonFormat": "Формат JSON",
+    "uploadCsvAction": "Натисніть, щоб завантажити CSV",
+    "uploadJsonAction": "Натисніть, щоб завантажити JSON",
+    "orDragHere": "або перетягніть сюди"
   },
   "tableOfContents": {
     "name": "Зміст",
-    "subtitle": "Створити сторінку змісту на основі закладок PDF."
+    "subtitle": "Створити сторінку змісту на основі закладок PDF.",
+    "titleLabel": "Заголовок змісту",
+    "fontSize": "Розмір шрифту",
+    "fontFamily": "Сімейство шрифтів",
+    "addBookmark": "Додати закладку для сторінки змісту",
+    "generateButton": "Створити зміст",
+    "selectPdfFirst": "Спочатку виберіть PDF-файл.",
+    "statusReadingFileMainThread": "Читання файлу (головний потік)...",
+    "statusGenerating": "Створення змісту...",
+    "errorReadingFileWithMessage": "Помилка читання файлу: {{message}}",
+    "successGeneratedDownloadStarted": "Зміст успішно створено! Завантаження розпочато.",
+    "workerErrorWithMessage": "Помилка: {{message}}",
+    "workerErrorOccurred": "Виникла помилка worker. Подробиці в консолі."
   },
   "pageNumbers": {
     "name": "Нумерація сторінок",
@@ -210,7 +231,8 @@
     "subtitle": "Додати графічні штампи до PDF через панель анотацій.",
     "usernameLabel": "Ім’я для штампу",
     "usernamePlaceholder": "Введіть ваше ім’я (для штампів)",
-    "usernameHint": "Це ім’я буде відображатися на створених штампах."
+    "usernameHint": "Це ім’я буде відображатися на створених штампах.",
+    "saveButton": "Зберегти PDF зі штампом"
   },
   "removeAnnotations": {
     "name": "Видалити анотації",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "Заповнення PDF-форм",
-    "subtitle": "Заповнювати форми прямо в браузері. Підтримуються також XFA-форми."
+    "subtitle": "Заповнювати форми прямо в браузері. Підтримуються також XFA-форми.",
+    "uploadHint": "Завантажте PDF з полями форми. Заповніть їх безпосередньо у переглядачі нижче, потім натисніть кнопку, щоб зберегти та завантажити заповнену форму. Також підтримуються форми XFA.",
+    "xfaNoteTitle": "Примітка щодо форм XFA:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) — застарілий формат, який підтримується лише певними PDF-переглядачами, такими як BentoPDF та Firefox. Якщо ви відкриваєте XFA PDF в іншому ПЗ і бачите порожні сторінки або відсутність полів форми, це означає, що цей переглядач не підтримує XFA. Щоб правильно переглядати та заповнювати форми XFA, використовуйте Firefox або заповнювач форм BentoPDF."
   },
   "createPdfForm": {
     "name": "Створити PDF-форму",
-    "subtitle": "Створювати заповнювані PDF-форми за допомогою drag-and-drop полів."
+    "subtitle": "Створювати заповнювані PDF-форми за допомогою drag-and-drop полів.",
+    "orSeparator": "АБО",
+    "createBlankPdf": "Створити порожній PDF"
   },
   "removeBlankPages": {
     "name": "Видалити порожні сторінки",
@@ -259,11 +286,35 @@
   },
   "textToPdf": {
     "name": "Текст у PDF",
-    "subtitle": "Конвертувати текстовий файл у PDF."
+    "subtitle": "Конвертувати текстовий файл у PDF.",
+    "uploadFiles": "Завантажити файли",
+    "typeText": "Ввести текст",
+    "acceptedFormats": "Текстові файли (.txt)",
+    "fontFamily": "Сімейство шрифтів",
+    "fontSize": "Розмір шрифту",
+    "textColor": "Колір тексту",
+    "pageSize": "Розмір сторінки",
+    "rtlAutoDetectNote": "Мови RTL (арабська, урду, перська тощо) автоматично визначаються, і напрямок тексту регулюється.",
+    "createButton": "Створити PDF"
   },
   "jsonToPdf": {
     "name": "JSON у PDF",
-    "subtitle": "Конвертувати JSON-файли у формат PDF."
+    "subtitle": "Конвертувати JSON-файли у формат PDF.",
+    "noteLabel": "Примітка:",
+    "noteText": "Підтримуються лише JSON-файли, створені інструментом PDF→JSON. Стандартні JSON-файли від інших інструментів не працюють.",
+    "acceptedFormats": "Кілька JSON-файлів",
+    "status": {
+      "selectAtLeastOne": "Виберіть принаймні 1 JSON-файл",
+      "selectedReady": "Вибрано {{count}} файл(ів). Готово до конвертації!",
+      "readingFiles": "Читання файлів (головний потік)...",
+      "converting": "Конвертація JSON-файлів у PDF...",
+      "readError": "Помилка читання файлів: {{message}}",
+      "creatingZip": "Створення ZIP-файлу...",
+      "success": "JSON-файли успішно конвертовано в PDF! Завантаження ZIP розпочато.",
+      "zipError": "Помилка створення ZIP: {{message}}",
+      "workerError": "Помилка Worker: {{message}}",
+      "getStarted": "Виберіть JSON-файли, щоб почати"
+    }
   },
   "pdfToJpg": {
     "name": "PDF у JPG",
@@ -387,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF у JSON",
-    "subtitle": "Конвертувати PDF-файли у формат JSON."
+    "subtitle": "Конвертувати PDF-файли у формат JSON.",
+    "convertButton": "Конвертувати у JSON",
+    "status": {
+      "selectAtLeastOne": "Виберіть принаймні 1 PDF-файл",
+      "selectedReady": "Вибрано {{count}} файл(ів). Готово до конвертації!",
+      "checkingEncrypted": "Перевірка зашифрованих PDF...",
+      "readingFiles": "Читання файлів (головний потік)...",
+      "converting": "Конвертація PDF у JSON...",
+      "readError": "Помилка читання файлів: {{message}}",
+      "creatingZip": "Створення ZIP-файлу...",
+      "success": "PDF успішно конвертовано у JSON! Завантаження ZIP розпочато.",
+      "zipError": "Помилка створення ZIP: {{message}}",
+      "workerError": "Помилка Worker: {{message}}",
+      "getStarted": "Виберіть PDF-файли, щоб почати"
+    }
   },
   "ocrPdf": {
     "name": "OCR PDF",
-    "subtitle": "Зробити PDF доступним для пошуку та копіювання тексту."
+    "subtitle": "Зробити PDF доступним для пошуку та копіювання тексту.",
+    "languagesInDocument": "Мови в документі",
+    "searchLanguagesPlaceholder": "Пошук мов...",
+    "selectedLabel": "Вибрано:",
+    "none": "Немає",
+    "advancedSettingsSummary": "Додаткові налаштування (рекомендовано для покращення точності)",
+    "resolutionLabel": "Роздільна здатність",
+    "resolutionStandard": "Стандартна (192 DPI)",
+    "resolutionHigh": "Висока (288 DPI)",
+    "resolutionUltra": "Ультра (384 DPI)",
+    "binarizeLabel": "Бінаризувати зображення (покращити контраст для чистих сканів)",
+    "embedFullFontsLabel": "Вбудувати повні шрифти (більший файл, краща сумісність)",
+    "whitelistPresetLabel": "Передустановка білого списку символів",
+    "whitelistNone": "Немає (усі символи)",
+    "whitelistAlphanumeric": "Літери та цифри + базова пунктуація",
+    "whitelistNumbersCurrency": "Числа + Символи валют",
+    "whitelistLettersOnly": "Лише літери (A-Z, a-z)",
+    "whitelistNumbersOnly": "Лише числа (0-9)",
+    "whitelistInvoice": "Рахунок/Чек (числа, $, ., -, /)",
+    "whitelistForms": "Форми (літери та цифри + загальні символи)",
+    "whitelistCustom": "Користувацький...",
+    "whitelistHelp": "Будуть розпізнані лише ці символи. Залиште порожнім для всіх символів.",
+    "whitelistInputLabel": "Білий список символів (необов'язково)",
+    "whitelistInputPlaceholder": "напр., abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "Запустити OCR",
+    "progressInitializing": "Ініціалізація...",
+    "resultsTitle": "OCR завершено",
+    "resultsDescription": "Ваш PDF з пошуком готовий. Ви також можете скопіювати або завантажити витягнутий текст нижче.",
+    "copyToClipboard": "Копіювати в буфер обміну",
+    "downloadTxt": "Завантажити як .txt",
+    "downloadSearchablePdf": "Завантажити PDF з пошуком",
+    "statusPrefix": "Статус: {{status}}",
+    "availabilityInvalidConfig": "Цей реліз не надає дійсних мов OCR. Перебудуйте його з VITE_TESSERACT_AVAILABLE_LANGUAGES, встановленим на дійсні коди Tesseract.",
+    "availabilityBundles": "Цей реліз містить OCR для: {{languages}}.",
+    "noLanguagesAvailable": "У цьому релізі немає доступних мов OCR.",
+    "noLanguagesTitle": "Мови не вибрано",
+    "noLanguagesMessage": "Виберіть принаймні одну мову для OCR.",
+    "noFileTitle": "Немає файлу",
+    "noFileMessage": "Спочатку завантажте PDF-файл.",
+    "languageUnavailableTitle": "Мова OCR недоступна",
+    "ocrErrorTitle": "Помилка OCR",
+    "ocrErrorMessage": "Виникла помилка під час процесу OCR. Worker, можливо, не завантажився. Спробуйте ще раз.",
+    "howItWorksTitle": "Як це працює:",
+    "extractTextLabel": "Витягти текст:",
+    "extractTextDescription": "Використовує Tesseract OCR для розпізнавання тексту на сканованих зображеннях або PDF.",
+    "searchableOutputLabel": "Вивід з можливістю пошуку:",
+    "searchableOutputDescription": "Створює новий PDF з невидимим текстовим шаром, роблячи ваш документ повністю придатним для пошуку, зберігаючи оригінальний вигляд.",
+    "characterFilteringLabel": "Фільтрація символів:",
+    "characterFilteringDescription": "Використовуйте білі списки для фільтрації небажаних символів і покращення точності для конкретних типів документів (рахунки, форми тощо).",
+    "multiLanguageSupportLabel": "Багатомовна підтримка:",
+    "multiLanguageSupportDescription": "Виберіть кілька мов для документів зі змішаним мовним вмістом."
   },
   "alternateMerge": {
     "name": "Чергування та змішування сторінок",
@@ -724,8 +839,10 @@
   "pdfToText": {
     "name": "PDF у текст",
     "subtitle": "Витягувати текст із PDF та зберігати як звичайний текст (.txt). Підтримується обробка кількох файлів.",
-    "note": "Цей інструмент працює ТІЛЬКИ з PDF, створеними у цифровому вигляді. Для сканованих документів використовуйте OCR PDF.",
-    "convertButton": "Витягти текст"
+    "noteLabel": "Примітка:",
+    "noteText": "Цей інструмент працює ТІЛЬКИ з PDF, створеними цифровим способом. Для сканованих документів або PDF на основі зображень використовуйте натомість наш інструмент OCR PDF.",
+    "convertButton": "Витягти текст",
+    "note": "Цей інструмент працює ТІЛЬКИ з PDF, створеними у цифровому вигляді. Для сканованих документів використовуйте OCR PDF."
   },
   "digitalSignPdf": {
     "name": "Цифровий підпис PDF",
@@ -734,6 +851,7 @@
     "certificateSection": "Сертифікат",
     "uploadCert": "Завантажити сертифікат (.pfx, .p12)",
     "certPassword": "Пароль сертифіката",
+    "privateKeyPassword": "Пароль приватного ключа",
     "certPasswordPlaceholder": "Введіть пароль сертифіката",
     "certInfo": "Інформація про сертифікат",
     "certSubject": "Власник",
@@ -746,8 +864,71 @@
     "locationPlaceholder": "наприклад: Київ, Україна",
     "contactInfo": "Контактна інформація",
     "contactPlaceholder": "наприклад: email@example.com",
+    "visibleSignature": "Видимий підпис",
+    "visibleSignatureDescription": "Якщо увімкнено, у PDF з'являється видиме поле підпису. Можна завантажити зображення/логотип або додати текст. Якщо не вказано жодного, ім'я підписанта автоматично відображається з сертифіката.",
+    "signatureImage": "Зображення/логотип підпису (необов'язково)",
+    "uploadSignatureImage": "Завантажити зображення (PNG, JPG, WebP)",
+    "signaturePreviewAlt": "Попередній перегляд підпису",
+    "remove": "Видалити",
+    "page": "Сторінка",
+    "firstPage": "Перша сторінка",
+    "lastPage": "Остання сторінка",
+    "allPages": "Усі сторінки",
+    "customPage": "Користувацька сторінка #",
+    "pageNumber": "Сторінка #",
+    "xPosition": "Позиція X (зліва)",
+    "yPosition": "Позиція Y (зверху)",
+    "width": "Ширина",
+    "height": "Висота",
+    "addTextOverlay": "Додати текстове накладання",
+    "text": "Текст",
+    "textPlaceholder": "напр., Підписано в цифровій формі Іваном Петренком",
+    "textColor": "Колір тексту",
+    "fontSize": "Розмір шрифту",
+    "invalidImageTitle": "Недійсне зображення",
+    "invalidImageMessage": "Виберіть зображення PNG, JPG або WebP.",
+    "invalidFileTitle": "Недійсний файл",
+    "invalidFileMessage": "Виберіть PDF-файл.",
+    "invalidCertificateTitle": "Недійсний сертифікат",
+    "invalidCertificateMessage": "Виберіть файл сертифіката .pfx, .p12 або .pem.",
+    "certificateLoaded": "Сертифікат завантажено",
+    "certificateUnlocked": "Сертифікат розблоковано",
+    "failedParsePem": "Не вдалося проаналізувати файл PEM",
+    "enterPasswordToUnlock": "Введіть пароль для розблокування",
+    "invalidPasswordOrCertificate": "Невірний пароль або сертифікат",
+    "incorrectPassword": "Невірний пароль",
+    "failedParseCertificate": "Не вдалося проаналізувати сертифікат",
+    "missingDataTitle": "Відсутні дані",
+    "missingDataMessage": "Завантажте і PDF, і дійсний сертифікат.",
+    "applyingSignature": "Застосування цифрового підпису...",
+    "signingFailedTitle": "Помилка підписання",
+    "chainFetchFailed": "Не вдалося отримати ланцюг сертифікатів. Можливо, проблема з мережею або проксі сертифікатів недоступний. Перевірте підключення до Інтернету та повторіть спробу. Якщо проблема не зникає, зверніться до підтримки.",
+    "failedToSignPdf": "Не вдалося підписати PDF: {{message}}",
+    "defaultSignatureText": "Підписано в цифровій формі {{signer}}\n{{date}}",
+    "pageCount": "{{count}} стор.",
+    "howToStep1Title": "Завантажити PDF",
+    "howToStep1Text": "Виберіть PDF-документ, який хочете підписати",
+    "howToStep2Title": "Завантажити сертифікат",
+    "howToStep2Text": "Надайте файл сертифіката .pfx або .p12 і пароль",
+    "howToStep3Title": "Підписати та завантажити",
+    "howToStep3Text": "Застосуйте цифровий підпис і завантажте підписаний PDF",
+    "relatedEncryptDesc": "Захистити PDF паролем",
+    "relatedDecryptDesc": "Видалити пароль PDF",
+    "relatedFlattenDesc": "Зробити анотації постійними",
+    "relatedSanitizeDesc": "Видалити приховані дані",
+    "relatedPermissionsDesc": "Встановити дозволи PDF",
+    "faqWhatIsQuestion": "Що таке цифровий підпис?",
+    "faqWhatIsAnswer": "Цифровий підпис — це криптографічний механізм, який перевіряє автентичність і цілісність документа. На відміну від намальованого підпису, він використовує криптографію відкритого ключа (сертифікати X.509) для підтвердження особи підписанта.",
+    "faqFormatsQuestion": "Які формати сертифікатів підтримуються?",
+    "faqFormatsAnswer": "Ми підтримуємо сертифікати у форматі PKCS#12 (.pfx, .p12), які містять і ваш сертифікат, і приватний ключ в одному зашифрованому файлі. Зазвичай вони видаються центрами сертифікації.",
+    "faqPrivateKeyQuestion": "Чи безпечний мій приватний ключ?",
+    "faqPrivateKeyAnswer": "Так! Уся обробка відбувається повністю у вашому браузері. Ваш сертифікат, приватний ключ і файли PDF ніколи не залишають ваш пристрій і не завантажуються на жоден сервер.",
+    "faqValidReadersQuestion": "Чи буде підпис дійсним у переглядачах PDF?",
+    "faqValidReadersAnswer": "Так, інструмент створює стандартні відокремлені підписи PKCS#7, які розпізнаються всіма основними програмами для перегляду PDF. Для повної перевірки використовуйте сертифікат від довіреного центру сертифікації.",
     "applySignature": "Застосувати цифровий підпис",
-    "successMessage": "PDF успішно підписано! Підпис можна перевірити у будь-якому PDF-переглядачі."
+    "successMessage": "PDF успішно підписано! Підпис можна перевірити у будь-якому PDF-переглядачі.",
+    "internetRequiredTitle": "Потрібне інтернет-з'єднання",
+    "internetRequiredDescription": "Для перевірки підпису може знадобитися отримати інформацію про ланцюг сертифікатів із сервера видавця сертифіката."
   },
   "validateSignaturePdf": {
     "name": "Перевірка підпису PDF",
@@ -903,6 +1084,46 @@
       "storageQuotaExceeded": "Не вдалося зберегти робочий процес: перевищено квоту сховища. Спробуйте видалити старі шаблони.",
       "failedToImport": "Не вдалося імпортувати робочий процес: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "Налаштування розширених функцій",
+    "description": "Налаштуйте зовнішні модулі обробки для увімкнення розширених функцій PDF. Ці модулі необов'язкові і ліцензуються окремо.",
+    "status": {
+      "testing": "Перевірка...",
+      "customOverride": "Користувацьке перевизначення",
+      "preConfigured": "Попередньо налаштовано",
+      "notConfigured": "Не налаштовано"
+    },
+    "preconfiguredTitle": "Попередньо налаштовано і готово до використання.",
+    "preconfiguredDescription": "Розширені модулі обробки автоматично завантажуються з CDN. Ви можете перевизначити URL нижче, якщо потрібно використовувати власне джерело (наприклад, для air-gapped або самостійно розміщених розгортань).",
+    "usingDefault": "Використовується за замовчуванням: {{url}}",
+    "pymupdfSubtitle": "Рушій обробки документів",
+    "pymupdfFeatures": "Вмикає: PDF у текст, Markdown, SVG, DOCX, Excel • Витягти зображення/таблиці • Конвертацію формату",
+    "testButton": "Перевірити",
+    "recommendedLabel": "Рекомендовано:",
+    "copyTitle": "Копіювати в буфер обміну",
+    "ghostscriptSubtitle": "Рушій конвертації PDF/A",
+    "ghostscriptFeatures": "Вмикає: Конвертацію PDF/A-1b, PDF/A-2b, PDF/A-3b • Шрифт у контур",
+    "cpdfSubtitle": "Рушій закладок і метаданих",
+    "cpdfFeatures": "Вмикає: Розділити за закладками • Редагувати закладки • Метадані PDF",
+    "saveConfiguration": "Зберегти конфігурацію",
+    "savingConfiguration": "Збереження конфігурації...",
+    "savedTitle": "Збережено",
+    "savedMessage": "Конфігурацію успішно збережено!",
+    "errorTitle": "Помилка",
+    "failedSave": "Не вдалося зберегти конфігурацію: {{message}}",
+    "emptyUrlTitle": "Порожній URL",
+    "emptyUrlMessage": "Введіть URL для перевірки.",
+    "testSuccessTitle": "Успіх",
+    "connectionSuccess": "Підключення до {{package}} успішне!",
+    "connectionFailedTitle": "Збій підключення",
+    "connectionFailedMessage": "Не вдалося підключитися до URL.",
+    "resetDefaults": "Скинути до значень за замовчуванням",
+    "resetTitle": "Скинути",
+    "resetWithDefaults": "Користувацькі перевизначення очищено. Активні попередньо налаштовані значення за замовчуванням.",
+    "resetNoDefaults": "Усі конфігурації та кешовані модулі очищено.",
+    "licenseTitle": "Повідомлення про ліцензію:",
+    "licenseDescription": "Зовнішні модулі (PyMuPDF, Ghostscript, CoherentPDF) ліцензовані під AGPL-3.0 або подібними copyleft-ліцензіями. Налаштовуючи та використовуючи ці модулі, ви погоджуєтеся з їхніми відповідними умовами ліцензії. BentoPDF сумісний з будь-якою реалізацією Ghostscript WASM і PyMuPDF WASM, що дотримується очікуваного інтерфейсу."
   },
   "pdfOverlay": {
     "name": "Накладання PDF",

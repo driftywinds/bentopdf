@@ -7,7 +7,9 @@
     "allTools": "Todas las Herramientas",
     "docs": "Docs",
     "openMainMenu": "Abrir menú principal",
-    "language": "Idioma"
+    "language": "Idioma",
+    "searchLanguage": "Buscar idioma…",
+    "noLanguagesFound": "No se encontraron idiomas"
   },
   "donation": {
     "message": "¿Te encanta BentoPDF? ¡Ayúdanos a mantenerlo gratis y de código abierto!",
@@ -96,6 +98,18 @@
       "webpImages": "Imágenes WebP"
     }
   },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "step1Title": "Subir archivo",
+    "step1": "Haz clic o arrastra tu archivo aquí",
+    "step2Title": "Procesar",
+    "step2": "Haz clic en el botón de procesar",
+    "step3Title": "Descargar",
+    "step3": "Guarda tu archivo procesado al instante"
+  },
+  "relatedTools": {
+    "title": "Herramientas PDF relacionadas"
+  },
   "loader": {
     "processing": "Procesando..."
   },
@@ -121,6 +135,10 @@
     "resetToDefaults": "Restaurar Valores Predeterminados",
     "fullWidthMode": "Modo de Ancho Completo",
     "fullWidthDescription": "Usa el ancho completo de la pantalla para todas las herramientas en lugar de un contenedor centrado",
+    "compactMode": "Modo compacto",
+    "compactModeDescription": "Mostrar herramientas como lista compacta en lugar de tarjetas",
+    "advancedSettings": "Configuración avanzada",
+    "advancedSettingsDescription": "Configurar módulos de procesamiento externos (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "La configuración se guarda automáticamente",
     "clickToSet": "Haz clic para establecer",
     "pressKeys": "Presiona teclas...",
@@ -167,6 +185,7 @@
   "faq": {
     "title": "Preguntas",
     "questions": "Frecuentes",
+    "sectionTitle": "Preguntas frecuentes",
     "isFree": {
       "question": "¿BentoPDF es realmente gratis?",
       "answer": "Sí, absolutamente. Todas las herramientas en BentoPDF son 100% gratuitas, sin límites de archivos, sin registro y sin marcas de agua. Creemos que todos merecen acceso a herramientas PDF simples y potentes sin un muro de pago."
@@ -198,8 +217,7 @@
     "analytics": {
       "question": "¿Usan cookies o análisis para rastrearme?",
       "answer": "Nos preocupamos por tu privacidad. BentoPDF no rastrea información personal. Usamos Simple Analytics únicamente para ver recuentos de visitas anónimas. Esto significa que podemos saber cuántos usuarios visitan nuestro sitio, pero nunca sabemos quién eres. Simple Analytics cumple completamente con GDPR y respeta tu privacidad."
-    },
-    "sectionTitle": "Preguntas frecuentes"
+    }
   },
   "testimonials": {
     "title": "Lo que Nuestros",
@@ -252,11 +270,14 @@
     "add": "Agregar",
     "remove": "Remover",
     "loading": "Cargando...",
+    "loadingPageCount": "Cargando páginas...",
     "error": "Error",
     "success": "Éxito",
     "file": "Archivo",
     "files": "Archivos",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "convert": "Convertir",
+    "unknownError": "Error desconocido"
   },
   "about": {
     "hero": {
@@ -349,15 +370,6 @@
     "errorRendering": "Error al renderizar miniaturas de páginas",
     "error": "Error",
     "failedToLoad": "Error al cargar"
-  },
-  "howItWorks": {
-    "title": "Cómo funciona",
-    "step1": "Haz clic o arrastra tu archivo aquí",
-    "step2": "Haz clic en el botón de procesar",
-    "step3": "Guarda tu archivo procesado al instante"
-  },
-  "relatedTools": {
-    "title": "Herramientas PDF relacionadas"
   },
   "simpleMode": {
     "title": "Herramientas PDF",

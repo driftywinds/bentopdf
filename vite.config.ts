@@ -530,6 +530,7 @@ export default defineConfig(() => {
     resolve: {
       alias: {
         '@/types': resolve(__dirname, 'src/js/types/index.ts'),
+        '@': resolve(__dirname, 'src'),
         stream: 'stream-browserify',
         zlib: 'browserify-zlib',
       },

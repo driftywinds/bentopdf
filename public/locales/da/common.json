@@ -7,7 +7,9 @@
     "allTools": "Alle værktøjer",
     "docs": "Docs",
     "openMainMenu": "Åbn hovedmenu",
-    "language": "Sprog"
+    "language": "Sprog",
+    "searchLanguage": "Søg sprog…",
+    "noLanguagesFound": "Ingen sprog fundet"
   },
   "donation": {
     "message": "Elsker du BentoPDF? Hjælp os med at holde det gratis og open source!",
@@ -98,8 +100,11 @@
   },
   "howItWorks": {
     "title": "Sådan fungerer det",
+    "step1Title": "Upload fil",
     "step1": "Klik eller træk og slip din fil for at starte",
+    "step2Title": "Behandl",
     "step2": "Klik på behandl-knappen for at starte",
+    "step3Title": "Download",
     "step3": "Gem din behandlede fil med det samme"
   },
   "relatedTools": {
@@ -130,6 +135,10 @@
     "resetToDefaults": "Nulstil til standard",
     "fullWidthMode": "Fuld bredde-tilstand",
     "fullWidthDescription": "Brug hele skærmbredden til alle værktøjer i stedet for en centreret container",
+    "compactMode": "Kompakt tilstand",
+    "compactModeDescription": "Vis værktøjer som kompakt liste i stedet for kort",
+    "advancedSettings": "Avancerede indstillinger",
+    "advancedSettingsDescription": "Konfigurer eksterne behandlingsmoduler (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "Indstillinger gemmes automatisk",
     "clickToSet": "Klik for at vælge",
     "pressKeys": "Tryk på taster...",
@@ -261,11 +270,14 @@
     "add": "Tilføj",
     "remove": "Fjern",
     "loading": "Indlæser...",
+    "loadingPageCount": "Indlæser sider...",
     "error": "Fejl",
     "success": "Succes",
     "file": "Fil",
     "files": "Filer",
-    "close": "Luk"
+    "close": "Luk",
+    "convert": "Konvertér",
+    "unknownError": "Ukendt fejl"
   },
   "about": {
     "hero": {

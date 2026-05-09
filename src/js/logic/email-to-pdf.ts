@@ -1,5 +1,5 @@
 import PostalMime from 'postal-mime';
-import MsgReader from '@kenjiuno/msgreader';
+import MsgReaderDefault from '@kenjiuno/msgreader';
 import {
   formatBytes,
   escapeHtml,
@@ -8,6 +8,11 @@ import {
   formatRawDate,
 } from '../utils/helpers.js';
 import type { EmailAttachment, ParsedEmail, EmailRenderOptions } from '@/types';
+
+type MsgReaderCtor = typeof MsgReaderDefault;
+const MsgReader: MsgReaderCtor =
+  (MsgReaderDefault as unknown as { default?: MsgReaderCtor }).default ??
+  MsgReaderDefault;
 
 export type { EmailAttachment, ParsedEmail, EmailRenderOptions };
 

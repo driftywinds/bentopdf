@@ -7,7 +7,9 @@
     "allTools": "Все инструменты",
     "docs": "Docs",
     "openMainMenu": "Открыть главное меню",
-    "language": "Язык"
+    "language": "Язык",
+    "searchLanguage": "Поиск языка…",
+    "noLanguagesFound": "Языки не найдены"
   },
   "donation": {
     "message": "Нравится BentoPDF? Помогите ему оставаться бесплатным и с открытым исходным кодом!",
@@ -98,8 +100,11 @@
   },
   "howItWorks": {
     "title": "Как это работает",
+    "step1Title": "Загрузить файл",
     "step1": "Нажмите или перетащите ваш файл, чтобы начать",
+    "step2Title": "Обработка",
     "step2": "Нажмите кнопку обработки",
+    "step3Title": "Скачать",
     "step3": "Мгновенно сохраните обработанный файл"
   },
   "relatedTools": {
@@ -130,6 +135,10 @@
     "resetToDefaults": "По умолчанию",
     "fullWidthMode": "На всю ширину",
     "fullWidthDescription": "Используйте всю ширину экрана для всех инструментов вместо контейнера по центру",
+    "compactMode": "Компактный режим",
+    "compactModeDescription": "Показывать инструменты в виде компактного списка вместо карточек",
+    "advancedSettings": "Расширенные настройки",
+    "advancedSettingsDescription": "Настройте внешние модули обработки (PyMuPDF, Ghostscript, CoherentPDF)",
     "settingsAutoSaved": "Настройки сохраняются автоматически",
     "clickToSet": "Задать",
     "pressKeys": "Нажмите...",
@@ -261,11 +270,14 @@
     "add": "Добавить",
     "remove": "Удалить",
     "loading": "Загрузка...",
+    "loadingPageCount": "Загрузка страниц...",
     "error": "Ошибка",
     "success": "Успех",
     "file": "Файл",
     "files": "Файлы",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "convert": "Конвертировать",
+    "unknownError": "Неизвестная ошибка"
   },
   "about": {
     "hero": {
@@ -358,6 +370,10 @@
     "errorRendering": "Не удалось отрисовать миниатюры страниц",
     "error": "Ошибка",
     "failedToLoad": "Не удалось загрузить"
+  },
+  "simpleMode": {
+    "title": "Инструменты PDF",
+    "subtitle": "Выберите инструмент, чтобы начать"
   },
   "disabledTool": {
     "title": "Инструмент недоступен",

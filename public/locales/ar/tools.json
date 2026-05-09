@@ -10,6 +10,7 @@
     "input": "إدخال",
     "output": "إخراج"
   },
+  "convertToPdf": "تحويل إلى PDF",
   "pdfMultiTool": {
     "name": "أداة PDF المتعددة",
     "subtitle": "دمج، تقسيم، تنظيم، حذف، تدوير، إضافة صفحات فارغة، استخراج وتكرار في واجهة موحدة."
@@ -72,7 +73,8 @@
   },
   "duplicateOrganize": {
     "name": "تكرار وتنظيم",
-    "subtitle": "تكرار وإعادة ترتيب وحذف الصفحات."
+    "subtitle": "تكرار وإعادة ترتيب وحذف الصفحات.",
+    "saveChanges": "حفظ التغييرات"
   },
   "deletePages": {
     "name": "حذف الصفحات",
@@ -80,11 +82,30 @@
   },
   "editBookmarks": {
     "name": "تعديل الإشارات المرجعية",
-    "subtitle": "إضافة وتعديل واستيراد وحذف واستخراج الإشارات المرجعية في PDF."
+    "subtitle": "إضافة وتعديل واستيراد وحذف واستخراج الإشارات المرجعية في PDF.",
+    "autoExtractExisting": "استخراج الإشارات المرجعية الموجودة تلقائيًا",
+    "importSectionTitle": "أو استيراد الإشارات المرجعية",
+    "csvFormat": "تنسيق CSV: العنوان,الصفحة,المستوى",
+    "jsonFormat": "تنسيق JSON",
+    "uploadCsvAction": "انقر لتحميل CSV",
+    "uploadJsonAction": "انقر لتحميل JSON",
+    "orDragHere": "أو اسحب إلى هنا"
   },
   "tableOfContents": {
     "name": "جدول المحتويات",
-    "subtitle": "إنشاء صفحة جدول محتويات من إشارات PDF المرجعية."
+    "subtitle": "إنشاء صفحة جدول محتويات من إشارات PDF المرجعية.",
+    "titleLabel": "عنوان جدول المحتويات",
+    "fontSize": "حجم الخط",
+    "fontFamily": "عائلة الخط",
+    "addBookmark": "إضافة إشارة مرجعية لصفحة جدول المحتويات",
+    "generateButton": "إنشاء جدول المحتويات",
+    "selectPdfFirst": "يرجى تحديد ملف PDF أولاً.",
+    "statusReadingFileMainThread": "جارٍ قراءة الملف (الخيط الرئيسي)...",
+    "statusGenerating": "جارٍ إنشاء جدول المحتويات...",
+    "errorReadingFileWithMessage": "خطأ في قراءة الملف: {{message}}",
+    "successGeneratedDownloadStarted": "تم إنشاء جدول المحتويات بنجاح! بدأ التنزيل.",
+    "workerErrorWithMessage": "خطأ: {{message}}",
+    "workerErrorOccurred": "حدث خطأ في Worker. تحقق من وحدة التحكم لمزيد من التفاصيل."
   },
   "pageNumbers": {
     "name": "أرقام الصفحات",
@@ -210,7 +231,8 @@
     "subtitle": "إضافة أختام صور إلى PDF باستخدام شريط أدوات التعليقات.",
     "usernameLabel": "اسم مستخدم الختم",
     "usernamePlaceholder": "أدخل اسمك (للأختام)",
-    "usernameHint": "سيظهر هذا الاسم على الأختام التي تنشئها."
+    "usernameHint": "سيظهر هذا الاسم على الأختام التي تنشئها.",
+    "saveButton": "حفظ PDF المختوم"
   },
   "removeAnnotations": {
     "name": "إزالة التعليقات",
@@ -218,11 +240,16 @@
   },
   "pdfFormFiller": {
     "name": "ملء نماذج PDF",
-    "subtitle": "ملء النماذج مباشرة في المتصفح. يدعم أيضًا نماذج XFA."
+    "subtitle": "ملء النماذج مباشرة في المتصفح. يدعم أيضًا نماذج XFA.",
+    "uploadHint": "حمّل ملف PDF يحتوي على حقول نموذج. املأها مباشرة في العارض أدناه، ثم انقر على الزر لحفظ النموذج المملوء وتنزيله. يدعم أيضًا نماذج XFA.",
+    "xfaNoteTitle": "ملاحظة حول نماذج XFA:",
+    "xfaNoteDescription": "XFA (XML Forms Architecture) هو تنسيق قديم مدعوم فقط في بعض عارضات PDF مثل BentoPDF و Firefox. إذا فتحت ملف XFA PDF في برنامج آخر ورأيت صفحات فارغة أو لا توجد حقول نموذج، فهذا يعني أن هذا العارض لا يدعم XFA. لعرض وملء نماذج XFA بشكل صحيح، استخدم Firefox أو أداة ملء النماذج في BentoPDF."
   },
   "createPdfForm": {
     "name": "إنشاء نموذج PDF",
-    "subtitle": "إنشاء نماذج PDF قابلة للتعبئة مع حقول نص بالسحب والإفلات."
+    "subtitle": "إنشاء نماذج PDF قابلة للتعبئة مع حقول نص بالسحب والإفلات.",
+    "orSeparator": "أو",
+    "createBlankPdf": "إنشاء PDF فارغ"
   },
   "removeBlankPages": {
     "name": "إزالة الصفحات الفارغة",
@@ -259,27 +286,101 @@
   },
   "textToPdf": {
     "name": "نص إلى PDF",
-    "subtitle": "تحويل ملف نص عادي إلى PDF."
+    "subtitle": "تحويل ملف نص عادي إلى PDF.",
+    "uploadFiles": "تحميل الملفات",
+    "typeText": "اكتب النص",
+    "acceptedFormats": "ملفات نصية (.txt)",
+    "fontFamily": "عائلة الخط",
+    "fontSize": "حجم الخط",
+    "textColor": "لون النص",
+    "pageSize": "حجم الصفحة",
+    "rtlAutoDetectNote": "يتم اكتشاف لغات RTL (العربية، الأردية، الفارسية، إلخ) تلقائيًا ويتم ضبط اتجاه النص.",
+    "createButton": "إنشاء PDF"
   },
   "jsonToPdf": {
     "name": "JSON إلى PDF",
-    "subtitle": "تحويل ملفات JSON إلى تنسيق PDF."
+    "subtitle": "تحويل ملفات JSON إلى تنسيق PDF.",
+    "noteLabel": "ملاحظة:",
+    "noteText": "يتم دعم ملفات JSON التي أنشأتها أداة محول PDF إلى JSON فقط. لن تعمل ملفات JSON القياسية من أدوات أخرى.",
+    "acceptedFormats": "ملفات JSON متعددة",
+    "status": {
+      "selectAtLeastOne": "يرجى تحديد ملف JSON واحد على الأقل",
+      "selectedReady": "تم تحديد {{count}} ملف. جاهز للتحويل!",
+      "readingFiles": "جارٍ قراءة الملفات (الخيط الرئيسي)...",
+      "converting": "جارٍ تحويل ملفات JSON إلى PDF...",
+      "readError": "خطأ في قراءة الملفات: {{message}}",
+      "creatingZip": "جارٍ إنشاء ملف ZIP...",
+      "success": "تم تحويل ملفات JSON إلى PDF بنجاح! بدأ تنزيل ZIP.",
+      "zipError": "خطأ في إنشاء ZIP: {{message}}",
+      "workerError": "خطأ في Worker: {{message}}",
+      "getStarted": "اختر ملفات JSON للبدء"
+    }
   },
   "pdfToJpg": {
     "name": "PDF إلى JPG",
-    "subtitle": "تحويل كل صفحة PDF إلى صورة JPG."
+    "subtitle": "تحويل كل صفحة PDF إلى صورة JPG.",
+    "imageQuality": "جودة الصورة",
+    "imageQualityExplanation": "جودة أعلى = حجم ملف أكبر",
+    "alert": {
+      "invalidFile": "ملف غير صالح",
+      "invalidFileExplanation": "يرجى تحميل ملف PDF.",
+      "noFile": "لا يوجد ملف",
+      "noFileExplanation": "يرجى تحميل ملف PDF أولاً.",
+      "conversionSuccess": "تم تحويل PDF إلى JPG بنجاح!",
+      "conversionError": "فشل تحويل PDF إلى JPG. قد يكون الملف تالفًا."
+    },
+    "loader": {
+      "converting": "جارٍ التحويل إلى JPG..."
+    }
   },
   "pdfToPng": {
     "name": "PDF إلى PNG",
-    "subtitle": "تحويل كل صفحة PDF إلى صورة PNG."
+    "subtitle": "تحويل كل صفحة PDF إلى صورة PNG.",
+    "imageScale": "مقياس الصورة",
+    "imageScaleExplanation": "مقياس أكبر = جودة أفضل لكن ملف أكبر",
+    "alert": {
+      "invalidFile": "ملف غير صالح",
+      "invalidFileExplanation": "يرجى تحميل ملف PDF.",
+      "noFile": "لا يوجد ملف",
+      "noFileExplanation": "يرجى تحميل ملف PDF أولاً.",
+      "conversionSuccess": "تم تحويل PDF إلى PNG بنجاح!",
+      "conversionError": "فشل تحويل PDF إلى PNG. قد يكون الملف تالفًا."
+    },
+    "loader": {
+      "converting": "جارٍ التحويل إلى PNG..."
+    }
   },
   "pdfToWebp": {
     "name": "PDF إلى WebP",
-    "subtitle": "تحويل كل صفحة PDF إلى صورة WebP."
+    "subtitle": "تحويل كل صفحة PDF إلى صورة WebP.",
+    "imageQuality": "جودة الصورة",
+    "imageQualityExplanation": "جودة أعلى = حجم ملف أكبر",
+    "alert": {
+      "invalidFile": "ملف غير صالح",
+      "invalidFileExplanation": "يرجى تحميل ملف PDF.",
+      "noFile": "لا يوجد ملف",
+      "noFileExplanation": "يرجى تحميل ملف PDF أولاً.",
+      "conversionSuccess": "تم تحويل PDF إلى WebP بنجاح!",
+      "conversionError": "فشل تحويل PDF إلى WebP. قد يكون الملف تالفًا."
+    },
+    "loader": {
+      "converting": "جارٍ التحويل إلى WebP..."
+    }
   },
   "pdfToBmp": {
     "name": "PDF إلى BMP",
-    "subtitle": "تحويل كل صفحة PDF إلى صورة BMP."
+    "subtitle": "تحويل كل صفحة PDF إلى صورة BMP.",
+    "alert": {
+      "invalidFile": "ملف غير صالح",
+      "invalidFileExplanation": "يرجى تحميل ملف PDF.",
+      "noFile": "لا يوجد ملف",
+      "noFileExplanation": "يرجى تحميل ملف PDF أولاً.",
+      "conversionSuccess": "تم تحويل PDF إلى BMP بنجاح!",
+      "conversionError": "فشل تحويل PDF إلى BMP. قد يكون الملف تالفًا."
+    },
+    "loader": {
+      "converting": "جارٍ التحويل إلى BMP..."
+    }
   },
   "pdfToTiff": {
     "name": "PDF إلى TIFF",
@@ -291,7 +392,15 @@
     "colorMode": "وضع الألوان",
     "multiPage": "حفظ كملف TIFF متعدد الصفحات (ملف واحد)",
     "loadingVips": "جارٍ تحميل معالج الصور...",
-    "converting": "جارٍ التحويل إلى TIFF..."
+    "converting": "جارٍ التحويل إلى TIFF...",
+    "alert": {
+      "invalidFile": "ملف غير صالح",
+      "invalidFileExplanation": "يرجى تحميل ملف PDF.",
+      "noFile": "لا يوجد ملف",
+      "noFileExplanation": "يرجى تحميل ملف PDF أولاً.",
+      "conversionSuccess": "تم تحويل PDF إلى TIFF بنجاح!",
+      "conversionError": "فشل تحويل PDF إلى TIFF. قد يكون الملف تالفًا."
+    }
   },
   "pdfToCbz": {
     "name": "PDF إلى CBZ",
@@ -329,11 +438,75 @@
   },
   "pdfToJson": {
     "name": "PDF إلى JSON",
-    "subtitle": "تحويل ملفات PDF إلى تنسيق JSON."
+    "subtitle": "تحويل ملفات PDF إلى تنسيق JSON.",
+    "convertButton": "تحويل إلى JSON",
+    "status": {
+      "selectAtLeastOne": "يرجى تحديد ملف PDF واحد على الأقل",
+      "selectedReady": "تم تحديد {{count}} ملف. جاهز للتحويل!",
+      "checkingEncrypted": "جارٍ فحص ملفات PDF المشفرة...",
+      "readingFiles": "جارٍ قراءة الملفات (الخيط الرئيسي)...",
+      "converting": "جارٍ تحويل PDF إلى JSON...",
+      "readError": "خطأ في قراءة الملفات: {{message}}",
+      "creatingZip": "جارٍ إنشاء ملف ZIP...",
+      "success": "تم تحويل PDF إلى JSON بنجاح! بدأ تنزيل ZIP.",
+      "zipError": "خطأ في إنشاء ZIP: {{message}}",
+      "workerError": "خطأ في Worker: {{message}}",
+      "getStarted": "اختر ملفات PDF للبدء"
+    }
   },
   "ocrPdf": {
     "name": "التعرف الضوئي على PDF",
-    "subtitle": "اجعل PDF قابلاً للبحث والنسخ."
+    "subtitle": "اجعل PDF قابلاً للبحث والنسخ.",
+    "languagesInDocument": "اللغات في المستند",
+    "searchLanguagesPlaceholder": "البحث عن لغات...",
+    "selectedLabel": "محدد:",
+    "none": "لا شيء",
+    "advancedSettingsSummary": "الإعدادات المتقدمة (مستحسنة لتحسين الدقة)",
+    "resolutionLabel": "الدقة",
+    "resolutionStandard": "قياسية (192 DPI)",
+    "resolutionHigh": "عالية (288 DPI)",
+    "resolutionUltra": "فائقة (384 DPI)",
+    "binarizeLabel": "تحويل الصورة إلى ثنائية (تحسين التباين للمسح النظيف)",
+    "embedFullFontsLabel": "تضمين خطوط كاملة (ملف أكبر، توافق أفضل)",
+    "whitelistPresetLabel": "إعداد قائمة الأحرف البيضاء",
+    "whitelistNone": "لا شيء (جميع الأحرف)",
+    "whitelistAlphanumeric": "حروف وأرقام + علامات ترقيم أساسية",
+    "whitelistNumbersCurrency": "أرقام + رموز عملة",
+    "whitelistLettersOnly": "حروف فقط (A-Z، a-z)",
+    "whitelistNumbersOnly": "أرقام فقط (0-9)",
+    "whitelistInvoice": "فاتورة/إيصال (أرقام، $، .، -، /)",
+    "whitelistForms": "النماذج (حروف وأرقام + رموز شائعة)",
+    "whitelistCustom": "مخصص...",
+    "whitelistHelp": "سيتم التعرف على هذه الأحرف فقط. اتركه فارغًا لجميع الأحرف.",
+    "whitelistInputLabel": "قائمة الأحرف البيضاء (اختياري)",
+    "whitelistInputPlaceholder": "مثال: abcdefghijklmnopqrstuvwxyz0123456789$.,",
+    "startButton": "بدء OCR",
+    "progressInitializing": "جارٍ التهيئة...",
+    "resultsTitle": "اكتمل OCR",
+    "resultsDescription": "ملف PDF القابل للبحث جاهز. يمكنك أيضًا نسخ أو تنزيل النص المستخرج أدناه.",
+    "copyToClipboard": "نسخ إلى الحافظة",
+    "downloadTxt": "تنزيل كـ .txt",
+    "downloadSearchablePdf": "تنزيل PDF قابل للبحث",
+    "statusPrefix": "الحالة: {{status}}",
+    "availabilityInvalidConfig": "لا يعرض هذا النشر أي لغات OCR صالحة. أعد بناءه باستخدام VITE_TESSERACT_AVAILABLE_LANGUAGES المضبوط على رموز Tesseract صالحة.",
+    "availabilityBundles": "يتضمن هذا النشر OCR للغات: {{languages}}.",
+    "noLanguagesAvailable": "لا توجد لغات OCR متوفرة في هذا النشر.",
+    "noLanguagesTitle": "لم يتم تحديد لغات",
+    "noLanguagesMessage": "يرجى تحديد لغة واحدة على الأقل لـ OCR.",
+    "noFileTitle": "لا يوجد ملف",
+    "noFileMessage": "يرجى تحميل ملف PDF أولاً.",
+    "languageUnavailableTitle": "لغة OCR غير متوفرة",
+    "ocrErrorTitle": "خطأ OCR",
+    "ocrErrorMessage": "حدث خطأ أثناء عملية OCR. ربما فشل تحميل العامل. يرجى المحاولة مرة أخرى.",
+    "howItWorksTitle": "كيف يعمل:",
+    "extractTextLabel": "استخراج النص:",
+    "extractTextDescription": "يستخدم Tesseract OCR للتعرف على النص من الصور الممسوحة ضوئيًا أو ملفات PDF.",
+    "searchableOutputLabel": "إخراج قابل للبحث:",
+    "searchableOutputDescription": "ينشئ ملف PDF جديدًا بطبقة نص غير مرئية، مما يجعل المستند قابلاً للبحث بالكامل مع الحفاظ على المظهر الأصلي.",
+    "characterFilteringLabel": "تصفية الأحرف:",
+    "characterFilteringDescription": "استخدم القوائم البيضاء لتصفية الأحرف غير المرغوب فيها وتحسين الدقة لأنواع المستندات المحددة (الفواتير، النماذج، إلخ).",
+    "multiLanguageSupportLabel": "دعم متعدد اللغات:",
+    "multiLanguageSupportDescription": "حدد لغات متعددة للمستندات التي تحتوي على محتوى بلغات مختلطة."
   },
   "alternateMerge": {
     "name": "تبديل ومزج الصفحات",
@@ -666,16 +839,19 @@
   "pdfToText": {
     "name": "PDF إلى نص",
     "subtitle": "استخراج النص من ملفات PDF وحفظه كنص عادي (.txt). يدعم عدة ملفات.",
-    "note": "تعمل هذه الأداة فقط مع ملفات PDF المنشأة رقميًا. للمستندات الممسوحة ضوئيًا أو ملفات PDF المبنية على الصور، استخدم أداة التعرف الضوئي.",
-    "convertButton": "استخراج النص"
+    "noteLabel": "ملاحظة:",
+    "noteText": "تعمل هذه الأداة فقط مع ملفات PDF التي تم إنشاؤها رقميًا. للمستندات الممسوحة ضوئيًا أو ملفات PDF القائمة على الصور، استخدم أداة OCR PDF بدلاً من ذلك.",
+    "convertButton": "استخراج النص",
+    "note": "تعمل هذه الأداة فقط مع ملفات PDF المنشأة رقميًا. للمستندات الممسوحة ضوئيًا أو ملفات PDF المبنية على الصور، استخدم أداة التعرف الضوئي."
   },
   "digitalSignPdf": {
     "name": "توقيع رقمي لـ PDF",
     "pageTitle": "توقيع رقمي لـ PDF - إضافة توقيع تشفيري | BentoPDF",
     "subtitle": "إضافة توقيع رقمي تشفيري إلى PDF باستخدام شهادات X.509. يدعم تنسيقات PKCS#12 (.pfx، .p12) وPEM. مفتاحك الخاص لا يغادر متصفحك أبدًا.",
     "certificateSection": "الشهادة",
-    "uploadCert": "رفع شهادة (.pfx، .p12)",
+    "uploadCert": "رفع شهادة (.pfx, .p12, .pem)",
     "certPassword": "كلمة مرور الشهادة",
+    "privateKeyPassword": "كلمة مرور المفتاح الخاص",
     "certPasswordPlaceholder": "أدخل كلمة مرور الشهادة",
     "certInfo": "معلومات الشهادة",
     "certSubject": "الموضوع",
@@ -688,8 +864,71 @@
     "locationPlaceholder": "مثلاً، نيويورك، الولايات المتحدة",
     "contactInfo": "معلومات الاتصال",
     "contactPlaceholder": "مثلاً، email@example.com",
+    "visibleSignature": "توقيع مرئي",
+    "visibleSignatureDescription": "عند التمكين، يظهر مربع توقيع مرئي على PDF. يمكنك تحميل صورة/شعار أو إضافة نص. إذا لم يتم توفير أي منهما، فسيتم عرض اسم الموقّع من الشهادة تلقائيًا.",
+    "signatureImage": "صورة/شعار التوقيع (اختياري)",
+    "uploadSignatureImage": "تحميل صورة (PNG، JPG، WebP)",
+    "signaturePreviewAlt": "معاينة التوقيع",
+    "remove": "إزالة",
+    "page": "صفحة",
+    "firstPage": "الصفحة الأولى",
+    "lastPage": "الصفحة الأخيرة",
+    "allPages": "جميع الصفحات",
+    "customPage": "صفحة مخصصة #",
+    "pageNumber": "صفحة #",
+    "xPosition": "موضع X (يسار)",
+    "yPosition": "موضع Y (أعلى)",
+    "width": "العرض",
+    "height": "الارتفاع",
+    "addTextOverlay": "إضافة تراكب نص",
+    "text": "نص",
+    "textPlaceholder": "مثال: موقّع رقميًا من قبل أحمد محمد",
+    "textColor": "لون النص",
+    "fontSize": "حجم الخط",
+    "invalidImageTitle": "صورة غير صالحة",
+    "invalidImageMessage": "يرجى تحديد صورة PNG أو JPG أو WebP.",
+    "invalidFileTitle": "ملف غير صالح",
+    "invalidFileMessage": "يرجى تحديد ملف PDF.",
+    "invalidCertificateTitle": "شهادة غير صالحة",
+    "invalidCertificateMessage": "يرجى تحديد ملف شهادة .pfx أو .p12 أو .pem.",
+    "certificateLoaded": "تم تحميل الشهادة",
+    "certificateUnlocked": "تم إلغاء قفل الشهادة",
+    "failedParsePem": "فشل في تحليل ملف PEM",
+    "enterPasswordToUnlock": "أدخل كلمة المرور لإلغاء القفل",
+    "invalidPasswordOrCertificate": "كلمة مرور أو شهادة غير صالحة",
+    "incorrectPassword": "كلمة مرور غير صحيحة",
+    "failedParseCertificate": "فشل في تحليل الشهادة",
+    "missingDataTitle": "بيانات مفقودة",
+    "missingDataMessage": "يرجى تحميل كل من PDF وشهادة صالحة.",
+    "applyingSignature": "جارٍ تطبيق التوقيع الرقمي...",
+    "signingFailedTitle": "فشل التوقيع",
+    "chainFetchFailed": "فشل في جلب سلسلة الشهادات. قد يكون ذلك بسبب مشكلات في الشبكة أو عدم توفر وكيل الشهادات. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى. إذا استمرت المشكلة، فاتصل بالدعم.",
+    "failedToSignPdf": "فشل في توقيع PDF: {{message}}",
+    "defaultSignatureText": "موقّع رقميًا من قبل {{signer}}\n{{date}}",
+    "pageCount": "{{count}} صفحات",
+    "howToStep1Title": "تحميل PDF",
+    "howToStep1Text": "حدد مستند PDF الذي تريد توقيعه",
+    "howToStep2Title": "تحميل الشهادة",
+    "howToStep2Text": "قدّم ملف الشهادة .pfx أو .p12 وكلمة المرور",
+    "howToStep3Title": "توقيع وتنزيل",
+    "howToStep3Text": "طبّق التوقيع الرقمي ونزّل ملف PDF الموقع",
+    "relatedEncryptDesc": "حماية PDF بكلمة مرور",
+    "relatedDecryptDesc": "إزالة كلمة مرور PDF",
+    "relatedFlattenDesc": "جعل التعليقات التوضيحية دائمة",
+    "relatedSanitizeDesc": "إزالة البيانات المخفية",
+    "relatedPermissionsDesc": "تعيين أذونات PDF",
+    "faqWhatIsQuestion": "ما هو التوقيع الرقمي؟",
+    "faqWhatIsAnswer": "التوقيع الرقمي هو آلية تشفير تتحقق من صحة وسلامة المستند. على عكس التوقيع المرسوم، يستخدم تشفير المفتاح العام (شهادات X.509) لإثبات هوية الموقّع.",
+    "faqFormatsQuestion": "ما تنسيقات الشهادات المدعومة؟",
+    "faqFormatsAnswer": "ندعم شهادات بتنسيق PKCS#12 (.pfx، .p12) التي تحتوي على كل من شهادتك والمفتاح الخاص في ملف مشفر واحد. عادة ما تصدر هذه الشهادات من قبل سلطات الشهادات.",
+    "faqPrivateKeyQuestion": "هل مفتاحي الخاص آمن؟",
+    "faqPrivateKeyAnswer": "نعم! تتم جميع المعالجة بالكامل في متصفحك. شهادتك ومفتاحك الخاص وملفات PDF لا تغادر جهازك أبدًا ولا تُرفع إلى أي خادم.",
+    "faqValidReadersQuestion": "هل سيكون التوقيع صالحًا في قارئات PDF؟",
+    "faqValidReadersAnswer": "نعم، تُنشئ الأداة توقيعات قياسية PKCS#7 منفصلة معترف بها في جميع قارئات PDF الرئيسية. للتحقق الكامل، استخدم شهادة من سلطة شهادات موثوقة.",
     "applySignature": "تطبيق التوقيع الرقمي",
-    "successMessage": "تم توقيع PDF بنجاح! يمكن التحقق من التوقيع في أي قارئ PDF."
+    "successMessage": "تم توقيع PDF بنجاح! يمكن التحقق من التوقيع في أي قارئ PDF.",
+    "internetRequiredTitle": "يلزم الاتصال بالإنترنت",
+    "internetRequiredDescription": "قد يحتاج التوقيع إلى جلب معلومات سلسلة الشهادات من خادم مُصدر شهادتك للتحقق من صحة التوقيع."
   },
   "validateSignaturePdf": {
     "name": "التحقق من توقيع PDF",
@@ -845,6 +1084,46 @@
       "storageQuotaExceeded": "فشل حفظ سير العمل: تم تجاوز حصة التخزين. حاول حذف القوالب القديمة.",
       "failedToImport": "فشل استيراد سير العمل: {{message}}"
     }
+  },
+  "wasmSettings": {
+    "title": "إعدادات الميزات المتقدمة",
+    "description": "قم بتكوين وحدات المعالجة الخارجية لتمكين ميزات PDF المتقدمة. هذه الوحدات اختيارية ومرخصة بشكل منفصل.",
+    "status": {
+      "testing": "جارٍ الاختبار...",
+      "customOverride": "تجاوز مخصص",
+      "preConfigured": "مهيأ مسبقًا",
+      "notConfigured": "غير مهيأ"
+    },
+    "preconfiguredTitle": "مهيأ مسبقًا وجاهز للاستخدام.",
+    "preconfiguredDescription": "يتم تحميل وحدات المعالجة المتقدمة تلقائيًا من CDN. يمكنك تجاوز عناوين URL أدناه إذا كنت بحاجة إلى استخدام مصدر مخصص (على سبيل المثال، لعمليات النشر المعزولة عن الإنترنت أو المستضافة ذاتيًا).",
+    "usingDefault": "استخدام الافتراضي: {{url}}",
+    "pymupdfSubtitle": "محرك معالجة المستندات",
+    "pymupdfFeatures": "يفعّل: PDF إلى نص، Markdown، SVG، DOCX، Excel • استخراج الصور/الجداول • تحويل التنسيق",
+    "testButton": "اختبار",
+    "recommendedLabel": "موصى به:",
+    "copyTitle": "نسخ إلى الحافظة",
+    "ghostscriptSubtitle": "محرك تحويل PDF/A",
+    "ghostscriptFeatures": "يفعّل: تحويل PDF/A-1b، PDF/A-2b، PDF/A-3b • الخط إلى مخطط",
+    "cpdfSubtitle": "محرك الإشارات المرجعية والبيانات الوصفية",
+    "cpdfFeatures": "يفعّل: التقسيم حسب الإشارات المرجعية • تحرير الإشارات المرجعية • بيانات تعريف PDF",
+    "saveConfiguration": "حفظ التكوين",
+    "savingConfiguration": "جارٍ حفظ التكوين...",
+    "savedTitle": "تم الحفظ",
+    "savedMessage": "تم حفظ التكوين بنجاح!",
+    "errorTitle": "خطأ",
+    "failedSave": "فشل حفظ التكوين: {{message}}",
+    "emptyUrlTitle": "عنوان URL فارغ",
+    "emptyUrlMessage": "يرجى إدخال عنوان URL للاختبار.",
+    "testSuccessTitle": "نجاح",
+    "connectionSuccess": "نجح الاتصال بـ {{package}}!",
+    "connectionFailedTitle": "فشل الاتصال",
+    "connectionFailedMessage": "تعذر الاتصال بعنوان URL.",
+    "resetDefaults": "إعادة التعيين إلى الافتراضي",
+    "resetTitle": "إعادة تعيين",
+    "resetWithDefaults": "تم مسح التجاوزات المخصصة. الإعدادات الافتراضية المهيأة مسبقًا نشطة.",
+    "resetNoDefaults": "تم مسح جميع التكوينات والوحدات المخزنة مؤقتًا.",
+    "licenseTitle": "إشعار الترخيص:",
+    "licenseDescription": "الوحدات الخارجية (PyMuPDF، Ghostscript، CoherentPDF) مرخصة بموجب AGPL-3.0 أو تراخيص copyleft مماثلة. بتكوين واستخدام هذه الوحدات، فإنك توافق على شروط الترخيص الخاصة بكل منها. BentoPDF متوافق مع أي تنفيذ Ghostscript WASM وPyMuPDF WASM يتبع الواجهة المتوقعة."
   },
   "pdfOverlay": {
     "name": "تراكب PDF",
