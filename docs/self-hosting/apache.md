@@ -207,6 +207,32 @@ Ensure MIME type is configured:
 AddType application/wasm .wasm
 ```
 
+### Sign PDF or Form Filler Shows a Blank Viewer (`.mjs` MIME error)
+
+If the browser console shows:
+
+```
+Failed to load module script: The server responded with a non-JavaScript
+MIME type of "application/octet-stream". Strict MIME type checking is
+enforced for module scripts per HTML spec.
+```
+
+…and the failing request ends in `.mjs`, your Apache config is missing the `.mjs → application/javascript` mapping. The bundled PDF viewer ships ES module files with a `.mjs` extension, and Apache's stock `mime.types` doesn't include them by default.
+
+Add to your VirtualHost or `.htaccess`:
+
+```apache
+AddType application/javascript .mjs
+```
+
+Then reload Apache:
+
+```bash
+sudo apache2ctl configtest && sudo systemctl reload apache2
+```
+
+To confirm: in browser DevTools → Network tab, find the failing `.mjs` request and check the `Content-Type` response header. It should now be `application/javascript`, not `application/octet-stream`.
+
 ### Rewrite Not Working
 
 Check that mod_rewrite is enabled:

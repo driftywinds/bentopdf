@@ -183,6 +183,64 @@ Choose your platform:
 - [Kubernetes](/self-hosting/kubernetes)
 - [CORS Proxy](/self-hosting/cors-proxy) - Required for digital signatures
 
+## Common Issues
+
+### Word / ODT / Excel / PowerPoint to PDF Hangs (SharedArrayBuffer Unavailable)
+
+**Symptom**: LibreOffice-based document conversions (Word, ODT, Excel, PowerPoint to PDF) hang at ~55% or fail to start. The browser console may show:
+
+> `ReferenceError: SharedArrayBuffer is not defined`
+
+…or `window.crossOriginIsolated` reports `false`, or the WASM compilation reports `expected magic word 00 61 73 6d, found 1f 8b 08 08`.
+
+**Cause**: LibreOffice WASM requires `SharedArrayBuffer`, which the browser only enables when the page is **cross-origin isolated** AND served from a **secure context**. That means two things must be true:
+
+1. Every response includes both headers:
+   - `Cross-Origin-Embedder-Policy: require-corp`
+   - `Cross-Origin-Opener-Policy: same-origin`
+2. The page is served from `https://...` or `http://localhost`. Plain HTTP on a LAN IP (e.g. `http://192.168.x.x`) does NOT count as secure — browsers disable `SharedArrayBuffer` there.
+
+The `00 61 73 6d / 1f 8b 08 08` mismatch is a separate sub-symptom: the pre-compressed `.wasm.gz` / `.data.gz` files are missing the `Content-Encoding: gzip` response header, so the browser receives raw gzip bytes instead of decompressed WASM.
+
+**Fix**: see your platform-specific deployment guide for the exact configuration:
+
+- [Nginx →](/self-hosting/nginx#word-odt-excel-to-pdf-not-working)
+- [Apache →](/self-hosting/apache#word-odt-excel-to-pdf-not-working)
+- [AWS S3 + CloudFront →](/self-hosting/aws#step-3b-response-headers-policy-required-for-libreoffice-wasm)
+- [Cloudflare Pages →](/self-hosting/cloudflare#configuration-file) (`_headers` file)
+- [Netlify →](/self-hosting/netlify#word-odt-excel-to-pdf-stuck-at-55) (`netlify.toml`)
+- [Vercel →](/self-hosting/vercel#word-odt-excel-to-pdf-not-working) (`vercel.json`)
+- [Hostinger →](/self-hosting/hostinger#libreoffice-tools-not-working) (`.htaccess`)
+- [Kubernetes →](/self-hosting/kubernetes#ensuring-the-sharedarraybuffer-headers-still-work-ingress-gateway)
+- **Docker**: handled automatically by the bundled nginx config — no action needed.
+
+**Verify**: open DevTools Console on any BentoPDF page and run:
+
+```js
+console.log(window.crossOriginIsolated); // should be true
+console.log(typeof SharedArrayBuffer); // should be "function"
+```
+
+If the page is HTTPS or `http://localhost` AND both COEP/COOP headers are present on every response, both checks pass. If you're on `http://192.168.x.x` or another non-loopback HTTP origin, terminate it with HTTPS — there is no header-only fix.
+
+### `.mjs` Files Served as `application/octet-stream`
+
+**Symptom**: Sign PDF / Form Filler / certain other tools show a blank viewer or fail to load. The browser console reports:
+
+> `Failed to load module script: The server responded with a non-JavaScript MIME type of "application/octet-stream". Strict MIME type checking is enforced for module scripts per HTML spec.`
+
+**Cause**: Your web server or reverse proxy doesn't have a MIME-type mapping for `.mjs` files (the bundled PDF viewer ships ES modules with that extension). Many stock server configs default to `application/octet-stream` for unrecognized extensions, which browsers refuse to execute as ES modules.
+
+**Fix**: see your platform-specific deployment guide for the exact snippet:
+
+- [Nginx →](/self-hosting/nginx#sign-pdf-or-form-filler-shows-a-blank-viewer-mjs-mime-error)
+- [Apache →](/self-hosting/apache#sign-pdf-or-form-filler-shows-a-blank-viewer-mjs-mime-error)
+- [AWS S3 + CloudFront →](/self-hosting/aws#step-2-build-and-upload) (see `aws s3 cp ... --include "*.mjs"`)
+- [Kubernetes →](/self-hosting/kubernetes#mjs-mime-type-errors-sign-pdf-form-filler-iframe-blank)
+- **Docker, Vercel, Netlify, Cloudflare Pages, Hostinger**: handled automatically — no action needed.
+
+**Verify**: open DevTools → Network tab, find the failing `.mjs` request, check the `Content-Type` response header. It should be `application/javascript`. If it's still `application/octet-stream`, an outer reverse proxy or CDN may be re-sniffing the type — check each layer in your serving chain.
+
 ## WASM Configuration (AGPL Components)
 
 BentoPDF **does not bundle** AGPL-licensed processing libraries in its source code, but **pre-configures CDN URLs** so all features work out of the box — no manual setup needed.

@@ -760,6 +760,15 @@ export default defineConfig(() => {
             'src/pages/bates-numbering.html'
           ),
         },
+        output: {
+          assetFileNames: (assetInfo) => {
+            const name = assetInfo.names?.[0] ?? '';
+            if (name.endsWith('.mjs')) {
+              return 'assets/[name]-[hash].js';
+            }
+            return 'assets/[name]-[hash][extname]';
+          },
+        },
       },
     },
     test: {

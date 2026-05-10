@@ -627,7 +627,9 @@ const init = async () => {
     }
 
     // Apply to all page uploaders
-    const pageUploaders = document.querySelectorAll('#tool-uploader');
+    const pageUploaders = document.querySelectorAll(
+      '#tool-uploader, #signature-editor'
+    );
     pageUploaders.forEach((uploader) => {
       if (enabled) {
         uploader.classList.remove('max-w-2xl', 'max-w-5xl');

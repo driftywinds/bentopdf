@@ -130,6 +130,23 @@ ingress:
       add_header Cross-Origin-Embedder-Policy "require-corp" always;
 ```
 
+## `.mjs` MIME-type errors (Sign PDF / Form Filler iframe blank)
+
+If the browser console shows `Failed to load module script: ... non-JavaScript MIME type "application/octet-stream"` on a `.mjs` request, an Ingress/Gateway controller in front of the BentoPDF nginx is replacing the upstream `Content-Type` header with `application/octet-stream`.
+
+The BentoPDF image's nginx already serves `.mjs` as `application/javascript`. The fix is to stop the controller from stripping/replacing it. For nginx-ingress:
+
+```yaml
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      location ~* \.mjs$ {
+        types {} default_type application/javascript;
+      }
+```
+
+Or use a `ResponseHeaderModifier` filter in Gateway API to set `Content-Type: application/javascript` for `.mjs` paths. Verify with DevTools → Network tab: the failed `.mjs` request should now show `content-type: application/javascript`.
+
 ### If you’re using Gateway API and want to force-add headers
 
 Gateway API supports a `ResponseHeaderModifier` filter. You can attach it in `httpRoute.rules[*].filters`:

@@ -39,6 +39,17 @@ aws s3 cp s3://your-bentopdf-bucket/ s3://your-bentopdf-bucket/ \
   --include "*.wasm" \
   --content-type "application/wasm" \
   --metadata-directive REPLACE
+
+# Set correct MIME type for ES module files (.mjs)
+# S3 defaults .mjs to application/octet-stream, which browsers refuse to
+# execute as ES modules. The bundled PDF viewer (Sign PDF, Form Filler)
+# ships ES modules with .mjs extensions and will fail without this step.
+aws s3 cp s3://your-bentopdf-bucket/ s3://your-bentopdf-bucket/ \
+  --recursive \
+  --exclude "*" \
+  --include "*.mjs" \
+  --content-type "application/javascript" \
+  --metadata-directive REPLACE
 ```
 
 ## Step 3: Create CloudFront Distribution

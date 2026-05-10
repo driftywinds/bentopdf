@@ -9,6 +9,14 @@ import {
 import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import * as pdfjsLib from 'pdfjs-dist';
 import { loadPdfDocument } from '../utils/load-pdf-document.js';
+import {
+  ROTATION_MIN,
+  ROTATION_MAX,
+  ROTATION_STEP,
+  clampRotation,
+  roundToStep,
+  parseAngleInput,
+} from '../utils/rotation-utils.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -85,7 +93,7 @@ function createPageWrapper(
 
   const canvasWrapper = document.createElement('div');
   canvasWrapper.className =
-    'thumbnail-wrapper flex items-center justify-center p-2 h-36 pointer-events-none';
+    'thumbnail-wrapper flex items-center justify-center p-2 h-64 pointer-events-none';
   canvasWrapper.style.transition = 'transform 0.3s ease';
   // Apply initial rotation if it exists (negated for canvas display)
   const initialRotation = pageState.rotations[pageIndex] || 0;
@@ -106,25 +114,36 @@ function createPageWrapper(
   const controls = document.createElement('div');
   controls.className = 'flex items-center justify-center gap-1 p-2 bg-gray-800';
 
+  const angleInput = document.createElement('input');
+  angleInput.type = 'number';
+  angleInput.step = ROTATION_STEP.toString();
+  angleInput.min = ROTATION_MIN.toString();
+  angleInput.max = ROTATION_MAX.toString();
+  angleInput.id = `page-angle-${pageIndex}`;
+  angleInput.value = pageState.rotations[pageIndex]?.toString() || '0';
+  angleInput.className =
+    'w-16 h-8 text-center bg-gray-700 border border-gray-600 text-white rounded text-xs';
+
+  const commitAngle = (normalize: boolean) => {
+    const angle = parseAngleInput(angleInput.value);
+    if (normalize) angleInput.value = angle.toString();
+    pageState.rotations[pageIndex] = angle;
+    canvasWrapper.style.transform = `rotate(${-angle}deg)`;
+  };
+
+  angleInput.addEventListener('input', () => commitAngle(false));
+  angleInput.addEventListener('change', () => commitAngle(true));
+
   const decrementBtn = document.createElement('button');
   decrementBtn.className =
     'w-8 h-8 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white rounded border border-gray-600 text-sm';
   decrementBtn.textContent = '-';
   decrementBtn.onclick = function (e) {
     e.stopPropagation();
-    const input = document.getElementById(
-      `page-angle-${pageIndex}`
-    ) as HTMLInputElement;
-    const current = parseInt(input.value) || 0;
-    input.value = (current - 1).toString();
+    const current = parseFloat(angleInput.value) || 0;
+    angleInput.value = clampRotation(roundToStep(current - 1)).toString();
+    commitAngle(true);
   };
-
-  const angleInput = document.createElement('input');
-  angleInput.type = 'number';
-  angleInput.id = `page-angle-${pageIndex}`;
-  angleInput.value = pageState.rotations[pageIndex]?.toString() || '0';
-  angleInput.className =
-    'w-12 h-8 text-center bg-gray-700 border border-gray-600 text-white rounded text-xs';
 
   const incrementBtn = document.createElement('button');
   incrementBtn.className =
@@ -132,37 +151,13 @@ function createPageWrapper(
   incrementBtn.textContent = '+';
   incrementBtn.onclick = function (e) {
     e.stopPropagation();
-    const input = document.getElementById(
-      `page-angle-${pageIndex}`
-    ) as HTMLInputElement;
-    const current = parseInt(input.value) || 0;
-    input.value = (current + 1).toString();
+    const current = parseFloat(angleInput.value) || 0;
+    angleInput.value = clampRotation(roundToStep(current + 1)).toString();
+    commitAngle(true);
   };
 
-  const applyBtn = document.createElement('button');
-  applyBtn.className =
-    'w-8 h-8 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white rounded border border-gray-600';
-  applyBtn.innerHTML = '<i data-lucide="rotate-cw" class="w-4 h-4"></i>';
-  applyBtn.onclick = function (e) {
-    e.stopPropagation();
-    const input = document.getElementById(
-      `page-angle-${pageIndex}`
-    ) as HTMLInputElement;
-    const angle = parseInt(input.value) || 0;
-    pageState.rotations[pageIndex] = angle;
-    const wrapper = container.querySelector(
-      '.thumbnail-wrapper'
-    ) as HTMLElement;
-    if (wrapper) wrapper.style.transform = `rotate(${-angle}deg)`;
-  };
-
-  controls.append(decrementBtn, angleInput, incrementBtn, applyBtn);
+  controls.append(decrementBtn, angleInput, incrementBtn);
   container.appendChild(controls);
-
-  // Re-create icons for the new element
-  setTimeout(function () {
-    createIcons({ icons });
-  }, 0);
 
   return container;
 }
@@ -278,10 +273,6 @@ async function applyRotations() {
       const currentRotation = originalPage.getRotation().angle;
       const totalRotation = currentRotation + rotation;
 
-      console.log(
-        `Page ${i}: rotation=${rotation}, currentRotation=${currentRotation}, totalRotation=${totalRotation}, applying=${-totalRotation}`
-      );
-
       if (totalRotation % 90 === 0) {
         const [copiedPage] = await newPdfDoc.copyPages(pageState.pdfDoc, [i]);
         copiedPage.setRotation(degrees(totalRotation));
@@ -373,21 +364,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (batchDecrement && batchAngleInput) {
     batchDecrement.addEventListener('click', function () {
-      const current = parseInt(batchAngleInput.value) || 0;
-      batchAngleInput.value = (current - 1).toString();
+      const current = parseFloat(batchAngleInput.value) || 0;
+      batchAngleInput.value = clampRotation(
+        roundToStep(current - 1)
+      ).toString();
     });
   }
 
   if (batchIncrement && batchAngleInput) {
     batchIncrement.addEventListener('click', function () {
-      const current = parseInt(batchAngleInput.value) || 0;
-      batchAngleInput.value = (current + 1).toString();
+      const current = parseFloat(batchAngleInput.value) || 0;
+      batchAngleInput.value = clampRotation(
+        roundToStep(current + 1)
+      ).toString();
     });
   }
 
   if (batchApply && batchAngleInput) {
     batchApply.addEventListener('click', function () {
-      const angle = parseInt(batchAngleInput.value) || 0;
+      const angle = parseAngleInput(batchAngleInput.value);
+      batchAngleInput.value = angle.toString();
       for (let i = 0; i < pageState.rotations.length; i++) {
         pageState.rotations[i] = angle;
       }

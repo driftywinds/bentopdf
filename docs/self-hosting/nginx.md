@@ -174,6 +174,43 @@ types {
 }
 ```
 
+### Sign PDF or Form Filler Shows a Blank Viewer (`.mjs` MIME error)
+
+If the browser console shows:
+
+```
+Failed to load module script: The server responded with a non-JavaScript
+MIME type of "application/octet-stream". Strict MIME type checking is
+enforced for module scripts per HTML spec.
+```
+
+…and the failing request ends in `.mjs`, your nginx is missing the `.mjs → application/javascript` mapping. The bundled PDF viewer (used by Sign PDF, Form Filler, and a few other tools) ships ES module files with a `.mjs` extension, and nginx's stock `mime.types` doesn't include them by default.
+
+Fix it by adding `mjs` to the existing `application/javascript` line in `/etc/nginx/mime.types`:
+
+```nginx
+application/javascript    js mjs;
+```
+
+> Do NOT append a _second_ `application/javascript` line — nginx parses `mime.types` line-by-line and only one type-to-extension mapping wins, so a second line is silently ignored on some versions. Edit the existing line to add `mjs` alongside `js`.
+
+Or override locally inside your server block (no global file edit):
+
+```nginx
+types {
+    application/javascript js mjs;
+    application/wasm wasm;
+}
+```
+
+Reload nginx after the change:
+
+```bash
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+To confirm: in browser DevTools → Network tab, find the failing `.mjs` request and check the `Content-Type` response header. It should now be `application/javascript`, not `application/octet-stream`.
+
 ### Word/ODT/Excel to PDF Not Working
 
 LibreOffice WASM requires `SharedArrayBuffer`, which needs `Cross-Origin-Embedder-Policy` and `Cross-Origin-Opener-Policy` headers. It also needs a secure context, so `http://localhost` works for local testing but `http://192.168.x.x` or other LAN IPs usually require HTTPS. Note that nginx `add_header` directives in a `location` block **override** server-level `add_header` directives — they don't merge. Every `location` block with its own `add_header` must include the COEP/COOP headers.
