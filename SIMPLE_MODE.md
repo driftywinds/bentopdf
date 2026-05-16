@@ -1,21 +1,25 @@
-# Simple Mode for BentoPDF
+# Simple Mode for BentoPDF (the Self-Hosted build)
 
-Simple Mode is designed for internal organizational use where you want to hide all branding and marketing content, showing only the essential PDF tools for your users.
+Simple Mode is what powers the **Self-Hosted build** of BentoPDF (`bentopdf-simple`). It is **functionally identical** to the Commercial build that powers bentopdf.com — every PDF tool is present and behaves the same. It just hides the marketing chrome (hero, FAQ, testimonials, footer) that only makes sense on the public bentopdf.com site or on a commercial public-facing deployment.
 
-## What Simple Mode Does
+> **Simple Mode is not a feature-reduced "lite" version.** Every PDF tool — merge, split, edit, sign, OCR, Office conversion, every other tool — works identically in both builds. The only difference is the marketing UI around the tools.
 
-When enabled, Simple Mode will:
+The Commercial build (`ghcr.io/alam00000/bentopdf:latest`) is used by bentopdf.com itself and by commercial license holders running public-facing PDF deployments where the full marketing site makes sense.
 
-- Hide the navigation bar
-- Hide the hero section with marketing content
-- Hide the features section
-- Hide the security/compliance section
-- Hide the FAQ section
-- Hide the testimonials section
-- Hide the support section
-- Hide the footer
-- Update the page title to "PDF Tools"
-- Make the tools section more prominent
+## What Simple Mode Hides
+
+When enabled, Simple Mode hides the following bentopdf.com-specific marketing UI:
+
+- Navigation bar
+- Hero section with marketing content
+- Features section
+- Security/compliance section
+- FAQ section
+- Testimonials section
+- Support section
+- Footer
+
+It also updates the page title to "PDF Tools" and makes the tools section more prominent. **No PDF tools are removed or disabled.**
 
 ## How to Enable Simple Mode
 
@@ -136,20 +140,20 @@ npx serve dist -p 3000
 
 Open `http://localhost:3000` in your browser.
 
-### Method 4: Compare Both Modes
+### Method 4: Compare Both Builds Side-by-Side
 
 ```bash
-# Test Normal Mode (Docker)
+# Commercial build (the bentopdf.com look)
 docker run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
 
-# Test Simple Mode (Docker)
+# Self-Hosted build (Simple Mode)
 docker run -p 3001:8080 ghcr.io/alam00000/bentopdf-simple:latest
 
 # Podman users: replace 'docker' with 'podman'
 ```
 
-- Normal Mode: `http://localhost:3000`
-- Simple Mode: `http://localhost:3001`
+- Commercial build: `http://localhost:3000`
+- Self-Hosted build: `http://localhost:3001`
 
 ## 🔍 What to Look For
 
@@ -165,19 +169,7 @@ When Simple Mode is working correctly, you should see:
 
 ## 📦 Available Container Images
 
-### Normal Mode (Full Branding)
-
-**GitHub Container Registry (Recommended):**
-
-- `ghcr.io/alam00000/bentopdf:latest`
-- `ghcr.io/alam00000/bentopdf:v1.0.0` (versioned)
-
-**Docker Hub:**
-
-- `bentopdfteam/bentopdf:latest`
-- `bentopdfteam/bentopdf:v1.0.0` (versioned)
-
-### Simple Mode (Clean Interface)
+### Self-Hosted build (Simple Mode) — recommended for self-hosting
 
 **GitHub Container Registry (Recommended):**
 
@@ -188,6 +180,20 @@ When Simple Mode is working correctly, you should see:
 
 - `bentopdfteam/bentopdf-simple:latest`
 - `bentopdfteam/bentopdf-simple:v1.0.0` (versioned)
+
+### Commercial build — used by bentopdf.com and commercial license holders
+
+The full marketing site, including hero/FAQ/testimonials/footer. Pull this only if you specifically want the bentopdf.com look — for example, you're running a public-facing PDF deployment under a commercial license.
+
+**GitHub Container Registry (Recommended):**
+
+- `ghcr.io/alam00000/bentopdf:latest`
+- `ghcr.io/alam00000/bentopdf:v1.0.0` (versioned)
+
+**Docker Hub:**
+
+- `bentopdfteam/bentopdf:latest`
+- `bentopdfteam/bentopdf:v1.0.0` (versioned)
 
 ## 🚀 Production Deployment Examples
 

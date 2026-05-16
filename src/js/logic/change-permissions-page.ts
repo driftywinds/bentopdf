@@ -112,6 +112,14 @@ async function changePermissions() {
     (document.getElementById('new-owner-password') as HTMLInputElement)
       ?.value || '';
 
+  if (newUserPassword && !newOwnerPassword) {
+    showAlert(
+      'Owner Password Required',
+      'An owner password is required when setting permissions'
+    );
+    return;
+  }
+
   const inputPath = '/input.pdf';
   const outputPath = '/output.pdf';
   let qpdf: QpdfInstanceExtended;

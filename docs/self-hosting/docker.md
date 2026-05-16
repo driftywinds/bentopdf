@@ -19,19 +19,27 @@ The easiest way to self-host BentoPDF in a production environment.
 
 ## Quick Start
 
+> [!TIP]
+> BentoPDF ships in two builds:
+>
+> - **Self-Hosted build** — `ghcr.io/alam00000/bentopdf-simple:latest`. Every PDF tool, **without** the marketing chrome (no hero, FAQ, testimonials, footer). Use this for internal/team/organization deployments. It is **not** a feature-reduced "lite" version.
+> - **Commercial build** — `ghcr.io/alam00000/bentopdf:latest`. The full marketing site, used by bentopdf.com itself and by commercial license holders running public-facing deployments.
+>
+> If in doubt: pull the Self-Hosted build.
+
 ```bash
 # Docker
 docker run -d \
   --name bentopdf \
   -p 3000:8080 \
   --restart unless-stopped \
-  ghcr.io/alam00000/bentopdf:latest
+  ghcr.io/alam00000/bentopdf-simple:latest
 
 # Podman
 podman run -d \
   --name bentopdf \
   -p 3000:8080 \
-  ghcr.io/alam00000/bentopdf:latest
+  ghcr.io/alam00000/bentopdf-simple:latest
 ```
 
 ## Docker Compose / Podman Compose
@@ -41,7 +49,7 @@ Create `docker-compose.yml`:
 ```yaml
 services:
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf-simple:latest
     container_name: bentopdf
     ports:
       - '3000:8080'
@@ -90,23 +98,23 @@ docker run -d -p 3000:8080 bentopdf:custom
 
 ## Environment Variables
 
-| Variable                             | Description                                 | Default                                                        |
-| ------------------------------------ | ------------------------------------------- | -------------------------------------------------------------- |
-| `SIMPLE_MODE`                        | Build without LibreOffice tools             | `false`                                                        |
-| `BASE_URL`                           | Deploy to subdirectory                      | `/`                                                            |
-| `VITE_WASM_PYMUPDF_URL`              | PyMuPDF WASM module URL                     | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/` |
-| `VITE_WASM_GS_URL`                   | Ghostscript WASM module URL                 | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm@0.1.1/assets/` |
-| `VITE_WASM_CPDF_URL`                 | CoherentPDF WASM module URL                 | `https://cdn.jsdelivr.net/npm/coherentpdf@2.5.5/dist/`         |
-| `VITE_TESSERACT_WORKER_URL`          | OCR worker script URL                       | _(empty; use Tesseract.js default CDN)_                        |
-| `VITE_TESSERACT_CORE_URL`            | OCR core runtime directory                  | _(empty; use Tesseract.js default CDN)_                        |
-| `VITE_TESSERACT_LANG_URL`            | OCR traineddata directory                   | _(empty; use Tesseract.js default CDN)_                        |
-| `VITE_TESSERACT_AVAILABLE_LANGUAGES` | Comma-separated OCR languages exposed in UI | _(empty; show full catalog)_                                   |
-| `VITE_OCR_FONT_BASE_URL`             | OCR text-layer font directory               | _(empty; use remote Noto font URLs)_                           |
-| `VITE_DEFAULT_LANGUAGE`              | Default UI language                         | `en`                                                           |
-| `VITE_BRAND_NAME`                    | Custom brand name                           | `BentoPDF`                                                     |
-| `VITE_BRAND_LOGO`                    | Logo path relative to `public/`             | `images/favicon-no-bg.svg`                                     |
-| `VITE_FOOTER_TEXT`                   | Custom footer/copyright text                | `© 2026 BentoPDF. All rights reserved.`                        |
-| `DISABLE_TOOLS`                      | Comma-separated tool IDs to hide            | _(empty; all tools enabled)_                                   |
+| Variable                             | Description                                                                                                                  | Default                                                        |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `SIMPLE_MODE`                        | Build the Self-Hosted variant (hides bentopdf.com marketing chrome — hero, FAQ, testimonials, footer). All PDF tools remain. | `false`                                                        |
+| `BASE_URL`                           | Deploy to subdirectory                                                                                                       | `/`                                                            |
+| `VITE_WASM_PYMUPDF_URL`              | PyMuPDF WASM module URL                                                                                                      | `https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/` |
+| `VITE_WASM_GS_URL`                   | Ghostscript WASM module URL                                                                                                  | `https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm@0.1.1/assets/` |
+| `VITE_WASM_CPDF_URL`                 | CoherentPDF WASM module URL                                                                                                  | `https://cdn.jsdelivr.net/npm/coherentpdf@2.5.5/dist/`         |
+| `VITE_TESSERACT_WORKER_URL`          | OCR worker script URL                                                                                                        | _(empty; use Tesseract.js default CDN)_                        |
+| `VITE_TESSERACT_CORE_URL`            | OCR core runtime directory                                                                                                   | _(empty; use Tesseract.js default CDN)_                        |
+| `VITE_TESSERACT_LANG_URL`            | OCR traineddata directory                                                                                                    | _(empty; use Tesseract.js default CDN)_                        |
+| `VITE_TESSERACT_AVAILABLE_LANGUAGES` | Comma-separated OCR languages exposed in UI                                                                                  | _(empty; show full catalog)_                                   |
+| `VITE_OCR_FONT_BASE_URL`             | OCR text-layer font directory                                                                                                | _(empty; use remote Noto font URLs)_                           |
+| `VITE_DEFAULT_LANGUAGE`              | Default UI language                                                                                                          | `en`                                                           |
+| `VITE_BRAND_NAME`                    | Custom brand name                                                                                                            | `BentoPDF`                                                     |
+| `VITE_BRAND_LOGO`                    | Logo path relative to `public/`                                                                                              | `images/favicon-no-bg.svg`                                     |
+| `VITE_FOOTER_TEXT`                   | Custom footer/copyright text                                                                                                 | `© 2026 BentoPDF. All rights reserved.`                        |
+| `DISABLE_TOOLS`                      | Comma-separated tool IDs to hide                                                                                             | _(empty; all tools enabled)_                                   |
 
 WASM module URLs are pre-configured with CDN defaults — all advanced features work out of the box. Override these for air-gapped or self-hosted deployments.
 
@@ -199,7 +207,7 @@ Mount a `config.json` file into the served directory — no rebuild needed:
 docker run -d \
   -p 3000:8080 \
   -v ./config.json:/usr/share/nginx/html/config.json:ro \
-  ghcr.io/alam00000/bentopdf:latest
+  ghcr.io/alam00000/bentopdf-simple:latest
 ```
 
 Or with Docker Compose:
@@ -207,7 +215,7 @@ Or with Docker Compose:
 ```yaml
 services:
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf-simple:latest
     ports:
       - '3000:8080'
     volumes:
@@ -324,7 +332,7 @@ Set a variable to empty string to disable that module (users must configure manu
 By default, BentoPDF listens on port `8080` inside the container. To change this, set the `PORT` environment variable at runtime:
 
 ```bash
-docker run -p 3000:9090 -e PORT=9090 ghcr.io/alam00000/bentopdf:latest
+docker run -p 3000:9090 -e PORT=9090 ghcr.io/alam00000/bentopdf-simple:latest
 ```
 
 | Variable | Description                    | Default |
@@ -410,7 +418,7 @@ services:
       - ./letsencrypt:/letsencrypt
 
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf-simple:latest
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.bentopdf.rule=Host(`pdf.example.com`)'
@@ -438,7 +446,7 @@ services:
       - caddy_data:/data
 
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf-simple:latest
     restart: unless-stopped
 
 volumes:
@@ -460,7 +468,7 @@ pdf.example.com {
 ```yaml
 services:
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf-simple:latest
     deploy:
       resources:
         limits:
@@ -486,7 +494,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Container]
-Image=ghcr.io/alam00000/bentopdf:latest
+Image=ghcr.io/alam00000/bentopdf-simple:latest
 ContainerName=bentopdf
 PublishPort=3000:8080
 AutoUpdate=registry
@@ -521,30 +529,6 @@ journalctl --user -u bentopdf -f
 > [!TIP]
 > For system-wide deployment, use `systemctl` without `--user` flag and place the file in `/etc/containers/systemd/`.
 
-### Simple Mode Quadlet
-
-For Simple Mode deployment, create `bentopdf-simple.container`:
-
-```ini
-[Unit]
-Description=BentoPDF Simple Mode - Clean PDF toolkit
-After=network-online.target
-Wants=network-online.target
-
-[Container]
-Image=ghcr.io/alam00000/bentopdf-simple:latest
-ContainerName=bentopdf-simple
-PublishPort=3000:8080
-AutoUpdate=registry
-
-[Service]
-Restart=always
-TimeoutStartSec=300
-
-[Install]
-WantedBy=default.target
-```
-
 ### Quadlet with Health Check
 
 ```ini
@@ -554,7 +538,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Container]
-Image=ghcr.io/alam00000/bentopdf:latest
+Image=ghcr.io/alam00000/bentopdf-simple:latest
 ContainerName=bentopdf
 PublishPort=3000:8080
 AutoUpdate=registry
@@ -600,7 +584,7 @@ Then reference it in your container file:
 
 ```ini
 [Container]
-Image=ghcr.io/alam00000/bentopdf:latest
+Image=ghcr.io/alam00000/bentopdf-simple:latest
 ContainerName=bentopdf
 PublishPort=3000:8080
 Network=bentopdf.network

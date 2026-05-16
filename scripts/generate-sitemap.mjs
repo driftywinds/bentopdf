@@ -92,31 +92,26 @@ function generateSitemap() {
 
   for (const pageName of htmlFiles) {
     const priority = getPriority(pageName);
+    const url = buildUrl('en', pageName);
+    const lastmod = getLastMod('en', pageName);
 
-    for (const lang of languages) {
-      const url = buildUrl(lang, pageName);
-      const lastmod = getLastMod(lang, pageName);
-
-      sitemap += `  <url>
+    sitemap += `  <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${priority}</priority>
 `;
 
-      // Add hreflang alternates for all languages
-      for (const altLang of languages) {
-        const altUrl = buildUrl(altLang, pageName);
-        sitemap += `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${altUrl}"/>
-`;
-      }
-
-      // Add x-default pointing to English
-      const defaultUrl = buildUrl('en', pageName);
-      sitemap += `    <xhtml:link rel="alternate" hreflang="x-default" href="${defaultUrl}"/>
-  </url>
+    for (const altLang of languages) {
+      const altUrl = buildUrl(altLang, pageName);
+      sitemap += `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${altUrl}"/>
 `;
     }
+
+    const defaultUrl = buildUrl('en', pageName);
+    sitemap += `    <xhtml:link rel="alternate" hreflang="x-default" href="${defaultUrl}"/>
+  </url>
+`;
   }
 
   sitemap += `</urlset>
@@ -128,9 +123,8 @@ function generateSitemap() {
   const publicSitemapPath = path.resolve(__dirname, '../public/sitemap.xml');
   fs.writeFileSync(publicSitemapPath, sitemap);
 
-  const urlCount = htmlFiles.length * languages.length;
   console.log(
-    `✅ Sitemap generated with ${urlCount} URLs (${htmlFiles.length} pages × ${languages.length} languages)`
+    `✅ Sitemap generated with ${htmlFiles.length} canonical URLs (${languages.length} hreflang alternates each)`
   );
 }
 

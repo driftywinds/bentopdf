@@ -6,6 +6,14 @@ BentoPDF can be self-hosted on your own infrastructure. This guide covers variou
 
 The fastest way to self-host BentoPDF:
 
+> [!TIP]
+> BentoPDF ships in two builds:
+>
+> - **Self-Hosted build** — `ghcr.io/alam00000/bentopdf-simple:latest`. Every PDF tool, **without** the marketing chrome (no hero, FAQ, testimonials, footer). Use this for internal/team/organization deployments. It is **not** a feature-reduced "lite" version.
+> - **Commercial build** — `ghcr.io/alam00000/bentopdf:latest`. The full marketing site, used by bentopdf.com itself and by commercial license holders running public-facing deployments.
+>
+> If in doubt: pull the Self-Hosted build.
+
 > [!IMPORTANT]
 > Office file conversion requires `SharedArrayBuffer`, which means the app must be both cross-origin isolated and served from a secure context. The official image already sends the required COOP/COEP headers, but browsers still disable `SharedArrayBuffer` on plain HTTP local-network origins such as `http://192.168.x.x`.
 >
@@ -13,10 +21,10 @@ The fastest way to self-host BentoPDF:
 
 ```bash
 # Docker
-docker run -d -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
+docker run -d -p 3000:8080 ghcr.io/alam00000/bentopdf-simple:latest
 
 # Podman
-podman run -d -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
+podman run -d -p 3000:8080 ghcr.io/alam00000/bentopdf-simple:latest
 ```
 
 Or with Docker Compose / Podman Compose:
@@ -25,7 +33,7 @@ Or with Docker Compose / Podman Compose:
 # docker-compose.yml
 services:
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:latest
+    image: ghcr.io/alam00000/bentopdf-simple:latest
     ports:
       - '3000:8080'
     restart: unless-stopped
@@ -45,7 +53,7 @@ Run BentoPDF as a systemd service. Create `~/.config/containers/systemd/bentopdf
 
 ```ini
 [Container]
-Image=ghcr.io/alam00000/bentopdf:latest
+Image=ghcr.io/alam00000/bentopdf-simple:latest
 ContainerName=bentopdf
 PublishPort=3000:8080
 AutoUpdate=registry
@@ -78,27 +86,70 @@ npm run build
 
 ## Configuration Options
 
-### Simple Mode
+### Self-Hosted build (Simple Mode)
 
-Simple Mode is designed for internal organizational use where you want to hide all branding and marketing content, showing only the essential PDF tools.
+The Self-Hosted build (the `bentopdf-simple` image, also called Simple Mode) is **functionally identical** to the Commercial build — every PDF tool is present and behaves the same. It just hides the marketing chrome that only makes sense on bentopdf.com itself or on a commercial public-facing deployment. **It is not a feature-reduced or "lite" version.**
 
-**What Simple Mode hides:**
+**What the Self-Hosted build hides** (cosmetic only — no PDF features are removed):
 
-- Navigation bar
-- Hero section with marketing content
-- Features, FAQ, testimonials sections
-- Footer
+- Navigation bar, hero section, features section, FAQ, testimonials, footer
 - Updates page title to "PDF Tools"
 
-```bash
-# Build with Simple Mode
-SIMPLE_MODE=true npm run build
+**What the Self-Hosted build keeps** (everything that actually does PDF work):
 
-# Or use the pre-built Docker image
-docker run -p 3000:8080 bentopdfteam/bentopdf-simple:latest
+- Every PDF tool (merge, split, edit, sign, OCR, Office conversion, etc.)
+- Custom branding support, all build-time and runtime config
+
+The Commercial build (`ghcr.io/alam00000/bentopdf:latest`) is what powers bentopdf.com itself and is used by commercial license holders running public-facing deployments — it adds the hero, FAQ, testimonials, and footer that wouldn't make sense on an internal tool.
+
+If you're self-hosting BentoPDF for your team, organization, or as an internal tool, pull the Self-Hosted build:
+
+```bash
+# Use the pre-built image (recommended)
+docker run -p 3000:8080 ghcr.io/alam00000/bentopdf-simple:latest
+
+# Or build it yourself
+SIMPLE_MODE=true npm run build
 ```
 
 See [SIMPLE_MODE.md](https://github.com/alam00000/bentopdf/blob/main/SIMPLE_MODE.md) for full details.
+
+### Commercial build (public-facing deployments with your own brand)
+
+The Commercial build (the `bentopdf` image — no `-simple` suffix) is what powers bentopdf.com itself. It includes the full marketing site (hero, features, FAQ, testimonials, footer) on top of every PDF tool. Use this build when you want to **deploy BentoPDF as a public-facing PDF service under your own brand** — for example:
+
+- You're running BentoPDF as a hosted SaaS for end-users on your own domain
+- You want the landing-page experience (marketing sections + tools), not just the bare tool surface
+- You're a commercial license holder embedding BentoPDF into a commercial product
+
+**Run it as-is** (BentoPDF branding — useful to preview the build):
+
+```bash
+docker run -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
+```
+
+**Build with your own brand** (the typical commercial workflow):
+
+```bash
+docker build \
+  --build-arg VITE_BRAND_NAME="AcmePDF" \
+  --build-arg VITE_BRAND_LOGO="images/acme-logo.svg" \
+  --build-arg VITE_FOOTER_TEXT="© 2026 Acme Corp. All rights reserved." \
+  -t acmepdf .
+
+docker run -p 3000:8080 acmepdf
+```
+
+Every other build-time option (`BASE_URL`, `VITE_DEFAULT_LANGUAGE`, `DISABLE_TOOLS`, WASM URL overrides, etc.) works the same way it does on the Self-Hosted build.
+
+::: warning Licensing
+Running the Commercial build is allowed under either of BentoPDF's two license options:
+
+- **AGPL-3.0** (free) — allowed if your deployment publishes its full source code under AGPL, including any branding modifications and surrounding business logic.
+- **Commercial license** ($79 lifetime) — required for closed-source / proprietary deployments where you don't open-source your branding fork or business code.
+
+See the [Licensing page](https://bentopdf.com/licensing.html) for the full comparison. AGPL-licensed WASM modules (PyMuPDF, Ghostscript, CoherentPDF) load from a CDN at runtime, so they don't enter your image and don't change your licensing posture.
+:::
 
 ### Base URL
 
@@ -161,7 +212,7 @@ DISABLE_TOOLS="edit-pdf,sign-pdf" npm run build
 ```bash
 docker run -d -p 3000:8080 \
   -v ./config.json:/usr/share/nginx/html/config.json:ro \
-  ghcr.io/alam00000/bentopdf:latest
+  ghcr.io/alam00000/bentopdf-simple:latest
 ```
 
 Both methods can be combined — the lists are merged.

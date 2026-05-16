@@ -199,16 +199,20 @@
             <label
               for="new-owner-password"
               class="block mb-2 text-sm font-medium text-gray-300"
-              >New Owner Password</label
+              >New Owner Password
+              <span class="text-red-400" aria-hidden="true">*</span></label
             >
             <input
               type="password"
               id="new-owner-password"
               placeholder="Password for permissions"
+              required
+              aria-required="true"
               class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5"
             />
             <p class="text-xs text-gray-500 mt-1">
-              Leave both passwords empty to decrypt the PDF.
+              Required when setting permissions or a user password. Leave all
+              fields empty to decrypt the PDF instead.
             </p>
           </div>
 

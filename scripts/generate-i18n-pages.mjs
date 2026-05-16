@@ -240,7 +240,8 @@ function processFileForLanguage(
   defaultLink.href = buildUrl('', pagePath);
   document.head.appendChild(defaultLink);
 
-  const canonicalUrl = buildUrl(lang, pagePath);
+  const localizedUrl = buildUrl(lang, pagePath);
+  const canonicalUrl = buildUrl('', pagePath);
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) {
     canonical = document.createElement('link');
@@ -250,15 +251,15 @@ function processFileForLanguage(
   canonical.href = canonicalUrl;
 
   const ogUrl = document.querySelector('meta[property="og:url"]');
-  if (ogUrl) ogUrl.content = canonicalUrl;
+  if (ogUrl) ogUrl.content = localizedUrl;
   const twitterUrl = document.querySelector('meta[name="twitter:url"]');
-  if (twitterUrl) twitterUrl.content = canonicalUrl;
+  if (twitterUrl) twitterUrl.content = localizedUrl;
 
   injectOrganizationLd(document);
 
   const localizedToolName = resolveToolName(translationKey, tools);
   if (localizedToolName) {
-    injectToolBreadcrumb(document, lang, localizedToolName, canonicalUrl);
+    injectToolBreadcrumb(document, lang, localizedToolName, localizedUrl);
   }
 
   const links = document.querySelectorAll('a[href]');

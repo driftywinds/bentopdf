@@ -24,13 +24,16 @@ Visit [bentopdf.com](https://bentopdf.com) to use BentoPDF instantly—no instal
 > `http://localhost` works for local testing because browsers treat loopback as trustworthy. `http://192.168.x.x` or other LAN IPs usually do not, so Word/Excel/PowerPoint conversions will require HTTPS when accessed from other devices on your network.
 
 ```bash
-# Pull and run the Docker image
-docker run -d -p 3000:8080 ghcr.io/alam00000/bentopdf:latest
+# Pull and run the Docker image (self-hosted build)
+docker run -d -p 3000:8080 ghcr.io/alam00000/bentopdf-simple:latest
 
 # Or use Docker Compose
 curl -O https://raw.githubusercontent.com/alam00000/bentopdf/main/docker-compose.yml
 docker compose up -d
 ```
+
+> [!TIP]
+> BentoPDF ships in two builds: the **Self-Hosted build** (`bentopdf-simple`, used above) for internal/team/organization deployments, and the **Commercial build** (`bentopdf:latest`) used by bentopdf.com itself and by commercial license holders running public-facing deployments. Both ship the same PDF tools — the Commercial build adds the bentopdf.com hero, FAQ, testimonials, and footer. If in doubt, use the Self-Hosted build.
 
 Then open `http://localhost:3000` in your browser.
 

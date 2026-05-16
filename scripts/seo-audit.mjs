@@ -69,11 +69,9 @@ function findAll(html, regex) {
 function expectedCanonicalForFile(rel) {
   const parts = rel.split('/');
   const fileName = parts.pop();
-  const langPrefix = parts.length > 0 ? parts.join('/') : '';
   const baseName = fileName.replace(/\.html$/, '');
   const slug = baseName === 'index' ? '' : baseName;
   const segments = [SITE_URL];
-  if (langPrefix) segments.push(langPrefix);
   if (slug) segments.push(slug);
   return segments.join('/').replace(/\/+$/, '') || SITE_URL;
 }
@@ -230,11 +228,9 @@ function auditSitemap() {
     .filter((d) => fs.statSync(path.join(LOCALES_DIR, d)).isDirectory());
   for (const lang of expectedLocales) {
     if (lang === 'en') continue;
-    const sample = locs.find(
-      (l) => l.includes(`/${lang}/`) || l.endsWith(`/${lang}`)
-    );
-    if (!sample) {
-      warn('sitemap', `sitemap has no entry for locale "${lang}"`);
+    const hreflangPattern = new RegExp(`hreflang="${lang}"`);
+    if (!hreflangPattern.test(xml)) {
+      warn('sitemap', `sitemap has no hreflang entry for locale "${lang}"`);
     }
   }
 }
