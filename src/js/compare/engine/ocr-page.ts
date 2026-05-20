@@ -9,7 +9,20 @@ import { createConfiguredTesseractWorker } from '../../utils/tesseract-runtime.j
 
 type OcrWord = Tesseract.Word;
 type OcrRecognizeResult = Tesseract.RecognizeResult;
-type OcrPageWithWords = Tesseract.Page & { words: OcrWord[] };
+
+function flattenWords(result: OcrRecognizeResult): OcrWord[] {
+  const out: OcrWord[] = [];
+  for (const block of result.data.blocks ?? []) {
+    for (const paragraph of block.paragraphs ?? []) {
+      for (const line of paragraph.lines ?? []) {
+        for (const word of line.words ?? []) {
+          out.push(word);
+        }
+      }
+    }
+  }
+  return out;
+}
 
 export async function recognizePageCanvas(
   canvas: HTMLCanvasElement,
@@ -26,12 +39,12 @@ export async function recognizePageCanvas(
 
   let result: OcrRecognizeResult;
   try {
-    result = await worker.recognize(canvas);
+    result = await worker.recognize(canvas, {}, { text: true, blocks: true });
   } finally {
     await worker.terminate();
   }
 
-  const words = (result.data as OcrPageWithWords).words
+  const words = flattenWords(result)
     .map((word, index) => {
       const normalizedText = normalizeCompareText(word.text);
       if (!normalizedText) return null;

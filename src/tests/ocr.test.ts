@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const {
   createConfiguredTesseractWorker,
@@ -23,6 +23,7 @@ const mockWorker = {
 const mockPdfPage = {
   getViewport: vi.fn(() => ({ width: 200, height: 100 })),
   render: vi.fn(() => ({ promise: Promise.resolve() })),
+  cleanup: vi.fn(),
 };
 
 const mockPdfOutputPage = {
@@ -177,27 +178,31 @@ describe('performOcr', () => {
       expect.any(Function)
     );
     expect(mockWorker.setParameters).toHaveBeenCalledWith({
-      tessjs_create_hocr: '1',
       tessedit_pageseg_mode: '3',
     });
     expect(mockWorker.recognize).toHaveBeenCalledTimes(1);
     expect(mockWorker.terminate).toHaveBeenCalledTimes(1);
     expect(result.fullText).toContain('Recognized text');
     expect(result.pdfBytes).toBeInstanceOf(Uint8Array);
+    expect(result.warnings).toEqual([]);
   });
 
-  it('terminates the Tesseract worker when OCR fails', async () => {
+  it('records a warning and still terminates the worker when OCR fails on a page', async () => {
     mockWorker.recognize.mockRejectedValueOnce(new Error('ocr failed'));
 
-    await expect(
-      performOcr(new Uint8Array([1, 2, 3]), {
-        language: 'eng',
-        resolution: 2,
-        binarize: false,
-        whitelist: '',
-      })
-    ).rejects.toThrow('ocr failed');
+    const result = await performOcr(new Uint8Array([1, 2, 3]), {
+      language: 'eng',
+      resolution: 2,
+      binarize: false,
+      whitelist: '',
+    });
 
     expect(mockWorker.terminate).toHaveBeenCalledTimes(1);
+    expect(result.warnings).toHaveLength(1);
+    expect(result.warnings[0]).toMatchObject({
+      page: 1,
+      kind: 'recognize-error',
+    });
+    expect(result.warnings[0].message).toContain('ocr failed');
   });
 });

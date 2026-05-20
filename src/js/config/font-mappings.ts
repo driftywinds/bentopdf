@@ -11,11 +11,11 @@ export const languageToFontFamily: Record<string, string> = {
   kor: 'Noto Sans KR',
 
   // Arabic Script
-  ara: 'Noto Sans Arabic',
-  fas: 'Noto Sans Arabic',
-  urd: 'Noto Sans Arabic',
-  pus: 'Noto Sans Arabic',
-  kur: 'Noto Sans Arabic',
+  ara: 'Noto Naskh Arabic',
+  fas: 'Noto Naskh Arabic',
+  urd: 'Noto Naskh Arabic',
+  pus: 'Noto Naskh Arabic',
+  kur: 'Noto Naskh Arabic',
 
   // Devanagari Script
   hin: 'Noto Sans Devanagari',
@@ -167,8 +167,8 @@ export const fontFamilyToUrl: Record<string, string> = {
     'https://raw.githack.com/googlefonts/noto-cjk/main/Sans/OTF/TraditionalChinese/NotoSansCJKtc-Regular.otf',
   'Noto Sans KR':
     'https://raw.githack.com/googlefonts/noto-cjk/main/Sans/OTF/Korean/NotoSansCJKkr-Regular.otf',
-  'Noto Sans Arabic':
-    'https://raw.githack.com/googlefonts/noto-fonts/main/hinted/ttf/NotoSansArabic/NotoSansArabic-Regular.ttf',
+  'Noto Naskh Arabic':
+    'https://raw.githack.com/googlefonts/noto-fonts/main/hinted/ttf/NotoNaskhArabic/NotoNaskhArabic-Regular.ttf',
   'Noto Sans Devanagari':
     'https://raw.githack.com/googlefonts/noto-fonts/main/unhinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Regular.ttf',
   'Noto Sans Bengali':

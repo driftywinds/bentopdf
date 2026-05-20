@@ -12,11 +12,11 @@ describe('font-loader', () => {
 
   it('builds a self-hosted font URL when an OCR font base URL is configured', () => {
     expect(
-      resolveFontUrl('Noto Sans Arabic', {
+      resolveFontUrl('Noto Naskh Arabic', {
         VITE_OCR_FONT_BASE_URL: 'https://internal.example.com/wasm/ocr/fonts/',
       })
     ).toBe(
-      'https://internal.example.com/wasm/ocr/fonts/NotoSansArabic-Regular.ttf'
+      'https://internal.example.com/wasm/ocr/fonts/NotoNaskhArabic-Regular.ttf'
     );
   });
 

@@ -7,8 +7,9 @@ import {
   Baseline,
 } from '@/types';
 
-const BBOX_PATTERN = /bbox\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/;
-const BASELINE_PATTERN = /baseline\s+([-+]?\d*\.?\d*)\s+([-+]?\d+)/;
+const BBOX_PATTERN =
+  /bbox\s+(\d+\.?\d*)\s+(\d+\.?\d*)\s+(\d+\.?\d*)\s+(\d+\.?\d*)/;
+const BASELINE_PATTERN = /baseline\s+([-+]?\d*\.?\d*)\s+([-+]?\d+\.?\d*)/;
 const TEXTANGLE_PATTERN = /textangle\s+([-+]?\d*\.?\d*)/;
 
 export function parseBBox(title: string): BBox | null {
@@ -16,10 +17,10 @@ export function parseBBox(title: string): BBox | null {
   if (!match) return null;
 
   return {
-    x0: parseInt(match[1], 10),
-    y0: parseInt(match[2], 10),
-    x1: parseInt(match[3], 10),
-    y1: parseInt(match[4], 10),
+    x0: parseFloat(match[1]),
+    y0: parseFloat(match[2]),
+    x1: parseFloat(match[3]),
+    y1: parseFloat(match[4]),
   };
 }
 
@@ -31,7 +32,7 @@ export function parseBaseline(title: string): Baseline {
 
   return {
     slope: parseFloat(match[1]) || 0,
-    intercept: parseInt(match[2], 10) || 0,
+    intercept: parseFloat(match[2]) || 0,
   };
 }
 
@@ -91,7 +92,7 @@ export function parseHocrDocument(hocrText: string): OcrPage {
       }
     });
   } else {
-    const wordElements = doc.querySelectorAll('.ocrx_word');
+    const wordElements = Array.from(doc.querySelectorAll('.ocrx_word'));
     if (wordElements.length > 0) {
       const words = parseWordsFromElements(wordElements);
       if (words.length > 0) {
@@ -123,7 +124,7 @@ function parseHocrLine(lineElement: Element): OcrLine | null {
   const parent = lineElement.closest('.ocr_par') || lineElement.parentElement;
   const direction = parent ? getTextDirection(parent) : 'ltr';
   const injectWordBreaks = parent ? shouldInjectWordBreaks(parent) : true;
-  const wordElements = lineElement.querySelectorAll('.ocrx_word');
+  const wordElements = Array.from(lineElement.querySelectorAll('.ocrx_word'));
   const words = parseWordsFromElements(wordElements);
 
   return {
@@ -136,7 +137,7 @@ function parseHocrLine(lineElement: Element): OcrLine | null {
   };
 }
 
-function parseWordsFromElements(wordElements: NodeListOf<Element>): OcrWord[] {
+function parseWordsFromElements(wordElements: Element[]): OcrWord[] {
   const words: OcrWord[] = [];
 
   wordElements.forEach((wordEl) => {
@@ -172,6 +173,44 @@ function calculateBoundingBox(bboxes: BBox[]): BBox {
     x1: Math.max(...bboxes.map((b) => b.x1)),
     y1: Math.max(...bboxes.map((b) => b.y1)),
   };
+}
+
+function scaleBBox(bbox: BBox, sx: number, sy: number): BBox {
+  return {
+    x0: bbox.x0 * sx,
+    y0: bbox.y0 * sy,
+    x1: bbox.x1 * sx,
+    y1: bbox.y1 * sy,
+  };
+}
+
+export function scaleOcrPageToPdfPoints(
+  ocrPage: OcrPage,
+  pdfWidth: number,
+  pdfHeight: number
+): void {
+  if (ocrPage.width <= 0 || ocrPage.height <= 0) return;
+  const scaleX = pdfWidth / ocrPage.width;
+  const scaleY = pdfHeight / ocrPage.height;
+  if (scaleX === 1 && scaleY === 1) return;
+
+  for (const line of ocrPage.lines) {
+    line.bbox = scaleBBox(line.bbox, scaleX, scaleY);
+    line.baseline = {
+      slope: line.baseline.slope,
+      intercept: line.baseline.intercept * scaleY,
+    };
+    for (const word of line.words) {
+      word.bbox = scaleBBox(word.bbox, scaleX, scaleY);
+    }
+  }
+  ocrPage.width = pdfWidth;
+  ocrPage.height = pdfHeight;
+}
+
+export function calculateLineFontSize(line: OcrLine): number {
+  const lineHeight = line.bbox.y1 - line.bbox.y0;
+  return Math.max(lineHeight + line.baseline.intercept, 1);
 }
 
 /**
@@ -222,8 +261,6 @@ export function calculateWordTransform(
   const rotation = -line.textangle + slopeAngle;
 
   const x = wordBBox.x0;
-
-  // pdf-lib draws text from baseline, so we position at word bottom
   const y = pageHeight - wordBBox.y1;
 
   return {

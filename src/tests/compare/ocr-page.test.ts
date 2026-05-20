@@ -32,14 +32,26 @@ describe('compare OCR page recognition', () => {
 
     mockWorker.recognize.mockResolvedValue({
       data: {
-        words: [
+        blocks: [
           {
-            text: 'Hello',
-            bbox: { x0: 10, y0: 20, x1: 60, y1: 40 },
-          },
-          {
-            text: 'world',
-            bbox: { x0: 70, y0: 20, x1: 120, y1: 40 },
+            paragraphs: [
+              {
+                lines: [
+                  {
+                    words: [
+                      {
+                        text: 'Hello',
+                        bbox: { x0: 10, y0: 20, x1: 60, y1: 40 },
+                      },
+                      {
+                        text: 'world',
+                        bbox: { x0: 70, y0: 20, x1: 120, y1: 40 },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
@@ -52,7 +64,11 @@ describe('compare OCR page recognition', () => {
       1,
       expect.any(Function)
     );
-    expect(mockWorker.recognize).toHaveBeenCalledWith(canvas);
+    expect(mockWorker.recognize).toHaveBeenCalledWith(
+      canvas,
+      {},
+      { text: true, blocks: true }
+    );
     expect(mockWorker.terminate).toHaveBeenCalledTimes(1);
     expect(model.source).toBe('ocr');
     expect(model.hasText).toBe(true);
