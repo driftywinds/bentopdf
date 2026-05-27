@@ -101,8 +101,8 @@ function drawOcrTextLayer(
           y: transform.y,
           font,
           size: transform.fontSize,
-          color: rgb(1, 0, 0),
-          opacity: 1,
+          color: rgb(0, 0, 0),
+          opacity: 0,
           rotate: lineRotation,
         });
       } catch {
@@ -132,8 +132,8 @@ function drawOcrTextLayer(
               y: spaceTransform.y,
               font,
               size: spaceTransform.fontSize,
-              color: rgb(1, 0, 0),
-              opacity: 1,
+              color: rgb(0, 0, 0),
+              opacity: 0,
               rotate: lineRotation,
             });
           } catch {
