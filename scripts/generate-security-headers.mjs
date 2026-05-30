@@ -27,6 +27,7 @@ const DEFAULT_WASM_ORIGINS = {
 };
 const DEFAULT_CORS_PROXY_ORIGIN =
   'https://bentopdf-cors-proxy.bentopdf.workers.dev';
+const DEFAULT_OCR_FONT_CDN_ORIGIN = 'https://rawcdn.githack.com';
 
 const wasmOrigins = [
   originOf(process.env.VITE_WASM_PYMUPDF_URL) || DEFAULT_WASM_ORIGINS.pymupdf,
@@ -43,13 +44,15 @@ const tesseractOrigins = uniq([
 const corsProxyOrigin =
   originOf(process.env.VITE_CORS_PROXY_URL) || DEFAULT_CORS_PROXY_ORIGIN;
 
-const ocrFontOrigin = originOf(process.env.VITE_OCR_FONT_BASE_URL);
+const ocrFontOrigin =
+  originOf(process.env.VITE_OCR_FONT_BASE_URL) || DEFAULT_OCR_FONT_CDN_ORIGIN;
 
 const scriptOrigins = uniq([...wasmOrigins, ...tesseractOrigins]);
 const connectOrigins = uniq([
   ...wasmOrigins,
   ...tesseractOrigins,
   corsProxyOrigin,
+  ocrFontOrigin,
 ]);
 const fontOrigins = uniq([ocrFontOrigin].filter(Boolean));
 

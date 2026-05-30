@@ -6,7 +6,7 @@ import { resolveFontUrl } from '../js/utils/font-loader';
 describe('font-loader', () => {
   it('uses the default public font URL when no offline font base URL is configured', () => {
     expect(resolveFontUrl('Noto Sans', {})).toBe(
-      'https://raw.githack.com/googlefonts/noto-fonts/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf'
+      'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSans/NotoSans-Regular.ttf'
     );
   });
 

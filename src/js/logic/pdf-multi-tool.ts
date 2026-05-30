@@ -12,6 +12,8 @@ import {
 } from '../utils/render-utils';
 import { initializeGlobalShortcuts } from '../utils/shortcuts-init.js';
 import { repairPdfFile } from './repair-pdf.js';
+import { partitionIncomingFiles } from '../utils/multi-tool-file-input.js';
+import { convertImagesToPdfFile } from '../utils/images-to-pdf-lib.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -101,7 +103,11 @@ function showModal(
     success: 'text-green-400',
   };
 
-  modalIcon.innerHTML = `<i data-lucide="${iconMap[type]}" class="w-12 h-12 ${colorMap[type]}"></i>`;
+  modalIcon.replaceChildren();
+  const iconEl = document.createElement('i');
+  iconEl.dataset.lucide = iconMap[type];
+  iconEl.className = `w-12 h-12 ${colorMap[type]}`;
+  modalIcon.appendChild(iconEl);
   modal.classList.remove('hidden');
   createIcons({ icons });
 }
@@ -133,20 +139,25 @@ async function withButtonLoading(
   const button = document.getElementById(buttonId) as HTMLButtonElement;
   if (!button) return;
 
-  const originalContent = button.innerHTML;
+  const originalChildren = Array.from(button.childNodes).map((n) =>
+    n.cloneNode(true)
+  );
   const originalPointerEvents = button.style.pointerEvents;
 
   try {
     button.disabled = true;
     button.style.pointerEvents = 'none';
-    button.innerHTML =
-      '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+    const spinner = document.createElement('i');
+    spinner.dataset.lucide = 'loader';
+    spinner.className = 'w-5 h-5 animate-spin text-white';
+    button.replaceChildren(spinner);
+    createIcons({ icons });
 
     await action();
   } finally {
     button.disabled = false;
     button.style.pointerEvents = originalPointerEvents;
-    button.innerHTML = originalContent;
+    button.replaceChildren(...originalChildren);
   }
 }
 
@@ -330,33 +341,122 @@ function initializeTool() {
     }
   });
 
-  const uploadArea = document.getElementById('upload-area');
-  if (uploadArea) {
-    uploadArea.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadArea.classList.add('border-indigo-500');
-    });
-    uploadArea.addEventListener('dragleave', () => {
-      uploadArea.classList.remove('border-indigo-500');
-    });
-    uploadArea.addEventListener('drop', (e) => {
-      e.preventDefault();
-      uploadArea.classList.remove('border-indigo-500');
-      const files = Array.from(e.dataTransfer?.files || []).filter(
-        (f) => f.type === 'application/pdf'
-      );
-      if (files.length > 0) {
-        loadPdfs(files);
-      }
-    });
-  }
+  setupGlobalDragAndDrop();
 
   document.getElementById('upload-area')?.classList.remove('hidden');
+}
+
+let dragOverlay: HTMLDivElement | null = null;
+let isProcessingDrop = false;
+
+function showDragOverlay() {
+  if (dragOverlay) return;
+  dragOverlay = document.createElement('div');
+  dragOverlay.className =
+    'fixed inset-0 bg-indigo-900/40 border-4 border-dashed border-indigo-400 z-40 pointer-events-none flex items-center justify-center';
+  const inner = document.createElement('div');
+  inner.className =
+    'text-white text-lg sm:text-xl font-semibold bg-gray-900/80 px-6 py-4 rounded-lg text-center';
+  inner.textContent = t('multiTool.dropToAdd');
+  dragOverlay.appendChild(inner);
+  document.body.appendChild(dragOverlay);
+}
+
+function hideDragOverlay() {
+  if (dragOverlay) {
+    dragOverlay.remove();
+    dragOverlay = null;
+  }
+}
+
+function setupGlobalDragAndDrop() {
+  const target = document.getElementById('main-scroll-container');
+  if (!target) return;
+
+  target.addEventListener('dragover', (e) => {
+    if (!e.dataTransfer?.types.includes('Files')) return;
+    e.preventDefault();
+    showDragOverlay();
+  });
+
+  document.addEventListener('dragleave', (e) => {
+    if (
+      e.clientX <= 0 ||
+      e.clientY <= 0 ||
+      e.clientX >= window.innerWidth ||
+      e.clientY >= window.innerHeight
+    ) {
+      hideDragOverlay();
+    }
+  });
+
+  document.addEventListener('drop', () => {
+    hideDragOverlay();
+  });
+
+  target.addEventListener('drop', (e) => {
+    e.preventDefault();
+    hideDragOverlay();
+    const files = Array.from(e.dataTransfer?.files || []);
+    if (files.length === 0) return;
+    void handleIncomingFiles(files);
+  });
+}
+
+async function processIncomingFiles(rawFiles: File[]): Promise<File[]> {
+  const { pdfFiles, imageFiles, skipped } = partitionIncomingFiles(rawFiles);
+  const result: File[] = [...pdfFiles];
+
+  if (imageFiles.length > 0) {
+    try {
+      showLoading(0, 100);
+      const loadingText = document.getElementById('loading-text');
+      if (loadingText)
+        loadingText.textContent = t('multiTool.convertingImages');
+      const imagesPdfFile = await convertImagesToPdfFile(imageFiles);
+      result.push(imagesPdfFile);
+    } catch (e) {
+      console.error('Failed to convert images to PDF:', e);
+      hideLoading();
+      showModal(
+        t('multiTool.error'),
+        t('multiTool.failedToConvertImages'),
+        'error'
+      );
+    }
+  }
+
+  if (skipped.length > 0) {
+    console.warn('Skipped unsupported files:', skipped);
+  }
+
+  return result;
+}
+
+async function handleIncomingFiles(rawFiles: File[]) {
+  if (isRendering || isProcessingDrop) {
+    showModal(t('multiTool.pleaseWait'), t('multiTool.pagesRendering'), 'info');
+    return;
+  }
+
+  isProcessingDrop = true;
+  try {
+    const processed = await processIncomingFiles(rawFiles);
+    if (processed.length > 0) {
+      await loadPdfs(processed);
+    } else {
+      hideLoading();
+    }
+  } finally {
+    isProcessingDrop = false;
+  }
 }
 
 function resetAll() {
   renderCancelled = true;
   isRendering = false;
+  isProcessingDrop = false;
+  hideDragOverlay();
   snapshot();
   allPages = [];
   selectedPages.clear();
@@ -382,7 +482,7 @@ async function handlePdfUpload(e: Event) {
   const input = e.target as HTMLInputElement;
   const files = Array.from(input.files || []);
   if (files.length > 0) {
-    await loadPdfs(files);
+    await handleIncomingFiles(files);
   }
   input.value = '';
 }
@@ -524,20 +624,6 @@ async function loadPdfs(files: File[]) {
   }
 }
 
-function getCacheKey(pdfIndex: number, pageIndex: number): string {
-  return `${pdfIndex}-${pageIndex}`;
-}
-
-// Wrapper for compatibility with updatePageDisplay
-function createPageCard(pageData: PageData, index: number) {
-  const pagesContainer = document.getElementById('pages-container');
-  if (!pagesContainer) return;
-
-  const card = createPageElement(pageData.canvas, index);
-  pagesContainer.appendChild(card);
-  createIcons({ icons });
-}
-
 // Modified to return the element instead of appending it
 function createPageElement(
   canvas: HTMLCanvasElement | null,
@@ -584,10 +670,13 @@ function createPageElement(
     const loading = document.createElement('div');
     loading.className =
       'flex flex-col items-center justify-center text-gray-400';
-    loading.innerHTML = `
-      <i data-lucide="loader" class="w-8 h-8 animate-spin mb-2"></i>
-      <span class="text-xs">${t('common.loading')}</span>
-    `;
+    const loadingIcon = document.createElement('i');
+    loadingIcon.dataset.lucide = 'loader';
+    loadingIcon.className = 'w-8 h-8 animate-spin mb-2';
+    const loadingLabel = document.createElement('span');
+    loadingLabel.className = 'text-xs';
+    loadingLabel.textContent = t('common.loading');
+    loading.append(loadingIcon, loadingLabel);
     preview.appendChild(loading);
     preview.classList.add('bg-gray-700'); // Darker background for loading
   }
@@ -611,9 +700,15 @@ function createPageElement(
   const selectBtn = document.createElement('button');
   selectBtn.className =
     'absolute top-2 right-2 p-1 rounded bg-gray-900/70 hover:bg-gray-800 z-10';
-  selectBtn.innerHTML = selectedPages.has(index)
-    ? '<i data-lucide="check-square" class="w-4 h-4 text-indigo-400"></i>'
-    : '<i data-lucide="square" class="w-4 h-4 text-gray-200"></i>';
+  const selectIcon = document.createElement('i');
+  if (selectedPages.has(index)) {
+    selectIcon.dataset.lucide = 'check-square';
+    selectIcon.className = 'w-4 h-4 text-indigo-400';
+  } else {
+    selectIcon.dataset.lucide = 'square';
+    selectIcon.className = 'w-4 h-4 text-gray-200';
+  }
+  selectBtn.appendChild(selectIcon);
   selectBtn.onclick = (e) => {
     e.stopPropagation();
     toggleSelectOptimized(index);
@@ -1094,7 +1189,6 @@ async function downloadAll() {
 async function downloadSplitPdfs() {
   try {
     const zip = new JSZip();
-    const sortedMarkers = Array.from(splitMarkers).sort((a, b) => a - b);
 
     // Create segments based on split markers
     const segments: number[][] = [];
