@@ -299,6 +299,7 @@ export class MarkdownEditor {
         startOnLoad: false,
         theme: 'default',
         securityLevel: 'strict',
+        htmlLabels: false,
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       });
@@ -717,9 +718,10 @@ export class MarkdownEditor {
 
           const wrapper = document.createElement('div');
           wrapper.className = 'mermaid-diagram';
-          wrapper.innerHTML = DOMPurify.sanitize(svg, {
-            USE_PROFILES: { svg: true, svgFilters: true },
-          });
+          // Mermaid already sanitizes SVG at securityLevel: 'strict' (including
+          // foreignObject HTML labels). A second DOMPurify pass with the SVG-only
+          // profile strips those labels and leaves empty flowchart nodes.
+          wrapper.innerHTML = svg;
 
           pre.replaceWith(wrapper);
         } catch (error) {
