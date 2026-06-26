@@ -2,7 +2,12 @@ import { showLoader, hideLoader, showAlert } from '../ui.js';
 import { t } from '../i18n/i18n';
 import { createIcons, icons } from 'lucide';
 import * as pdfjsLib from 'pdfjs-dist';
-import { downloadFile, getPDFDocument, formatBytes } from '../utils/helpers.js';
+import {
+  downloadFile,
+  getPDFDocument,
+  formatBytes,
+  initializeQpdf,
+} from '../utils/helpers.js';
 import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import { state } from '../state.js';
 import {
@@ -13,8 +18,18 @@ import { initPagePreview } from '../utils/page-preview.js';
 import { isCpdfAvailable } from '../utils/cpdf-helper.js';
 import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
 import JSZip from 'jszip';
-import { PDFDocument as PDFLibDocument } from 'pdf-lib';
 import { loadPdfDocument } from '../utils/load-pdf-document.js';
+import type { QpdfInstanceExtended } from '@/types';
+import {
+  parseRangeGroups,
+  evenOddIndices,
+  allPagesIndices,
+  nTimesGroups,
+  bookmarkSplitGroups,
+  groupFilename,
+  uniqueZipName,
+  extractPagesWithQpdf,
+} from '../utils/split-pdf-helpers.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -23,6 +38,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
 
 document.addEventListener('DOMContentLoaded', () => {
   let visualSelectorRendered = false;
+  let isSplitting = false;
 
   const fileInput = document.getElementById('file-input') as HTMLInputElement;
   const dropZone = document.getElementById('drop-zone');
@@ -38,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const rangePanel = document.getElementById('range-panel');
   const visualPanel = document.getElementById('visual-select-panel');
   const evenOddPanel = document.getElementById('even-odd-panel');
-  const zipOptionWrapper = document.getElementById('zip-option-wrapper');
+  const outputModeWrapper = document.getElementById('output-mode-wrapper');
+  const outputSeparateLabel = document.getElementById('output-separate-label');
   const allPagesPanel = document.getElementById('all-pages-panel');
   const bookmarksPanel = document.getElementById('bookmarks-panel');
   const nTimesPanel = document.getElementById('n-times-panel');
@@ -252,6 +269,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ) as HTMLInputElement;
     if (nValueInput) nValueInput.value = '5';
 
+    const combineRadio = document.getElementById(
+      'output-combine'
+    ) as HTMLInputElement;
+    if (combineRadio) combineRadio.checked = true;
+
     // Reset radio buttons to default (range)
     const rangeRadio = document.querySelector(
       'input[name="split-mode"][value="range"]'
@@ -271,18 +293,50 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const split = async () => {
+    if (isSplitting) return;
+    isSplitting = true;
+    if (processBtn) (processBtn as HTMLButtonElement).disabled = true;
+
     const splitMode = splitModeSelect.value;
-    const downloadAsZip =
-      (document.getElementById('download-as-zip') as HTMLInputElement)
-        ?.checked || false;
+    const oneFilePerUnit =
+      (
+        document.querySelector(
+          'input[name="split-output-mode"]:checked'
+        ) as HTMLInputElement | null
+      )?.value === 'separate';
 
     showLoader('Splitting PDF...');
 
+    let qpdf: QpdfInstanceExtended | null = null;
+    const inputPath = '/split-input.pdf';
+
     try {
       if (!state.pdfDoc) throw new Error('No PDF document loaded.');
+      const srcDoc = state.pdfDoc;
 
-      const totalPages = state.pdfDoc.getPageCount();
+      const totalPages = srcDoc.getPageCount();
       let indicesToExtract: number[] = [];
+      let outputGroups: number[][] | null = null;
+
+      let sourceBytes: Uint8Array | null = null;
+      const getSourceBytes = async (): Promise<Uint8Array> => {
+        if (sourceBytes) return sourceBytes;
+        sourceBytes = new Uint8Array(await srcDoc.save());
+        return sourceBytes;
+      };
+
+      const ensureQpdf = async (): Promise<QpdfInstanceExtended> => {
+        if (qpdf) return qpdf;
+        const instance = await initializeQpdf();
+        instance.FS.writeFile(inputPath, await getSourceBytes());
+        qpdf = instance;
+        return instance;
+      };
+
+      const extractPages = async (indices: number[]): Promise<Uint8Array> => {
+        const instance = await ensureQpdf();
+        return extractPagesWithQpdf(instance, inputPath, indices);
+      };
 
       switch (splitMode) {
         case 'range': {
@@ -290,71 +344,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('page-range') as HTMLInputElement
           ).value;
           if (!pageRangeInput) throw new Error('Choose a valid page range.');
-          const ranges = pageRangeInput.split(',');
 
-          const rangeGroups: number[][] = [];
-          for (const range of ranges) {
-            const trimmedRange = range.trim();
-            if (!trimmedRange) continue;
+          const { groups: rangeGroups, indices: rangeIndices } =
+            parseRangeGroups(pageRangeInput, totalPages);
+          indicesToExtract.push(...rangeIndices);
 
-            const groupIndices: number[] = [];
-            if (trimmedRange.includes('-')) {
-              const [start, end] = trimmedRange.split('-').map(Number);
-              if (
-                isNaN(start) ||
-                isNaN(end) ||
-                start < 1 ||
-                end > totalPages ||
-                start > end
-              )
-                continue;
-              for (let i = start; i <= end; i++) groupIndices.push(i - 1);
-            } else {
-              const pageNum = Number(trimmedRange);
-              if (isNaN(pageNum) || pageNum < 1 || pageNum > totalPages)
-                continue;
-              groupIndices.push(pageNum - 1);
-            }
-
-            if (groupIndices.length > 0) {
-              rangeGroups.push(groupIndices);
-              indicesToExtract.push(...groupIndices);
-            }
-          }
-
-          if (rangeGroups.length > 1) {
-            showLoader('Creating separate PDFs for each range...');
-            const zip = new JSZip();
-
-            for (let i = 0; i < rangeGroups.length; i++) {
-              const group = rangeGroups[i];
-              const newPdf = await PDFLibDocument.create();
-              const copiedPages = await newPdf.copyPages(state.pdfDoc, group);
-              copiedPages.forEach((page) => newPdf.addPage(page));
-              const pdfBytes = await newPdf.save();
-
-              const minPage = Math.min(...group) + 1;
-              const maxPage = Math.max(...group) + 1;
-              const filename =
-                minPage === maxPage
-                  ? `page-${minPage}.pdf`
-                  : `pages-${minPage}-${maxPage}.pdf`;
-              zip.file(filename, pdfBytes);
-            }
-
-            const zipBlob = await zip.generateAsync({ type: 'blob' });
-            downloadFile(zipBlob, 'split-pages.zip');
-            hideLoader();
-            showAlert(
-              'Success',
-              `PDF split into ${rangeGroups.length} files successfully!`,
-              'success',
-              () => {
-                resetState();
-              }
-            );
-            return;
-          }
+          if (oneFilePerUnit) outputGroups = rangeGroups;
           break;
         }
 
@@ -364,21 +359,20 @@ document.addEventListener('DOMContentLoaded', () => {
           ) as HTMLInputElement;
           if (!choiceElement)
             throw new Error('Please select even or odd pages.');
-          const choice = choiceElement.value;
-          for (let i = 0; i < totalPages; i++) {
-            if (choice === 'even' && (i + 1) % 2 === 0)
-              indicesToExtract.push(i);
-            if (choice === 'odd' && (i + 1) % 2 !== 0) indicesToExtract.push(i);
-          }
+          const choice = choiceElement.value === 'even' ? 'even' : 'odd';
+          indicesToExtract = evenOddIndices(choice, totalPages);
           break;
         }
         case 'all':
-          indicesToExtract = Array.from({ length: totalPages }, (_, i) => i);
+          indicesToExtract = allPagesIndices(totalPages);
+          outputGroups = indicesToExtract.map((i) => [i]);
           break;
         case 'visual':
           indicesToExtract = Array.from(
             document.querySelectorAll('.page-thumbnail-wrapper.selected')
           ).map((el) => parseInt((el as HTMLElement).dataset.pageIndex || '0'));
+          if (oneFilePerUnit)
+            outputGroups = [...new Set(indicesToExtract)].map((i) => [i]);
           break;
         case 'bookmarks': {
           if (!isCpdfAvailable()) {
@@ -388,8 +382,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           const { getCpdf } = await import('../utils/cpdf-helper.js');
           const cpdf = await getCpdf();
-          const pdfBytes = await state.pdfDoc.save();
-          const pdf = cpdf.fromMemory(new Uint8Array(pdfBytes), '');
+          const pdf = cpdf.fromMemory(
+            new Uint8Array(await getSourceBytes()),
+            ''
+          );
 
           cpdf.startGetBookmarkInfo(pdf);
           const bookmarkCount = cpdf.numberBookmarks();
@@ -415,27 +411,11 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error('No bookmarks found at the selected level.');
           }
 
-          splitPages.sort((a, b) => a - b);
           const zip = new JSZip();
+          const bookmarkGroups = bookmarkSplitGroups(splitPages, totalPages);
 
-          for (let i = 0; i < splitPages.length; i++) {
-            const startPage = i === 0 ? 0 : splitPages[i];
-            const endPage =
-              i < splitPages.length - 1
-                ? splitPages[i + 1] - 1
-                : totalPages - 1;
-
-            const newPdf = await PDFLibDocument.create();
-            const pageIndices = Array.from(
-              { length: endPage - startPage + 1 },
-              (_, idx) => startPage + idx
-            );
-            const copiedPages = await newPdf.copyPages(
-              state.pdfDoc,
-              pageIndices
-            );
-            copiedPages.forEach((page) => newPdf.addPage(page));
-            const pdfBytes2 = await newPdf.save();
+          for (let i = 0; i < bookmarkGroups.length; i++) {
+            const pdfBytes2 = await extractPages(bookmarkGroups[i]);
             zip.file(`split-${i + 1}.pdf`, pdfBytes2);
           }
 
@@ -456,23 +436,10 @@ document.addEventListener('DOMContentLoaded', () => {
           if (nValue < 1) throw new Error('N must be at least 1.');
 
           const zip2 = new JSZip();
-          const numSplits = Math.ceil(totalPages / nValue);
+          const chunks = nTimesGroups(nValue, totalPages);
 
-          for (let i = 0; i < numSplits; i++) {
-            const startPage = i * nValue;
-            const endPage = Math.min(startPage + nValue - 1, totalPages - 1);
-            const pageIndices = Array.from(
-              { length: endPage - startPage + 1 },
-              (_, idx) => startPage + idx
-            );
-
-            const newPdf = await PDFLibDocument.create();
-            const copiedPages = await newPdf.copyPages(
-              state.pdfDoc,
-              pageIndices
-            );
-            copiedPages.forEach((page) => newPdf.addPage(page));
-            const pdfBytes3 = await newPdf.save();
+          for (let i = 0; i < chunks.length; i++) {
+            const pdfBytes3 = await extractPages(chunks[i]);
             zip2.file(`split-${i + 1}.pdf`, pdfBytes3);
           }
 
@@ -495,31 +462,26 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('No pages were selected for splitting.');
       }
 
-      if (
-        splitMode === 'all' ||
-        (['range', 'visual'].includes(splitMode) && downloadAsZip)
-      ) {
-        showLoader('Creating ZIP file...');
-        const zip = new JSZip();
-        for (const index of uniqueIndices) {
-          const newPdf = await PDFLibDocument.create();
-          const [copiedPage] = await newPdf.copyPages(state.pdfDoc, [
-            index as number,
-          ]);
-          newPdf.addPage(copiedPage);
-          const pdfBytes = await newPdf.save();
-          zip.file(`page-${index + 1}.pdf`, new Uint8Array(pdfBytes));
+      if (outputGroups && outputGroups.length > 0) {
+        if (outputGroups.length === 1) {
+          const pdfBytes = await extractPages(outputGroups[0]);
+          downloadFile(
+            new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' }),
+            groupFilename(outputGroups[0])
+          );
+        } else {
+          showLoader('Creating ZIP file...');
+          const zip = new JSZip();
+          const usedNames = new Map<string, number>();
+          for (const group of outputGroups) {
+            const pdfBytes = await extractPages(group);
+            zip.file(uniqueZipName(groupFilename(group), usedNames), pdfBytes);
+          }
+          const zipBlob = await zip.generateAsync({ type: 'blob' });
+          downloadFile(zipBlob, 'split-pages.zip');
         }
-        const zipBlob = await zip.generateAsync({ type: 'blob' });
-        downloadFile(zipBlob, 'split-pages.zip');
       } else {
-        const newPdf = await PDFLibDocument.create();
-        const copiedPages = await newPdf.copyPages(
-          state.pdfDoc,
-          uniqueIndices as number[]
-        );
-        copiedPages.forEach((page) => newPdf.addPage(page));
-        const pdfBytes = await newPdf.save();
+        const pdfBytes = await extractPages(uniqueIndices);
         downloadFile(
           new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' }),
           'split-document.pdf'
@@ -542,6 +504,15 @@ document.addEventListener('DOMContentLoaded', () => {
           : 'Failed to split PDF. Please check your selection.'
       );
     } finally {
+      if (qpdf) {
+        try {
+          qpdf.FS.unlink(inputPath);
+        } catch (cleanupError) {
+          console.warn('Failed to clean up qpdf input file:', cleanupError);
+        }
+      }
+      isSplitting = false;
+      if (processBtn) (processBtn as HTMLButtonElement).disabled = false;
       hideLoader();
     }
   };
@@ -610,15 +581,19 @@ document.addEventListener('DOMContentLoaded', () => {
       allPagesPanel?.classList.add('hidden');
       bookmarksPanel?.classList.add('hidden');
       nTimesPanel?.classList.add('hidden');
-      zipOptionWrapper?.classList.add('hidden');
+      outputModeWrapper?.classList.add('hidden');
       if (nTimesWarning) nTimesWarning.classList.add('hidden');
 
       if (mode === 'range') {
         rangePanel?.classList.remove('hidden');
-        zipOptionWrapper?.classList.remove('hidden');
+        outputModeWrapper?.classList.remove('hidden');
+        if (outputSeparateLabel)
+          outputSeparateLabel.textContent = 'One PDF per range';
       } else if (mode === 'visual') {
         visualPanel?.classList.remove('hidden');
-        zipOptionWrapper?.classList.remove('hidden');
+        outputModeWrapper?.classList.remove('hidden');
+        if (outputSeparateLabel)
+          outputSeparateLabel.textContent = 'One PDF per page';
         renderVisualSelector();
       } else if (mode === 'even-odd') {
         evenOddPanel?.classList.remove('hidden');
@@ -626,10 +601,8 @@ document.addEventListener('DOMContentLoaded', () => {
         allPagesPanel?.classList.remove('hidden');
       } else if (mode === 'bookmarks') {
         bookmarksPanel?.classList.remove('hidden');
-        zipOptionWrapper?.classList.remove('hidden');
       } else if (mode === 'n-times') {
         nTimesPanel?.classList.remove('hidden');
-        zipOptionWrapper?.classList.remove('hidden');
 
         const updateWarning = () => {
           if (!state.pdfDoc) return;
