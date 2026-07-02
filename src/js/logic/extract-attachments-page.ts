@@ -85,8 +85,27 @@ worker.onmessage = function (e) {
     const zip = new JSZip();
     let totalSize = 0;
 
+    const usedNames = new Set<string>();
     for (const attachment of attachments) {
-      zip.file(attachment.name, new Uint8Array(attachment.data));
+      const base =
+        (attachment.name || 'attachment')
+          .split(/[/\\]/)
+          .pop()
+          ?.replace(/^\.+/, '')
+          .replace(/\p{Cc}/gu, '')
+          .trim() || 'attachment';
+      let safeName = base;
+      let counter = 1;
+      while (usedNames.has(safeName)) {
+        const dot = base.lastIndexOf('.');
+        safeName =
+          dot > 0
+            ? `${base.slice(0, dot)}_${counter}${base.slice(dot)}`
+            : `${base}_${counter}`;
+        counter++;
+      }
+      usedNames.add(safeName);
+      zip.file(safeName, new Uint8Array(attachment.data));
       totalSize += attachment.data.byteLength;
     }
 

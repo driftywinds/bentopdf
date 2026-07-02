@@ -12,3 +12,26 @@ export const TIMESTAMP_TSA_PRESETS: TimestampTsaPreset[] = [
   { label: 'FreeTSA', url: 'https://freetsa.org/tsr' },
   { label: 'MeSign', url: 'http://tsa.mesign.com' },
 ];
+
+const ALLOWED_TSA_HOSTS: ReadonlySet<string> = new Set(
+  TIMESTAMP_TSA_PRESETS.map((preset) => new URL(preset.url).hostname)
+);
+
+export function isValidTsaRequestUrl(value: unknown): value is string {
+  if (typeof value !== 'string') {
+    return false;
+  }
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+export function isAllowedTsaUrl(value: unknown): value is string {
+  if (!isValidTsaRequestUrl(value)) {
+    return false;
+  }
+  return ALLOWED_TSA_HOSTS.has(new URL(value).hostname);
+}

@@ -44,6 +44,20 @@ vi.mock('@/js/workflow/nodes/base-node', () => ({
     addOutput() {}
     addControl() {}
     controls: Record<string, unknown> = {};
+    sanitizeControlValue(key: string, value: unknown): unknown {
+      const control = this.controls[key];
+      if (!control || typeof control !== 'object' || !('value' in control)) {
+        return value;
+      }
+      const current = (control as { value: unknown }).value;
+      if (current === null || current === undefined) {
+        return value;
+      }
+      if (typeof value !== typeof current) {
+        return current;
+      }
+      return value;
+    }
   },
 }));
 
@@ -172,5 +186,42 @@ describe('TimestampNode', () => {
 
     expect(caught).toBeInstanceOf(Error);
     expect(caught?.cause).toBe(originalError);
+  });
+});
+
+describe('TimestampNode.sanitizeControlValue (workflow import hardening)', () => {
+  it('keeps a preset tsaUrl from an imported workflow', () => {
+    const node = new TimestampNode();
+    expect(
+      node.sanitizeControlValue('tsaUrl', TIMESTAMP_TSA_PRESETS[0].url)
+    ).toBe(TIMESTAMP_TSA_PRESETS[0].url);
+    expect(node.sanitizeControlValue('tsaUrl', 'https://freetsa.org/tsr')).toBe(
+      'https://freetsa.org/tsr'
+    );
+  });
+
+  it('resets an untrusted imported tsaUrl to the default preset', () => {
+    const node = new TimestampNode();
+    expect(
+      node.sanitizeControlValue(
+        'tsaUrl',
+        'https://attacker.example.com/steal-tsr'
+      )
+    ).toBe(TIMESTAMP_TSA_PRESETS[0].url);
+  });
+
+  it('resets non-string tsaUrl values injected via import', () => {
+    const node = new TimestampNode();
+    expect(node.sanitizeControlValue('tsaUrl', { evil: true })).toBe(
+      TIMESTAMP_TSA_PRESETS[0].url
+    );
+    expect(node.sanitizeControlValue('tsaUrl', null)).toBe(
+      TIMESTAMP_TSA_PRESETS[0].url
+    );
+  });
+
+  it('does not constrain non-tsaUrl controls', () => {
+    const node = new TimestampNode();
+    expect(node.sanitizeControlValue('other', 'anything')).toBe('anything');
   });
 });

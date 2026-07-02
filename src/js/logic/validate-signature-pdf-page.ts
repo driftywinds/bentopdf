@@ -373,6 +373,13 @@ function createSignatureCard(
       statusColor = 'text-yellow-400';
       statusIcon = 'alert-triangle';
       statusText = 'Unverified — Unsupported Signature Algorithm';
+    } else if (
+      result.cryptoVerified === true &&
+      result.coverageStatus === 'partial'
+    ) {
+      statusColor = 'text-red-400';
+      statusIcon = 'x-circle';
+      statusText = 'Invalid — Modified After Signing (partial coverage)';
     } else {
       statusColor = 'text-red-400';
       statusIcon = 'x-circle';

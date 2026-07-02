@@ -1,6 +1,7 @@
 import { PdfSigner, type SignOption } from 'zgapdfsigner';
 import forge from 'node-forge';
 import { CertificateData, SignPdfOptions } from '@/types';
+import { isValidTsaRequestUrl } from '../config/timestamp-tsa.js';
 
 export function parsePfxFile(
   pfxBytes: ArrayBuffer,
@@ -349,6 +350,12 @@ export async function timestampPdf(
   pdfBytes: Uint8Array,
   tsaUrl: string
 ): Promise<Uint8Array> {
+  if (!isValidTsaRequestUrl(tsaUrl)) {
+    throw new Error(
+      `Invalid TSA URL. The timestamp authority must be a valid http:// or https:// URL.`
+    );
+  }
+
   const pageIsHttps =
     typeof window !== 'undefined' && window.location?.protocol === 'https:';
   const tsaIsHttp = /^http:\/\//i.test(tsaUrl);

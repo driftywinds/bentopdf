@@ -4,7 +4,10 @@ import { pdfSocket } from '../sockets';
 import type { SocketData } from '../types';
 import { requirePdfInput, processBatch } from '../types';
 import { wfError } from '../errors';
-import { TIMESTAMP_TSA_PRESETS } from '../../config/timestamp-tsa.js';
+import {
+  TIMESTAMP_TSA_PRESETS,
+  isAllowedTsaUrl,
+} from '../../config/timestamp-tsa.js';
 import { timestampPdf } from '../../logic/digital-sign-pdf.js';
 import { loadPdfDocument } from '../../utils/load-pdf-document.js';
 
@@ -30,6 +33,14 @@ export class TimestampNode extends BaseWorkflowNode {
 
   getTsaPresets(): { label: string; url: string }[] {
     return TIMESTAMP_TSA_PRESETS;
+  }
+
+  sanitizeControlValue(key: string, value: unknown): unknown {
+    const sanitized = super.sanitizeControlValue(key, value);
+    if (key === 'tsaUrl' && !isAllowedTsaUrl(sanitized)) {
+      return TIMESTAMP_TSA_PRESETS[0].url;
+    }
+    return sanitized;
   }
 
   async data(

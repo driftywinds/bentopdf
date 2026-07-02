@@ -28,4 +28,19 @@ export abstract class BaseWorkflowNode extends ClassicPreset.Node {
       description: this.description,
     };
   }
+
+  sanitizeControlValue(key: string, value: unknown): unknown {
+    const control = this.controls[key];
+    if (!control || typeof control !== 'object' || !('value' in control)) {
+      return value;
+    }
+    const current = (control as { value: unknown }).value;
+    if (current === null || current === undefined) {
+      return value;
+    }
+    if (typeof value !== typeof current) {
+      return current;
+    }
+    return value;
+  }
 }

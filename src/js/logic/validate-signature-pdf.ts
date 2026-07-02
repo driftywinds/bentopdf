@@ -252,7 +252,7 @@ export async function validateSignature(
 
     result.isValid =
       verification.status === 'verified' &&
-      result.coverageStatus !== 'unknown' &&
+      result.coverageStatus === 'full' &&
       !result.usesInsecureDigest;
   } catch (e) {
     result.errorMessage =

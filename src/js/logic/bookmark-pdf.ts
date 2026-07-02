@@ -1688,10 +1688,13 @@ function createNodeElement(node: BookmarkNode, level = 0): HTMLLIElement {
 
   const titleDiv = document.createElement('div');
   titleDiv.className = 'flex-1 min-w-0 cursor-pointer';
-  const customColorStyle =
-    node.color && typeof node.color === 'string' && node.color.startsWith('#')
-      ? `style="color: ${node.color}"`
+  const safeCustomColor =
+    typeof node.color === 'string' && /^#[0-9a-fA-F]{3,8}$/.test(node.color)
+      ? node.color
       : '';
+  const customColorStyle = safeCustomColor
+    ? `style="color: ${safeCustomColor}"`
+    : '';
   const hasDestination =
     node.destX !== null || node.destY !== null || node.zoom !== null;
   const destinationIcon = hasDestination
@@ -2006,6 +2009,13 @@ jsonImportHidden?.addEventListener('change', async (e: Event) => {
       if (!nodes) return;
       for (const node of nodes) {
         if (node.title) node.title = cleanTitle(node.title);
+        if (
+          typeof node.color === 'string' &&
+          node.color.startsWith('#') &&
+          !/^#[0-9a-fA-F]{3,8}$/.test(node.color)
+        ) {
+          node.color = '';
+        }
         if (node.children) cleanImportedTree(node.children);
       }
     }

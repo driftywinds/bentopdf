@@ -98,7 +98,10 @@ async function deserializeWorkflow(
     for (const [key, value] of Object.entries(serializedNode.controls || {})) {
       const control = node.controls[key];
       if (control && 'value' in control) {
-        (control as { value: unknown }).value = value;
+        (control as { value: unknown }).value = node.sanitizeControlValue(
+          key,
+          value
+        );
       }
     }
 
