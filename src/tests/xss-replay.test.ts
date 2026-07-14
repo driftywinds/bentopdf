@@ -262,6 +262,50 @@ describe('XSS replay — sanitizeEmailHtml (DOMPurify-backed)', () => {
     expect(out.toLowerCase()).not.toContain('<style');
     expect(out.toLowerCase()).not.toContain('<link');
   });
+
+  it('does not produce a javascript: href when unwrapping SafeLinks URLs', () => {
+    const out = sanitizeEmailHtml(
+      '<a href="https://nam12.safelinks.protection.outlook.com/?url=javascript%3Aalert%28document.cookie%29&data=05%7C01">Quarterly Report</a>'
+    );
+    expect(out).not.toMatch(/href=["']\s*javascript:/i);
+    expect(out.toLowerCase()).not.toContain('javascript:alert');
+    const doc = new DOMParser().parseFromString(out, 'text/html');
+    for (const el of Array.from(doc.querySelectorAll('*'))) {
+      for (const attr of Array.from(el.attributes)) {
+        if (
+          ['href', 'src'].includes(attr.name.toLowerCase()) &&
+          /^\s*javascript:/i.test(attr.value)
+        ) {
+          throw new Error(`unexpected javascript: href after unwrap:\n${out}`);
+        }
+      }
+    }
+  });
+
+  it('unwraps a safe https SafeLinks target for readability', () => {
+    const out = sanitizeEmailHtml(
+      '<a href="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fexample.com%2Freport&data=05">Report</a>'
+    );
+    expect(out).toMatch(/href=["']https:\/\/example\.com\/report["']/i);
+  });
+
+  it('escapes special characters when unwrapping a SafeLinks target', () => {
+    const out = sanitizeEmailHtml(
+      '<a href="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fx.com%2F%22%3E%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E">x</a>'
+    );
+    const doc = new DOMParser().parseFromString(out, 'text/html');
+    expect(
+      doc.querySelector('img'),
+      `unexpected element after unwrap:\n${out}`
+    ).toBeNull();
+    for (const el of Array.from(doc.querySelectorAll('*'))) {
+      for (const attr of Array.from(el.attributes)) {
+        expect(/^on/i.test(attr.name), `event handler survived:\n${out}`).toBe(
+          false
+        );
+      }
+    }
+  });
 });
 
 describe('XSS replay — PDF signature cryptographic verification', () => {

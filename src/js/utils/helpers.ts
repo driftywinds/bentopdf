@@ -331,7 +331,16 @@ export function sanitizeEmailHtml(html: string): string {
     (match, encodedUrl) => {
       try {
         const decodedUrl = decodeURIComponent(encodedUrl);
-        return `href="${decodedUrl}"`;
+        let parsed: URL;
+        try {
+          parsed = new URL(decodedUrl);
+        } catch {
+          return match;
+        }
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+          return match;
+        }
+        return `href="${escapeHtml(decodedUrl)}"`;
       } catch {
         return match;
       }
