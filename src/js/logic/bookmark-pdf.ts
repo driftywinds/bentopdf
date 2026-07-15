@@ -273,7 +273,7 @@ placeholder="${escapeHTML(field.placeholder || '')}" />
                   <div class="grid grid-cols-2 gap-2">
                     <div>
                     <label class="text-xs text-gray-600">Page</label>
-                      <input type="number" id="modal-dest-page" min="1" max="${field.maxPages || 1}" value="${defaultValues.destPage || field.page || 1}"
+                      <input type="number" id="modal-dest-page" min="1" max="${escapeHTML(String(field.maxPages || 1))}" value="${escapeHTML(String(defaultValues.destPage || field.page || 1))}"
 class="w-full px-2 py-1 border border-gray-300 rounded text-sm text-gray-900" step="1" />
   </div>
   <div>
@@ -1703,7 +1703,7 @@ function createNodeElement(node: BookmarkNode, level = 0): HTMLLIElement {
 
   titleDiv.innerHTML = `
                 <span class="text-sm block ${styleClass} ${textColorClass}" ${customColorStyle}>${escapeHTML(node.title)}${destinationIcon}</span>
-                <span class="text-xs text-gray-500">Page ${node.page}</span>
+                <span class="text-xs text-gray-500">Page ${escapeHTML(String(node.page))}</span>
             `;
 
   titleDiv.addEventListener('click', async () => {
@@ -1951,7 +1951,14 @@ exportCsvBtn?.addEventListener('click', () => {
   const csv =
     'title,page,level\n' +
     flat
-      .map((b) => `"${b.title.replace(/"/g, '""')}",${b.page},${b.level}`)
+      .map((b) => {
+        const first = b.title.charAt(0);
+        const t =
+          /[=+\-@]/.test(first) || first === '\t' || first === '\r'
+            ? `'${b.title}`
+            : b.title;
+        return `"${t.replace(/"/g, '""')}",${b.page},${b.level}`;
+      })
       .join('\n');
 
   const blob = new Blob([csv], { type: 'text/csv' });
@@ -2007,8 +2014,12 @@ jsonImportHidden?.addEventListener('change', async (e: Event) => {
     const imported = JSON.parse(text) as BookmarkTree;
     function cleanImportedTree(nodes: BookmarkNode[]): void {
       if (!nodes) return;
+      const validStyles = ['bold', 'italic', 'bold-italic'];
       for (const node of nodes) {
         if (node.title) node.title = cleanTitle(node.title);
+        node.page = Number.isFinite(Number(node.page))
+          ? Math.max(1, Math.trunc(Number(node.page)))
+          : 1;
         if (
           typeof node.color === 'string' &&
           node.color.startsWith('#') &&
@@ -2016,6 +2027,21 @@ jsonImportHidden?.addEventListener('change', async (e: Event) => {
         ) {
           node.color = '';
         }
+        if (!validStyles.includes(node.style as string)) {
+          node.style = null;
+        }
+        node.destX =
+          node.destX != null && Number.isFinite(Number(node.destX))
+            ? Number(node.destX)
+            : null;
+        node.destY =
+          node.destY != null && Number.isFinite(Number(node.destY))
+            ? Number(node.destY)
+            : null;
+        node.zoom =
+          node.zoom != null && /^-?\d*\.?\d+$/.test(String(node.zoom))
+            ? String(node.zoom)
+            : null;
         if (node.children) cleanImportedTree(node.children);
       }
     }

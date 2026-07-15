@@ -134,9 +134,27 @@ async function convertCbzToPdf(file: File): Promise<Blob> {
       a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
     );
 
+  const MAX_CBZ_PAGES = 2000;
+  const MAX_ENTRY_BYTES = 100 * 1024 * 1024;
+  const MAX_TOTAL_BYTES = 500 * 1024 * 1024;
+  if (imageFiles.length > MAX_CBZ_PAGES) {
+    throw new Error(`Archive has too many images (max ${MAX_CBZ_PAGES}).`);
+  }
+  let totalBytes = 0;
+
   for (const filename of imageFiles) {
     const zipEntry = zip.files[filename];
+    const declared = (
+      zipEntry as unknown as { _data?: { uncompressedSize?: number } }
+    )._data?.uncompressedSize;
+    if (typeof declared === 'number' && declared > MAX_ENTRY_BYTES) {
+      throw new Error('Archive contains an oversized image entry.');
+    }
     const imageData = await zipEntry.async('arraybuffer');
+    totalBytes += imageData.byteLength;
+    if (totalBytes > MAX_TOTAL_BYTES) {
+      throw new Error('Archive is too large when decompressed.');
+    }
     const dataArray = new Uint8Array(imageData);
     const actualFormat = detectImageFormat(dataArray);
 

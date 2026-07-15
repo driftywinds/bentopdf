@@ -322,7 +322,7 @@ function displayResults(): void {
     'mb-4 p-3 bg-gray-700 rounded-lg border border-gray-600';
 
   const validCount = state.results.filter(
-    (r) => r.isValid && !r.isExpired
+    (r) => r.isValid && !r.isExpired && r.isTrusted
   ).length;
   const trustVerified = state.trustedCert
     ? state.results.filter((r) => r.isTrusted).length
@@ -396,10 +396,12 @@ function createSignatureCard(
     statusColor = 'text-yellow-400';
     statusIcon = 'alert-triangle';
     statusText = 'Certificate Expired';
-  } else if (result.isSelfSigned) {
+  } else if (!result.isTrusted) {
     statusColor = 'text-yellow-400';
     statusIcon = 'alert-triangle';
-    statusText = 'Self-Signed Certificate';
+    statusText = result.isSelfSigned
+      ? 'Self-Signed — Signer Identity Not Verified'
+      : 'Signature Intact — Signer Identity Not Verified';
   }
 
   const formatDate = (date: Date) => {

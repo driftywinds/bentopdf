@@ -90,9 +90,6 @@ const pdfFileInput = document.getElementById(
   'pdfFileInput'
 ) as HTMLInputElement;
 const blankPdfBtn = document.getElementById('blankPdfBtn') as HTMLButtonElement;
-const pdfUploadInput = document.getElementById(
-  'pdfUploadInput'
-) as HTMLInputElement;
 const pageSizeSelector = document.getElementById(
   'pageSizeSelector'
 ) as HTMLDivElement;
@@ -117,9 +114,6 @@ const nextPageBtn = document.getElementById('nextPageBtn') as HTMLButtonElement;
 const addPageBtn = document.getElementById('addPageBtn') as HTMLButtonElement;
 const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
 const downloadBtn = document.getElementById('downloadBtn') as HTMLButtonElement;
-const backToToolsBtn = document.getElementById(
-  'back-to-tools'
-) as HTMLButtonElement | null;
 const gotoPageInput = document.getElementById(
   'gotoPageInput'
 ) as HTMLInputElement;
@@ -794,14 +788,12 @@ function renderField(field: FormField): void {
   });
 
   // Touch events for moving fields
-  let touchMoveStarted = false;
   fieldWrapper.addEventListener(
     'touchstart',
     (e) => {
       if ((e.target as HTMLElement).classList.contains('resize-handle')) {
         return;
       }
-      touchMoveStarted = false;
       const touch = e.touches[0];
       const rect = canvas.getBoundingClientRect();
       offsetX = touch.clientX - rect.left - field.x;
@@ -813,7 +805,6 @@ function renderField(field: FormField): void {
 
   fieldWrapper.addEventListener('touchmove', (e) => {
     e.preventDefault();
-    touchMoveStarted = true;
     const touch = e.touches[0];
     const rect = canvas.getBoundingClientRect();
     let newX = touch.clientX - rect.left - offsetX;
@@ -827,10 +818,6 @@ function renderField(field: FormField): void {
 
     field.x = newX;
     field.y = newY;
-  });
-
-  fieldWrapper.addEventListener('touchend', () => {
-    touchMoveStarted = false;
   });
 
   // Add resize handles to the container - hidden by default
@@ -2381,7 +2368,6 @@ downloadBtn.addEventListener('click', async () => {
         else if (field.options && field.options.length > 0)
           dropdown.select(field.options[0]);
 
-        const rgbColor = hexToRgb(field.textColor);
         dropdown.acroField.setFontSize(field.fontSize);
         dropdown.acroField.setDefaultAppearance(
           `0 0 0 rg /Helv ${field.fontSize} Tf`
@@ -2417,7 +2403,6 @@ downloadBtn.addEventListener('click', async () => {
         else if (field.options && field.options.length > 0)
           optionList.select(field.options[0]);
 
-        const rgbColor = hexToRgb(field.textColor);
         optionList.acroField.setFontSize(field.fontSize);
         optionList.acroField.setDefaultAppearance(
           `0 0 0 rg /Helv ${field.fontSize} Tf`
@@ -2547,7 +2532,10 @@ downloadBtn.addEventListener('click', async () => {
         });
 
         // Add Date Format and Keystroke Actions to the FIELD (not widget)
-        const dateFormat = field.dateFormat || 'mm/dd/yyyy';
+        const dateFormat = (field.dateFormat || 'mm/dd/yyyy').replace(
+          /[^a-zA-Z0-9/:.,\- ]/g,
+          ''
+        );
 
         const formatAction = pdfDoc.context.obj({
           Type: 'Action',
@@ -2757,9 +2745,9 @@ downloadBtn.addEventListener('click', async () => {
 });
 
 // Back to tools button
-const backToToolsBtns = document.querySelectorAll(
+const backToToolsBtns = document.querySelectorAll<HTMLButtonElement>(
   '[id^="back-to-tools"]'
-) as NodeListOf<HTMLButtonElement>;
+);
 backToToolsBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     window.location.href = import.meta.env.BASE_URL;
@@ -3129,7 +3117,7 @@ let modalCloseCallback: (() => void) | null = null;
 function showModal(
   title: string,
   message: string,
-  type: 'error' | 'warning' | 'info' = 'error',
+  _type: 'error' | 'warning' | 'info' = 'error',
   onClose?: () => void,
   buttonText: string = 'Close'
 ) {

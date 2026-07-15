@@ -67,7 +67,9 @@ export class RedactNode extends BaseWorkflowNode {
     const pdfInputs = requirePdfInput(inputs, 'Redact');
 
     const mode = this.getText('redactMode', 'text');
-    const searchText = this.getText('text', '');
+    const searchText = this.getText('text', '')
+      .replace(/\\/g, '')
+      .replace(/\p{Cc}/gu, '');
     const fill = hexToRgb(this.getText('fillColor', '#000000'));
 
     if (mode === 'text' && !searchText) {

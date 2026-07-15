@@ -145,25 +145,30 @@ export async function validateSignature(
 
     result.isSelfSigned = signerCert.isIssuer(signerCert);
 
-    // Check trust against provided certificate
+    // Check trust against provided certificate (cryptographic, not name/serial match)
     if (trustedCert) {
       try {
-        const isTrustedIssuer = trustedCert.isIssuer(signerCert);
-        const isSameCert = signerCert.serialNumber === trustedCert.serialNumber;
+        const trustedPem = forge.pki.certificateToPem(trustedCert);
+        const isSameCert =
+          forge.pki.certificateToPem(signerCert) === trustedPem;
 
-        let chainTrusted = false;
-        for (const cert of p7.certificates) {
-          if (
-            trustedCert.isIssuer(cert) ||
-            (cert as forge.pki.Certificate).serialNumber ===
-              trustedCert.serialNumber
-          ) {
-            chainTrusted = true;
-            break;
+        let cryptoIssued = false;
+        const chain = [
+          signerCert,
+          ...(p7.certificates as forge.pki.Certificate[]),
+        ];
+        for (const cert of chain) {
+          try {
+            if (trustedCert.verify(cert)) {
+              cryptoIssued = true;
+              break;
+            }
+          } catch {
+            continue;
           }
         }
 
-        result.isTrusted = isTrustedIssuer || isSameCert || chainTrusted;
+        result.isTrusted = isSameCert || cryptoIssued;
       } catch {
         result.isTrusted = false;
       }
@@ -223,7 +228,7 @@ export async function validateSignature(
     }
 
     if (signature.byteRange && signature.byteRange.length === 4) {
-      const [, len1, start2, len2] = signature.byteRange;
+      const [, , start2, len2] = signature.byteRange;
       const expectedEnd = start2 + len2;
 
       if (expectedEnd === pdfBytes.length) {

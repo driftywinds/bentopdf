@@ -220,6 +220,7 @@
 
       // Listen for messages from parent window
       window.addEventListener('message', async (event) => {
+        if (event.origin !== window.location.origin) return;
         if (event.data.type === 'loadPDF') {
           const { data } = event.data;
           loadPDF(data);

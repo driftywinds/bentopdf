@@ -37,7 +37,8 @@
     "lint:security": "eslint . --no-inline-config --rule 'no-unsanitized/method:error' --rule 'no-unsanitized/property:error' --rule 'security/detect-eval-with-expression:error'",
     "security:codeql": "codeql database create ./codeql-db --language=javascript-typescript --source-root=. --overwrite --threads=0 && codeql database analyze ./codeql-db --format=sarif-latest --output=codeql-results.sarif --threads=0 codeql/javascript-queries:codeql-suites/javascript-security-extended.qls",
     "security:codeql:quick": "codeql database analyze ./codeql-db --format=csv --output=codeql-results.csv --threads=0 codeql/javascript-queries:codeql-suites/javascript-security-extended.qls",
-    "security:audit": "npm audit --audit-level=high && npm run lint:security",
+    "security:patterns": "node scripts/security-patterns-check.mjs",
+    "security:audit": "npm audit --audit-level=high && npm run lint:security && npm run security:patterns",
     "prepare": "husky"
   },
   "devDependencies": {

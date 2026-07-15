@@ -239,6 +239,7 @@
 
       // Listen for messages from parent window
       window.addEventListener('message', async (event) => {
+        if (event.origin !== window.location.origin) return;
         console.log('Sign viewer received message:', event.data.type);
 
         if (event.data.type === 'loadPDF') {
