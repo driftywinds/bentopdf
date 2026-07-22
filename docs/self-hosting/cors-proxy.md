@@ -126,6 +126,15 @@ The included Cloudflare Worker has several security measures:
 | **Rate Limiting**       | 60 requests per IP per minute (requires KV)                                            |
 | **HMAC Signatures**     | Optional client-side signing (deters casual abuse)                                     |
 
+### DNS rebinding and network egress (self-hosting off Cloudflare)
+
+The worker resolves each target hostname and rejects any that resolve to a private, loopback, link-local, or cloud-metadata address. Because the proxy must fetch certificate-chain URLs from arbitrary certificate authorities (the hosts come from each certificate's AIA/OCSP/CRL fields, e.g. `www.cert.fnmt.es` and corporate CAs), it cannot restrict destinations to a fixed host allowlist without breaking signing for legitimate CAs.
+
+That leaves a narrow DNS-rebinding gap: the safety check and the actual outbound request each resolve the hostname independently, so an attacker who controls their own domain's DNS (with a very low TTL) could pass the check with a public address and then have the fetch land on a private one.
+
+- **On Cloudflare (the default deployment) this is not exploitable** — Workers egress from Cloudflare's edge, which has no route to private/internal or `169.254.169.254` metadata addresses, so a successful rebind reaches nothing.
+- **If you run this worker off Cloudflare** (for example `workerd`, Node, or another runtime inside a cloud VPC), the runtime **can** reach internal addresses, so you must add **network-level egress filtering** in front of it — block outbound connections to RFC1918 (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`), loopback (`127.0.0.0/8`), link-local (`169.254.0.0/16`, including the `169.254.169.254` metadata endpoint), and their IPv6 equivalents. Application code alone cannot guarantee this on a non-Cloudflare runtime, so treat the egress firewall as required.
+
 ## Disabling the Proxy
 
 If you don't want to use a CORS proxy, set the environment variable to an empty string:

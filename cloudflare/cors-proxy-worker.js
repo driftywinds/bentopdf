@@ -47,6 +47,8 @@ const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 
+let warnedNoProxySecret = false;
+
 async function verifySignature(message, signature, secret) {
   try {
     const encoder = new TextEncoder();
@@ -213,6 +215,10 @@ export default {
     }
 
     // NOTE: If you are selfhosting this proxy, you can remove this check, or can set it to only accept requests from your own domain
+    // SECURITY: The Origin allow-list and the optional PROXY_SECRET HMAC are anti-abuse controls, NOT a security boundary — the Origin
+    // header is forgeable by non-browser clients and the HMAC secret ships in the public client bundle. The real SSRF defense is the
+    // private/reserved-IP resolution check (hostnameResolvesToPrivate). Deployments running this off Cloudflare cannot fully close the
+    // DNS-rebinding gap in code and MUST add network egress filtering (see docs/self-hosting/cors-proxy.md).
     if (!isAllowedOrigin(origin)) {
       return new Response(
         JSON.stringify({
@@ -356,6 +362,13 @@ export default {
           }
         );
       }
+    } else if (!warnedNoProxySecret) {
+      warnedNoProxySecret = true;
+      console.warn(
+        '[CORS Proxy] PROXY_SECRET is not set — request signatures are not verified, so the proxy is callable by any client that can ' +
+          'send an allowed Origin header. Set PROXY_SECRET to deter casual abuse (note: it ships in the public client bundle, so it is ' +
+          'not a real authentication boundary), and add network egress filtering if running off Cloudflare.'
+      );
     }
 
     const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
