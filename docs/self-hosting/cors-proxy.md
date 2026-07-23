@@ -126,14 +126,13 @@ The included Cloudflare Worker has several security measures:
 | **Rate Limiting**       | 60 requests per IP per minute (requires KV)                                            |
 | **HMAC Signatures**     | Optional client-side signing (deters casual abuse)                                     |
 
-### DNS rebinding and network egress (self-hosting off Cloudflare)
+### DNS rebinding (self-hosting off Cloudflare)
 
-The worker resolves each target hostname and rejects any that resolve to a private, loopback, link-local, or cloud-metadata address. Because the proxy must fetch certificate-chain URLs from arbitrary certificate authorities (the hosts come from each certificate's AIA/OCSP/CRL fields, e.g. `www.cert.fnmt.es` and corporate CAs), it cannot restrict destinations to a fixed host allowlist without breaking signing for legitimate CAs.
+The worker rejects any URL that resolves to a private or internal IP. It can't use a fixed allowlist of hosts, since certificate-chain URLs point to whatever CA issued the cert (FNMT, corporate CAs, and so on), so the destinations aren't known up front. That leaves a small rebinding window: someone running the DNS for their own domain could hand a public IP to the safety check and a private one to the real request a moment later.
 
-That leaves a narrow DNS-rebinding gap: the safety check and the actual outbound request each resolve the hostname independently, so an attacker who controls their own domain's DNS (with a very low TTL) could pass the check with a public address and then have the fetch land on a private one.
+On Cloudflare this isn't exploitable — Workers can't reach private IPs or the `169.254.169.254` metadata endpoint, so a rebind lands on nothing. Just don't give the worker a way in: don't attach a Tunnel, Service, or private-network binding (it only needs `RATE_LIMIT_KV`).
 
-- **On Cloudflare (the default deployment) this is not exploitable** — Workers egress from Cloudflare's edge, which has no route to private/internal or `169.254.169.254` metadata addresses, so a successful rebind reaches nothing.
-- **If you run this worker off Cloudflare** (for example `workerd`, Node, or another runtime inside a cloud VPC), the runtime **can** reach internal addresses, so you must add **network-level egress filtering** in front of it — block outbound connections to RFC1918 (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`), loopback (`127.0.0.0/8`), link-local (`169.254.0.0/16`, including the `169.254.169.254` metadata endpoint), and their IPv6 equivalents. Application code alone cannot guarantee this on a non-Cloudflare runtime, so treat the egress firewall as required.
+If you run this off Cloudflare (workerd, Node, and the like) inside a VPC, the runtime _can_ reach internal IPs. Put an egress firewall in front of it and block the private ranges — `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.0/8`, `169.254.0.0/16`, and their IPv6 equivalents. App code can't enforce that once you're off Cloudflare.
 
 ## Disabling the Proxy
 
