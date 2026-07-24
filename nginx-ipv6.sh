@@ -10,6 +10,13 @@ entrypoint_log() {
 }
 
 PORT=${PORT:-8080}
+case "$PORT" in
+  ''|*[!0-9]*) echo "ERROR: PORT must be a number, got '$PORT'" >&2; exit 1 ;;
+esac
+if [ "$PORT" -lt 1 ] || [ "$PORT" -gt 65535 ]; then
+  echo "ERROR: PORT must be between 1 and 65535, got '$PORT'" >&2
+  exit 1
+fi
 if [ "$PORT" != "8080" ]; then
   entrypoint_log "Changing Nginx listen port to $PORT"
   sed -i "s/listen 8080/listen $PORT/g; s/listen \[::\]:8080/listen [::]:$PORT/g" /etc/nginx/nginx.conf
