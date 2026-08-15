@@ -41,6 +41,7 @@
   - [Commercial Build](#-commercial-build)
   - [Custom Branding](#-custom-branding)
   - [Disabling Specific Tools](#-disabling-specific-tools)
+  - [Disabling the GitHub Star Counter](#-disabling-the-github-star-counter)
   - [WASM Configuration](#wasm-configuration)
   - [Air-Gapped / Offline Deployment](#air-gapped--offline-deployment)
   - [Security Features](#-security-features)
@@ -933,6 +934,24 @@ You can also disable specific features inside the PDF Editor (e.g., redaction, f
 ```
 
 For the full list of editor categories, see the [self-hosting docs](https://bentopdf.com/docs/self-hosting/docker#disabling-editor-features).
+
+### 🔕 Disabling the GitHub Star Counter
+
+The navbar shows a live GitHub star count, fetched from `api.github.com` on page load. The only external request that isn't serving a PDF feature. Self-hosters who want zero non-essential network calls can disable it at build time. This removes the fetch code from the bundle entirely and drops `api.github.com` from the Content-Security-Policy.
+
+Simple Mode builds (`bentopdf-simple`) always skip the star counter — this flag is only needed on the Commercial build or custom full builds.
+
+**Docker:**
+
+```bash
+docker build --build-arg DISABLE_GITHUB_STARS=true -t bentopdf .
+```
+
+**Building from source:**
+
+```bash
+DISABLE_GITHUB_STARS=true npm run build
+```
 
 ### 🔒 Security Features
 

@@ -389,12 +389,17 @@ export async function merge() {
       'retain-page-labels'
     ) as HTMLInputElement | null;
 
+    const removeDuplicateFontsCheckbox = document.getElementById(
+      'remove-duplicate-fonts'
+    ) as HTMLInputElement | null;
+
     const message: MergeMessage = {
       command: 'merge',
       files: filesToMerge,
       jobs: jobs,
       cpdfUrl: WasmProvider.getUrl('cpdf')! + 'coherentpdf.browser.min.js',
       retainPageLabels: retainCheckbox?.checked ?? false,
+      removeDuplicateFonts: removeDuplicateFontsCheckbox?.checked ?? false,
     };
 
     mergeWorker.postMessage(
