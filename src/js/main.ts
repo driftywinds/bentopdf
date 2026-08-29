@@ -1,3 +1,5 @@
+import './utils/map-upsert-polyfill.js';
+import './utils/setup-pdf-worker.js';
 import { categories } from './config/tools.js';
 import { dom, switchView, hideAlert } from './ui.js';
 import { ShortcutsManager } from './logic/shortcuts.js';
@@ -54,10 +56,6 @@ const init = async () => {
     return;
   }
 
-  pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url
-  ).toString();
   if (__SIMPLE_MODE__) {
     const hideBrandingSections = () => {
       const heroSection = document.getElementById('hero-section');
@@ -176,6 +174,7 @@ const init = async () => {
     'Split PDF': 'tools:splitPdf',
     'Compress PDF': 'tools:compressPdf',
     'PDF Editor': 'tools:pdfEditor',
+    'Edit PDF Text': 'tools:editPdfText',
     'JPG to PDF': 'tools:jpgToPdf',
     'Sign PDF': 'tools:signPdf',
     'Crop PDF': 'tools:cropPdf',
@@ -216,6 +215,7 @@ const init = async () => {
     'PDF to JSON': 'tools:pdfToJson',
     'OCR PDF': 'tools:ocrPdf',
     'Alternate & Mix Pages': 'tools:alternateMerge',
+    'Duplex Collate': 'tools:duplexCollate',
     'PDF Overlay': 'tools:pdfOverlay',
     'Organize & Duplicate': 'tools:duplicateOrganize',
     'Add Attachments': 'tools:addAttachments',
