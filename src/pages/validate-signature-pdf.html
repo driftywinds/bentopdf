@@ -109,7 +109,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -338,41 +338,35 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             What types of signatures can be validated?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             This tool validates PKCS#7 digital signatures created with X.509
             certificates, the standard format used by most PDF signing tools and
             certificate authorities.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             What does "Self-Signed Certificate" mean?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             A self-signed certificate is one where the issuer and subject are
             the same. While the signature is technically valid, it means the
             certificate wasn't issued by a trusted Certificate Authority (CA).
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Is my PDF uploaded to a server?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             No, all processing happens entirely in your browser. Your PDF files
             never leave your device, ensuring complete privacy and security.
           </p>

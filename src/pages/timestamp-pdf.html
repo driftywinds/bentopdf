@@ -100,7 +100,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -349,15 +349,13 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             What is a document timestamp?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             A document timestamp (RFC 3161) is a cryptographic proof that your
             PDF existed at a specific point in time. A trusted Time Stamp
             Authority (TSA) server signs a hash of your document along with the
@@ -365,39 +363,33 @@
             PDF.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Do I need a certificate?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             No. Unlike a digital signature, a document timestamp does not
             require a personal certificate. The TSA server provides the trusted
             timestamp using its own certificate.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Is my document sent to the TSA server?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             No. Only a cryptographic hash (SHA-256) of your document is sent to
             the TSA server. Your actual PDF content never leaves your browser.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Will the timestamp be valid in PDF readers?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Yes. The tool creates a standard RFC 3161 document timestamp
             (ETSI.RFC3161 SubFilter) that is recognized by Adobe Acrobat and
             other major PDF viewers.

@@ -50,4 +50,50 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  const mobileProductsButton = document.getElementById(
+    'mobile-products-button'
+  );
+  const mobileProductsMenu = document.getElementById('mobile-products-menu');
+
+  if (mobileProductsButton && mobileProductsMenu) {
+    mobileProductsButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen =
+        mobileProductsButton.getAttribute('aria-expanded') === 'true';
+      mobileProductsMenu.hidden = isOpen;
+      mobileProductsButton.setAttribute('aria-expanded', (!isOpen).toString());
+    });
+  }
+
+  const productsButton = document.getElementById('products-menu-button');
+  const productsMenu = document.getElementById('products-menu');
+
+  if (productsButton && productsMenu) {
+    const closeProducts = () => {
+      productsMenu.hidden = true;
+      productsButton.setAttribute('aria-expanded', 'false');
+    };
+
+    productsButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = productsButton.getAttribute('aria-expanded') === 'true';
+      productsMenu.hidden = isOpen;
+      productsButton.setAttribute('aria-expanded', (!isOpen).toString());
+    });
+
+    document.addEventListener('click', (event) => {
+      const target = event.target as Node;
+      if (!productsMenu.contains(target) && !productsButton.contains(target)) {
+        closeProducts();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !productsMenu.hidden) {
+        closeProducts();
+        productsButton.focus();
+      }
+    });
+  }
 });

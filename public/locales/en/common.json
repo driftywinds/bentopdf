@@ -212,7 +212,7 @@
     },
     "browserBased": {
       "question": "How does browser-based processing keep me safe?",
-      "answer": "By running entirely inside your browser, BentoPDF ensures that your files never leave your device. This eliminates the risks of server hacks, data breaches, or unauthorized access. Your files remain yours—always."
+      "answer": "By running entirely inside your browser, BentoPDF ensures that your files never leave your device. This eliminates the risks of server hacks, data breaches, or unauthorized access. Your files remain yours, always."
     },
     "analytics": {
       "question": "Do you use cookies or analytics to track me?",
@@ -292,7 +292,7 @@
     "philosophy": {
       "label": "Our Core Philosophy",
       "title": "Privacy First. Always.",
-      "description": "In an era where data is a commodity, we take a different approach. All processing for Bentopdf tools happens locally in your browser. This means your files never touch our servers, we never see your documents, and we don't track what you do. Your documents remain completely and unequivocally private. It's not just a feature; it's our foundation."
+      "description": "In an era where data is a commodity, we take a different approach. All processing for BentoPDF tools happens locally in your browser. This means your files never touch our servers, we never see your documents, and we don't track what you do. Your documents remain completely and unequivocally private. It's not just a feature; it's our foundation."
     },
     "whyBentopdf": {
       "title": "Why",
@@ -315,7 +315,7 @@
     },
     "cta": {
       "title": "Ready to get started?",
-      "description": "Join thousands of users who trust Bentopdf for their daily document needs. Experience the difference that privacy and performance can make.",
+      "description": "Join thousands of users who trust BentoPDF for their daily document needs. Experience the difference that privacy and performance can make.",
       "button": "Explore All Tools"
     }
   },

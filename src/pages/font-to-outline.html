@@ -104,7 +104,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools"
@@ -329,55 +329,47 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             What does "font to outline" mean?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Converting fonts to outlines means transforming text characters from
             font-based representations into vector paths/curves. This ensures
             the PDF looks identical on any device, even if the original fonts
             aren't installed.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             When should I use this tool?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Use this tool when preparing PDFs for professional printing, sharing
             documents with special fonts, or when you need to ensure consistent
             appearance across different systems and devices.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Will the text still be selectable?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             No. After conversion, text becomes vector graphics and is no longer
             selectable or searchable. If you need searchable text, consider
             using the OCR tool after conversion.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Are my files private?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Yes! All processing happens entirely in your browser using
             WebAssembly. Your files never leave your device.
           </p>

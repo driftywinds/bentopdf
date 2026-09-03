@@ -110,7 +110,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -362,39 +362,33 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Does it work with both .doc and .docx files?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Yes! BentoPDF supports both older .doc and newer .docx Microsoft
             Word formats.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Will formatting be preserved?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Yes! Fonts, images, tables, headers, footers, and all formatting are
             preserved exactly as they appear in Word.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Can I convert password-protected Word files?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             You'll need to unlock password-protected files first before
             converting them to PDF.
           </p>

@@ -1,5 +1,5 @@
 {{#if simpleMode}} {{> navbar-simple}} {{else}}
-<nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-30">
+<nav class="bg-gray-900 border-b border-white/10 sticky top-0 z-30">
   <div class="container mx-auto px-4">
     <div class="flex justify-between items-center h-16">
       <div
@@ -20,7 +20,7 @@
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-8">
+      <div class="hidden md:flex flex-1 items-center justify-center space-x-8">
         <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
         <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
         <a href="contact.html" class="nav-link" data-i18n="nav.contact"
@@ -29,12 +29,42 @@
         <a href="licensing.html" class="nav-link" data-i18n="nav.licensing"
           >Licensing</a
         >
+        <div class="nav-products">
+          <button
+            id="products-menu-button"
+            type="button"
+            class="nav-link nav-products-trigger"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="products-menu"
+          >
+            <span>Products</span>
+            <i data-lucide="chevron-down" class="nav-products-chevron"></i>
+          </button>
+          <div id="products-menu" class="nav-products-menu" role="menu" hidden>
+            <a href="kura.html" role="menuitem">
+              <span class="nav-product-text">
+                <b>Kura</b>
+                <small>PDF/A, PDF/UA and PDF/X conversion engine.</small>
+              </span>
+            </a>
+            <a href="hyper-compress.html" role="menuitem">
+              <span class="nav-product-text">
+                <b>Hyper Compress</b>
+                <small>Content-preserving PDF compression engine.</small>
+              </span>
+            </a>
+          </div>
+        </div>
         <a
           href="https://bentopdf.com/docs/"
           class="nav-link"
           data-i18n="nav.docs"
           >Docs</a
         >
+      </div>
+
+      <div class="hidden md:flex items-center flex-shrink-0">
         <a
           href="https://github.com/alam00000/bentopdf/"
           target="_blank"
@@ -131,7 +161,7 @@
   <!-- Mobile Menu Dropdown -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden bg-gray-800 border-t border-gray-700"
+    class="hidden md:hidden bg-gray-900 border-t border-white/10"
   >
     <div class="px-2 pt-2 pb-3 space-y-1 text-center">
       <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">Home</a>
@@ -144,6 +174,20 @@
       <a href="licensing.html" class="mobile-nav-link" data-i18n="nav.licensing"
         >Licensing</a
       >
+      <button
+        id="mobile-products-button"
+        type="button"
+        class="mobile-nav-link mobile-products-trigger"
+        aria-expanded="false"
+        aria-controls="mobile-products-menu"
+      >
+        <span>Products</span>
+        <i data-lucide="chevron-down" class="mobile-products-chevron"></i>
+      </button>
+      <div id="mobile-products-menu" class="mobile-products-menu" hidden>
+        <a href="kura.html" class="mobile-nav-link">Kura</a>
+        <a href="hyper-compress.html" class="mobile-nav-link">Hyper Compress</a>
+      </div>
       <a
         href="https://bentopdf.com/docs/"
         class="mobile-nav-link"

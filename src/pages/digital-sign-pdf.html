@@ -106,7 +106,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -802,52 +802,46 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+      <div class="faq-list">
+        <details class="faq-d">
           <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
+            class="faq-d-q"
             data-i18n="tools:digitalSignPdf.faqWhatIsQuestion"
           >
             What is a digital signature?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:digitalSignPdf.faqWhatIsAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:digitalSignPdf.faqWhatIsAnswer">
             A digital signature is a cryptographic mechanism that verifies the
             authenticity and integrity of a document. Unlike a drawn signature,
             it uses public key cryptography (X.509 certificates) to prove the
             signer's identity.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <details class="faq-d">
           <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
+            class="faq-d-q"
             data-i18n="tools:digitalSignPdf.faqFormatsQuestion"
           >
             What certificate formats are supported?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:digitalSignPdf.faqFormatsAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:digitalSignPdf.faqFormatsAnswer">
             We support PKCS#12 format certificates (.pfx, .p12) which contain
             both your certificate and private key in a single encrypted file.
             These are commonly issued by certificate authorities.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <details class="faq-d">
           <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
+            class="faq-d-q"
             data-i18n="tools:digitalSignPdf.faqPrivateKeyQuestion"
           >
             Is my private key safe?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p
-            class="mt-3 text-gray-400"
+            class="faq-d-a"
             data-i18n="tools:digitalSignPdf.faqPrivateKeyAnswer"
           >
             Yes! All processing happens entirely in your browser. Your
@@ -855,16 +849,16 @@
             get uploaded to any server.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <details class="faq-d">
           <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
+            class="faq-d-q"
             data-i18n="tools:digitalSignPdf.faqValidReadersQuestion"
           >
             Will the signature be valid in PDF readers?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p
-            class="mt-3 text-gray-400"
+            class="faq-d-a"
             data-i18n="tools:digitalSignPdf.faqValidReadersAnswer"
           >
             Yes, the tool creates standard PKCS#7 detached signatures that are

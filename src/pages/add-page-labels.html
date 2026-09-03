@@ -92,7 +92,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools"
@@ -462,55 +462,40 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:addPageLabels.faqWhatIsQuestion"
               >What is a page label?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:addPageLabels.faqWhatIsAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:addPageLabels.faqWhatIsAnswer">
             A page label is the numbering shown by PDF readers in thumbnails,
             page navigation, and print dialogs. It does not print new text onto
             the page itself.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:addPageLabels.faqMixQuestion"
               >Can I mix Roman numerals and normal numbers?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:addPageLabels.faqMixAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:addPageLabels.faqMixAnswer">
             Yes. Add multiple rules, such as 1-4 with LowercaseRoman and 5-20
             with DecimalArabic.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:addPageLabels.faqPrivacyQuestion"
               >Do my files stay private?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:addPageLabels.faqPrivacyAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:addPageLabels.faqPrivacyAnswer">
             Yes. The processing happens in your browser using CoherentPDF WASM.
             Your PDF does not leave your device.
           </p>

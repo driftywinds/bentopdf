@@ -73,6 +73,8 @@ function loadPages(): Set<string> {
     'privacy',
     'terms',
     'licensing',
+    'kura',
+    'hyper-compress',
     'tools',
     '404',
     'pdf-converter',
@@ -437,7 +439,7 @@ function swPrecachePlugin(): Plugin {
 
       if (workerAssets.length === 0) {
         throw new Error(
-          '[sw-precache] no PDF.js worker asset found in bundle — service worker would precache nothing'
+          '[sw-precache] no PDF.js worker asset found in bundle; service worker would precache nothing'
         );
       }
 
@@ -633,6 +635,8 @@ export default defineConfig(() => {
           privacy: resolve(__dirname, 'privacy.html'),
           terms: resolve(__dirname, 'terms.html'),
           licensing: resolve(__dirname, 'licensing.html'),
+          kura: resolve(__dirname, 'kura.html'),
+          'hyper-compress': resolve(__dirname, 'hyper-compress.html'),
           tools: resolve(__dirname, 'tools.html'),
           '404': resolve(__dirname, '404.html'),
           // Category Hub Pages

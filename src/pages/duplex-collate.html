@@ -89,7 +89,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools"
@@ -475,86 +475,70 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:duplexCollate.faqOddPagesQuestion"
               >What if my scan has an odd number of pages?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:duplexCollate.faqOddPagesAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:duplexCollate.faqOddPagesAnswer">
             A duplex scan should have an even page count. If it does not, a page
             was probably scanned twice or missed. The tool warns you before
             processing, and any unpaired pages are appended at the end so
             nothing is lost.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:duplexCollate.faqBackOrderQuestion"
               >Why would I keep the back block as-is?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:duplexCollate.faqBackOrderAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:duplexCollate.faqBackOrderAnswer">
             It depends on how the stack was fed for the second pass. Flipping
             the whole stack over produces back sides in reverse order, which is
             the default. If your scanner returned them in the same order as the
             fronts, choose to keep the block as-is.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="faq.isFree.question"
               >Is BentoPDF really free?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400" data-i18n="faq.isFree.answer">
+          <p class="faq-d-a" data-i18n="faq.isFree.answer">
             Yes, absolutely. All tools on BentoPDF are 100% free to use, with no
             file limits, no sign-ups, and no watermarks. We believe everyone
             deserves access to simple, powerful PDF tools without a paywall.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="faq.areFilesSecure.question"
               >Are my files secure? Where are they processed?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400" data-i18n="faq.areFilesSecure.answer">
+          <p class="faq-d-a" data-i18n="faq.areFilesSecure.answer">
             Your files are as secure as possible because they never leave your
             computer. All processing happens directly in your web browser
             (client-side). We never upload your files to a server, so you
             maintain complete privacy and control over your documents.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="faq.platforms.question"
               >Does it work on Mac, Windows, and Mobile?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400" data-i18n="faq.platforms.answer">
+          <p class="faq-d-a" data-i18n="faq.platforms.answer">
             Yes! Since BentoPDF runs entirely in your browser, it works on any
             operating system with a modern web browser, including Windows,
             macOS, Linux, iOS, and Android.

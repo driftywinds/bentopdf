@@ -292,7 +292,7 @@
     "philosophy": {
       "label": "Nuestra Filosofía Central",
       "title": "Privacidad Primero. Siempre.",
-      "description": "En una era donde los datos son una mercancía, adoptamos un enfoque diferente. Todo el procesamiento de las herramientas de Bentopdf ocurre localmente en tu navegador. Esto significa que tus archivos nunca tocan nuestros servidores, nunca vemos tus documentos y no rastreamos lo que haces. Tus documentos permanecen completa e inequívocamente privados. No es solo una característica; es nuestra base."
+      "description": "En una era donde los datos son una mercancía, adoptamos un enfoque diferente. Todo el procesamiento de las herramientas de BentoPDF ocurre localmente en tu navegador. Esto significa que tus archivos nunca tocan nuestros servidores, nunca vemos tus documentos y no rastreamos lo que haces. Tus documentos permanecen completa e inequívocamente privados. No es solo una característica; es nuestra base."
     },
     "whyBentopdf": {
       "title": "Por qué",
@@ -315,7 +315,7 @@
     },
     "cta": {
       "title": "¿Listo para comenzar?",
-      "description": "Únete a miles de usuarios que confían en Bentopdf para sus necesidades diarias de documentos. Experimenta la diferencia que la privacidad y el rendimiento pueden hacer.",
+      "description": "Únete a miles de usuarios que confían en BentoPDF para sus necesidades diarias de documentos. Experimenta la diferencia que la privacidad y el rendimiento pueden hacer.",
       "button": "Explorar Todas las Herramientas"
     }
   },

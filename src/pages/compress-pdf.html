@@ -107,7 +107,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -248,7 +248,7 @@
             <button
               id="toggle-custom-settings"
               type="button"
-              class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 text-sm font-medium"
+              class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 text-sm font-medium"
             >
               <i data-lucide="settings" class="w-4 h-4"></i>
               <span>Custom Settings</span>
@@ -524,41 +524,35 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             What's the difference between Condense and Photon?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Condense removes dead-weight, optimizes images, and subsets fonts -
             best for most PDFs. Photon converts pages to images - ideal for
             photo-heavy/scanned PDFs but makes text non-selectable.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Which compression level should I use?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             Balanced (recommended) offers great size reduction with minimal
             quality loss. Use Light to preserve maximum quality, Aggressive for
             smaller files, or Extreme for maximum compression.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             Are there file size limits?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
+          <p class="faq-d-a">
             No limits! Compress as many PDFs as you need, of any size,
             completely free.
           </p>

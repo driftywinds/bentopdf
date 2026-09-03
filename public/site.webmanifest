@@ -4,7 +4,7 @@
     "description": "Free online PDF tools - Privacy-first PDF toolkit that works 100% in your browser",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#262d3b",
+    "background_color": "#222222",
     "theme_color": "#4f46e5",
     "orientation": "portrait-primary",
     "icons": [

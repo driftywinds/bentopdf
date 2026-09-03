@@ -1,12 +1,12 @@
 #text-editor-app {
   --ecbg: #111827;
-  --ecpanel: #1f2937;
-  --ecpanel2: #374151;
-  --ecline: #4b5563;
+  --ecpanel: #2a2a2a;
+  --ecpanel2: #383838;
+  --ecline: #444444;
   --ectext: #f3f4f6;
   --ecmuted: #9ca3af;
   --ecaccent: #6366f1;
-  --ecstage: #374151;
+  --ecstage: #383838;
   position: fixed;
   inset: 0;
   z-index: 40;
@@ -50,7 +50,7 @@
   user-select: none;
 }
 #text-editor-app .btn:hover {
-  background: #4b5563;
+  background: #444444;
 }
 #text-editor-app .btn:disabled {
   opacity: 0.4;
@@ -1043,7 +1043,7 @@
   cursor: pointer;
 }
 #text-editor-app .toolright button[data-tool]:hover {
-  background: #4b5563;
+  background: #444444;
 }
 #text-editor-app .toolright button[data-tool].on {
   background: var(--ecaccent);
@@ -1285,7 +1285,7 @@
   line-height: 1;
 }
 #text-editor-app .stepbtn:hover {
-  background: #4b5563;
+  background: #444444;
   color: var(--ectext);
 }
 #text-editor-app .stepper:has(.num:disabled) .stepbtn {
@@ -1526,8 +1526,8 @@
     border-bottom: none;
     border-top: 1px solid var(--ecline);
     border-radius: 16px 16px 0 0;
-    background: #1f2937;
-    background: var(--ecpanel, #1f2937);
+    background: #2a2a2a;
+    background: var(--ecpanel, #2a2a2a);
     box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.45);
     z-index: 27;
     padding: 8px 14px calc(14px + env(safe-area-inset-bottom));

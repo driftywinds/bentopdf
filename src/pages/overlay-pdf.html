@@ -96,7 +96,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -384,56 +384,41 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:pdfOverlay.faqDifferenceQuestion"
               >What is the difference between overlay and underlay?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:pdfOverlay.faqDifferenceAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:pdfOverlay.faqDifferenceAnswer">
             Overlay places pages on top of your base PDF (like a watermark).
             Underlay places pages behind your base PDF (like a letterhead or
             background).
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:pdfOverlay.faqSinglePageQuestion"
               >Can I use a single-page PDF as overlay for all pages?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:pdfOverlay.faqSinglePageAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:pdfOverlay.faqSinglePageAnswer">
             Yes! Enable the "Loop" option and your overlay PDF pages will repeat
             across all base pages. A single-page watermark will apply to every
             page.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <span data-i18n="tools:pdfOverlay.faqPrivacyQuestion"
               >Are my files private and secure?</span
             >
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="mt-3 text-gray-400"
-            data-i18n="tools:pdfOverlay.faqPrivacyAnswer"
-          >
+          <p class="faq-d-a" data-i18n="tools:pdfOverlay.faqPrivacyAnswer">
             Absolutely! All processing happens in your browser. Your files never
             leave your device, ensuring complete privacy.
           </p>
