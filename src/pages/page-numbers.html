@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Page Numbers online free - Page numbers PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Insert page numbers into your document. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="page numbers, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Page Numbers online free - Page numbers PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Insert page numbers into your document. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Page Numbers Free" />
     <meta
       name="twitter:description"
-      content="★ Page Numbers online free - Page numbers PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Insert page numbers into your document. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Page Numbers" />
 
     <title>Add Page Numbers - BentoPDF</title>
-    <meta
-      name="description"
-      content="Add page numbers to your PDF documents. Choose position, format, font size and color. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -378,32 +374,113 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is page numbers really free?
+            Where on the page can the numbers go?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Six positions: bottom center, bottom left, bottom right, top center,
+            top left, and top right. The margin adjusts to the page size
+            automatically (about 4 percent of the page, between 8 and 40
+            points), so numbers stay clear of the edge on both small and large
+            pages.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Can I show the total page count, like 3 of 12?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Choose the "page X of Y" format and each page prints as 3 / 12. The
+            other format prints only the number. There's no free-form template
+            here; for wording such as "Page 3 of 12",
+            <a
+              href="/header-footer"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Header &amp; Footer</a
+            >
+            accepts custom text with {page} and {total} placeholders.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I start numbering from a page other than the first, or skip a
+            cover page?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Not here; numbering always starts at 1 on the first page and runs to
+            the last. To leave a cover unnumbered, split it off, number the
+            rest, and merge the two back together. For Roman numerals on front
+            matter,
+            <a
+              href="/add-page-labels"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Add Page Labels</a
+            >
+            sets the numbers viewers display instead of printing them on the
+            page.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What font is used, and can I change it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Numbers are set in Helvetica at the size you choose, from 6 to 72
+            points, in any color from the color picker. The typeface itself is
+            fixed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the numbers permanent?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            They're drawn directly into the page content, not added as
+            annotations, so every viewer shows them and they print with the
+            document. That also means they can't be switched off later, so keep
+            your unnumbered original.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will numbers land in the right spot on cropped or mixed-size pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each page is measured individually, using its crop box when one is
+            set, so a document that mixes Letter and A4 or portrait and
+            landscape pages still gets numbers inside the visible area at the
+            chosen corner.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add a prefix like EXHIBIT-A or legal Bates numbers?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool prints plain numbers only. For prefixed, zero-padded
+            numbering such as ABC000123 used in legal productions, use
+            <a
+              href="/bates-numbering"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Bates Numbering</a
+            >, which has templates, padding, and multi-file support.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the tool upload my PDF to add the numbers?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The numbers are written by a PDF library running in your browser
+            and the file never leaves your device, which makes it fine for
+            contracts and confidential reports.
           </p>
         </details>
       </div>

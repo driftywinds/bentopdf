@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to WebP online free - PDF to WebP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a WebP image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to webp, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to WebP online free - PDF to WebP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a WebP image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF to WebP Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to WebP online free - PDF to WebP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a WebP image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to WebP" />
 
     <title>PDF to WebP - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF pages to WebP images. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -345,32 +341,92 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to webp really free?
+            Why choose WebP over JPG for PDF pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            WebP files are typically 25 to 35% smaller than JPG at the same
+            visual quality, which matters for web pages and social posts where
+            file size counts. If you need images for older software or email
+            clients,
+            <a href="/pdf-to-jpg" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to JPG</a
+            >
+            is the safer choice.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What WebP quality setting should I use?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The slider runs from 10% to 100% and defaults to 85%. Values between
+            80 and 85% usually look identical to the original on screen, and
+            going higher mainly adds file size.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What resolution are the WebP images?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Each page is rendered at 2x its PDF dimensions, so a letter-size
+            page comes out at roughly 1,224 by 1,584 pixels. There is no
+            separate DPI or size setting.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it convert all pages, or can I pick some?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            All pages are converted. A one-page PDF downloads as filename.webp;
+            a longer document downloads as filename_webps.zip containing
+            page_1.webp, page_2.webp, and so on. To convert only certain pages,
+            pull them out first with
+            <a
+              href="/extract-pages"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Extract Pages</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the WebP images open everywhere?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Current versions of Chrome, Firefox, Safari, and Edge display WebP,
+            as do most modern image editors. Some older desktop programs and
+            email clients don't, so fall back to JPG or PNG for those.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the WebP output lossy?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The quality slider controls lossy compression, so fine text edges
+            lose a little detail at low settings. For an exact copy of a page,
+            use
+            <a href="/pdf-to-png" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to PNG</a
+            >, which is lossless.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my PDF pages uploaded when converting to WebP?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering and WebP encoding happen in your browser, and the
+            resulting images or ZIP are created on your own device.
           </p>
         </details>
       </div>

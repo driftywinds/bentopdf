@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "네! \"반복\" 옵션을 활성화하면 오버레이 페이지가 모든 기본 페이지에 반복됩니다. 단일 페이지 워터마크가 모든 페이지에 적용됩니다.",
     "faqPrivacyQuestion": "내 파일은 비공개이고 안전한가요?",
     "faqPrivacyAnswer": "물론입니다! 모든 처리는 브라우저에서 이루어집니다. 파일이 기기를 떠나지 않아 완전한 개인정보 보호가 보장됩니다."
+  },
+  "unlockPdf": {
+    "name": "PDF 복호화",
+    "subtitle": "비밀번호를 제거하여 PDF 잠금을 해제합니다."
+  },
+  "protectPdf": {
+    "name": "PDF 암호화",
+    "subtitle": "비밀번호를 설정하여 PDF를 보호합니다."
   }
 }

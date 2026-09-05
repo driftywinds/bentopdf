@@ -10,7 +10,7 @@
     />
     <meta
       name="description"
-      content="★ Scanner Effect online free - Make PDFs look scanned ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make your PDF look like a scanned document. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Scanner Effect online free - Make PDFs look scanned ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make your PDF look like a scanned document. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -50,7 +50,7 @@
     <meta name="twitter:title" content="Scanner Effect Free" />
     <meta
       name="twitter:description"
-      content="★ Scanner Effect online free - Make PDFs look scanned ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make your PDF look like a scanned document. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -63,10 +63,6 @@
     <meta name="apple-mobile-web-app-title" content="Scanner Effect" />
 
     <title>Scanner Effect - BentoPDF</title>
-    <meta
-      name="description"
-      content="Make your PDF look like a scanned document. Adjust noise, brightness, contrast, blur, and more. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -548,32 +544,96 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is scanner effect really free?
+            Which settings give the most realistic scan look?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Subtle values work best: noise around 10 to 20, a rotation of about
+            0.5 degrees with a little Rotate Variance so each page tilts
+            differently, and a touch of blur. Turn on Grayscale for a
+            photocopier look, add Border for the dark edge a flatbed leaves, and
+            drop Resolution to 100 to 150 DPI for a fax-like result.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What does Rotate Variance do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            It adds a random amount, up to the value you set (0 to 3 degrees),
+            to the base rotation on every page, so a ten-page document doesn't
+            have ten identically tilted pages. The preview shows only the base
+            rotation; the variation is applied when you click Apply.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I still select or search the text afterward?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. Each page is rendered, processed as pixels, and saved as a JPEG
+            image, so the output is image-only. That's usually the point of a
+            scan effect, but keep the original if you need editable text later.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does the preview look different from the final file?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The preview renders the first page at screen resolution and ignores
+            the Resolution slider, so noise and blur can look slightly stronger
+            or weaker in the final output, and it can't show the per-page
+            rotation variance. The other settings match what you'll get.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How does the Resolution setting affect the file?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            It sets the DPI at which pages are rendered before the effects are
+            applied, from 72 to 300. Lower values make pages softer and more
+            pixelated, like a cheap scanner, and produce smaller files; 300 DPI
+            keeps text crisp but makes a much larger PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I make the paper look old or yellowed?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Raise the Yellowish slider to add a warm tint that mimics aged or
+            recycled paper. Combine it with Grayscale for a
+            photocopy-of-a-photocopy look, and nudge Brightness down and
+            Contrast up to imitate a tired toner cartridge.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it process more than one PDF at a time?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. This tool works on a single PDF per run, applying your settings
+            to every page of that file. Load the next file after the first
+            download finishes.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does my document get uploaded to apply the effect?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering, noise, blur, and rotation are all applied on a canvas
+            in your browser, and the output PDF is assembled locally, so the
+            file never leaves your computer.
           </p>
         </details>
       </div>

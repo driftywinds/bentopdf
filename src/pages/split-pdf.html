@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Split PDF Online Free - Split PDF Tool | BentoPDF"
+      content="Split PDF Online Free - Extract Pages from a PDF | BentoPDF"
     />
     <meta
       name="description"
-      content="★ Split PDF online free - Split PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract a range of pages into a new PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -31,11 +31,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/split-pdf" />
     <meta
       property="og:title"
-      content="Split PDF Online Free - Split PDF Tool | BentoPDF"
+      content="Split PDF Online Free - Extract Pages from a PDF | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ Split PDF online free - Split PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract a range of pages into a new PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,10 +48,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/split-pdf" />
-    <meta name="twitter:title" content="Split PDF Free" />
+    <meta
+      name="twitter:title"
+      content="Split PDF Online Free - Extract Pages from a PDF | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ Split PDF online free - Split PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract a range of pages into a new PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,11 +67,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Split PDF" />
 
-    <title>Split PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Extract pages from a PDF using various methods. Free, secure, and runs entirely in your browser."
-    />
+    <title>Split PDF Online Free - Extract Pages from a PDF | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -569,33 +568,94 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Can I extract specific page ranges?
+            How do I extract a range of pages from a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! You can extract any specific pages or page ranges from your
-            PDF. Select exactly which pages you need or split into individual
-            files.
+            Choose Extract by Page Range and type the pages you want, such as
+            1-5, 8, 11-13. By default the selected pages are combined into one
+            PDF; switch the output to One PDF per range and each comma-separated
+            range becomes its own file inside split-pages.zip.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Will split PDFs lose quality?
+            Can I split a PDF into one file per page?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Split PDFs maintain the exact same quality as the original
-            document. No compression or quality loss occurs.
+            Yes. Pick Split All Pages into Separate Files and every page is
+            written to its own PDF, named page-1.pdf, page-2.pdf, and so on,
+            bundled in split-pages.zip.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Can I split multiple PDFs at once?
+            How do I split a PDF every N pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes, process multiple PDFs in batches for efficient document
-            management.
+            Choose Split N Times and enter the chunk size. A 23-page file split
+            every 5 pages produces five PDFs, and the tool warns you beforehand
+            that the last one will hold only 3 pages. The files download as
+            split-n-times.zip.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I split a PDF by chapters or bookmarks?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes, if the PDF has bookmarks. Choose Split by Bookmarks and a level
+            (All, or level 0 through 3), and a new file starts at each
+            bookmark's page, giving you split-1.pdf, split-2.pdf, and so on in
+            split-by-bookmarks.zip. A PDF with no bookmarks at the chosen level
+            shows an error instead.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I separate odd and even pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Select Split by Even/Odd Pages and pick even or odd; the matching
+            pages are extracted into one PDF in their original order. This is a
+            common step for double-sided printing on a single-sided printer.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I pick pages visually instead of typing numbers?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Select Pages Visually shows a thumbnail of every page; click
+            the ones you want and they're extracted in page order. Combined
+            output gives one PDF, and the separate option gives one file per
+            page in a ZIP.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does splitting reduce the quality of the pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Pages are copied by QPDF without re-rendering, so text, images,
+            fonts, and vector graphics stay exactly as they were in the
+            original.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded when I split it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The page extraction and ZIP packaging run in your browser, and
+            the resulting files are saved directly from your device.
           </p>
         </details>
       </div>

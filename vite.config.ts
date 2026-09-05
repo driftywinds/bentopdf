@@ -213,6 +213,18 @@ function createLanguageMiddleware(isDev: boolean): Connect.NextHandleFunction {
       }
     }
 
+    if (pathname === '/blog' || pathname === '/blog/') {
+      req.url = '/blog/index.html' + (queryString ? `?${queryString}` : '');
+      return next();
+    }
+
+    const blogMatch = pathname.match(/^\/blog\/([a-z0-9-]+)\/?$/);
+    if (blogMatch) {
+      req.url =
+        `/blog/${blogMatch[1]}.html` + (queryString ? `?${queryString}` : '');
+      return next();
+    }
+
     next();
   };
 }
@@ -638,6 +650,15 @@ export default defineConfig(() => {
           kura: resolve(__dirname, 'kura.html'),
           'hyper-compress': resolve(__dirname, 'hyper-compress.html'),
           tools: resolve(__dirname, 'tools.html'),
+          ...Object.fromEntries(
+            fs
+              .readdirSync(resolve(__dirname, 'blog'))
+              .filter((f) => f.endsWith('.html'))
+              .map((f) => [
+                `blog-${f.replace('.html', '')}`,
+                resolve(__dirname, 'blog', f),
+              ])
+          ),
           '404': resolve(__dirname, '404.html'),
           // Category Hub Pages
           'pdf-converter': resolve(__dirname, 'pdf-converter.html'),
@@ -659,6 +680,30 @@ export default defineConfig(() => {
           'merge-pdf': resolve(__dirname, 'src/pages/merge-pdf.html'),
           'split-pdf': resolve(__dirname, 'src/pages/split-pdf.html'),
           'compress-pdf': resolve(__dirname, 'src/pages/compress-pdf.html'),
+          'compress-pdf-to-100kb': resolve(
+            __dirname,
+            'src/pages/compress-pdf-to-100kb.html'
+          ),
+          'compress-pdf-to-200kb': resolve(
+            __dirname,
+            'src/pages/compress-pdf-to-200kb.html'
+          ),
+          'compress-pdf-to-500kb': resolve(
+            __dirname,
+            'src/pages/compress-pdf-to-500kb.html'
+          ),
+          'compress-pdf-to-1mb': resolve(
+            __dirname,
+            'src/pages/compress-pdf-to-1mb.html'
+          ),
+          'compress-pdf-to-2mb': resolve(
+            __dirname,
+            'src/pages/compress-pdf-to-2mb.html'
+          ),
+          'compress-pdf-for-email': resolve(
+            __dirname,
+            'src/pages/compress-pdf-for-email.html'
+          ),
           'edit-pdf': resolve(__dirname, 'src/pages/edit-pdf.html'),
           'edit-pdf-text': resolve(__dirname, 'src/pages/edit-pdf-text.html'),
           'jpg-to-pdf': resolve(__dirname, 'src/pages/jpg-to-pdf.html'),
@@ -735,9 +780,9 @@ export default defineConfig(() => {
             __dirname,
             'src/pages/remove-metadata.html'
           ),
-          'decrypt-pdf': resolve(__dirname, 'src/pages/decrypt-pdf.html'),
+          'unlock-pdf': resolve(__dirname, 'src/pages/unlock-pdf.html'),
           'flatten-pdf': resolve(__dirname, 'src/pages/flatten-pdf.html'),
-          'encrypt-pdf': resolve(__dirname, 'src/pages/encrypt-pdf.html'),
+          'protect-pdf': resolve(__dirname, 'src/pages/protect-pdf.html'),
           'linearize-pdf': resolve(__dirname, 'src/pages/linearize-pdf.html'),
           'remove-restrictions': resolve(
             __dirname,
@@ -770,7 +815,7 @@ export default defineConfig(() => {
           'pdf-to-tiff': resolve(__dirname, 'src/pages/pdf-to-tiff.html'),
           'pdf-to-cbz': resolve(__dirname, 'src/pages/pdf-to-cbz.html'),
           'pdf-to-webp': resolve(__dirname, 'src/pages/pdf-to-webp.html'),
-          'pdf-to-docx': resolve(__dirname, 'src/pages/pdf-to-docx.html'),
+          'pdf-to-word': resolve(__dirname, 'src/pages/pdf-to-word.html'),
           'extract-images': resolve(__dirname, 'src/pages/extract-images.html'),
           'pdf-to-markdown': resolve(
             __dirname,

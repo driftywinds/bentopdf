@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ ODT to PDF online free - ODT to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Text files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="odt to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ ODT to PDF online free - ODT to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Text files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="ODT to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ ODT to PDF online free - ODT to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Text files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="ODT to PDF" />
 
     <title>ODT to PDF - Convert OpenDocument Text to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert ODT (OpenDocument Text) files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -332,32 +328,98 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is odt to pdf really free?
+            How do I convert an ODT file to PDF without LibreOffice installed?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Drop the .odt file on the page and click Convert to PDF. A build of
+            LibreOffice compiled to WebAssembly loads inside your browser and
+            does the conversion, so you don't need LibreOffice, OpenOffice, or
+            Word on the computer.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why is converting the first ODT file slower?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The LibreOffice engine is roughly 75 MB compressed and has to be
+            downloaded and started the first time you convert in a session; a
+            progress indicator shows the percentage. Once it's loaded, further
+            conversions in the same session start right away.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Will my formatting, tables, and images be preserved?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The conversion uses LibreOffice's own PDF export, so styles, tables,
+            images, and page layout come through the way Writer would print
+            them. Documents with embedded OLE objects or fonts that aren't
+            available may render slightly differently, so check one sample
+            before converting a large batch.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert multiple ODT files at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Add as many .odt files as you like, remove any you don't want from
+            the list, and convert them in one go. A single file downloads as a
+            PDF named after the original; two or more arrive in
+            odt-converted.zip with one PDF per file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What about .docx, .doc, or .ott files?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This page accepts only .odt. Word documents go through
+            <a href="/word-to-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Word to PDF</a
+            >, which uses the same engine, and an .ott template should be opened
+            and saved as .odt before converting.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the PDF text be selectable and searchable?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The PDF is exported from the document's actual text rather than a
+            picture of the page, so the text can be selected, copied, and
+            searched in any viewer.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it work with ODT files from OpenOffice or other programs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Any standard OpenDocument Text file is accepted regardless of which
+            program saved it, including LibreOffice Writer, Apache OpenOffice,
+            and other word processors that write .odt.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my ODT document uploaded to convert it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The LibreOffice engine runs entirely inside your browser, so the
+            .odt file is read and the PDF is written on your own device. That
+            makes it usable for confidential contracts, theses, and anything
+            else you'd rather not put on a conversion server.
           </p>
         </details>
       </div>

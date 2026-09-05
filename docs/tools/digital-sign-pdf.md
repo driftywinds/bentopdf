@@ -61,5 +61,5 @@ Signing may require an internet connection. The signing library fetches the cert
 
 - [Validate Signature](./validate-signature-pdf) -- verify digital signatures in signed PDFs
 - [Flatten PDF](./flatten-pdf) -- flatten forms before signing to prevent modifications
-- [Encrypt PDF](./encrypt-pdf) -- add password protection on top of the digital signature
+- [Encrypt PDF](./protect-pdf) -- add password protection on top of the digital signature
 - [Remove Metadata](./remove-metadata) -- strip metadata before signing

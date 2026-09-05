@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ RTF to PDF online free - RTF to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Rich Text Format documents to PDF. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="rtf to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ RTF to PDF online free - RTF to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Rich Text Format documents to PDF. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="RTF to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ RTF to PDF online free - RTF to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Rich Text Format documents to PDF. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="RTF to PDF" />
 
     <title>RTF to PDF - Convert Rich Text Format to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert RTF (Rich Text Format) document files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -331,32 +327,99 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is rtf to pdf really free?
+            Why does the first RTF file take longer to convert?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The converter is LibreOffice compiled to WebAssembly, and the engine
+            is about 77 MB compressed. It's downloaded and started the first
+            time you convert in a session; after that, each file takes only a
+            few seconds.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What RTF formatting is preserved in the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Font styles such as bold and italic, paragraph alignment, lists,
+            tables, and embedded images come through as they would if you
+            exported the file from LibreOffice Writer. Embedded OLE objects,
+            such as inserted spreadsheets, may not render fully.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Will my fonts look the same?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Only fonts bundled with the engine are available, which covers
+            common Latin, Arabic, and Hebrew faces. Fonts that aren't bundled
+            are replaced with the closest substitute, so line breaks and spacing
+            can shift slightly.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert many RTF files at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. One file downloads as a PDF with the same base name; several
+            files download together as rtf-converted.zip with one PDF per file,
+            and duplicate names are numbered automatically.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What's the difference between this and Word to PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Both use the same LibreOffice engine and produce the same result for
+            RTF.
+            <a href="/word-to-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Word to PDF</a
+            >
+            also accepts .doc, .docx, and .odt, so use it when you have a mix of
+            formats in one batch.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it handle RTF from WordPad, TextEdit, or legal and medical
+            software?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            RTF written by any standard word processor converts, including files
+            from WordPad, TextEdit, and exports from records systems.
+            Proprietary extensions inside such files may be dropped, but the
+            text and standard formatting still convert.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What about text in Chinese, Japanese, Korean, or Indic scripts?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Those fonts aren't bundled with the browser engine, so text in these
+            scripts may render with a fallback font or as boxes. Latin, Arabic,
+            and Hebrew scripts are covered.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my document sent to a LibreOffice server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The whole LibreOffice engine runs inside your browser tab as
+            WebAssembly. Your file is converted locally, and the only thing
+            downloaded is the engine itself.
           </p>
         </details>
       </div>

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && NODE_OPTIONS='--max-old-space-size=3072' node scripts/generate-i18n-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-security-headers.mjs && node scripts/seo-audit.mjs",
+    "build": "node scripts/generate-blog.mjs && node scripts/generate-static-tool-links.mjs && tsc && vite build && node scripts/enhance-seo-pages.mjs && NODE_OPTIONS='--max-old-space-size=3072' node scripts/generate-i18n-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-security-headers.mjs && node scripts/seo-audit.mjs",
     "seo-audit": "node scripts/seo-audit.mjs",
     "build:with-docs": "npm run build && npm run docs:build && node scripts/include-docs-in-dist.js",
     "build:gzip": "COMPRESSION_MODE=g npm run build",
@@ -60,6 +60,7 @@
     "husky": "^9.1.7",
     "jsdom": "^28.1.0",
     "lint-staged": "^16.3.1",
+    "marked": "^16.4.2",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",

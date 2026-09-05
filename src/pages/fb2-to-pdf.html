@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ FB2 to PDF online free - FB2 to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert FictionBook (FB2) e-books to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="fb2 to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ FB2 to PDF online free - FB2 to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert FictionBook (FB2) e-books to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="FB2 to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ FB2 to PDF online free - FB2 to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert FictionBook (FB2) e-books to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="FB2 to PDF" />
 
     <title>FB2 to PDF - Convert XPS/OFB2 to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert XPS and OXPS documents to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -333,32 +329,99 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is fb2 to pdf really free?
+            What is an FB2 file?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            FB2 is the FictionBook 2 ebook format, an XML-based format that is
+            common in Russia and Eastern Europe. It stores the book's text,
+            chapter structure, and any embedded images in a single file, but
+            many readers and phones outside that region can't open it, which is
+            why converting to PDF helps.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Does the conversion keep chapters, formatting, and images?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Chapter breaks, basic text formatting, and images embedded in the
+            FB2 file are all carried into the PDF. The PyMuPDF engine reads the
+            XML structure directly, so nothing needs to be configured.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I convert an .fb2.zip file?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Not directly. The tool only accepts plain .fb2 files, so extract the
+            archive first and upload the .fb2 inside it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several FB2 books at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Select or drop as many files as you like and click Convert to PDF. A
+            single book downloads as a PDF with the same name, while several are
+            packed into fb2-converted.zip with one PDF per book.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I change the page size or font before converting?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. There are no layout options in this converter; the engine
+            paginates the book with its default page size and typography. If you
+            need a different page size afterward, run the result through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will Russian or other Cyrillic text convert correctly?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            FB2 files are Unicode XML and the converter renders Unicode text, so
+            Cyrillic books convert with their original characters intact. The
+            text stays selectable and searchable in the PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my ebook uploaded during conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The FB2 file is parsed and laid out by a PDF engine running in
+            your browser, and only the finished PDF is saved to your device.
+            Nothing is sent to a server, so the conversion also works for drafts
+            and personal documents.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does the PDF have a different number of pages than my e-reader
+            shows?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            FB2 is a reflowable format, so page counts depend on screen size and
+            font settings in each reader. The PDF fixes the layout at conversion
+            time, which usually produces a different, and now permanent, page
+            count.
           </p>
         </details>
       </div>

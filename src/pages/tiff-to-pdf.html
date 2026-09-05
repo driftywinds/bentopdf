@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ TIFF to PDF online free - TIFF to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more TIFF images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="tiff to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ TIFF to PDF online free - TIFF to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more TIFF images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="TIFF to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ TIFF to PDF online free - TIFF to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more TIFF images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="TIFF to PDF" />
 
     <title>TIFF to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert TIFF images to PDF. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -350,32 +346,105 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is tiff to pdf really free?
+            Does it handle multi-page TIFFs?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Yes. Every page (IFD) inside a TIFF becomes a separate PDF page, so
+            a 10-page fax file gives a 10-page PDF without splitting it first.
+            Pages from several TIFF files are appended in list order into one
+            document.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Which TIFF variants are supported?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Grayscale and RGB images at 8, 16, or 32 bits per channel, with or
+            without an alpha channel, stored uncompressed or with LZW or Deflate
+            compression. TIFFs using CCITT Group 3 or 4 fax compression,
+            PackBits, or JPEG compression can't be decoded; re-save those as
+            uncompressed or LZW TIFF in an image editor first.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What do the quality options do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            High stores each page as lossless PNG, keeping every pixel. Medium
+            and Low re-encode pages as JPEG at 75% and 50% quality, which is
+            much smaller for scanned photos but can blur fine text. Pixel
+            dimensions stay the same in all three.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What page size does a converted TIFF get?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The page is sized to the pixel dimensions at one point per pixel,
+            and the TIFF's own DPI tag is ignored. A 300 DPI Letter scan of 2550
+            by 3300 pixels therefore becomes a page about 35 by 46 inches; run
+            the result through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >
+            to get true Letter or A4 pages.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the PDF be searchable?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Scanned TIFFs are images, and the PDF contains the same images
+            with no text layer. Run the output through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            to make it searchable and copyable.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens with 16-bit or floating-point images?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            They're reduced to 8 bits per channel for the PDF, so medical or
+            scientific TIFFs lose their extended range. WhiteIsZero grayscale
+            files are inverted correctly so black stays black.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does a large TIFF take so long or fail?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The whole file is decoded into browser memory and each page is
+            expanded to raw pixels before being re-encoded. Files of several
+            hundred megabytes can exhaust that memory, so split very large TIFFs
+            or convert them a few at a time.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my scans uploaded?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The TIFF is decoded with a JavaScript decoder in your browser
+            and the PDF is assembled locally, so medical images or confidential
+            faxes never leave your device.
           </p>
         </details>
       </div>

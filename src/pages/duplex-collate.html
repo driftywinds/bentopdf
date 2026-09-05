@@ -478,70 +478,96 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:duplexCollate.faqOddPagesQuestion"
-              >What if my scan has an odd number of pages?</span
-            >
+            What kind of scan is this tool for?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:duplexCollate.faqOddPagesAnswer">
-            A duplex scan should have an even page count. If it does not, a page
-            was probably scanned twice or missed. The tool warns you before
-            processing, and any unpaired pages are appended at the end so
-            nothing is lost.
+          <p class="faq-d-a">
+            A PDF produced by feeding a stack through a single-sided scanner
+            twice, once for the fronts and once for the backs, which gives one
+            file with all front pages first and all back pages after. The tool
+            interleaves the two blocks into front 1, back 1, front 2, back 2
+            order. If the fronts and backs are in two separate PDFs, use
+            <a
+              href="/alternate-merge"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Alternate &amp; Mix Pages</a
+            >
+            instead.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:duplexCollate.faqBackOrderQuestion"
-              >Why would I keep the back block as-is?</span
-            >
+            How do I know where to set the split point?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:duplexCollate.faqBackOrderAnswer">
-            It depends on how the stack was fed for the second pass. Flipping
-            the whole stack over produces back sides in reverse order, which is
-            the default. If your scanner returned them in the same order as the
-            fronts, choose to keep the block as-is.
+          <p class="faq-d-a">
+            The split is the last page of the front block, which for a normal
+            two-pass scan is exactly half the total. Click Auto-detect split
+            (half) to fill that in, then read the preview summary, which shows
+            the size of each block and the resulting page count before you
+            commit.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="faq.isFree.question"
-              >Is BentoPDF really free?</span
-            >
+            What does the grouped export option do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="faq.isFree.answer">
-            Yes, absolutely. All tools on BentoPDF are 100% free to use, with no
-            file limits, no sign-ups, and no watermarks. We believe everyone
-            deserves access to simple, powerful PDF tools without a paywall.
+          <p class="faq-d-a">
+            If the stack held several short documents, such as two-page forms,
+            enter the pages per document and the collated output is cut into
+            chunks of that length. Multiple chunks download as a ZIP with one
+            PDF per document; a single chunk downloads as a plain PDF.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="faq.areFilesSecure.question"
-              >Are my files secure? Where are they processed?</span
-            >
+            What filename does the collated PDF get?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="faq.areFilesSecure.answer">
-            Your files are as secure as possible because they never leave your
-            computer. All processing happens directly in your web browser
-            (client-side). We never upload your files to a server, so you
-            maintain complete privacy and control over your documents.
+          <p class="faq-d-a">
+            A single collated file downloads under your original name with
+            _collated added, for example scan_collated.pdf. Grouped output is a
+            ZIP named scan_collated_grouped.zip containing the separate PDFs.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="faq.platforms.question"
-              >Does it work on Mac, Windows, and Mobile?</span
-            >
+            Can I preview the result before downloading?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="faq.platforms.answer">
-            Yes! Since BentoPDF runs entirely in your browser, it works on any
-            operating system with a modern web browser, including Windows,
-            macOS, Linux, iOS, and Android.
+          <p class="faq-d-a">
+            The page shows a summary line as you change the split point and back
+            order, including the front and back block sizes and the output page
+            count, and it warns when the blocks are uneven. There is no
+            thumbnail preview, so check the first few pages of the download and
+            switch the back block order if the backs come out reversed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it keep bookmarks from the scanned PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The output is rebuilt page by page, so page content and rotation are
+            preserved but document-level bookmarks aren't carried across.
+            Scanner output rarely has any, but if yours does you can add them
+            again with
+            <a href="/bookmark" class="text-indigo-300 hover:text-indigo-400"
+              >Edit Bookmarks</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my scanned document uploaded to be reordered?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PDF is opened in your browser, the pages are copied into a
+            new document on your device, and the result is downloaded directly,
+            so scans of forms and records never leave your computer.
           </p>
         </details>
       </div>

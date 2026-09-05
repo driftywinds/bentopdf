@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Overlay or underlay PDF pages online free ★ Add watermarks, letterheads, backgrounds ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Overlay Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -33,7 +33,7 @@
     />
     <meta
       property="og:description"
-      content="★ Overlay or underlay PDF pages online free ★ Add watermarks, letterheads, backgrounds ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Overlay Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF Overlay & Underlay Free" />
     <meta
       name="twitter:description"
-      content="★ Overlay or underlay PDF pages online free ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Overlay Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -387,40 +387,102 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:pdfOverlay.faqDifferenceQuestion"
-              >What is the difference between overlay and underlay?</span
-            >
+            How do I apply the overlay to only some pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:pdfOverlay.faqDifferenceAnswer">
-            Overlay places pages on top of your base PDF (like a watermark).
-            Underlay places pages behind your base PDF (like a letterhead or
-            background).
+          <p class="faq-d-a">
+            Type a range in the Apply to pages field using the base document's
+            page numbers, for example 1-5, 8, 10-z, where z stands for the last
+            page. Leave it empty to cover every page.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:pdfOverlay.faqSinglePageQuestion"
-              >Can I use a single-page PDF as overlay for all pages?</span
-            >
+            What happens when the two PDFs have different page counts?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:pdfOverlay.faqSinglePageAnswer">
-            Yes! Enable the "Loop" option and your overlay PDF pages will repeat
-            across all base pages. A single-page watermark will apply to every
-            page.
+          <p class="faq-d-a">
+            With the loop option on, the overlay's pages repeat in order until
+            every base page is covered, so a 2-page overlay on a 5-page document
+            is applied as 1, 2, 1, 2, 1. With it off, pages are matched one to
+            one and base pages beyond the overlay's length are left unchanged.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:pdfOverlay.faqPrivacyQuestion"
-              >Are my files private and secure?</span
-            >
+            Do the page sizes need to match?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:pdfOverlay.faqPrivacyAnswer">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+          <p class="faq-d-a">
+            No. An overlay page larger than the base page is scaled down to fit
+            and a smaller one is centered without being enlarged. There are no
+            controls for position, scale, or opacity, so build the overlay PDF
+            at the size and transparency you want before combining.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the base PDF stay searchable and editable?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. The base document's text, links, form fields, and bookmarks are
+            untouched; the overlay is added to each page as an extra drawing
+            layer, and any text in it remains selectable too.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are links, form fields, or comments from the overlay PDF copied
+            over?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Only the visible page content of the overlay is used.
+            Annotations on the overlay pages, including links, form fields, and
+            comments, don't transfer to the result.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which mode should I use for a letterhead?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Underlay, so the letterhead sits behind the page content, with the
+            loop option on if the letterhead is a single page. For text or image
+            watermarks with adjustable opacity, rotation, and placement,
+            <a
+              href="/add-watermark"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Add Watermark</a
+            >
+            gives more control.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does it fail on a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The tool doesn't ask for passwords. If either file needs a password
+            to open, remove it first with the
+            <a href="/unlock-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >password removal tool</a
+            >, then apply the overlay to the copy without the password.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do both PDFs get uploaded?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The overlay is applied by qpdf compiled to WebAssembly, which
+            runs entirely in your browser, so neither the base document nor the
+            overlay file leaves your device. The combined PDF downloads under
+            the base document's filename.
           </p>
         </details>
       </div>

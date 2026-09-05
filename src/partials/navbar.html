@@ -13,20 +13,16 @@
           class="h-8 w-8"
         />
         <span id="nav-brand" class="text-white font-bold text-xl ml-2">
-          <a href="index.html"
-            >{{#if brandName}}{{brandName}}{{else}}BentoPDF{{/if}}</a
-          >
+          <a href="/">{{#if brandName}}{{brandName}}{{else}}BentoPDF{{/if}}</a>
         </span>
       </div>
 
       <!-- Desktop Navigation -->
       <div class="hidden md:flex flex-1 items-center justify-center space-x-8">
-        <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
-        <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
-        <a href="contact.html" class="nav-link" data-i18n="nav.contact"
-          >Contact</a
-        >
-        <a href="licensing.html" class="nav-link" data-i18n="nav.licensing"
+        <a href="/" class="nav-link" data-i18n="nav.home">Home</a>
+        <a href="/about" class="nav-link" data-i18n="nav.about">About</a>
+        <a href="/contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+        <a href="/licensing" class="nav-link" data-i18n="nav.licensing"
           >Licensing</a
         >
         <div class="nav-products">
@@ -42,13 +38,13 @@
             <i data-lucide="chevron-down" class="nav-products-chevron"></i>
           </button>
           <div id="products-menu" class="nav-products-menu" role="menu" hidden>
-            <a href="kura.html" role="menuitem">
+            <a href="/kura" role="menuitem">
               <span class="nav-product-text">
                 <b>Kura</b>
                 <small>PDF/A, PDF/UA and PDF/X conversion engine.</small>
               </span>
             </a>
-            <a href="hyper-compress.html" role="menuitem">
+            <a href="/hyper-compress" role="menuitem">
               <span class="nav-product-text">
                 <b>Hyper Compress</b>
                 <small>Content-preserving PDF compression engine.</small>
@@ -57,11 +53,12 @@
           </div>
         </div>
         <a
-          href="https://bentopdf.com/docs/"
+          href="https://www.bentopdf.com/docs/"
           class="nav-link"
           data-i18n="nav.docs"
           >Docs</a
         >
+        <a href="/blog" class="nav-link">Blog</a>
       </div>
 
       <div class="hidden md:flex items-center flex-shrink-0">
@@ -164,14 +161,12 @@
     class="hidden md:hidden bg-gray-900 border-t border-white/10"
   >
     <div class="px-2 pt-2 pb-3 space-y-1 text-center">
-      <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">Home</a>
-      <a href="about.html" class="mobile-nav-link" data-i18n="nav.about"
-        >About</a
-      >
-      <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact"
+      <a href="/" class="mobile-nav-link" data-i18n="nav.home">Home</a>
+      <a href="/about" class="mobile-nav-link" data-i18n="nav.about">About</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav.contact"
         >Contact</a
       >
-      <a href="licensing.html" class="mobile-nav-link" data-i18n="nav.licensing"
+      <a href="/licensing" class="mobile-nav-link" data-i18n="nav.licensing"
         >Licensing</a
       >
       <button
@@ -185,15 +180,16 @@
         <i data-lucide="chevron-down" class="mobile-products-chevron"></i>
       </button>
       <div id="mobile-products-menu" class="mobile-products-menu" hidden>
-        <a href="kura.html" class="mobile-nav-link">Kura</a>
-        <a href="hyper-compress.html" class="mobile-nav-link">Hyper Compress</a>
+        <a href="/kura" class="mobile-nav-link">Kura</a>
+        <a href="/hyper-compress" class="mobile-nav-link">Hyper Compress</a>
       </div>
       <a
-        href="https://bentopdf.com/docs/"
+        href="https://www.bentopdf.com/docs/"
         class="mobile-nav-link"
         data-i18n="nav.docs"
         >Docs</a
       >
+      <a href="/blog" class="mobile-nav-link">Blog</a>
     </div>
   </div>
 </nav>

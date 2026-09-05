@@ -58,7 +58,7 @@ AES-256 is computationally infeasible to brute-force with current technology. Th
 
 ## Related Tools
 
-- [Decrypt PDF](./decrypt-pdf) -- remove encryption when you know the password
+- [Decrypt PDF](./unlock-pdf) -- remove encryption when you know the password
 - [Change Permissions](./change-permissions) -- modify specific usage restrictions
 - [Remove Restrictions](./remove-restrictions) -- strip all security from a PDF
 - [Sanitize PDF](./sanitize-pdf) -- remove hidden content before encrypting

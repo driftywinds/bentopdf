@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "Evet! \"Tekrarla\" seçeneğini etkinleştirin ve üst katman sayfalarınız tüm temel sayfalarda tekrarlanır. Tek sayfalık bir filigran her sayfaya uygulanır.",
     "faqPrivacyQuestion": "Dosyalarım gizli ve güvende mi?",
     "faqPrivacyAnswer": "Kesinlikle! Tüm işleme tarayıcınızda gerçekleşir. Dosyalarınız cihazınızı asla terk etmez, tam gizlilik sağlanır."
+  },
+  "unlockPdf": {
+    "name": "PDF'nin Şifresini Çöz",
+    "subtitle": "Şifre korumasını kaldırarak PDF'nin kilidini açın."
+  },
+  "protectPdf": {
+    "name": "PDF'yi Şifrele",
+    "subtitle": "PDF'nizi şifre ekleyerek koruyun."
   }
 }

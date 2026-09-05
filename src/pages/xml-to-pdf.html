@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ XML to PDF online free - XML to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert XML documents to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="xml to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ XML to PDF online free - XML to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert XML documents to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="XML to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ XML to PDF online free - XML to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert XML documents to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="XML to PDF" />
 
     <title>XML to PDF - Convert WordPerfect to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert XML documents to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -328,32 +324,97 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is xml to pdf really free?
+            How does the tool decide what the PDF looks like?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            It parses the XML, groups repeating sibling elements by tag name,
+            and renders each group as a table with one column per child element,
+            using element names as the headers. If the root has no repeating
+            children, you get a two-column Property and Value table. The output
+            is landscape A4 with the root element's name as the title.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What kind of XML works best?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Data-style XML: records with the same set of child elements repeated
+            under one parent, such as database exports, invoice line items,
+            product feeds, RSS feeds, or sitemaps. Deeply nested or
+            document-style XML is flattened, so nested values are joined into a
+            single cell and lose their hierarchy.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why do I get an Invalid XML error?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The file isn't well-formed: an unclosed tag, a missing root element,
+            an unescaped &amp; or &lt; character, or a bad encoding. The message
+            includes the parser's reason, so fix the file in an editor or
+            validator and try again.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are XML attributes included in the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Partly. In the table view only child elements become columns, so
+            attributes on the repeated records are not shown. In the Property
+            and Value view for a non-repeating root, attributes are listed after
+            the child values.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert multiple XML files at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Add several files and they're converted in one batch into
+            xml-to-pdf.zip with one PDF per file. A single file downloads
+            directly with the same base name and a .pdf extension.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it apply my XSLT stylesheet or CSS?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Stylesheet instructions and DOCTYPE declarations are stripped
+            before parsing, and the layout is generated from the data structure
+            alone. If you need the styled rendering, open the XML in a browser
+            that applies the stylesheet and print it to PDF from there.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will Chinese, Arabic, Cyrillic, or other non-Latin text render?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not reliably. The PDF is built with jsPDF's standard Helvetica font,
+            which covers Latin characters, so text in other scripts may show up
+            as wrong or missing characters.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the XML file uploaded to convert it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Parsing uses a JavaScript XML parser and the PDF is generated
+            with jsPDF, both inside your browser, so invoices, transaction logs,
+            and other sensitive data in the file never leave your device.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Alternate Merge online free - Alternate merge PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Merge PDFs by alternating pages from each PDF. Preserves Bookmarks. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="alternate merge, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Alternate Merge online free - Alternate merge PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Merge PDFs by alternating pages from each PDF. Preserves Bookmarks. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Alternate Merge Free" />
     <meta
       name="twitter:description"
-      content="★ Alternate Merge online free - Alternate merge PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Merge PDFs by alternating pages from each PDF. Preserves Bookmarks. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Alternate Merge" />
 
     <title>Alternate & Mix PDF Pages - BentoPDF</title>
-    <meta
-      name="description"
-      content="Alternate and mix pages from multiple PDF files. Interleave PDF pages in any order. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -360,32 +356,116 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is alternate merge really free?
+            What does alternate merge do that a normal merge doesn't?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            A normal merge appends whole files one after another. Alternate
+            merge takes page 1 from each file in turn, then page 2 from each,
+            and so on, so the pages of two or more PDFs are interleaved into a
+            single document. If you only need files back to back, use
+            <a href="/merge-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Merge PDF</a
+            >.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            How do I fix a double-sided scan where the fronts and backs are in
+            separate PDFs?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Upload the fronts PDF first and the backs PDF second, then click Mix
+            Pages. The output alternates front 1, back 1, front 2, back 2 and so
+            on. If the backs were scanned last page first, flip that file with
+            <a
+              href="/reverse-pages"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Reverse Pages</a
+            >
+            before mixing.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            The fronts and backs are in the same PDF, not separate files. Which
+            tool do I need?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            This tool interleaves separate files. If one PDF holds all the
+            fronts followed by all the backs,
+            <a
+              href="/duplex-collate"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Duplex Collate</a
+            >
+            splits that single file at the midpoint and interleaves the two
+            halves, with an option to reverse the back block.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens if the PDFs have different page counts?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Interleaving continues until the shorter file runs out, and the
+            remaining pages from the longer file are appended in order at the
+            end. No pages are dropped.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I interleave more than two PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Any number of files from two upward. With three files the output
+            goes A1, B1, C1, A2, B2, C2 and so on, following the order shown in
+            the file list, which you can change by dragging the grip handles.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the output keep bookmarks and page numbers from the original
+            files?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Bookmarks from each source file are carried into the mixed PDF. Page
+            labels are reset to a plain 1 to N sequence by default; turn on the
+            option to keep original page labels if you want each file's own
+            labels, which can produce duplicates such as two pages both labeled
+            1.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I alternate pages from password-protected PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If a file is encrypted you're asked for its password when it loads,
+            and the decrypted copy is used for mixing. The output isn't
+            encrypted, so use
+            <a href="/protect-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Protect PDF</a
+            >
+            afterward if it needs a password again.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the PDFs uploaded to a server while they're being interleaved?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The files are read in your browser and interleaved by a
+            WebAssembly build of cpdf running in a background worker on your
+            device, and the finished alternated-mixed.pdf is saved straight from
+            the browser.
           </p>
         </details>
       </div>

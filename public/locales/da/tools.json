@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "Ja! Aktivér \"Gentag\"-indstillingen, og dine overlejringssider vil gentage sig på alle basis-sider. Et enkeltsidigt vandmærke vil blive anvendt på hver side.",
     "faqPrivacyQuestion": "Er mine filer private og sikre?",
     "faqPrivacyAnswer": "Absolut! Al behandling sker i din browser. Dine filer forlader aldrig din enhed, hvilket sikrer fuldstændig privatliv."
+  },
+  "unlockPdf": {
+    "name": "Dekryptér PDF",
+    "subtitle": "Fjern adgangskodebeskyttelse."
+  },
+  "protectPdf": {
+    "name": "Kryptér PDF",
+    "subtitle": "Lås din PDF med en adgangskode."
   }
 }

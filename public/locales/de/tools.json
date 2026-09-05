@@ -1311,5 +1311,13 @@
     "faqSinglePageAnswer": "Ja! Aktivieren Sie die Option \"Wiederholen\" und Ihre Überlagerungsseiten werden auf allen Basisseiten wiederholt. Ein einseitiges Wasserzeichen wird auf jeder Seite angewendet.",
     "faqPrivacyQuestion": "Sind meine Dateien privat und sicher?",
     "faqPrivacyAnswer": "Absolut! Die gesamte Verarbeitung findet in Ihrem Browser statt. Ihre Dateien verlassen niemals Ihr Gerät, was vollständige Privatsphäre gewährleistet."
+  },
+  "unlockPdf": {
+    "name": "PDF entschlüsseln",
+    "subtitle": "PDF durch Entfernen des Passwortschutzes entsperren."
+  },
+  "protectPdf": {
+    "name": "PDF verschlüsseln",
+    "subtitle": "Ihre PDF durch Hinzufügen eines Passworts sperren."
   }
 }

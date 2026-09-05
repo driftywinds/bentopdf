@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "Oui ! Activez l'option \"Répéter\" et vos pages de superposition se répéteront sur toutes les pages de base. Un filigrane d'une seule page s'appliquera à chaque page.",
     "faqPrivacyQuestion": "Mes fichiers sont-ils privés et sécurisés ?",
     "faqPrivacyAnswer": "Absolument ! Tout le traitement se fait dans votre navigateur. Vos fichiers ne quittent jamais votre appareil, garantissant une confidentialité totale."
+  },
+  "unlockPdf": {
+    "name": "Déverrouiller un PDF",
+    "subtitle": "Supprimer la protection par mot de passe."
+  },
+  "protectPdf": {
+    "name": "Chiffrer un PDF",
+    "subtitle": "Protéger le PDF en ajoutant un mot de passe."
   }
 }

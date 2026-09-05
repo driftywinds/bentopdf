@@ -14,7 +14,7 @@
     />
     <meta
       name="description"
-      content="★ Merge PDF files instantly - Combine multiple PDFs into one ★ Free forever ★ No file limits ★ Drag & drop pages ★ Privacy-first ★ Works in browser"
+      content="Combine multiple PDFs into one file. Preserves Bookmarks. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -453,32 +453,116 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            How many PDFs can I merge at once?
+            Does merging keep bookmarks?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Unlimited! Merge as many PDF files as you need in a single
-            operation. No restrictions on file count or total size.
+            Yes. The merge is done with the CoherentPDF engine, which carries
+            each file's bookmarks into the combined document so the outline
+            stays navigable. Page content and annotations are copied as they
+            are.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Will merging reduce PDF quality?
+            Can I merge only some pages from each file?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! BentoPDF preserves the original quality of all PDFs when
-            merging. Your documents remain crisp and clear with no quality loss.
+            Yes. In File Mode, type a range such as 1-3, 5 in the Pages box next
+            to a file to include just those pages, or leave it blank for the
+            whole file. In Page Mode every page from every file appears as a
+            thumbnail you can drag into any sequence, including interleaving
+            pages from different documents.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Can I reorder pages after selecting files?
+            What order will the files be in?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! Simply drag and drop files to arrange them in any order before
-            clicking the merge button.
+            The order shown in the list, top to bottom. Drag entries to
+            rearrange them before merging, and use Add More Files to append
+            documents without losing the arrangement you already have.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why do page numbers look wrong in the merged PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            By default the merged file uses plain numbering from 1 to N. If the
+            originals used page labels such as i, ii, iii or A-1, turn on Keep
+            original page labels to preserve them, keeping in mind that two
+            files with the same labels will produce duplicates. To print visible
+            numbers on the pages themselves, use
+            <a
+              href="/page-numbers"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Page Numbers</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is the merged file so large?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each file's fonts and images are copied as they are, so the result
+            is roughly the combined size of the inputs, and when several files
+            embed the same font each copy is kept. Check Remove duplicate fonts
+            to fold identical fonts into one; for more savings, run the result
+            through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I merge PDFs that have different page sizes or orientations?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Pages keep their own size and rotation, so a landscape A3
+            drawing can follow a portrait Letter page without being scaled. For
+            a uniform size afterward, run the merged file through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the PDFs uploaded to a server to be merged?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The files are combined inside your browser by the CoherentPDF
+            WebAssembly module and the merged PDF is written to your downloads
+            folder, so contracts and statements never leave your machine.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I merge password-protected PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If a file needs a password to open, the tool asks for it when you
+            add the file and then merges the decrypted pages. The merged output
+            has no password; add one afterward with
+            <a href="/protect-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Protect PDF</a
+            >
+            if needed.
           </p>
         </details>
       </div>

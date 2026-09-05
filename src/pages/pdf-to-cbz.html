@@ -13,7 +13,7 @@
     />
     <meta
       name="description"
-      content="★ Convert PDF to CBZ (Comic Book Archive) online free ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert a PDF into a CBZ (Comic Book Archive) file for comic readers. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Convert PDF to CBZ online free ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Convert a PDF into a CBZ (Comic Book Archive) file for comic readers. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -50,7 +50,7 @@
     <meta name="twitter:title" content="PDF to CBZ Free" />
     <meta
       name="twitter:description"
-      content="★ Convert PDF to CBZ online free ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Convert a PDF into a CBZ (Comic Book Archive) file for comic readers. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -561,35 +561,91 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            What is a CBZ file?
+            What scale should I use?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            CBZ (Comic Book ZIP) is a popular format for digital comics and
-            manga. It's simply a ZIP archive containing page images, supported
-            by most comic book readers like Komga, Kavita, and CDisplayEx.
+            Scale multiplies the page's native size, from 1.0x to 4.0x with 2.0x
+            as the default. 2.0x suits phones and most tablets; 3.0x or 4.0x
+            gives sharper pages on high-resolution screens at the cost of a much
+            larger file and a longer conversion.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Which image format should I use?
+            Why is my CBZ bigger than the original PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            JPEG is best for color comics (smaller files). PNG is ideal for
-            black-and-white manga (lossless quality). WebP offers the best
-            compression but may not work in older readers.
+            Every page is rendered to a bitmap at the chosen scale, which
+            discards the PDF's compact vector text and compression. Lowering the
+            scale, choosing JPEG or WebP at around 80% quality, or turning on
+            grayscale for black-and-white content all bring the size down.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            What is ComicInfo.xml?
+            What does Manga mode change?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            ComicInfo.xml is a metadata file embedded in the CBZ that stores
-            information like title, author, and reading direction. Comic library
-            managers like Komga and Kavita use it to organize your collection.
+            It writes a right-to-left reading direction flag into the
+            ComicInfo.xml metadata so readers that honor the flag page from
+            right to left. The page images themselves are unchanged.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the pages stay in the right order?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Images are named with zero-padded numbers, such as 01.jpg or
+            001.jpg depending on the page count, so readers that sort filenames
+            alphabetically keep the sequence even past page 100.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which metadata will Calibre pick up?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Calibre reads the metadata.opf file inside the archive: title,
+            author, publisher, year, tags, and series with its index. Komga,
+            Kavita, CDisplayEx, Mylar, and ComicRack use ComicInfo.xml, and a
+            ComicBookInfo record in the ZIP comment covers older readers. Fill
+            in Series and Number so libraries group issues correctly.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several PDFs to CBZ in one go?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. This tool handles one PDF per run, and adding another file
+            replaces the current one. Convert them one at a time.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can a password-protected PDF be converted to CBZ?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If the PDF needs a password to open, you're prompted for it and the
+            pages are rendered from a decrypted copy held in memory.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the comic pages rendered on a server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Pages are drawn with PDF.js in your browser and zipped locally,
+            so the comic never leaves your device.
           </p>
         </details>
       </div>

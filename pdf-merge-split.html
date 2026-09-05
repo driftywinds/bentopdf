@@ -254,48 +254,142 @@
         <div class="faq-list">
           <details class="faq-d">
             <summary class="faq-d-q">
-              Are these pdf merge & split tools really free?
-              <i class="ph ph-caret-down text-xl"></i>
-            </summary>
-            <p class="faq-d-a">
-              Yes! All BentoPDF pdf merge & split tools are 100% free with no
-              hidden fees, no premium tiers, and no subscription required. Use
-              unlimited tools, unlimited times.
-            </p>
-          </details>
-
-          <details class="faq-d">
-            <summary class="faq-d-q">
-              Are my files private and secure?
+              How do I combine several PDFs into one file?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              Absolutely! All processing happens entirely in your browser. Your
-              files never leave your device, are never uploaded to servers.
-              Complete privacy guaranteed.
+              Add two or more files to
+              <a href="/merge-pdf" class="text-indigo-300 hover:text-indigo-400"
+                >Merge PDF</a
+              >
+              and drag them into the order you want. File Mode joins whole
+              documents, with an optional page range per file such as 1-3, 5,
+              while Page Mode lays out every page as a thumbnail so you can
+              build the exact sequence. There's no cap on file count or total
+              pages, and pages are copied without re-encoding, so quality
+              doesn't change.
             </p>
           </details>
-
           <details class="faq-d">
             <summary class="faq-d-q">
-              Is there a file size limit?
+              What are the different ways to split a PDF?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              No file size limits! Process files of any size. Browser-based
-              processing means no artificial limitations.
+              <a href="/split-pdf" class="text-indigo-300 hover:text-indigo-400"
+                >Split PDF</a
+              >
+              has six modes: page ranges, visual selection from thumbnails, even
+              or odd pages only, one file per page, splitting at bookmark
+              boundaries with a choice of bookmark level, and fixed chunks of
+              every N pages. A single range downloads as one PDF, while multiple
+              ranges or per-page output arrive as a ZIP. Bookmark mode needs a
+              PDF that actually contains bookmarks.
             </p>
           </details>
-
           <details class="faq-d">
             <summary class="faq-d-q">
-              Do I need to install software?
+              What's the difference between Split, Extract Pages, and Delete
+              Pages?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              No installation required! All tools are web-based and work
-              directly in your browser. Just open the page and start using -
-              works on any device.
+              <a
+                href="/extract-pages"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Extract Pages</a
+              >
+              keeps only the pages you list and saves them as a new file, Delete
+              Pages removes the pages you list and keeps everything else, and
+              Split breaks one document into several files. Extract and Delete
+              are inverses of each other, so pick whichever needs the shorter
+              list of page numbers.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Can I reorder pages or duplicate a page?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              <a
+                href="/organize-pdf"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Organize PDF</a
+              >
+              shows every page as a draggable thumbnail with a duplicate and a
+              delete button on each one. You can also type a complete page order
+              such as 3, 1, 2, 4 to rearrange everything in one step, and
+              Reverse Pages flips an entire document, or a batch of them, in one
+              click.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              My scanner put all the front pages first and all the backs after.
+              How do I fix the order?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              <a
+                href="/duplex-collate"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Duplex Collate</a
+              >
+              handles exactly that: it interleaves the two blocks into front 1,
+              back 1, front 2, back 2 order, with an option to reverse the back
+              block for stacks that were flipped before the second pass. If the
+              fronts and backs are in two separate files, Alternate Merge
+              interleaves pages from multiple PDFs the same way.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              How do I print a PDF as a folded booklet?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              <a
+                href="/pdf-booklet"
+                class="text-indigo-300 hover:text-indigo-400"
+                >PDF Booklet</a
+              >
+              reorders the pages into saddle-stitch imposition and shows a
+              preview of each sheet before you download. Print the result
+              double-sided with "flip on short edge", fold the stack in half,
+              and staple at the spine; if the page count isn't a multiple of
+              four, blank pages are added automatically to fill the last sheet.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Can I see what changed between two versions of a PDF?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              <a
+                href="/compare-pdfs"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Compare PDFs</a
+              >
+              pairs up the pages of two documents and highlights differences in
+              text, images, annotations, headers and footers, and formatting, in
+              either a side-by-side or an overlay view. Filters let you hide the
+              change types you don't care about, OCR can be switched on for
+              scanned documents, and the comparison can be exported as a PDF
+              report.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Are my files uploaded when I merge or split them?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              No. Merging, splitting, and reordering run as WebAssembly inside
+              your browser, so the files are read from your disk and the result
+              is written back to it without passing through a server. That holds
+              for large scans and multi-file batches too.
             </p>
           </details>
         </div>

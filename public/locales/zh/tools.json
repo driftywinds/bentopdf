@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "可以！启用\"循环\"选项，叠加页面将在所有基础页面上重复。单页水印将应用到每一页。",
     "faqPrivacyQuestion": "我的文件是否私密安全？",
     "faqPrivacyAnswer": "当然！所有处理都在您的浏览器中进行。您的文件永远不会离开您的设备，确保完全隐私。"
+  },
+  "unlockPdf": {
+    "name": "解密 PDF",
+    "subtitle": "通过移除密码保护解锁 PDF。"
+  },
+  "protectPdf": {
+    "name": "加密 PDF",
+    "subtitle": "通过添加密码锁定您的 PDF。"
   }
 }

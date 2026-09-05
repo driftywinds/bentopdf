@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "Sì! Attiva l'opzione \"Ripeti\" e le pagine di sovrapposizione si ripeteranno su tutte le pagine base. Una filigrana di una pagina verrà applicata a ogni pagina.",
     "faqPrivacyQuestion": "I miei file sono privati e sicuri?",
     "faqPrivacyAnswer": "Assolutamente! Tutta l'elaborazione avviene nel tuo browser. I tuoi file non lasciano mai il tuo dispositivo, garantendo la massima privacy."
+  },
+  "unlockPdf": {
+    "name": "Decrittografa PDF",
+    "subtitle": "Sblocca il PDF rimuovendo la protezione tramite password."
+  },
+  "protectPdf": {
+    "name": "Cripta PDF",
+    "subtitle": "Proteggi il tuo PDF aggiungendo una password."
   }
 }

@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="PDF to Word Converter Free Online - Convert Files | BentoPDF"
+      content="PDF to Word Converter Free - PDF to DOCX Online | BentoPDF"
     />
     <meta
       name="description"
-      content="★ PDF to Word online free - Convert PDF to Word easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf To Docx online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -24,22 +24,22 @@
     />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.bentopdf.com/pdf-to-docx" />
+    <link rel="canonical" href="https://www.bentopdf.com/pdf-to-word" />
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.bentopdf.com/pdf-to-docx" />
+    <meta property="og:url" content="https://www.bentopdf.com/pdf-to-word" />
     <meta
       property="og:title"
-      content="PDF to Word Converter Free Online - Convert Files | BentoPDF"
+      content="PDF to Word Converter Free - PDF to DOCX Online | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ PDF to Word online free - Convert PDF to Word easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf To Docx online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
-      content="https://www.bentopdf.com/images/og-pdf-to-docx.png"
+      content="https://www.bentopdf.com/images/og-pdf-to-word.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -47,15 +47,18 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://www.bentopdf.com/pdf-to-docx" />
-    <meta name="twitter:title" content="PDF to Word Free" />
+    <meta name="twitter:url" content="https://www.bentopdf.com/pdf-to-word" />
+    <meta
+      name="twitter:title"
+      content="PDF to Word Converter Free - PDF to DOCX Online | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ PDF to Word online free - Convert PDF to Word easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Pdf To Docx online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
-      content="https://www.bentopdf.com/images/twitter-pdf-to-docx.png"
+      content="https://www.bentopdf.com/images/twitter-pdf-to-word.png"
     />
     <meta name="twitter:site" content="@BentoPDF" />
 
@@ -64,11 +67,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="PDF to Word" />
 
-    <title>PDF to DOCX - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF files to editable Word documents (DOCX). Free, secure, and runs entirely in your browser."
-    />
+    <title>PDF to Word Converter Free - PDF to DOCX Online | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -125,7 +124,7 @@
           PDF to Word
         </h1>
         <p class="text-gray-400 mb-6" data-i18n="tools:pdfToWord.subtitle">
-          Convert PDF files to editable Word documents.
+          Convert PDF files to editable Word (DOCX) documents.
         </p>
 
         <div
@@ -329,32 +328,101 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to docx really free?
+            Will the Word document look like the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Text, basic formatting, and page layout are reconstructed into a
+            .docx that stays close to the original for simple documents.
+            Multi-column layouts, text placed over graphics, embedded forms, and
+            unusual fonts may shift, so open the result and tidy it in Word or
+            Google Docs.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why is my converted Word file empty?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The PDF is a scan with no text layer, so there's nothing for the
+            converter to reconstruct and you get blank pages or a few stray
+            characters. Run the file through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            first to add a text layer, then convert the OCR'd PDF.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I edit the text after converting?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The output is a normal .docx with real paragraphs, not an image of
+            the page, so you can edit, restyle, and copy from it in Word,
+            LibreOffice Writer, or Google Docs.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it handle CMYK or print-ready PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Before conversion the PDF is passed through Ghostscript to convert
+            it to RGB, which avoids the image errors that CMYK print files
+            otherwise cause in the converter. If that step fails, the original
+            file is used as is.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert many PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Add as many files as you want; they're converted one after another
+            and downloaded as converted-documents.zip with one .docx per PDF. A
+            single file downloads directly under its own name with a .docx
+            extension.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What about password-protected PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            You're prompted for the password when conversion starts, and the
+            decrypted copy is converted. The resulting .docx isn't password
+            protected.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do I need Microsoft Word installed to convert PDF to Word?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The conversion is done by PyMuPDF and pdf2docx running in your
+            browser, and the .docx it produces opens in Word, LibreOffice
+            Writer, Pages, and Google Docs. To go the other way, use
+            <a href="/word-to-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Word to PDF</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the PDF uploaded to convert it to Word?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The whole pipeline, from reading the PDF to writing the .docx,
+            runs in WebAssembly inside your browser, so contracts and reports
+            stay on your device.
           </p>
         </details>
       </div>
@@ -363,7 +431,7 @@
     <script type="module" src="/src/js/utils/lucide-init.ts"></script>
     <script type="module" src="/src/js/utils/full-width.ts"></script>
     <script type="module" src="/src/js/utils/simple-mode-footer.ts"></script>
-    <script type="module" src="/src/js/logic/pdf-to-docx-page.ts"></script>
+    <script type="module" src="/src/js/logic/pdf-to-word-page.ts"></script>
     <script type="module" src="/src/js/mobileMenu.ts"></script>
     <script type="module" src="/src/js/main.ts"></script>
 
@@ -427,7 +495,7 @@
             "@type": "ListItem",
             "position": 2,
             "name": "PDF to Word",
-            "item": "https://www.bentopdf.com/pdf-to-docx"
+            "item": "https://www.bentopdf.com/pdf-to-word"
           }
         ]
       }

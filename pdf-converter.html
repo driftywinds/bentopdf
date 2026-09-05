@@ -193,7 +193,7 @@
           <h3 class="font-semibold text-white">JSON to PDF</h3>
           <p class="text-gray-400 text-sm">Data to PDF</p>
         </a>
-        <a href="/pdf-to-docx" class="tool-card">
+        <a href="/pdf-to-word" class="tool-card">
           <i
             class="ph ph-microsoft-word-logo text-4xl text-indigo-400 mb-2"
           ></i>
@@ -425,48 +425,144 @@
         <div class="faq-list">
           <details class="faq-d">
             <summary class="faq-d-q">
-              Are these pdf converter tools really free?
-              <i class="ph ph-caret-down text-xl"></i>
-            </summary>
-            <p class="faq-d-a">
-              Yes! All BentoPDF pdf converter tools are 100% free with no hidden
-              fees, no premium tiers, and no subscription required. Use
-              unlimited tools, unlimited times.
-            </p>
-          </details>
-
-          <details class="faq-d">
-            <summary class="faq-d-q">
-              Are my files private and secure?
+              Which file formats can I convert to PDF?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              Absolutely! All processing happens entirely in your browser. Your
-              files never leave your device, are never uploaded to servers.
-              Complete privacy guaranteed.
+              Word, Excel, and PowerPoint files (including the older DOC, XLS,
+              and PPT formats), OpenDocument text, spreadsheets, presentations,
+              and drawings, RTF, plain text, Markdown, CSV, XML, ebooks in EPUB,
+              MOBI, FB2, and CBZ, XPS, Publisher, Visio, WordPerfect, Microsoft
+              Works, Apple Pages, and images in JPG, PNG, HEIC, WebP, TIFF, BMP,
+              SVG, and PSD. If you have a folder of mixed image types,
+              <a
+                href="/image-to-pdf"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Images to PDF</a
+              >
+              accepts them all in one batch and puts each image on its own page.
             </p>
           </details>
-
           <details class="faq-d">
             <summary class="faq-d-q">
-              Is there a file size limit?
+              What can I convert a PDF into?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              No file size limits! Process files of any size. Browser-based
-              processing means no artificial limitations.
+              Word (DOCX), Excel (XLSX), CSV, plain text, Markdown, SVG, and
+              page images in JPG, PNG, WebP, TIFF, or BMP, with multi-page PDFs
+              delivered as a ZIP holding one image per page. For long-term
+              archiving,
+              <a
+                href="/pdf-to-pdfa"
+                class="text-indigo-300 hover:text-indigo-400"
+                >PDF to PDF/A</a
+              >
+              outputs PDF/A-1b, 2b, or 3b, and a separate tool turns a color PDF
+              into a grayscale one.
             </p>
           </details>
-
           <details class="faq-d">
             <summary class="faq-d-q">
-              Do I need to install software?
+              Does PDF to Word keep the layout?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              No installation required! All tools are web-based and work
-              directly in your browser. Just open the page and start using -
-              works on any device.
+              <a
+                href="/pdf-to-word"
+                class="text-indigo-300 hover:text-indigo-400"
+                >PDF to Word</a
+              >
+              rebuilds the document with its text, basic formatting, and general
+              layout, and it can convert a batch of files in one run. Pages with
+              multiple columns, embedded forms, or heavy graphics may not come
+              across perfectly, so expect to tidy those up in your word
+              processor.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Why is my converted Word or text file empty?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              The PDF is almost certainly a scan, which stores each page as a
+              picture with no text layer, so PDF to Word, PDF to Text, and the
+              table converters have nothing to pull out. Run the file through
+              <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+                >OCR PDF</a
+              >
+              first to add a searchable text layer, then convert the result.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Can I get tables out of a PDF into Excel?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              <a
+                href="/pdf-to-excel"
+                class="text-indigo-300 hover:text-indigo-400"
+                >PDF to Excel</a
+              >
+              scans every page for tables and writes each one to its own
+              worksheet, named after the page it came from. If it reports that
+              no tables were found, the PDF lays the data out as loose text
+              rather than a real table structure; PDF to CSV and Extract Tables
+              rely on the same detection, so try PDF to Text to grab the raw
+              content instead.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Do I need Microsoft Office installed to convert Word, Excel, or
+              PowerPoint files?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              No. Those files, along with Publisher, Visio, RTF, and
+              WordPerfect, are converted by a LibreOffice engine that runs
+              inside your browser, so there's nothing to install;
+              <a
+                href="/word-to-pdf"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Word to PDF</a
+              >, for example, also takes DOC, ODT, and RTF directly. The engine
+              downloads once per session, which makes the first conversion take
+              a few seconds longer than the ones after it.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Will converting a PDF to JPG or PNG lose quality?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              Pages are rendered at twice their native size, so a letter-size
+              page becomes an image of roughly 1,224 by 1,584 pixels.
+              <a
+                href="/pdf-to-jpg"
+                class="text-indigo-300 hover:text-indigo-400"
+                >PDF to JPG</a
+              >
+              is lossy with a quality slider that defaults to 90%, which keeps a
+              good balance between sharpness and file size; PDF to PNG and PDF
+              to TIFF are lossless, and PNG adds a scale control from 1x to 3x
+              for print-quality output.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Are my files uploaded to a server during conversion?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              No. Every converter on this page, including the Office, ebook, and
+              image converters, runs as WebAssembly inside your browser tab, so
+              the file is read from your device and the result is written
+              straight back to it. There's no upload queue, no server copy, and
+              nothing to delete afterward.
             </p>
           </details>
         </div>

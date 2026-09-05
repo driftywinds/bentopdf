@@ -557,7 +557,7 @@ export const nodeRegistry: Record<string, NodeRegistryEntry> = {
     icon: 'ph-lock',
     description: 'Encrypt PDF with password',
     factory: () => new EncryptNode(),
-    toolPageId: 'encrypt-pdf',
+    toolPageId: 'protect-pdf',
   },
   DecryptNode: {
     label: 'Decrypt',
@@ -565,7 +565,7 @@ export const nodeRegistry: Record<string, NodeRegistryEntry> = {
     icon: 'ph-lock-open',
     description: 'Remove PDF password protection',
     factory: () => new DecryptNode(),
-    toolPageId: 'decrypt-pdf',
+    toolPageId: 'unlock-pdf',
   },
   SanitizeNode: {
     label: 'Sanitize',
@@ -653,7 +653,7 @@ export const nodeRegistry: Record<string, NodeRegistryEntry> = {
     icon: 'ph-microsoft-word-logo',
     description: 'Convert PDF to Word document',
     factory: () => new PdfToDocxNode(),
-    toolPageId: 'pdf-to-docx',
+    toolPageId: 'pdf-to-word',
   },
   PdfToXlsxNode: {
     label: 'PDF to XLSX',

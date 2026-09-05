@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ SVG to PDF online free - SVG to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more SVG images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="svg to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ SVG to PDF online free - SVG to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more SVG images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="SVG to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ SVG to PDF online free - SVG to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more SVG images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="SVG to PDF" />
 
     <title>SVG to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert one or more SVG graphics into a single PDF file. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -357,32 +353,93 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is svg to pdf really free?
+            Is the PDF vector or an image?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            An image. Each SVG is rendered by your browser onto a canvas and the
+            bitmap is placed on a PDF page, so the result won't scale without
+            loss and the text isn't selectable. If you need true vector output,
+            export the PDF from a vector editor such as Inkscape instead.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What size will the page be?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The page matches the SVG's width and height attributes in pixels,
+            one pixel per PDF point. An SVG with no width and height (only a
+            viewBox) renders at 800 by 600, so set explicit dimensions in the
+            file for predictable results.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What do the quality settings change for SVG conversion?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            High keeps the lossless PNG at full size. Medium re-encodes it as
+            JPEG at 75 percent quality and limits the longest side to 2500
+            pixels; Low uses 50 percent and 1500 pixels, which also shrinks the
+            page. For line art and text, High avoids JPEG artifacts.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I control the output resolution, for example 300 DPI?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            There is no DPI setting; the render uses the SVG's own pixel
+            dimensions. To get more pixels, increase the width and height
+            attributes in the SVG source while keeping the viewBox, then
+            convert.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why did my SVG come out with missing text, fonts, or images?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The SVG is rendered from its own markup, so references to external
+            files (linked images, imported fonts, external CSS) can't be loaded
+            in that context and fall back or disappear. Embed images as data
+            URIs and convert text to paths before converting.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is transparency kept?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The canvas is filled with white before the SVG is drawn, so
+            transparent areas become white in the PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I put several SVGs into one PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Upload multiple files and they become consecutive pages of a single
+            from_svgs.pdf, in the order shown in the file list. Each page takes
+            the size of its own SVG.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the SVG uploaded to be converted?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering happens on a canvas in your browser and the PDF is
+            built with pdf-lib on your device; nothing is sent anywhere.
           </p>
         </details>
       </div>

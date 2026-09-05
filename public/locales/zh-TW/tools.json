@@ -1311,5 +1311,13 @@
     "faqSinglePageAnswer": "可以！啟用重複使用功能後，疊加 PDF 的頁面會在所有基礎頁面上重複套用。單頁浮水印會套用至每一頁。",
     "faqPrivacyQuestion": "我的檔案是否私密安全？",
     "faqPrivacyAnswer": "當然！所有處理都在您的瀏覽器中進行。您的檔案永遠不會離開您的裝置，確保完全隱私。"
+  },
+  "unlockPdf": {
+    "name": "解密 PDF",
+    "subtitle": "透過移除密碼保護解鎖 PDF。"
+  },
+  "protectPdf": {
+    "name": "加密 PDF",
+    "subtitle": "透過新增密碼為您的 PDF 上鎖。"
   }
 }

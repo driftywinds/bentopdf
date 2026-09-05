@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Extract Images online free - Extract images PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract all embedded images from your PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="extract images, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Extract Images online free - Extract images PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract all embedded images from your PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -51,7 +51,7 @@
     <meta name="twitter:title" content="Extract Images Free" />
     <meta
       name="twitter:description"
-      content="★ Extract Images online free - Extract images PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Extract all embedded images from your PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -65,10 +65,6 @@
     <meta name="apple-mobile-web-app-title" content="Extract Images" />
 
     <title>Extract Images from PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Extract all images from PDF files. Download individual images or all as a ZIP. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -343,32 +339,98 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is extract images really free?
+            What format are the extracted images saved in?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Each image comes out in the format it's stored in inside the PDF,
+            most often JPEG or PNG, with no re-encoding. Files are numbered in
+            the order they're found, for example image_1.jpg and image_2.png,
+            and Download All packs them into extracted-images.zip.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why does the tool say no images were found?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            It only pulls out embedded raster images. If the graphics are vector
+            drawings, charts, or text drawn as paths, there's nothing to
+            extract, and you'd need to render the page as a picture with
+            <a href="/pdf-to-png" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to PNG</a
+            >
+            instead.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Will I get the original full-resolution images?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            You get the image data exactly as it's embedded, at its stored
+            resolution rather than the size it appears on the page. If whoever
+            made the PDF downsampled the images before embedding them, that
+            lower resolution is all that exists in the file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I extract images from a scanned PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A scanned PDF stores each page as one large image, so you'll get one
+            full-page picture per page rather than the individual photos or
+            figures on it. Crop what you need from those page images afterward.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why do I get duplicate images?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Images are collected page by page, so a logo or header graphic
+            that's reused on many pages is extracted once for every page it
+            appears on. Keep the first copy and discard the rest.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I extract images from several PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Upload as many PDFs as you want and click Extract once. Images from
+            all the files are numbered continuously and shown in a single grid,
+            and Download All puts everything into one ZIP.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I choose which images or pages to extract?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            There are no page or selection options; every embedded image on
+            every page is extracted. You can still save only the ones you want
+            from the preview grid, since each thumbnail has its own download
+            button.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my PDF's images uploaded during extraction?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PDF is opened by a PyMuPDF engine running as WebAssembly
+            inside your browser, and the images are pulled out of the file in
+            memory on your device. The preview grid, the individual downloads,
+            and the ZIP are all generated locally.
           </p>
         </details>
       </div>

@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Excel to PDF Converter Free Online - Convert Files | BentoPDF"
+      content="Excel to PDF Converter Free - XLSX to PDF Online | BentoPDF"
     />
     <meta
       name="description"
-      content="★ Excel to PDF online free - Convert Excel to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Excel spreadsheets (XLSX, XLS, ODS, CSV) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -31,11 +31,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/excel-to-pdf" />
     <meta
       property="og:title"
-      content="Excel to PDF Converter Free Online - Convert Files | BentoPDF"
+      content="Excel to PDF Converter Free - XLSX to PDF Online | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ Excel to PDF online free - Convert Excel to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Excel spreadsheets (XLSX, XLS, ODS, CSV) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,10 +48,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/excel-to-pdf" />
-    <meta name="twitter:title" content="Excel to PDF Free" />
+    <meta
+      name="twitter:title"
+      content="Excel to PDF Converter Free - XLSX to PDF Online | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ Excel to PDF online free - Convert Excel to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Convert Excel spreadsheets (XLSX, XLS, ODS, CSV) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,11 +67,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Excel to PDF" />
 
-    <title>Excel to PDF - Convert XLSX, XLS to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert Excel spreadsheets (XLSX, XLS, ODS, CSV) to PDF format. Free, secure, and runs entirely in your browser."
-    />
+    <title>Excel to PDF Converter Free - XLSX to PDF Online | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -338,32 +337,99 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is excel to pdf really free?
+            Which spreadsheet formats can I convert to PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The tool accepts .xlsx and .xls Excel workbooks, OpenDocument .ods
+            files from LibreOffice Calc, and .csv files. You can mix formats in
+            the same batch and convert them all at once.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Does it convert all sheets in the workbook or just the first one?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            All sheets are included in the PDF. The LibreOffice engine follows
+            each sheet's own page setup, print area, and scaling, so Print
+            Preview in Excel is a good guide to what you'll get.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Will formulas and charts survive the conversion?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Charts are rendered into the PDF, and formulas appear as their
+            computed values rather than the formula text. Cell formatting such
+            as fills, borders, fonts, and number formats is preserved.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I stop a wide spreadsheet from being cut across several
+            pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            There are no layout options in the tool itself, so set the
+            orientation, print area, and fit-to-width scaling in Excel or
+            LibreOffice Calc before uploading. The converter reads those
+            settings from the file and lays out the PDF accordingly.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does the first conversion take a while to start?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The browser-based LibreOffice engine is downloaded the first time
+            you convert, which can take a moment on a slow connection. After
+            that it stays cached for the session, so further conversions start
+            right away.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What do I get when I convert several spreadsheets at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            One file downloads directly as a PDF with the same name as the
+            spreadsheet. Two or more files are bundled into excel-converted.zip
+            with one PDF per spreadsheet.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Should I use Excel to PDF or CSV to PDF for a .csv file?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Excel to PDF runs a CSV through the full LibreOffice layout engine,
+            which is heavier but handles long rows and print settings the way a
+            spreadsheet would.
+            <a href="/csv-to-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >CSV to PDF</a
+            >
+            is a lighter, faster option for plain tabular data without
+            formatting.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my spreadsheet uploaded to a server for conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The LibreOffice engine runs inside your browser through
+            WebAssembly, so the workbook is opened, rendered, and saved as a PDF
+            on your own device. Financial data and personal records never leave
+            your computer.
           </p>
         </details>
       </div>

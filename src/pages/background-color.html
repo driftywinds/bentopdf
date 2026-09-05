@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Background Color online free - Background color PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Change the background color of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="background color, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Background Color online free - Background color PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Change the background color of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Background Color Free" />
     <meta
       name="twitter:description"
-      content="★ Background Color online free - Background color PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Change the background color of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Background Color" />
 
     <title>Change Background Color - BentoPDF</title>
-    <meta
-      name="description"
-      content="Change the background color of your PDF documents. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -332,32 +328,107 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is background color really free?
+            How do I change the background color of a PDF without losing the
+            text?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the PDF, pick a color, and the tool draws a solid rectangle
+            behind each page and places the original page content on top of it.
+            The text stays real text, so it remains selectable and searchable,
+            and the page dimensions don't change.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why didn't the background color show up on some pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The color sits underneath the existing content, so any page that
+            already has an opaque background covers it up. Scanned pages, which
+            are usually one full-page image, and pages with a drawn white
+            background are the most common cases.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does the color apply to every page or can I pick specific pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            There's no page range option, so the same color is applied to every
+            page in the document. To color only certain pages, pull them out
+            with
+            <a href="/split-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Split PDF</a
+            >, color that file, and merge it back.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What colors work best as a PDF background?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Light, muted tones such as cream, ivory, or pale yellow keep black
+            text readable, which is why the default is a light yellow (#FFFFCC).
+            A dark background makes normal black text hard to read because the
+            text color isn't changed; use
+            <a href="/text-color" class="text-indigo-300 hover:text-indigo-400"
+              >Change Text Color</a
+            >
+            on the result if you want light text on a dark page.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will links, form fields, or bookmarks survive the color change?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Each page is re-embedded as a drawing on top of the color layer
+            and written into a new file, so link annotations, form fields,
+            comments, and bookmarks aren't carried over. Change the background
+            first and add those elements afterward.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does changing the background turn my pages into images or make the
+            file bigger?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Pages aren't rasterized. The tool works at the PDF object level and
+            only adds a filled rectangle per page, so fonts and vector graphics
+            stay intact and the file size stays close to the original.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded when I change its background color?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The color layer is added by code running in your browser and the
+            finished file is saved directly from the page to your device. The
+            document isn't sent to a server at any point.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I change the background color of a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If the PDF needs a password to open, the tool prompts you for it and
+            then processes the file as usual. The output is saved without that
+            password, so protect it again with
+            <a href="/protect-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Protect PDF</a
+            >
+            if you still need it locked.
           </p>
         </details>
       </div>

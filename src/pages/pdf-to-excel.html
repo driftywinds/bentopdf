@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="PDF to Excel Converter Free Online - Convert Files | BentoPDF"
+      content="PDF to Excel Converter Free - PDF to XLSX Online | BentoPDF"
     />
     <meta
       name="description"
-      content="★ PDF to Excel online free - Convert PDF to Excel easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract tables from PDF and convert to Excel (XLSX) format. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -31,11 +31,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/pdf-to-excel" />
     <meta
       property="og:title"
-      content="PDF to Excel Converter Free Online - Convert Files | BentoPDF"
+      content="PDF to Excel Converter Free - PDF to XLSX Online | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ PDF to Excel online free - Convert PDF to Excel easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract tables from PDF and convert to Excel (XLSX) format. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,10 +48,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/pdf-to-excel" />
-    <meta name="twitter:title" content="PDF to Excel Free" />
+    <meta
+      name="twitter:title"
+      content="PDF to Excel Converter Free - PDF to XLSX Online | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ PDF to Excel online free - Convert PDF to Excel easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Extract tables from PDF and convert to Excel (XLSX) format. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,11 +67,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="PDF to Excel" />
 
-    <title>PDF to Excel - BentoPDF</title>
-    <meta
-      name="description"
-      content="Extract tables from PDF files and convert to Excel (XLSX) format. Free, secure, and runs entirely in your browser."
-    />
+    <title>PDF to Excel Converter Free - PDF to XLSX Online | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -301,32 +300,98 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to excel really free?
+            Why does PDF to Excel say no tables were found?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The detector looks for table structure such as ruling lines and
+            aligned cells. Text arranged in columns with spaces, or a table that
+            exists only as part of a scanned image, doesn't register. For scans,
+            run
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            first; for loosely formatted text, PDF to Text gets you the raw
+            content to tidy up by hand.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            How are multiple tables organized in the spreadsheet?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Each detected table gets its own worksheet, named Table 1 (Page 3),
+            Table 2 (Page 5), and so on, so you can see which page it came from.
+            A PDF with a single table produces one sheet called Table. Sheet
+            names are cut at 31 characters because Excel allows no more.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Are formatting, colors, and merged cells preserved?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. Only the cell text is transferred; fonts, fills, borders, column
+            widths, and merged cells aren't reproduced. Numbers may arrive as
+            text cells, so if a column won't sum, select it and use Excel's
+            Convert to Number prompt.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert only certain pages to Excel?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            There are no page options; every page is scanned and all tables
+            found are exported. If you only need one table, pull those pages
+            into a separate PDF first, or use
+            <a
+              href="/extract-tables"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Extract Tables</a
+            >, which previews each table and lets you download them one at a
+            time.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What's the difference between PDF to Excel, PDF to CSV, and Extract
+            Tables?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            PDF to Excel packs every table into one .xlsx workbook with a sheet
+            per table.
+            <a href="/pdf-to-csv" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to CSV</a
+            >
+            produces flat comma-separated files, and Extract Tables previews
+            each table and offers per-table downloads in several formats. Pick
+            Excel when you want everything in one workbook with page references.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it handle password-protected PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If the file needs a password to open, the tool asks for it before
+            extraction starts. The output .xlsx is not password-protected.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my financial data uploaded during conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Table detection runs in a PDF engine loaded into your browser as
+            WebAssembly, and the spreadsheet is built locally by a JavaScript
+            library. Bank statements and invoices never leave your machine.
           </p>
         </details>
       </div>

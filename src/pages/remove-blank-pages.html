@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Remove Blank Pages online free - Remove blank pages PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Automatically detect and delete blank pages. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="remove blank pages, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Remove Blank Pages online free - Remove blank pages PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Automatically detect and delete blank pages. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Remove Blank Pages Free" />
     <meta
       name="twitter:description"
-      content="★ Remove Blank Pages online free - Remove blank pages PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Automatically detect and delete blank pages. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Remove Blank Pages" />
 
     <title>Remove Blank Pages - BentoPDF</title>
-    <meta
-      name="description"
-      content="Automatically detect and remove blank pages from your PDF documents. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -363,32 +359,98 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is remove blank pages really free?
+            How does the tool decide a page is blank?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Each page is rendered at reduced size and the tool counts pixels
+            that are noticeably darker than white. If that share is below the
+            limit set by the sensitivity slider, the page is flagged, so pages
+            with faint scanner noise can still count as blank.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What does the sensitivity slider actually change?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            It sets how much ink a page may contain and still count as blank. At
+            100% only pages with under 0.1% non-white pixels are flagged, at 0%
+            pages with up to 5% are, and the default 80% sits at about 1%.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            It missed pages that look blank, or flagged pages I want to keep.
+            What now?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Lower the sensitivity if pages that look empty were missed, and
+            raise it if pages with a light header, footer, or watermark were
+            flagged. Then click Detect Blank Pages again and check the
+            thumbnails.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I review the pages before they're removed?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            After detection the tool shows a thumbnail of every flagged page,
+            and clicking a thumbnail deselects it so it stays in the document.
+            Only the pages that remain selected are removed when you confirm.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will a page with only a page number be treated as blank?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A lone page number covers well under 0.1% of the page, so even the
+            strictest setting can flag it as blank. That's why the thumbnail
+            review matters when such pages need to stay.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the remaining pages changed in any way?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The kept pages are copied over exactly, with their content, fonts,
+            and order untouched. Bookmarks aren't carried into the new file,
+            since the pages are assembled into a fresh PDF, so rebuild them with
+            <a href="/bookmark" class="text-indigo-300 hover:text-indigo-400"
+              >Edit Bookmarks</a
+            >
+            if you need them.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does detection take a while on long documents?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Every page has to be rendered to pixels before it can be measured,
+            so the time grows with page count and page complexity. Progress is
+            shown while it works, and nothing else is needed from you until the
+            thumbnails appear.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the PDF leave my computer for the scan?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Pages are rendered and analyzed in your browser, and the cleaned
+            PDF is written locally. That's also why the scan speed depends on
+            your own device rather than a server.
           </p>
         </details>
       </div>

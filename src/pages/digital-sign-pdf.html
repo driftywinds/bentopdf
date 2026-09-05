@@ -13,7 +13,7 @@
     />
     <meta
       name="description"
-      content="★ Add digital signature to PDF online free ★ Use X.509 certificates ★ PKCS#7 signatures ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Add a cryptographic digital signature to your PDF using X.509 certificates. Supports PKCS#12 (.pfx, .p12) and PEM formats.. Free. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -38,7 +38,7 @@
     />
     <meta
       property="og:description"
-      content="★ Add digital signature to PDF online free ★ Use X.509 certificates ★ PKCS#7 signatures ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Add a cryptographic digital signature to your PDF using X.509 certificates. Supports PKCS#12 (.pfx, .p12) and PEM formats.. Free. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -56,7 +56,7 @@
     <meta name="twitter:title" content="Digital Signature PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Add digital signature to PDF online free ★ Use X.509 certificates ★ PKCS#7 signatures ★ Privacy-first"
+      content="Add a cryptographic digital signature to your PDF using X.509 certificates. Supports PKCS#12 (.pfx, .p12) and PEM formats.. Free. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -708,12 +708,12 @@
       </h2>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <a
-          href="encrypt-pdf.html"
+          href="protect-pdf.html"
           class="block bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors border border-gray-700"
         >
           <h3
             class="text-white font-semibold mb-1"
-            data-i18n="tools:encryptPdf.name"
+            data-i18n="tools:protectPdf.name"
           >
             Encrypt PDF
           </h3>
@@ -725,12 +725,12 @@
           </p>
         </a>
         <a
-          href="decrypt-pdf.html"
+          href="unlock-pdf.html"
           class="block bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors border border-gray-700"
         >
           <h3
             class="text-white font-semibold mb-1"
-            data-i18n="tools:decryptPdf.name"
+            data-i18n="tools:unlockPdf.name"
           >
             Decrypt PDF
           </h3>
@@ -804,66 +804,117 @@
       </h2>
       <div class="faq-list">
         <details class="faq-d">
-          <summary
-            class="faq-d-q"
-            data-i18n="tools:digitalSignPdf.faqWhatIsQuestion"
-          >
-            What is a digital signature?
+          <summary class="faq-d-q">
+            What is the difference between Digital Signature and Sign PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:digitalSignPdf.faqWhatIsAnswer">
-            A digital signature is a cryptographic mechanism that verifies the
-            authenticity and integrity of a document. Unlike a drawn signature,
-            it uses public key cryptography (X.509 certificates) to prove the
-            signer's identity.
+          <p class="faq-d-a">
+            <a href="/sign-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Sign PDF</a
+            >
+            places a drawn, typed, or uploaded picture of your signature on the
+            page; it's visual only. This tool applies a cryptographic PKCS#7
+            signature using your X.509 certificate, so a PDF reader can verify
+            who signed and detect any change made afterward. You can also show a
+            visible signature block at the same time.
           </p>
         </details>
         <details class="faq-d">
-          <summary
-            class="faq-d-q"
-            data-i18n="tools:digitalSignPdf.faqFormatsQuestion"
-          >
-            What certificate formats are supported?
+          <summary class="faq-d-q">
+            Can I sign with a PEM certificate instead of a .pfx or .p12 file?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:digitalSignPdf.faqFormatsAnswer">
-            We support PKCS#12 format certificates (.pfx, .p12) which contain
-            both your certificate and private key in a single encrypted file.
-            These are commonly issued by certificate authorities.
+          <p class="faq-d-a">
+            Yes. Upload a single .pem file that contains both the certificate
+            and the private key. Encrypted private keys work too; enter the key
+            password in the Certificate Password field. If your certificate and
+            key are in separate PEM files, paste them into one file first.
           </p>
         </details>
         <details class="faq-d">
-          <summary
-            class="faq-d-q"
-            data-i18n="tools:digitalSignPdf.faqPrivateKeyQuestion"
-          >
-            Is my private key safe?
+          <summary class="faq-d-q">
+            Do I need an internet connection to sign?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="faq-d-a"
-            data-i18n="tools:digitalSignPdf.faqPrivateKeyAnswer"
-          >
-            Yes! All processing happens entirely in your browser. Your
-            certificate, private key, and PDF files never leave your device or
-            get uploaded to any server.
+          <p class="faq-d-a">
+            Often, yes. The signing library fetches the issuer certificate chain
+            from the URLs in your certificate's Authority Information Access
+            extension, and if those servers can't be reached, signing fails for
+            certificates that need chain validation. Your PDF and private key
+            are never part of those requests; only the certificate URLs are
+            fetched.
           </p>
         </details>
         <details class="faq-d">
-          <summary
-            class="faq-d-q"
-            data-i18n="tools:digitalSignPdf.faqValidReadersQuestion"
-          >
-            Will the signature be valid in PDF readers?
+          <summary class="faq-d-q">
+            Why does Adobe Reader say the signature validity is unknown?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p
-            class="faq-d-a"
-            data-i18n="tools:digitalSignPdf.faqValidReadersAnswer"
-          >
-            Yes, the tool creates standard PKCS#7 detached signatures that are
-            recognized by all major PDF viewers. For full validation, use a
-            certificate from a trusted Certificate Authority.
+          <p class="faq-d-a">
+            The reader can't trace the certificate back to a root it trusts.
+            That's expected for self-signed certificates, which are fine for
+            testing but always show a warning. For documents other people need
+            to rely on, use a certificate issued by a Certificate Authority that
+            PDF readers trust.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do I have to add a visible signature on the page?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The cryptographic signature is embedded whether or not the
+            visible block is enabled. Turn on Visible Signature if you want a
+            stamp on the page: pick the first, last, all, or a specific page,
+            set the position and size in points, and add a PNG, JPG, or WebP
+            image or a line of text; with neither, the tool writes the
+            certificate's common name and the current date.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What are the Reason, Location, and Contact Info fields for?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            They're optional metadata stored inside the signature itself. Reason
+            records why you signed, such as "Approved" or "Reviewed", Location
+            where it happened, and Contact Info how to reach you. PDF readers
+            display them in the signature panel.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can a digitally signed PDF still be edited?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The file can still be opened and edited, but any change made after
+            signing breaks the integrity check and readers will report the
+            document as modified. If the PDF has form fields or annotations that
+            should be fixed in place, run it through
+            <a href="/flatten-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Flatten PDF</a
+            >
+            before signing, not after.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How can I check that the signature was applied correctly?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Open the signed file in
+            <a
+              href="/validate-signature-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Validate Signature</a
+            >. It lists every signature, shows the signer and issuer, checks the
+            certificate dates, and confirms whether the bytes have changed since
+            signing. You can also load your CA certificate there to verify the
+            trust chain.
           </p>
         </details>
       </div>

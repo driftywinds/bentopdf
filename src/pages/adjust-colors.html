@@ -10,7 +10,7 @@
     />
     <meta
       name="description"
-      content="★ Adjust PDF colors online free - Brightness, contrast, saturation, hue, temperature & more ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Fine-tune brightness, contrast, saturation and more in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Adjust PDF colors online free - Brightness, contrast, saturation, hue, temperature & more ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Fine-tune brightness, contrast, saturation and more in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -47,7 +47,7 @@
     <meta name="twitter:title" content="Adjust Colors Free" />
     <meta
       name="twitter:description"
-      content="★ Adjust PDF colors online free - Brightness, contrast, saturation, hue & more ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Fine-tune brightness, contrast, saturation and more in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -60,10 +60,6 @@
     <meta name="apple-mobile-web-app-title" content="Adjust Colors" />
 
     <title>Adjust Colors - BentoPDF</title>
-    <meta
-      name="description"
-      content="Adjust brightness, contrast, saturation, hue, temperature, gamma and more in your PDF. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -467,7 +463,7 @@
           <p class="text-gray-400 text-sm">Change PDF background</p>
         </a>
         <a
-          href="change-text-color.html"
+          href="text-color.html"
           class="block bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors border border-gray-700"
         >
           <h3 class="text-white font-semibold mb-1">Text Color</h3>
@@ -486,32 +482,115 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is adjust colors really free?
+            How do I brighten a dark scanned PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Move the Brightness slider (range -100 to +100) up to lighten the
+            page, and raise Contrast if the text still looks washed out. When
+            only the midtones are too dark, the Gamma slider (0.2 to 5.0) lifts
+            them without blowing out the white background. The preview updates
+            as you drag, so you can check the first page before applying the
+            settings to all of them.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Can I convert a color PDF to grayscale with this tool?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Drag the Saturation slider all the way to -100 and every page
+            becomes grayscale, which also cuts ink use when printing. If you
+            don't need any of the other adjustments, the
+            <a
+              href="/pdf-to-greyscale"
+              class="text-indigo-300 hover:text-indigo-400"
+              >grayscale conversion tool</a
+            >
+            does the same thing in one step.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What do the hue, temperature, and tint sliders do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Hue Shift rotates every color around the color wheel by 0 to 360
+            degrees while leaving whites, grays, and blacks untouched.
+            Temperature (-50 to +50) shifts the page toward blue on the cool end
+            or yellow-orange on the warm end, and Tint (-50 to +50) shifts
+            between green and magenta, which is useful for photos scanned with a
+            color cast.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the text still be selectable after adjusting colors?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. To apply the changes, each page is rendered to an image at 2x
+            resolution and saved into a new PDF, so the output is image-based
+            and text can't be selected or searched. Keep your original for
+            editing, or run the result through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR</a
+            >
+            to add a searchable text layer.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is my PDF larger after adjusting the colors?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Every page is stored as a full-page PNG image instead of text and
+            vector drawing commands, so the file usually grows, especially for
+            text-heavy documents. Running the result through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            afterward brings the size back down.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I give a PDF a sepia or vintage look?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Raise the Sepia slider (0 to 100) to add a brown tone; higher values
+            give a stronger antique look. Combine it with a small drop in
+            Contrast or Saturation to soften the result, and click Reset at any
+            point to return every slider to its default.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the preview show every page or only the first one?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The live preview renders the first page only, so you can test
+            settings quickly. When you click Apply, the same settings are
+            processed on every page of the document and the adjusted PDF
+            downloads.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded anywhere when I adjust its colors?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The page rendering and the color math run in your browser, and
+            the adjusted PDF is assembled on your device, so the file never
+            leaves your computer.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Linearize PDF online free - Linearize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Optimize PDF for fast web viewing. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="linearize pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Linearize PDF online free - Linearize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Optimize PDF for fast web viewing. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Linearize PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Linearize PDF online free - Linearize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Optimize PDF for fast web viewing. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Linearize PDF" />
 
     <title>Linearize PDF - Optimize for Web Viewing - BentoPDF</title>
-    <meta
-      name="description"
-      content="Linearize PDF files for fast web viewing. Optimize PDFs to load progressively in browsers. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -350,32 +346,95 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is linearize pdf really free?
+            What does linearizing a PDF actually change?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            QPDF rewrites the file so the objects needed for the first page come
+            first, adds a linearization dictionary and hint tables, and rebuilds
+            the cross-reference table. The pages, fonts, images, links, and form
+            fields are unchanged; only the byte order inside the file is
+            different.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Does this fix a PDF that shows Fast Web View: No in Acrobat?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Fast Web View is Acrobat's name for linearization, and running the
+            file through this tool sets it to Yes. That holds only if you don't
+            edit the PDF again afterward, because almost any later change, such
+            as merging, adding pages, or resaving from most editors, removes the
+            linearization.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does linearizing make the file smaller?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. It's a structural reorder, not compression, and the hint tables
+            add a small amount, typically under 1 percent. To shrink the file,
+            run
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            first and linearize last.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will my web server or viewer actually load it faster?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Only if the server supports HTTP byte-range requests, which most
+            static hosts and CDNs do. A viewer such as pdf.js or a browser's
+            built-in viewer can then fetch the first page and start rendering
+            while the rest downloads, instead of waiting for the whole file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why did I get a ZIP when I only uploaded one PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The tool always packages its output as linearized-pdfs.zip, with
+            each file inside renamed to linearized- followed by the original
+            name. Unzip it to get the PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What if a file fails to linearize?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The batch continues with the other files, and the completion message
+            tells you how many succeeded and how many failed. Damaged files are
+            the usual cause; run them through
+            <a href="/repair-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Repair PDF</a
+            >
+            and try again.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the PDFs uploaded to be optimized?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. QPDF runs as WebAssembly inside your browser, reading and
+            writing the files in memory on your device, and the ZIP is generated
+            locally. Nothing is sent to a server even though the output is meant
+            for web publishing.
           </p>
         </details>
       </div>

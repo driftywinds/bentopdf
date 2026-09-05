@@ -465,39 +465,105 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:addPageLabels.faqWhatIsQuestion"
-              >What is a page label?</span
-            >
+            How do I label appendix pages A-1, A-2, A-3?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:addPageLabels.faqWhatIsAnswer">
-            A page label is the numbering shown by PDF readers in thumbnails,
-            page navigation, and print dialogs. It does not print new text onto
-            the page itself.
+          <p class="faq-d-a">
+            Add a rule for the appendix page range, keep Decimal Arabic as the
+            style, and type A- in the Label Prefix field. With the default start
+            value of 1 the pages become A-1, A-2, A-3, and a second rule with
+            the prefix B- handles the next appendix.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:addPageLabels.faqMixQuestion"
-              >Can I mix Roman numerals and normal numbers?</span
-            >
+            Can page numbering start at 0 or at a number other than 1?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:addPageLabels.faqMixAnswer">
-            Yes. Add multiple rules, such as 1-4 with LowercaseRoman and 5-20
-            with DecimalArabic.
+          <p class="faq-d-a">
+            Each rule has a Start Value field that defaults to 1. Set it to 0
+            for zero-based numbering, or to any other number, for example 15 so
+            a chapter extracted from a longer book keeps its original page
+            numbers.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            <span data-i18n="tools:addPageLabels.faqPrivacyQuestion"
-              >Do my files stay private?</span
-            >
+            What does 'Continue numbering across disjoint ranges' do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="faq-d-a" data-i18n="tools:addPageLabels.faqPrivacyAnswer">
-            Yes. The processing happens in your browser using CoherentPDF WASM.
-            Your PDF does not leave your device.
+          <p class="faq-d-a">
+            Turn it on when one rule covers pages that aren't contiguous, such
+            as 1-9,30-40 or odd, and you want the labels to keep counting in
+            sequence across the gap. With it off, each separate block of pages
+            starts again from the start value.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens to the page labels the PDF already has?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The 'Remove existing page labels' box is checked by default, so the
+            old labels are cleared before your rules are applied. Uncheck it if
+            you only want to relabel some pages and keep the existing labels on
+            the rest.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which page range formats can I type?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Leave the field empty to cover every page, or use forms like 1-4, 7,
+            odd, or 1-9,30-40. Page numbers refer to physical positions in the
+            file, not to labels the PDF may already display.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add labels to a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not directly. The tool stops with a Protected PDF message, so remove
+            the password first with
+            <a href="/unlock-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Unlock PDF</a
+            >
+            and then upload the copy that no longer needs one.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does the tool ask me to configure CoherentPDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Page labels are written by the CoherentPDF engine, which normally
+            loads from a CDN the first time you use the tool. If that default
+            has been turned off in a self-hosted build, you'll be prompted to
+            point
+            <a
+              href="/wasm-settings"
+              class="text-indigo-300 hover:text-indigo-400"
+              >WASM Settings</a
+            >
+            at a copy of the library.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I check that the labels were applied?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Open the downloaded PDF in a reader that displays page labels, such
+            as Adobe Acrobat or Firefox's built-in viewer, and look at the page
+            number box in the toolbar. It shows the label, for example iv or
+            A-1, instead of the plain page index.
           </p>
         </details>
       </div>

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,9 +33,17 @@ const PRIORITY_MAP = {
   'excel-to-pdf': 0.9,
   'powerpoint-to-pdf': 0.9,
   'jpg-to-pdf': 0.9,
-  'pdf-to-docx': 0.9,
+  'pdf-to-word': 0.9,
+  'unlock-pdf': 0.9,
+  'protect-pdf': 0.9,
   'pdf-to-excel': 0.9,
   'pdf-to-jpg': 0.9,
+  'compress-pdf-to-100kb': 0.8,
+  'compress-pdf-to-200kb': 0.8,
+  'compress-pdf-to-500kb': 0.8,
+  'compress-pdf-to-1mb': 0.8,
+  'compress-pdf-to-2mb': 0.8,
+  'compress-pdf-for-email': 0.8,
   about: 0.8,
   faq: 0.8,
   contact: 0.7,
@@ -52,7 +61,7 @@ function buildUrl(lang, pageName) {
   if (lang === 'en') {
     return pagePath ? `${SITE_URL}/${pagePath}` : SITE_URL;
   }
-  return pagePath ? `${SITE_URL}/${lang}/${pagePath}` : `${SITE_URL}/${lang}`;
+  return pagePath ? `${SITE_URL}/${lang}/${pagePath}` : `${SITE_URL}/${lang}/`;
 }
 
 function generateSitemap() {
@@ -66,22 +75,48 @@ function generateSitemap() {
     .map((file) => file.replace('.html', ''))
     .filter((name) => !EXCLUDED_PAGES.has(name));
 
+  const projectRoot = path.resolve(__dirname, '..');
   const lastModCache = new Map();
-  const getLastMod = (lang, pageName) => {
-    const cacheKey = `${lang}::${pageName}`;
-    if (lastModCache.has(cacheKey)) return lastModCache.get(cacheKey);
+  const getLastMod = (pageName) => {
+    if (lastModCache.has(pageName)) return lastModCache.get(pageName);
     const fileName = `${pageName}.html`;
-    const filePath =
-      lang === 'en'
-        ? path.join(DIST_DIR, fileName)
-        : path.join(DIST_DIR, lang, fileName);
-    let iso;
-    try {
-      iso = fs.statSync(filePath).mtime.toISOString().slice(0, 10);
-    } catch {
-      iso = new Date().toISOString().slice(0, 10);
+    const candidates = [
+      path.join(projectRoot, 'src', 'pages', fileName),
+      path.join(projectRoot, fileName),
+    ];
+    let iso = null;
+    for (const sourcePath of candidates) {
+      if (!fs.existsSync(sourcePath)) continue;
+      try {
+        const out = execFileSync(
+          'git',
+          ['log', '-1', '--format=%cI', '--', sourcePath],
+          { cwd: projectRoot, encoding: 'utf-8' }
+        ).trim();
+        if (out) iso = out.slice(0, 10);
+      } catch {
+        iso = null;
+      }
+      if (!iso) {
+        try {
+          iso = fs.statSync(sourcePath).mtime.toISOString().slice(0, 10);
+        } catch {
+          iso = null;
+        }
+      }
+      break;
     }
-    lastModCache.set(cacheKey, iso);
+    if (!iso) {
+      try {
+        iso = fs
+          .statSync(path.join(DIST_DIR, fileName))
+          .mtime.toISOString()
+          .slice(0, 10);
+      } catch {
+        iso = new Date().toISOString().slice(0, 10);
+      }
+    }
+    lastModCache.set(pageName, iso);
     return iso;
   };
 
@@ -93,12 +128,11 @@ function generateSitemap() {
   for (const pageName of htmlFiles) {
     const priority = getPriority(pageName);
     const url = buildUrl('en', pageName);
-    const lastmod = getLastMod('en', pageName);
+    const lastmod = getLastMod(pageName);
 
     sitemap += `  <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>${priority}</priority>
 `;
 
@@ -112,6 +146,48 @@ function generateSitemap() {
     sitemap += `    <xhtml:link rel="alternate" hreflang="x-default" href="${defaultUrl}"/>
   </url>
 `;
+  }
+
+  const blogDir = path.join(DIST_DIR, 'blog');
+  let blogCount = 0;
+  if (fs.existsSync(blogDir)) {
+    const blogFiles = fs
+      .readdirSync(blogDir)
+      .filter((file) => file.endsWith('.html'))
+      .map((file) => file.replace('.html', ''));
+    for (const name of blogFiles) {
+      const url =
+        name === 'index' ? `${SITE_URL}/blog/` : `${SITE_URL}/blog/${name}`;
+      const sourcePath = path.join(projectRoot, 'blog', `${name}.html`);
+      let lastmod;
+      try {
+        const out = execFileSync(
+          'git',
+          ['log', '-1', '--format=%cI', '--', sourcePath],
+          { cwd: projectRoot, encoding: 'utf-8' }
+        ).trim();
+        lastmod = out ? out.slice(0, 10) : null;
+      } catch {
+        lastmod = null;
+      }
+      if (!lastmod) {
+        try {
+          lastmod = fs.statSync(sourcePath).mtime.toISOString().slice(0, 10);
+        } catch {
+          lastmod = new Date().toISOString().slice(0, 10);
+        }
+      }
+      sitemap += `  <url>
+    <loc>${url}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <priority>0.7</priority>
+  </url>
+`;
+      blogCount++;
+    }
+  }
+  if (blogCount > 0) {
+    console.log(`   Blog: ${blogCount} URLs added (English only)`);
   }
 
   sitemap += `</urlset>

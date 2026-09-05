@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to Text online free - PDF to text easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract text from PDF files and save as plain text (.txt). Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to text, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to Text online free - PDF to text easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract text from PDF files and save as plain text (.txt). Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF to Text Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to Text online free - PDF to text easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract text from PDF files and save as plain text (.txt). Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to Text" />
 
     <title>PDF to Text - Extract Text from PDF Files - BentoPDF</title>
-    <meta
-      name="description"
-      content="Extract text from PDF files and save as plain text (.txt). Free, secure, and runs entirely in your browser."
-    />
     <meta
       name="keywords"
       content="PDF to text, extract text from PDF, PDF text extractor, convert PDF to TXT, free PDF tool"
@@ -357,32 +353,107 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to text really free?
+            Why is the .txt file empty?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The PDF is most likely a scan or a photo, which has no text layer to
+            extract. Run it through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            first; that tool adds a text layer and also offers a .txt download
+            directly.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Does the text come out in the right order?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Text is read left to right, top to bottom, following the PDF's
+            internal structure, which is correct for most single-column
+            documents. Multi-column layouts, sidebars, and tables can come out
+            interleaved, and headers, footers, and page numbers are included
+            with everything else on the page.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Is any formatting kept?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. The output is plain UTF-8 text, so accented characters,
+            Cyrillic, CJK, and Arabic are preserved, but bold, headings, links,
+            and images are not, and line breaks follow the PDF's lines rather
+            than paragraphs. For headings and lists kept as Markdown, use
+            <a
+              href="/pdf-to-markdown"
+              class="text-indigo-300 hover:text-indigo-400"
+              >PDF to Markdown</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I extract text from several PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Add as many PDFs as you like and click Extract once; each
+            becomes its own .txt file named after the source, and they download
+            together as pdf-to-text.zip. A single PDF downloads directly as
+            filename.txt.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How are pages separated in the output?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Pages follow one another with a line break between them. There are
+            no page markers or form feeds, so the file reads as one continuous
+            stream of text.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I pick specific pages or a page range?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No, this tool always extracts every page. Pull the pages you need
+            into a separate PDF first with
+            <a
+              href="/extract-pages"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Extract Pages</a
+            >, then convert that file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it work on password-protected files?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If a PDF asks for a password when you open it, the tool prompts you
+            for that password before extracting. Without the password, the text
+            can't be read.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do my documents get uploaded to extract the text?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Extraction runs in a PDF engine loaded into your browser as
+            WebAssembly, so contracts, medical records, and anything else stay
+            on your device from start to finish.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Edit Metadata online free - Edit metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Change the author, title, and other properties. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="edit metadata, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Edit Metadata online free - Edit metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Change the author, title, and other properties. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Edit Metadata Free" />
     <meta
       name="twitter:description"
-      content="★ Edit Metadata online free - Edit metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Change the author, title, and other properties. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Edit Metadata" />
 
     <title>Edit PDF Metadata - BentoPDF</title>
-    <meta
-      name="description"
-      content="Edit PDF metadata including title, author, subject, keywords, and custom fields. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -436,32 +432,110 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is edit metadata really free?
+            Which metadata fields can I change?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Title, Author, Subject, Keywords, Creator, Producer, Creation Date,
+            and Modification Date, plus any custom key-value pairs you add. The
+            form loads with the file's current values, so you only edit what
+            needs changing.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            How do I delete a field like Author completely?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Clear the box and save. Whatever is in the form is written back, so
+            an emptied field is stored as empty. To strip every field at once,
+            including hidden ones, use
+            <a
+              href="/remove-metadata"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Remove Metadata</a
+            >
+            instead.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why does the modification date change even though I didn't touch it?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            If the Modification Date box is left empty, the tool stamps the
+            current date and time when it saves. Set a specific date in the
+            picker if a particular value needs to be kept.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add my own fields such as Department or Project ID?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Click the add button, enter a key and a value, and the pair is
+            written into the PDF's info dictionary alongside the standard
+            fields. Not every reader lists custom entries, but they stay in the
+            file and show up in tools that read the full info dictionary, such
+            as
+            <a
+              href="/view-metadata"
+              class="text-indigo-300 hover:text-indigo-400"
+              >View Metadata</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            I changed the title but Acrobat still shows the old one. Why?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The tool writes to the document info dictionary. Some PDFs also
+            carry an XMP metadata stream, and readers like Acrobat prefer XMP
+            when both exist, so the old title can still appear there. Run
+            <a
+              href="/remove-metadata"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Remove Metadata</a
+            >
+            first, then edit, to avoid the conflict.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How should I enter keywords?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Separate them with commas, for example invoice, 2026, Q3. They're
+            saved as a keyword list that document management systems and desktop
+            search can index.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does editing metadata alter the pages or send my file anywhere?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Only the info dictionary is rewritten; pages, fonts, links, and
+            bookmarks are untouched, and the whole edit happens in your browser,
+            so the document never leaves your device.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I edit metadata on a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If the file needs a password to open, the tool asks for it and then
+            loads the document normally. Without the password the file can't be
+            opened here.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Fix Page Size online free - Fix page size PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Standardize all pages to a uniform size. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="fix page size, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Fix Page Size online free - Fix page size PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Standardize all pages to a uniform size. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Fix Page Size Free" />
     <meta
       name="twitter:description"
-      content="★ Fix Page Size online free - Fix page size PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Standardize all pages to a uniform size. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Fix Page Size" />
 
     <title>Fix Page Size - Standardize PDF Pages - BentoPDF</title>
-    <meta
-      name="description"
-      content="Standardize all pages in your PDF to a uniform size. Choose from standard sizes or set custom dimensions. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -460,32 +456,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is fix page size really free?
+            What's the difference between Fit and Fill when resizing pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Fit scales each page until the whole page sits inside the target
+            size, centers it, and pads any leftover space with the background
+            color. Fill scales until the target is completely covered, which
+            crops whatever spills past the edges. Use Fit when losing content
+            isn't acceptable and Fill when you'd rather have edge-to-edge pages.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Can I convert a Letter document to A4 without distorting it?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Choose A4 as the target and keep Fit. Content is scaled
+            proportionally, never stretched, so a Letter page ends up slightly
+            narrower on A4 with a thin band of background color at the top and
+            bottom.
+            <a
+              href="/page-dimensions"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Page Dimensions</a
+            >
+            will confirm every page matches afterward.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What does the Auto orientation option do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Auto looks at each page individually and keeps landscape pages
+            landscape and portrait pages portrait, turning the target size to
+            match. Portrait or Landscape forces every page into that orientation
+            and scales the content to fit the new shape.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I set a custom page size?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Choose Custom as the target and enter the width and height in inches
+            or millimeters, down to a hundredth of a unit. This covers trim
+            sizes that aren't in the preset list, such as 6 x 9 inch book pages.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does this keep the text selectable, or does it turn pages into
+            images?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Pages are redrawn as vector content in a new document, so text stays
+            sharp and selectable and nothing is rasterized. What doesn't carry
+            over: annotations, form fields, links, and bookmarks, because only
+            the page appearance is copied. Run
+            <a href="/flatten-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Flatten PDF</a
+            >
+            first if filled-in form values need to survive.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            My pages are almost Letter size but not quite. Will this fix them?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Pick Letter and Fit; a page that is 8.49 by 11.02 inches is
+            scaled by a fraction of a percent to exactly 8.5 by 11, which is
+            invisible to the eye but satisfies print shops and document systems
+            that reject off-size pages.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What is the background color used for?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            It fills the margins that Fit mode adds when the source page has a
+            different shape than the target. White is the default; pick a dark
+            color when your pages have dark backgrounds so the padding doesn't
+            stand out.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded to fix the page sizes?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The resizing is done by a PDF library running in your browser,
+            and the new file is assembled on your device. Nothing is sent
+            anywhere.
           </p>
         </details>
       </div>

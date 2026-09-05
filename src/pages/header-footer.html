@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Header Footer online free - Header footer PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Add text to the top and bottom of pages. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="header footer, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Header Footer online free - Header footer PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Add text to the top and bottom of pages. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Header Footer Free" />
     <meta
       name="twitter:description"
-      content="★ Header Footer online free - Header footer PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Add text to the top and bottom of pages. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Header Footer" />
 
     <title>Add Header & Footer - BentoPDF</title>
-    <meta
-      name="description"
-      content="Add headers and footers to your PDF documents with dynamic page numbers. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -446,32 +442,102 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is header footer really free?
+            How do I add Page X of Y to every page?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Type Page {page} of {total} in any of the six fields, usually Footer
+            Center. {page} is replaced with that page's number and {total} with
+            the page count, so a 12-page file gets Page 1 of 12 through Page 12
+            of 12.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Can I put different text on the left, center, and right?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Yes. There are six independent fields: header left, center, and
+            right, plus footer left, center, and right. Fill only the ones you
+            need, for example a company name at header left, the date at header
+            right, and a confidentiality notice at footer center; empty fields
+            are skipped.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I apply the header only to certain pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Yes. Enter a range like 1-3, 5 in the Page Range field and only
+            those pages get the text; leave it empty to cover every page. The
+            {page} value still reflects the real page number, so page 5 reads 5
+            even when pages 1 through 4 were skipped.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What font and size does it use?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Helvetica, at any size from 6 to 24 points (10 by default), in the
+            color you pick. Because it uses the built-in PDF Helvetica, the text
+            is limited to Latin characters; accented letters work, but scripts
+            such as Cyrillic, Arabic, or Chinese don't.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will it replace the header my document already has?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The text is drawn on top of the existing page content about 40
+            points (a bit over half an inch) from the edge, so if a page already
+            has a running header in that spot the two will overlap. Check the
+            result and pick a different position if they collide.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the header text selectable and searchable afterward?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. It's added as real text rather than an image, so it can be
+            selected, searched, and copied, and it stays sharp when printed at
+            any size.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my document uploaded to add a header and footer?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The text is written into the PDF by your browser and the
+            finished file is saved under its original name; the document never
+            leaves your device.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add page numbers without any other text?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes, put {page} alone in a field.
+            <a
+              href="/page-numbers"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Page Numbers</a
+            >
+            does the same job with a dedicated layout and font sizes up to 72
+            points, and Add Page Labels handles Roman numerals in the viewer's
+            page display.
           </p>
         </details>
       </div>

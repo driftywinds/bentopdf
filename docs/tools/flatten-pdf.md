@@ -48,4 +48,4 @@ The tool uses pdf-lib to flatten form fields (via `form.flatten()`) and a dedica
 - [Sanitize PDF](./sanitize-pdf) -- flatten forms plus remove metadata, scripts, and more
 - [Rasterize PDF](./rasterize-pdf) -- convert to image-based PDF for maximum flattening
 - [Font to Outline](./font-to-outline) -- flatten fonts to vector paths
-- [Encrypt PDF](./encrypt-pdf) -- lock the flattened PDF with a password
+- [Encrypt PDF](./protect-pdf) -- lock the flattened PDF with a password

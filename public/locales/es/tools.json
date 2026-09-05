@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "¡Sí! Active la opción \"Repetir\" y las páginas de superposición se repetirán en todas las páginas base. Una marca de agua de una página se aplicará a cada página.",
     "faqPrivacyQuestion": "¿Mis archivos son privados y seguros?",
     "faqPrivacyAnswer": "¡Por supuesto! Todo el procesamiento ocurre en su navegador. Sus archivos nunca abandonan su dispositivo, garantizando total privacidad."
+  },
+  "unlockPdf": {
+    "name": "Descifrar PDF",
+    "subtitle": "Desbloquea PDF eliminando la protección por contraseña."
+  },
+  "protectPdf": {
+    "name": "Cifrar PDF",
+    "subtitle": "Bloquea tu PDF agregando una contraseña."
   }
 }

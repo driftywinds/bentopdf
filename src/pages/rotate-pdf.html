@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Rotate PDF Online Free - Rotate PDF Tool | BentoPDF"
+      content="Rotate PDF Online Free - Fix Page Orientation | BentoPDF"
     />
     <meta
       name="description"
-      content="★ Rotate PDF online free - Rotate PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Turn pages in 90-degree increments. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="rotate pdf, turn pdf, flip pdf pages" />
     <meta name="author" content="BentoPDF" />
@@ -28,11 +28,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/rotate-pdf" />
     <meta
       property="og:title"
-      content="Rotate PDF Online Free - Rotate PDF Tool | BentoPDF"
+      content="Rotate PDF Online Free - Fix Page Orientation | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ Rotate PDF online free - Rotate PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Turn pages in 90-degree increments. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -45,10 +45,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/rotate-pdf" />
-    <meta name="twitter:title" content="Rotate PDF Free" />
+    <meta
+      name="twitter:title"
+      content="Rotate PDF Online Free - Fix Page Orientation | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ Rotate PDF online free - Rotate PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Turn pages in 90-degree increments. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -61,11 +64,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Rotate PDF" />
 
-    <title>Rotate PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Rotate PDF pages by 90, 180, or 270 degrees. Rotate individual pages or all pages at once. Free, secure, and runs entirely in your browser."
-    />
+    <title>Rotate PDF Online Free - Fix Page Orientation | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -349,32 +348,110 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is rotate pdf really free?
+            Can I rotate just one page instead of the whole document?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Yes. Every page shows as a thumbnail with its own left and right
+            buttons, so a single sideways scan in a 40-page file can be fixed on
+            its own. The buttons at the top rotate every page at once when the
+            whole document is the wrong way up.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            How do I rotate a page 180 degrees?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Click the same direction twice. Rotations add up in 90-degree steps,
+            so two clicks give 180 and three clicks give 270, the same as one
+            click the other way. The thumbnail updates so you can see the
+            current state before saving.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does rotating reduce the quality of the pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. The tool changes each page's rotation attribute rather than
+            re-rendering anything, so text stays selectable, images keep their
+            resolution, and the file size stays about the same.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the rotation stick when I open the file in another app or print
+            it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. The rotation is written into the PDF page itself, which every
+            viewer and printer honors, unlike the temporary rotate button in a
+            viewer that resets when you close the file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I rotate by an angle other than 90 degrees, like to straighten a
+            tilted scan?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not here; this tool works in 90-degree steps only. Use
+            <a
+              href="/rotate-custom"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Rotate by Custom Degrees</a
+            >
+            for arbitrary angles, or Deskew PDF to straighten scans
+            automatically.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I rotate only the odd or even pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            There's no page selection or range field in this tool; you either
+            rotate pages one at a time with their buttons or all of them
+            together. For selecting groups of pages,
+            <a
+              href="/pdf-multi-tool"
+              class="text-indigo-300 hover:text-indigo-400"
+              >PDF Multi Tool</a
+            >
+            is the better fit.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded to rotate its pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The thumbnails are rendered by your browser and the rotated file
+            is written locally, so the document never leaves your computer. The
+            rotated PDF downloads under the original file name.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does rotating keep my bookmarks?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Page content, images, and annotations come through unchanged, but
+            bookmarks are not carried over, because the rotated file is built
+            from copied pages. A document that relies on its outline will need
+            it added back with the
+            <a href="/bookmark" class="text-indigo-300 hover:text-indigo-400"
+              >Bookmark</a
+            >
+            tool.
           </p>
         </details>
       </div>

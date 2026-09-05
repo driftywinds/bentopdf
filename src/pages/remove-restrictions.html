@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Remove Restrictions online free - Remove restrictions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Remove password protection and security restrictions associated with digitally signed PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="remove restrictions, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Remove Restrictions online free - Remove restrictions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Remove password protection and security restrictions associated with digitally signed PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Remove Restrictions Free" />
     <meta
       name="twitter:description"
-      content="★ Remove Restrictions online free - Remove restrictions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Remove password protection and security restrictions associated with digitally signed PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -70,10 +70,6 @@
     <title>
       Remove PDF Restrictions - Unlock Editing and Printing - BentoPDF
     </title>
-    <meta
-      name="description"
-      content="Remove restrictions from PDF files. Unlock editing, printing, and copying permissions. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -356,32 +352,104 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is remove restrictions really free?
+            What is the difference between Remove Restrictions and Unlock PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Use
+            <a href="/unlock-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Unlock PDF</a
+            >
+            when a PDF asks for a password before it will open. Use this tool
+            when the PDF opens but blocks printing, copying, editing, or
+            commenting; it strips those restrictions and writes a copy with no
+            encryption at all.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Do I need the owner password?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            If the PDF opens without asking for a password, leave the field
+            empty and the restrictions are removed as is. If a password is
+            required, enter it in the Owner Password field. The tool doesn't
+            crack, guess, or brute-force passwords.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What restrictions exactly get removed?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Password protection, printing limits, editing locks, text and image
+            copying restrictions, annotation and commenting limits, and the
+            usage restrictions attached to some digitally signed PDFs. The
+            output has zero encryption, so anyone who receives it can open it
+            freely.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is it legal to remove restrictions from a PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            That depends on your rights to the document and on local law.
+            Removing restrictions from files you own or are licensed to use, for
+            example to run accessibility tools or copy quotes for notes, is the
+            intended use. Don't use it to get around someone else's copyright or
+            licensing terms.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the content of the PDF change?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. QPDF rewrites only the encryption layer; pages, text, images,
+            bookmarks, and form fields are untouched, and the output keeps the
+            original file name.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does it say the PDF may require the correct owner password?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            That error appears when QPDF can't open the file with the password
+            you entered, or with no password. Check for typos and caps lock, and
+            if the file needs a password to open, enter that one.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I keep the PDF encrypted but allow printing?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not with this tool, which removes all security. To keep a password
+            and adjust individual permissions such as printing or copying, use
+            <a
+              href="/change-permissions"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Change Permissions</a
+            >
+            instead.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does removing restrictions upload my PDF or password?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. QPDF runs as WebAssembly inside your browser tab, so the file
+            and any password you enter stay on your device.
           </p>
         </details>
       </div>

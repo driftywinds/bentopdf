@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Compare PDFs online free - Compare PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Compare two PDFs side by side. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="compare pdfs, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Compare PDFs online free - Compare PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Compare two PDFs side by side. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Compare PDFs Free" />
     <meta
       name="twitter:description"
-      content="★ Compare PDFs online free - Compare PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Compare two PDFs side by side. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Compare PDFs" />
 
     <title>Compare PDFs - BentoPDF</title>
-    <meta
-      name="description"
-      content="Compare two PDF files side by side or with overlay. See differences between PDF versions. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
     <style>
@@ -1160,32 +1156,100 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is compare pdfs really free?
+            How do I see what changed between two versions of a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the original as the first PDF and the revised version as the
+            second. The tool pairs matching pages, then highlights added,
+            deleted, modified, and moved content on each page pair, with
+            counters showing how many changes of each kind were found.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What is the difference between side-by-side and overlay mode?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Side-by-side shows the two pages next to each other with
+            synchronized scrolling, which is easiest for reading text changes.
+            Overlay stacks the revised page on top of the original with an
+            opacity slider, so shifted or resized elements stand out, and the
+            Flicker button switches the top page on and off to make small moves
+            visible.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can it compare scanned PDFs that have no text layer?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            With OCR turned on, page images are run through Tesseract in your
+            browser and the recognized text is compared, so scanned documents
+            can be checked. OCR currently uses the English language model, and
+            it's slower than comparing PDFs that already contain text.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I filter out formatting changes and only see text differences?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Changes are grouped into text, image, header/footer, annotation,
+            formatting, and background categories, each with its own toggle.
+            Turn off the categories you don't care about, and use the text
+            search box to find a specific changed word or phrase.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens when pages were added, removed, or reordered between
+            versions?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Pages are paired by content similarity rather than by page number,
+            so an inserted page doesn't throw off everything after it. A page
+            with no counterpart is reported as added or removed, and the page
+            navigation steps through the pairs the tool built.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it detect changes to comments and annotations?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Annotation changes are their own category, so added or removed
+            comments, highlights, and markup are flagged separately from body
+            text and can be shown or hidden with the annotation filter.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I save the comparison as a report?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The Export as PDF menu produces a PDF of the comparison. In
+            side-by-side mode you can choose a split view, alternating pages, or
+            only the left or right document with highlights; in overlay mode it
+            exports the overlay view.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the two PDFs sent anywhere to be compared?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering, page pairing, OCR, and change detection all run in
+            your browser with WebAssembly and web workers, and nothing is
+            transmitted, so contracts and other confidential drafts stay on your
+            machine.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to ZIP online free - PDF to ZIP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf To Zip online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to zip, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to ZIP online free - PDF to ZIP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf To Zip online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF to ZIP Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to ZIP online free - PDF to ZIP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf To Zip online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to ZIP" />
 
     <title>PDFs to ZIP - BentoPDF</title>
-    <meta
-      name="description"
-      content="Package multiple PDF files into a single ZIP archive. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -336,32 +332,94 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to zip really free?
+            What does PDFs to ZIP actually do to my files?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Nothing beyond packaging. The PDFs are copied into a single
+            pdfs_archive.zip with their original names, unchanged, in the order
+            you added them, so what comes out of the ZIP is byte for byte what
+            went in.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Does zipping make the PDFs smaller?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            No. The archive is written without compression, since PDF content is
+            already compressed internally and would barely shrink anyway, so
+            expect the ZIP to be about the combined size of the files. To reduce
+            the size, run them through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            first and zip the results.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What's the difference between zipping PDFs and merging them?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            A ZIP keeps each PDF as a separate file inside one container that
+            the recipient unpacks. Merging joins the pages into one PDF
+            document, which is what you want when the files should be read as a
+            single document; use
+            <a href="/merge-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Merge PDF</a
+            >
+            for that.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What if two of my files have the same name?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Duplicate names are handled automatically: the second file becomes
+            name (1).pdf, the third name (2).pdf, and so on, so nothing gets
+            overwritten inside the archive. Rename the files before uploading if
+            you'd rather have meaningful names.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add non-PDF files to the archive?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Only files with a .pdf extension or a PDF file type are
+            accepted; anything else you drop in is ignored. For a mixed bundle,
+            use your operating system's built-in zip feature instead.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the recipient need special software to open the archive?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The output is a standard ZIP file that Windows, macOS, iOS, and
+            Android open without extra software; double-click or tap it to
+            unpack the PDFs.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my PDFs uploaded to build the ZIP?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The archive is assembled in your browser, so the files are read
+            from your disk and the ZIP is written back to it without any network
+            transfer. Bundling invoices, contracts, or medical records this way
+            keeps them on your device.
           </p>
         </details>
       </div>

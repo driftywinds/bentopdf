@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "Có! Bật tùy chọn \"Lặp lại\" và các trang chồng sẽ lặp lại trên tất cả các trang gốc. Hình mờ một trang sẽ được áp dụng cho mọi trang.",
     "faqPrivacyQuestion": "Tệp của tôi có được bảo mật không?",
     "faqPrivacyAnswer": "Chắc chắn! Toàn bộ quá trình xử lý diễn ra trong trình duyệt của bạn. Tệp của bạn không bao giờ rời khỏi thiết bị, đảm bảo quyền riêng tư hoàn toàn."
+  },
+  "unlockPdf": {
+    "name": "Giải mã PDF",
+    "subtitle": "Mở khóa PDF bằng cách xóa bảo vệ mật khẩu."
+  },
+  "protectPdf": {
+    "name": "Mã hóa PDF",
+    "subtitle": "Khóa PDF của bạn bằng cách thêm mật khẩu."
   }
 }

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Pages to PDF online free - Pages to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Apple Pages documents to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pages to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Pages to PDF online free - Pages to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Apple Pages documents to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Pages to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Pages to PDF online free - Pages to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Apple Pages documents to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Pages to PDF" />
 
     <title>Pages to PDF - Convert WordPerfect to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert Apple Pages documents to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -340,32 +336,94 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pages to pdf really free?
+            Do I need a Mac or the Pages app to convert a .pages file?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            No. The conversion runs on a LibreOffice engine inside your browser,
+            so it works on Windows, Linux, Chromebooks, and Macs without Pages
+            installed.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why is the first Pages document slow to convert?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The engine has to be downloaded on first use, around 75 MB
+            compressed, and then started. Later conversions in the same session
+            reuse it and start right away.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I convert several Pages documents at once?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Yes. Add multiple .pages files and click Convert to PDF; you get
+            pages-to-pdf.zip with one PDF per document. Files that share a name
+            get a numbered suffix such as Report (1).pdf so nothing is
+            overwritten.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the PDF look exactly like it does in Pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Usually close, but not guaranteed. A LibreOffice import filter reads
+            the file rather than Pages itself, so complex layouts, some fonts,
+            and newer Pages features may render differently. Check the output
+            before sending it on.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What will the PDF be named?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The same base name as the Pages document with a .pdf extension, so
+            Resume.pages becomes Resume.pdf.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What should I do if the conversion fails?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            An error message shows the reason the engine reported. Make sure the
+            file is a real .pages document and not corrupted; if it still fails,
+            open it in Pages and export it again, or export to PDF from Pages
+            directly.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a Pages file to Word instead of PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool only produces PDF. If you need a .docx, convert the Pages
+            file here first and then run the result through
+            <a href="/pdf-to-word" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to Word</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my Pages document uploaded to a server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The LibreOffice engine reads and renders the document in your
+            browser; the only network transfer is downloading the engine itself.
+            Your file never leaves your device.
           </p>
         </details>
       </div>

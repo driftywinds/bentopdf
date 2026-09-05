@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Text Color online free - Text color PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Text Color online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="text color, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Text Color online free - Text color PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Text Color online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Text Color Free" />
     <meta
       name="twitter:description"
-      content="★ Text Color online free - Text color PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Text Color online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Text Color" />
 
     <title>Change Text Color - BentoPDF</title>
-    <meta
-      name="description"
-      content="Change the text color of your PDF documents. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -326,32 +322,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is text color really free?
+            How does it know which pixels are text?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            It doesn't read the text; each page is rendered to an image and
+            every dark pixel (red, green, and blue all below 120 on a 0 to 255
+            scale) is repainted in your chosen color. Black and dark gray type
+            is caught, while light gray text, colored text, and photos are left
+            alone.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why did lines, borders, and my logo change color too?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Because the tool works on dark pixels rather than text objects, any
+            dark element, including table rules, underlines, and black artwork,
+            is recolored along with the text. There's no way to exclude regions
+            in this tool.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I recolor only certain words or paragraphs?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. One color is applied to all dark content on every page. To
+            change individual words or headings while leaving the rest alone,
+            edit the text directly in the
+            <a href="/edit-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >PDF Editor</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the text still be selectable and searchable?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The output is image-based: each page is rendered at 2x and
+            embedded as a PNG, so text can no longer be selected, searched, or
+            copied. Keep the original if you need an editable version, or run
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            on the result to add a text layer back.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why did the file get much bigger?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A page of text weighs a few kilobytes as text but becomes a
+            full-page PNG image when recolored, so multi-page documents can grow
+            many times over.
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            can shrink the result at the cost of some sharpness.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I turn black text white for a dark background?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes, any color works, including white, but the page background isn't
+            changed, so white text on the original white page disappears. Choose
+            a color that contrasts with the background the page already has.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my document uploaded to change the text color?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Each page is rendered and recolored on a canvas in your browser,
+            and the new PDF is assembled there too, so the file never leaves
+            your device. A progress indicator shows which page is being
+            processed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is colored or light gray text unchanged?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Only pixels dark enough to pass the threshold are repainted. Red
+            headings, blue links, mid-gray captions, and anti-aliased edges
+            lighter than the cutoff keep their original color, which can leave a
+            faint halo around recolored letters.
           </p>
         </details>
       </div>

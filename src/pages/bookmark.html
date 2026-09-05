@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Bookmark online free - Bookmark PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Bookmark online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="bookmark, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Bookmark online free - Bookmark PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Bookmark online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Bookmark Free" />
     <meta
       name="twitter:description"
-      content="★ Bookmark online free - Bookmark PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Bookmark online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -787,32 +787,103 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is bookmark really free?
+            How do I add bookmarks to a PDF that doesn't have any?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the PDF, go to a page, type a title, and click Add to Page;
+            drag entries to nest or reorder them. Click Save PDF with Bookmarks
+            to download the result. For a printed contents page inside the
+            document rather than sidebar navigation, use
+            <a
+              href="/table-of-contents"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Table of Contents</a
+            >
+            instead.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will my existing bookmarks be kept?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Only if you check Auto-extract existing bookmarks before uploading,
+            or use the extract button afterward, so they load into the panel.
+            When you save, the panel's contents replace the PDF's bookmark tree
+            entirely, so anything not loaded into the editor is dropped.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What is the CSV format for importing bookmarks?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            A header row followed by one line per bookmark with three columns:
+            title,page,level. Titles containing commas go in double quotes, page
+            is the 1-based page number, and level controls nesting, with the
+            lowest number for top-level entries and each deeper child adding
+            one.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can a bookmark jump to a specific spot on a page instead of the top?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Open the bookmark's edit dialog, turn on Set custom destination, and
+            either type X and Y coordinates plus a zoom percentage or click the
+            pick button and then click the exact spot on the page preview. The
+            bookmark is saved as an XYZ destination, which most readers honor.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I color or bold bookmarks?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each bookmark can be red, blue, green, yellow, purple, or a custom
+            hex color, and styled bold, italic, or bold italic. Turn on Batch
+            Mode to select several bookmarks and apply a color or style to all
+            of them at once.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I get bookmarks out of a PDF for editing in a spreadsheet?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Load them with Auto-extract, then use Export to CSV or Export to
+            JSON; the file is named after your PDF with a -bookmarks suffix. The
+            CSV opens in Excel or Google Sheets, and once you've edited it you
+            can import it back and save a new PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the editor work on password-protected PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            You'll be asked for the password when you upload the file, and the
+            editor opens once it's entered. The saved PDF is written without the
+            password, so protect it again afterward if you need to.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded while I edit bookmarks?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The page preview, the bookmark tree, and the final save are all
+            handled in your browser with PDF.js and pdf-lib, so the file never
+            leaves your computer.
           </p>
         </details>
       </div>

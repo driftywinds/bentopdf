@@ -111,12 +111,12 @@
       <div
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
       >
-        <a href="/encrypt-pdf" class="tool-card">
+        <a href="/protect-pdf" class="tool-card">
           <i class="ph ph-lock text-4xl text-indigo-400 mb-2"></i>
           <h3 class="font-semibold text-white">Encrypt PDF</h3>
           <p class="text-gray-400 text-sm">Add password</p>
         </a>
-        <a href="/decrypt-pdf" class="tool-card">
+        <a href="/unlock-pdf" class="tool-card">
           <i class="ph ph-lock-open text-4xl text-indigo-400 mb-2"></i>
           <h3 class="font-semibold text-white">Decrypt PDF</h3>
           <p class="text-gray-400 text-sm">Remove password</p>
@@ -229,48 +229,148 @@
         <div class="faq-list">
           <details class="faq-d">
             <summary class="faq-d-q">
-              Are these PDF security tools really free?
-              <i class="ph ph-caret-down text-xl"></i>
-            </summary>
-            <p class="faq-d-a">
-              Yes! All BentoPDF PDF security tools are 100% free with no hidden
-              fees, no premium tiers, and no subscription required. Use
-              unlimited tools, unlimited times.
-            </p>
-          </details>
-
-          <details class="faq-d">
-            <summary class="faq-d-q">
-              Are my files private and secure?
+              What's the difference between protecting a PDF with a password and
+              restricting its permissions?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              Absolutely! All processing happens entirely in your browser. Your
-              files never leave your device and are never uploaded to servers.
-              Complete privacy is guaranteed.
+              A user password, set with
+              <a
+                href="/protect-pdf"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Protect PDF</a
+              >, is required to open the file at all. Permissions are flags
+              stored inside the encryption that control what a reader can do
+              after opening, such as printing, copying, editing, annotating, or
+              filling forms, and they only take effect when an owner password is
+              set. Change Permissions lets you allow or deny each action
+              individually, while Protect PDF applies the strictest set as soon
+              as you add an owner password.
             </p>
           </details>
-
           <details class="faq-d">
             <summary class="faq-d-q">
-              Is there a file size limit?
+              How strong is the password protection?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              No file size limits! Process files of any size. Browser-based
-              processing means no artificial limitations.
+              Protect PDF and Change Permissions use 256-bit AES encryption, the
+              PDF 2.0 standard, applied by QPDF running in your browser. The
+              encryption itself isn't practical to brute-force, so the weak
+              point is the password: use a long passphrase and send it through a
+              different channel than the file. Permission flags are a separate
+              matter, since they rely on the reader honoring them and some
+              third-party tools ignore them.
             </p>
           </details>
-
           <details class="faq-d">
             <summary class="faq-d-q">
-              Do I need to install software?
+              Can I remove a password from a PDF if I don't know it?
               <i data-lucide="plus" class="faq-d-icon"></i>
             </summary>
             <p class="faq-d-a">
-              No installation required! All tools are web-based and work
-              directly in your browser. Just open the page and start using -
-              works on any device.
+              No.
+              <a
+                href="/unlock-pdf"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Unlock PDF</a
+              >
+              needs the password and then saves a copy with no encryption or
+              restrictions left, and none of the tools crack or brute-force
+              passwords. For a file that opens fine but blocks printing or
+              copying, use Remove Restrictions instead, which asks for the owner
+              password if the file has one.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              What's the difference between Sign PDF and a digital signature?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              Sign PDF places a drawn, typed, or uploaded signature image on the
+              page, with an option to flatten it so nobody can move or delete it
+              later.
+              <a
+                href="/digital-sign-pdf"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Digital Signature</a
+              >
+              applies a cryptographic signature with your own X.509 certificate
+              (.pfx, .p12, or .pem), which proves who signed and that the file
+              hasn't changed since, and Validate Signature checks signatures
+              already in a file. Certificate signing may need an internet
+              connection to fetch the certificate chain, and self-signed
+              certificates will show warnings in Adobe Reader.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              How do I redact text so it's actually gone?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              Use the redaction tool in the
+              <a href="/edit-pdf" class="text-indigo-300 hover:text-indigo-400"
+                >PDF Editor</a
+              >, which permanently removes the marked content from the page
+              instead of just covering it with a box. Redaction only deals with
+              what's on the page, so if the file's properties, comments, or
+              attachments could reveal the same information, run Remove Metadata
+              or Sanitize PDF on the result as well.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              What's the difference between Remove Metadata and Sanitize PDF?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              <a
+                href="/remove-metadata"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Remove Metadata</a
+              >
+              strips only the document properties: title, author, dates,
+              producer, XMP data, document IDs, and application-specific data,
+              and it leaves pages, forms, links, and bookmarks untouched.
+              Sanitize PDF goes further and can also flatten forms and delete
+              annotations, embedded JavaScript, attachments, layers, links, and
+              structure tags, with each item selectable. Both are irreversible,
+              so keep your original file.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              What does flattening a PDF do, and when should I use it?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              <a
+                href="/flatten-pdf"
+                class="text-indigo-300 hover:text-indigo-400"
+                >Flatten PDF</a
+              >
+              burns form fields and annotations (comments, highlights, stamps,
+              sticky notes, signature fields) into the page content, so they
+              look the same but can no longer be edited, moved, or removed. Use
+              it after a form is filled in or a signature is placed and before
+              you send the file, because there's no way to unflatten. Text stays
+              selectable and searchable, and bookmarks are kept.
+            </p>
+          </details>
+          <details class="faq-d">
+            <summary class="faq-d-q">
+              Are my passwords, certificates, or files sent to a server?
+              <i data-lucide="plus" class="faq-d-icon"></i>
+            </summary>
+            <p class="faq-d-a">
+              No. Encrypting, unlocking, sanitizing, and signing all run as
+              WebAssembly in your browser, so the document, the password you
+              type, and your certificate's private key stay on your device. The
+              one network exception is Digital Signature, which may contact your
+              certificate authority's servers to fetch the certificate chain;
+              the document itself is still never sent.
             </p>
           </details>
         </div>

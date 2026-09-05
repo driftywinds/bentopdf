@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Page Dimensions online free - Page dimensions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Analyze page size, orientation, and units. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="page dimensions, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Page Dimensions online free - Page dimensions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Analyze page size, orientation, and units. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Page Dimensions Free" />
     <meta
       name="twitter:description"
-      content="★ Page Dimensions online free - Page dimensions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Analyze page size, orientation, and units. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Page Dimensions" />
 
     <title>Page Dimensions - Analyze PDF Page Sizes - BentoPDF</title>
-    <meta
-      name="description"
-      content="Analyze PDF page dimensions and sizes. View detailed information about each page including dimensions, orientation, and aspect ratio. Export to CSV. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -346,32 +342,103 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is page dimensions really free?
+            How do I check whether my PDF is A4 or Letter?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the file and the analysis runs immediately. The summary shows
+            the total page count and how many distinct sizes appear, and the
+            table lists each page's width and height next to the matched
+            standard size, so a plain A4 or Letter document shows one size
+            across all pages.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Which standard paper sizes does it recognize?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            A3, A4, A5, Letter, Legal, and Tabloid, in either portrait or
+            landscape, matched within one point of the official dimensions.
+            Anything else is reported as Custom with its exact measurements.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What does the Mixed Sizes warning mean?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            More than one width and height combination was found in the
+            document, and the summary breaks down how many pages use each. A
+            rotated page counts as a separate size from its upright twin, so a
+            landscape A4 page in a portrait A4 file triggers the warning. To
+            make everything uniform, use
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I see the sizes in inches or millimeters instead of points?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Use the units menu to switch the whole table between points, inches,
+            millimeters, and pixels. Pixels are calculated at 96 PPI, which
+            matches how browsers and most screen tools treat PDF pages.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What does the Rotation column tell me?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            It shows the rotation attribute stored on the page, in degrees. A
+            page can look upright in a viewer while carrying a 90 or 270 degree
+            rotation, which trips up some print and conversion workflows, and
+            <a href="/rotate-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Rotate PDF</a
+            >
+            can normalize it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I export the results?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Click Export to CSV to download page-dimensions.csv with one row per
+            page: page number, width, height, standard size, orientation, aspect
+            ratio, area, and rotation, in whichever unit is selected. It opens
+            directly in Excel or Google Sheets.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does this tool change my PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. It only reads the page tree and reports what it finds; nothing
+            is rewritten, and the only download offered is the optional CSV.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the PDF uploaded for analysis?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The file is parsed in your browser and the measurements are
+            computed locally, which is also why the results appear as soon as
+            the file is loaded.
           </p>
         </details>
       </div>

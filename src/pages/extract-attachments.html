@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Extract Attachments online free - Extract PDF attachments easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract all embedded files from PDF(s) as a ZIP. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="extract attachments, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Extract Attachments online free - Extract PDF attachments easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract all embedded files from PDF(s) as a ZIP. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Extract Attachments Free" />
     <meta
       name="twitter:description"
-      content="★ Extract Attachments online free - Extract PDF attachments easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Extract all embedded files from PDF(s) as a ZIP. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Extract Attachments" />
 
     <title>Extract Attachments from PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Extract all embedded attachments from your PDF documents. Download attachments as a ZIP file. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -334,32 +330,105 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is extract attachments really free?
+            What counts as an attachment in a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Files embedded inside the PDF, either at the document level (the
+            paperclip panel in Acrobat) or attached to a specific page as a file
+            attachment annotation. Images drawn on the page, fonts, and form
+            data are not attachments; for pictures use
+            <a
+              href="/extract-images"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Extract Images</a
+            >.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why does it say the PDF has no attachments?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            It means cpdf found no embedded files at either the document or page
+            level. Pictures on the page, hyperlinks to external files, and form
+            field data can look like attachments in a viewer but aren't stored
+            as embedded files, so there is nothing to extract.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            How are the extracted files named?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Each file keeps the name it was embedded with. Attachments tied to a
+            specific page get the PDF's name and page number added as a prefix,
+            and if two attachments share a name the second gets a _1 suffix so
+            nothing is overwritten inside the ZIP.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I extract attachments from several PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Upload as many PDFs as you like and click Extract Attachments once.
+            Everything found across all of them is placed in one
+            extracted-attachments.zip, and the status message reports the total
+            count and combined size.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What file types can be extracted?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Anything that was embedded: spreadsheets, XML data files, images,
+            ZIP archives, other PDFs, and so on. The tool copies the bytes out
+            exactly as they were stored and doesn't convert or open them.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I extract attachments from a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Encrypted PDFs prompt for their password when loaded, and extraction
+            then runs on the decrypted copy held in memory. Without the correct
+            password the embedded files can't be read.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I view or delete individual attachments instead of extracting
+            all of them?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool extracts everything in one pass. To inspect, remove, or
+            replace individual attachments inside the PDF use
+            <a
+              href="/edit-attachments"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Edit Attachments</a
+            >, and to embed new ones use Add Attachments.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the embedded files uploaded during extraction?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PDFs are parsed by a WebAssembly build of cpdf in a
+            background worker in your browser, the ZIP is assembled locally, and
+            the download comes straight from your device. Attachments often
+            contain source data, so this keeps them off any server.
           </p>
         </details>
       </div>

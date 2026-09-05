@@ -13,7 +13,7 @@
     />
     <meta
       name="description"
-      content="★ Add RFC 3161 document timestamp to PDF online free ★ Trusted TSA servers ★ No certificate required ★ Privacy-first ★ Works in browser"
+      content="Add an RFC 3161 document timestamp to your PDF using a trusted Time Stamp Authority (TSA) server. Proves your document. Free. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Add RFC 3161 document timestamp to PDF online free ★ Trusted TSA servers ★ No certificate required ★ Privacy-first ★ Works in browser"
+      content="Add an RFC 3161 document timestamp to your PDF using a trusted Time Stamp Authority (TSA) server. Proves your document. Free. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -50,7 +50,7 @@
     <meta name="twitter:title" content="Timestamp PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Add RFC 3161 document timestamp to PDF online free ★ Trusted TSA servers ★ Privacy-first"
+      content="Add an RFC 3161 document timestamp to your PDF using a trusted Time Stamp Authority (TSA) server. Proves your document. Free. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -319,7 +319,7 @@
           <p class="text-gray-400 text-sm">Verify digital signatures</p>
         </a>
         <a
-          href="encrypt-pdf.html"
+          href="protect-pdf.html"
           class="block bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors border border-gray-700"
         >
           <h3 class="text-white font-semibold mb-1">Encrypt PDF</h3>
@@ -352,47 +352,105 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            What is a document timestamp?
+            Which timestamp servers can I use?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            A document timestamp (RFC 3161) is a cryptographic proof that your
-            PDF existed at a specific point in time. A trusted Time Stamp
-            Authority (TSA) server signs a hash of your document along with the
-            current time, creating a tamper-evident timestamp embedded in the
-            PDF.
+            The menu offers five public RFC 3161 authorities: DigiCert, Sectigo,
+            SSL.com, FreeTSA, and MeSign. There is no field for a custom URL, so
+            the choice is limited to those presets.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Do I need a certificate?
+            Does timestamping work offline?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No. Unlike a digital signature, a document timestamp does not
-            require a personal certificate. The TSA server provides the trusted
-            timestamp using its own certificate.
+            No. The tool has to contact the chosen TSA over the internet to
+            obtain the signed timestamp token; everything else, including
+            hashing the file and embedding the token, happens in your browser.
+            If the request fails you can pick another server and try again.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is my document sent to the TSA server?
+            What's the difference between a timestamp and a digital signature?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No. Only a cryptographic hash (SHA-256) of your document is sent to
-            the TSA server. Your actual PDF content never leaves your browser.
+            A digital signature proves who signed the document and needs your
+            own certificate, while a document timestamp proves only when the
+            document existed, vouched for by the TSA. If you need both, sign
+            first with
+            <a
+              href="/digital-sign-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Digital Sign PDF</a
+            >
+            and then add the timestamp here.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Will the timestamp be valid in PDF readers?
+            Can I timestamp a PDF that is already signed?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes. The tool creates a standard RFC 3161 document timestamp
-            (ETSI.RFC3161 SubFilter) that is recognized by Adobe Acrobat and
-            other major PDF viewers.
+            The timestamp is appended as an incremental update rather than a
+            rewrite of the file, so an existing signature stays intact and
+            verifiable, and the timestamp shows as its own entry in the reader's
+            signature panel.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will anything appear on the page?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The timestamp is invisible; it lives in the file's signature
+            data and shows up in the signature panel of Acrobat and similar
+            readers, not as a stamp on the page. The downloaded file keeps its
+            original name.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why did I get a Timestamp Failed error?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Most often the TSA didn't respond or your connection dropped, so try
+            another server from the list. On self-hosted copies of BentoPDF
+            served over HTTPS, the servers that only offer HTTP endpoints need a
+            CORS proxy configured at build time; FreeTSA uses HTTPS and works
+            without one.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How long does the timestamp stay valid?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Readers validate the token against the TSA's certificate chain, so
+            it verifies as long as that chain is trusted. This tool doesn't
+            embed long-term validation (LTV) data, so verification years later
+            depends on the reader still being able to check the TSA's
+            certificates.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I check the timestamp after downloading?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Open the signature panel in Adobe Acrobat Reader or another
+            signature-aware viewer; the timestamp is listed there with its time
+            and the authority that issued it. If the reader trusts the TSA's
+            certificate chain, it reports the timestamp as valid.
           </p>
         </details>
       </div>

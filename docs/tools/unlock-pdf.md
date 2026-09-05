@@ -41,6 +41,6 @@ If you have the password to an encrypted PDF, this tool removes the encryption e
 
 ## Related Tools
 
-- [Encrypt PDF](./encrypt-pdf) -- re-apply encryption with a new password
+- [Encrypt PDF](./protect-pdf) -- re-apply encryption with a new password
 - [Remove Restrictions](./remove-restrictions) -- remove usage restrictions without full decryption
 - [Change Permissions](./change-permissions) -- modify specific permissions on an encrypted PDF

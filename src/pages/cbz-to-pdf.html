@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ CBZ to PDF online free - CBZ to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert comic book archives (CBZ/CBR) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="cbz to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ CBZ to PDF online free - CBZ to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert comic book archives (CBZ/CBR) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="CBZ to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ CBZ to PDF online free - CBZ to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert comic book archives (CBZ/CBR) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="CBZ to PDF" />
 
     <title>CBZ to PDF - Convert XPS/OCBZ to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert XPS and OXPS documents to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -333,32 +329,103 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is cbz to pdf really free?
+            Does converting a CBZ to PDF reduce the image quality?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            JPEG and PNG pages are copied into the PDF as they are, with no
+            re-encoding, so the artwork looks exactly like the original and the
+            file size stays about the same. Other formats such as WebP, GIF, or
+            BMP are decoded and re-saved as lossless PNG before embedding.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            How does the tool decide the page order?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Pages are sorted by filename using natural ordering, so page2.jpg
+            comes before page10.jpg. Files in subfolders are included and sorted
+            by their full path, and non-image files such as ComicInfo.xml are
+            ignored.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What page size do the comic pages get in the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Each page is sized to the pixel dimensions of its image, one point
+            per pixel, so a double-page spread comes out as a wide landscape
+            page and single pages stay portrait. There's no option to force one
+            size here; if you need uniform pages, run the result through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert CBR files as well as CBZ?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            .cbr archives are accepted and can be mixed with .cbz files in the
+            same batch. CBR files are routed through the PyMuPDF engine, which
+            downloads on first use, so they take a little longer than CBZ files,
+            which are unpacked directly in the browser.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which image formats inside the archive are supported?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            JPEG and PNG are embedded directly. GIF, BMP, WebP, AVIF, TIFF,
+            HEIC, and JXL are converted to PNG by your browser first, so those
+            less common formats only work if your browser can display them;
+            TIFF, HEIC, and JXL fail in some browsers. The converter checks the
+            actual image data rather than the extension, so a PNG named .jpg
+            still works.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is there a limit on archive size or page count?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A single CBZ can hold up to 2,000 images, with each image capped at
+            100 MB and 500 MB of uncompressed image data per archive. Those
+            limits keep the browser from running out of memory, and they're far
+            above a typical comic issue.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens when I convert several comics at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each archive becomes its own PDF named after the original file. One
+            file downloads directly; two or more are bundled into
+            comic-converted.zip.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my comic files uploaded anywhere?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. CBZ archives are unzipped and rebuilt as PDFs entirely inside
+            your browser, and CBR files are handled by an engine that also runs
+            locally. Nothing from your collection leaves your device.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to TIFF online free - PDF to TIFF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a TIFF image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to tiff, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to TIFF online free - PDF to TIFF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a TIFF image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF to TIFF Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to TIFF online free - PDF to TIFF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a TIFF image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to TIFF" />
 
     <title>PDF to TIFF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF pages to TIFF images. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -403,32 +399,101 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to tiff really free?
+            Can I get all pages in a single multi-page TIFF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Yes. Check "Save as multi-page TIFF (single file)" and every page is
+            written into one .tiff named after the PDF. Leave it unchecked and a
+            multi-page PDF downloads as a ZIP containing page_1.tiff,
+            page_2.tiff, and so on; a one-page PDF always gives a single .tiff.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What DPI should I use?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The slider runs from 72 to 600 and defaults to 300, the usual choice
+            for print and archival scans. Fax and document management systems
+            typically expect 200 to 300, and 150 is enough for screen use. Very
+            high DPI on large pages can run the browser out of memory, and
+            you'll see an error if that happens.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Which compression should I choose?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            LZW, the default, and Deflate are lossless and suit any content.
+            CCITT Group 4 gives the smallest files for black-and-white scans and
+            automatically switches the color mode to 1-bit. JPEG is lossy
+            (quality 85) but keeps photo-heavy pages small, and PackBits or None
+            are there for older systems that require them.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I make a black-and-white TIFF for fax or e-filing?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Set Color Mode to "Black &amp; White (1-bit)" and Compression to
+            CCITT Group 4, then pick 200 or 300 DPI. That combination is what
+            most fax gateways and document management systems expect, and it
+            produces very small files.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is my TIFF so large?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            TIFF stores a bitmap of every page. An uncompressed 300 DPI color
+            Letter page is roughly 25 MB, so lower the DPI, switch the color
+            mode to grayscale or black and white, or use CCITT Group 4 for text
+            scans. If you only need lossless images for the screen,
+            <a href="/pdf-to-png" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to PNG</a
+            >
+            makes smaller files.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I batch-convert PDFs to TIFF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. This tool takes one PDF at a time; if you drop several, only the
+            first is used. Convert them one after another.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will a password-protected PDF convert to TIFF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. If the PDF needs a password to open, you're asked for it before
+            conversion, and the pages are rendered once it's entered. The TIFF
+            output itself has no password protection.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my pages uploaded to convert them?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Pages are rendered with PDF.js and encoded with libvips compiled
+            to WebAssembly, all inside your browser. That does require a browser
+            with SharedArrayBuffer support, which is why the tool must run over
+            HTTPS.
           </p>
         </details>
       </div>

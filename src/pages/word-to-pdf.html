@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Word to PDF Converter Free Online - Convert Files | BentoPDF"
+      content="Word to PDF Converter Free - DOCX to PDF Online | BentoPDF"
     />
     <meta
       name="description"
-      content="★ Word to PDF online free - Convert Word to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Word documents (DOCX, DOC, ODT, RTF) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -31,11 +31,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/word-to-pdf" />
     <meta
       property="og:title"
-      content="Word to PDF Converter Free Online - Convert Files | BentoPDF"
+      content="Word to PDF Converter Free - DOCX to PDF Online | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ Word to PDF online free - Convert Word to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Word documents (DOCX, DOC, ODT, RTF) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,10 +48,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/word-to-pdf" />
-    <meta name="twitter:title" content="Word to PDF Free" />
+    <meta
+      name="twitter:title"
+      content="Word to PDF Converter Free - DOCX to PDF Online | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ Word to PDF online free - Convert Word to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Convert Word documents (DOCX, DOC, ODT, RTF) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,11 +67,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Word to PDF" />
 
-    <title>Word to PDF - Convert DOCX, DOC to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert Word documents (DOCX, DOC, ODT, RTF) to PDF format. Free, secure, and runs entirely in your browser."
-    />
+    <title>Word to PDF Converter Free - DOCX to PDF Online | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -315,7 +314,7 @@
       </h2>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <a
-          href="pdf-to-docx.html"
+          href="pdf-to-word.html"
           class="block bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors border border-gray-700"
         >
           <h3 class="text-white font-semibold mb-1">PDF to DOCX</h3>
@@ -365,32 +364,96 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Does it work with both .doc and .docx files?
+            Do I need Microsoft Word installed to convert Word to PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF supports both older .doc and newer .docx Microsoft
-            Word formats.
+            No. The conversion is done by LibreOffice compiled to WebAssembly
+            running inside your browser, so it works on any computer, tablet, or
+            phone with a modern browser and no Office license. The engine is
+            about 77 MB and downloads on first use, so the first conversion of a
+            session takes longer.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Will formatting be preserved?
+            Can I convert Google Docs or Apple Pages files?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! Fonts, images, tables, headers, footers, and all formatting are
-            preserved exactly as they appear in Word.
+            For Google Docs, download the document as .docx from File &gt;
+            Download and convert that. Pages files aren't supported; export them
+            as Word or PDF from Pages first. The tool accepts .doc, .docx, .odt,
+            and .rtf.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Can I convert password-protected Word files?
+            Will headings become PDF bookmarks, and do links stay clickable?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            You'll need to unlock password-protected files first before
-            converting them to PDF.
+            Yes, as long as the headings use Word's heading styles;
+            LibreOffice's PDF export turns them into an outline, and hyperlinks
+            in the document remain clickable in the PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why do fonts look different in the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Only fonts bundled with the engine are available, so a document set
+            in a font that isn't embedded in the file is rendered with the
+            closest substitute. The layout stays close, but line breaks can
+            shift; embedding fonts in the .docx before converting avoids this.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do tracked changes and comments appear in the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The document is rendered the way LibreOffice Writer displays it, so
+            accept or reject tracked changes and delete comments in Word before
+            converting if you want a clean PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several documents at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. A single file downloads as a PDF with the same base name;
+            multiple files are delivered as word-converted.zip with one PDF
+            each, and duplicate names are numbered automatically.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What doesn't convert well?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Macros, ActiveX controls, and complex SmartArt may not render
+            correctly, and Chinese, Japanese, Korean, or Indic text may show
+            fallback fonts or boxes because those fonts aren't bundled. Standard
+            text, tables, images, headers, footers, and footnotes convert
+            reliably.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my document uploaded to a server for conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The LibreOffice engine runs entirely inside your browser tab, so
+            a resume, contract, or medical letter is converted on your own
+            device and never sent anywhere.
           </p>
         </details>
       </div>

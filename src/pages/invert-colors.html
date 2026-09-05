@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Invert Colors online free - Invert colors PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a 'dark mode' version of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="invert colors, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Invert Colors online free - Invert colors PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a 'dark mode' version of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Invert Colors Free" />
     <meta
       name="twitter:description"
-      content="★ Invert Colors online free - Invert colors PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Create a 'dark mode' version of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Invert Colors" />
 
     <title>Invert PDF Colors - BentoPDF</title>
-    <meta
-      name="description"
-      content="Invert colors in your PDF documents. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -122,7 +118,7 @@
           Invert Colors
         </h1>
         <p class="text-gray-400 mb-6" data-i18n="tools:invertColors.subtitle">
-          Create a "dark mode" version of your PDF.
+          Create a 'dark mode' version of your PDF.
         </p>
 
         <div
@@ -318,32 +314,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is invert colors really free?
+            What happens to photos and colored graphics when I invert a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Every pixel is flipped to its complementary value, so photos look
+            like film negatives and brand colors shift (blue turns orange, red
+            turns cyan). The tool suits text-heavy documents where you want
+            light text on a dark page; for brightness or contrast changes
+            without inverting images, use
+            <a
+              href="/adjust-colors"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Adjust Colors</a
+            >.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will I still be able to select or search text after inverting?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            No. Each page is rendered as an image, inverted, and rebuilt as an
+            image-only PDF, so the text layer is gone. If you need searchable
+            text again, run the inverted file through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does the inverted PDF look blurry?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Pages are rendered at 1.5x scale, roughly 108 dots per inch. That's
+            sharp on a screen at normal zoom, which is where dark-mode reading
+            happens, but it can look soft if you print the file or zoom in far.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is the output file larger than the original?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The inverted pages are stored as full-page PNG images instead of
+            text and vector drawings, which often takes more space. For a
+            smaller file, pass the result through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are hyperlinks, bookmarks, and form fields kept?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Because the output is a fresh image-based document, interactive
+            elements such as links, form fields, comments, and bookmarks are not
+            carried over. Keep the original if you need them.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I invert only some pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not with this tool; it processes every page. If you only want a few
+            pages inverted, separate them first with
+            <a href="/split-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Split PDF</a
+            >, invert that part, and merge the pieces back together.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it work on scanned documents?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Scans are already images, so they invert cleanly, and it can
+            rescue a scan captured as a negative or with reversed exposure.
+            Grayscale scans keep their gray levels, just reversed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my document uploaded to be inverted?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering and pixel inversion happen on a canvas in your
+            browser, and the new PDF is assembled locally. Nothing leaves your
+            computer, and there's no server queue, so the speed depends only on
+            your device.
           </p>
         </details>
       </div>

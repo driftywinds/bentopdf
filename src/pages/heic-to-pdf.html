@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ HEIC to PDF online free - HEIC to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more HEIC images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="heic to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ HEIC to PDF online free - HEIC to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more HEIC images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="HEIC to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ HEIC to PDF online free - HEIC to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more HEIC images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="HEIC to PDF" />
 
     <title>HEIC to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert HEIC images to PDF. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -329,32 +325,103 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is heic to pdf really free?
+            Does it work with HEIF files as well as HEIC?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Yes. Both .heic and .heif extensions are accepted, including HEIF
+            screenshots and photos from iPhones and iPads. Files with any other
+            extension are skipped when you add them.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why is the PDF so much larger than my HEIC photos?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            HEIC is heavily compressed, and the converter decodes each photo to
+            a lossless PNG before placing it in the PDF at full resolution, so a
+            12 megapixel photo can take tens of megabytes. Run the result
+            through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            if you need a smaller file.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            How are the photos arranged, and what size are the pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Each photo becomes its own page in the order listed. The page is
+            sized to the photo's pixel dimensions at one point per pixel, so a
+            4032 by 3024 photo produces a page about 56 by 42 inches, which
+            viewers and printers scale to fit.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the GPS location or other EXIF data kept in the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The decoded image is stored as plain pixels, so location, camera
+            model, and capture date from the phone aren't carried into the PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What about burst shots or HEIC files that contain several images?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Only the first image in the container is converted; additional
+            frames stored in the same file are ignored. For a Live Photo, the
+            still image is used and the video part, which lives in a separate
+            .mov file, isn't involved.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does the first HEIC file take longer to convert?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The HEIC decoder is libheif compiled to WebAssembly and loads in the
+            browser when first needed. Later conversions in the same session
+            skip that step, though large photos still take a few seconds each to
+            decode.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I combine HEIC photos with JPG or PNG images in one PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not here; this tool accepts only HEIC and HEIF.
+            <a
+              href="/image-to-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Images to PDF</a
+            >
+            accepts HEIC alongside JPG, PNG, WebP, and other formats in a single
+            batch.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my photos uploaded to convert them?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Decoding and PDF creation happen in your browser, so private
+            photos never leave your phone or computer.
           </p>
         </details>
       </div>

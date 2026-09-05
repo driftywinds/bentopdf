@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Divide Pages online free - Divide pages PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Divide pages horizontally or vertically. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="divide pages, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Divide Pages online free - Divide pages PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Divide pages horizontally or vertically. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Divide Pages Free" />
     <meta
       name="twitter:description"
-      content="★ Divide Pages online free - Divide pages PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Divide pages horizontally or vertically. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Divide Pages" />
 
     <title>Divide PDF Pages - BentoPDF</title>
-    <meta
-      name="description"
-      content="Split each page of your PDF horizontally or vertically into two pages. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -371,32 +367,99 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is divide pages really free?
+            How do I split a two-page book scan into separate pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the PDF, choose Vertical (Left &amp; Right) as the split
+            type, and process it. Each page is cut at the exact midpoint into a
+            left page followed by a right page, so a book scanned two pages per
+            sheet becomes one page per sheet in reading order.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What is the difference between vertical and horizontal division?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Vertical cuts each page down the middle into left and right halves,
+            which suits landscape pages with side-by-side content. Horizontal
+            cuts across the middle into top and bottom halves, top half first,
+            which suits tall pages such as posters or stacked forms.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I divide only some pages and leave the rest alone?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Enter a page range such as 1-5, 8, 11-13 in the page range box. Only
+            those pages are divided; every other page is copied into the output
+            unchanged and in its original position. Leave the box blank to
+            divide all pages.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does dividing pages lower the quality or change the text?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The tool copies each page twice and sets a different crop box on
+            each copy rather than re-rendering anything, so text stays
+            selectable, vector graphics stay sharp, and images keep their
+            original resolution.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I choose where the cut happens instead of the middle?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No, the split is always at the midpoint of the page. If the content
+            is off-center or you need an uneven cut, use
+            <a href="/crop-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Crop PDF</a
+            >
+            to set the exact area you want for each half.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How many pages will the output have?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each divided page becomes two pages, so a 10-page document with
+            every page divided produces 20 pages. Pages outside your range still
+            count once, and the halves keep the same order as the original.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            The halves come out sideways. What should I do?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Divide Pages doesn't rotate anything, so fix the orientation with
+            <a href="/rotate-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Rotate PDF</a
+            >
+            either before dividing or on the divided output, depending on how
+            the scan was made.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded when I divide its pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The page copying and crop-box changes happen in your browser,
+            and the divided file is written on your device without any upload.
           </p>
         </details>
       </div>

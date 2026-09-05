@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PSD to PDF online free - PSD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Adobe Photoshop (PSD) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="psd to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PSD to PDF online free - PSD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Adobe Photoshop (PSD) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PSD to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ PSD to PDF online free - PSD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Adobe Photoshop (PSD) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PSD to PDF" />
 
     <title>PSD to PDF - Convert Photoshop Files to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert Adobe Photoshop (PSD) files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -329,32 +325,91 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is psd to pdf really free?
+            Do I need Photoshop installed?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            No. The PSD is read by PyMuPDF running in your browser, which uses
+            the flattened composite image stored inside the file, so the
+            conversion works on any computer with a modern browser.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Are the layers kept in the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            No. The PDF contains one flattened image of the composite, so
+            individual layers, adjustment layers, masks, and layer effects can't
+            be toggled or edited afterward. It's a picture of the document as it
+            looked when the PSD was saved.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why does my PSD convert to a blank or wrong-looking page?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The converter relies on the composite image Photoshop writes when
+            Maximize Compatibility is on. If that option was off when the file
+            was saved, the composite may be missing or stale; resave the PSD
+            with Maximize Compatibility enabled and convert again.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What resolution will the PDF have?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The composite is embedded at its full pixel dimensions with no
+            downsampling, so a 300 DPI print file stays at print quality. That
+            also means large artwork produces a large PDF; run it through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            if you need a smaller proof.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens when I convert several PSDs together?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            They're combined into one PDF named psd_to_pdf.pdf, with each PSD
+            becoming a page in the order listed. To get separate PDFs, convert
+            the files one at a time.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert other Photoshop or image formats here?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Only files with a .psd extension are accepted. For PNG, JPG, TIFF,
+            or WebP exports use
+            <a
+              href="/image-to-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Images to PDF</a
+            >, which also lets you set page size and margins.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my design files uploaded?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PSD is decoded and the PDF written by PyMuPDF compiled to
+            WebAssembly in your browser, so unreleased designs and client work
+            never leave your machine.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PUB to PDF online free - PUB to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Microsoft Publisher (PUB) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pub to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PUB to PDF online free - PUB to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Microsoft Publisher (PUB) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PUB to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ PUB to PDF online free - PUB to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Microsoft Publisher (PUB) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PUB to PDF" />
 
     <title>PUB to PDF - Convert Microsoft Publisher to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert Microsoft Publisher (PUB) files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -339,32 +335,87 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pub to pdf really free?
+            How do I open a .pub file without Microsoft Publisher?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the .pub file here and click Convert to PDF. A LibreOffice
+            engine compiled to WebAssembly runs in your browser, reads the
+            Publisher file, and writes a PDF you can open on any device, so you
+            don't need Publisher or any other Microsoft software installed.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will the layout look the same as in Publisher?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Text, images, and text boxes are placed according to the original
+            layout, and most flyers and newsletters convert well. Layered text
+            boxes and tightly positioned elements can shift slightly, and fonts
+            that aren't standard system fonts may be substituted, so check the
+            output when exact positioning matters.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why does the first Publisher file take longer?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The conversion engine is roughly 75 MB compressed and is downloaded
+            and started the first time you convert in a session, with a progress
+            indicator showing how far along it is. After that, additional files
+            convert much faster.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several Publisher files at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Add multiple .pub files, remove any you don't want, and convert them
+            together. A single file downloads as a PDF with the same base name;
+            several are packaged into pub-to-pdf.zip, with duplicate names given
+            a numbered suffix.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a PDF back into a Publisher file?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No, the conversion is one way, from .pub to PDF. If you need an
+            editable result, convert the PDF with
+            <a href="/pdf-to-word" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to Word</a
+            >
+            afterward and rebuild the layout there.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the text in the converted PDF selectable?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The PDF is generated from the document's text objects, so text stays
+            selectable and searchable rather than being flattened into an image.
+            Text that was placed in the original as a picture stays a picture.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my Publisher file uploaded to a server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The whole conversion happens inside your browser, so the .pub
+            file and the resulting PDF never leave your computer. Client
+            artwork, unreleased newsletters, and event programs stay private.
           </p>
         </details>
       </div>

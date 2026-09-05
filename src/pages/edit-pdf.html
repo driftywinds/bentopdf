@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Edit PDF Online Free - Edit PDF Tool | BentoPDF"
+      content="Edit PDF Online Free - Annotate, Highlight and Redact | BentoPDF"
     />
     <meta
       name="description"
-      content="★ Edit PDF online free - Edit PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Edit Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -31,11 +31,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/edit-pdf" />
     <meta
       property="og:title"
-      content="Edit PDF Online Free - Edit PDF Tool | BentoPDF"
+      content="Edit PDF Online Free - Annotate, Highlight and Redact | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ Edit PDF online free - Edit PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Edit Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,10 +48,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/edit-pdf" />
-    <meta name="twitter:title" content="Edit PDF Free" />
+    <meta
+      name="twitter:title"
+      content="Edit PDF Online Free - Annotate, Highlight and Redact | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ Edit PDF online free - Edit PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Edit Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,11 +67,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Edit PDF" />
 
-    <title>PDF Editor - BentoPDF</title>
-    <meta
-      name="description"
-      content="Annotate, highlight, redact, comment, add shapes/images, search, and view PDFs. Free, secure, and runs entirely in your browser."
-    />
+    <title>
+      Edit PDF Online Free - Annotate, Highlight and Redact | BentoPDF
+    </title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -316,32 +317,104 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is edit pdf really free?
+            Can I change the existing text in my PDF with this editor?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            This editor works on top of the page: highlights, comments, shapes,
+            images, freehand drawing, redaction, and new text boxes. To rewrite
+            text that's already in the document, use
+            <a
+              href="/edit-pdf-text"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Edit PDF Text</a
+            >, which lets you click a paragraph and edit it in place.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will my annotations show up in Acrobat, Preview, or Chrome?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Yes. Highlights, comments, shapes, and drawings are saved as
+            standard PDF annotations, so other viewers display them and can
+            usually edit or delete them. Text boxes are written into the page as
+            regular text on download, so they look identical everywhere but
+            can't be moved afterward.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Is the redaction permanent?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Yes. Applying a redaction removes the content underneath the marked
+            area from the file rather than covering it with a box, so the text
+            can't be recovered by copying or searching. Open the downloaded file
+            and check before you share it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I open more than one PDF at a time?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Up to 10 documents can be open at once, each in its own tab above
+            the viewer. Adding more files opens more tabs, and removing a file
+            from the list closes its tab.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the editor save my changes automatically?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Everything stays in your browser's memory until you click
+            Download Edited PDF, and closing or refreshing the tab discards the
+            changes. Download before you leave the page.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why can't I highlight text on my scanned PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Highlight, underline, and strikethrough attach to real text, and a
+            scanned page is only an image. Run the file through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            first to add a text layer, or mark it up visually with the pen or
+            rectangle tools.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add text in Chinese, Japanese, Arabic, or other non-Latin
+            scripts?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. When a text box contains characters outside the basic Latin
+            set, the editor fetches a matching Noto font and embeds it in the
+            PDF so the text renders correctly in other viewers.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the editor upload my PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The editor runs a PDF engine (PDFium compiled to WebAssembly)
+            inside your browser. The only network requests are for the editor's
+            code and optional font files; the document itself never leaves your
+            device.
           </p>
         </details>
       </div>

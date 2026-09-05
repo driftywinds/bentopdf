@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ CSV to PDF online free - CSV to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert CSV spreadsheet files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="csv to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ CSV to PDF online free - CSV to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert CSV spreadsheet files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="CSV to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ CSV to PDF online free - CSV to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert CSV spreadsheet files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="CSV to PDF" />
 
     <title>CSV to PDF - Convert Spreadsheets to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert CSV (Comma-Separated Values) spreadsheet files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -331,32 +327,102 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is csv to pdf really free?
+            How is the CSV laid out in the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The first row becomes a bold header with a blue background and the
+            remaining rows become striped table rows in 9-point text on
+            landscape A4 pages. Long tables continue over as many pages as
+            needed, with the header repeated on each page.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            My file uses semicolons or tabs instead of commas. Will it work?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Yes. The parser detects the delimiter automatically, so comma,
+            semicolon, tab, and pipe separated files all convert. Quoted fields
+            containing commas or line breaks are handled according to standard
+            CSV rules.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            My CSV has many columns. Why is the table squashed?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            All columns are shrunk to fit the page width and cell text wraps
+            onto extra lines, so very wide files end up with narrow columns.
+            There's no setting for page size or orientation, so split wide
+            datasets into several files or drop columns you don't need.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several CSV files at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. A single file downloads as a PDF with the same base name, while
+            several files are packaged into csv-converted.zip with one PDF per
+            file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it handle accented or non-Latin characters?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The file is read as UTF-8 and the PDF uses the built-in Helvetica
+            font, which covers Latin characters including accents. Text in
+            scripts such as Chinese, Arabic, or Cyrillic may not display
+            correctly, and files saved in other encodings can show garbled
+            characters.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does it say the CSV file is empty?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Rows that are completely blank are dropped before the table is
+            built, so a file containing only empty lines or whitespace triggers
+            that error. Open the file in a text editor and confirm it has at
+            least a header row with values.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I keep spreadsheet formatting such as column widths, colors, or
+            multiple sheets?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. CSV holds only raw values, so there's no formatting to preserve.
+            For .xlsx or .xls files with formatting and several sheets, use
+            <a
+              href="/excel-to-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Excel to PDF</a
+            >
+            instead.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my spreadsheet data sent anywhere?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The CSV is parsed and the PDF is generated in your browser with
+            JavaScript libraries (PapaParse and jsPDF), so financial or customer
+            data in the file stays on your machine.
           </p>
         </details>
       </div>

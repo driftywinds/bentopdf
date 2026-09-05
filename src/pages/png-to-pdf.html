@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <meta
-      name="title"
-      content="PNG to PDF Converter Free Online - Convert Files | BentoPDF"
-    />
+    <meta name="title" content="PNG to PDF Converter Free Online | BentoPDF" />
     <meta
       name="description"
-      content="★ PNG to PDF online free - Convert PNG to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more PNG images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="png to pdf, image to pdf, convert png" />
     <meta name="author" content="BentoPDF" />
@@ -28,11 +25,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/png-to-pdf" />
     <meta
       property="og:title"
-      content="PNG to PDF Converter Free Online - Convert Files | BentoPDF"
+      content="PNG to PDF Converter Free Online | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ PNG to PDF online free - Convert PNG to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more PNG images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -45,10 +42,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/png-to-pdf" />
-    <meta name="twitter:title" content="PNG to PDF Free" />
+    <meta
+      name="twitter:title"
+      content="PNG to PDF Converter Free Online | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ PNG to PDF online free - Convert PNG to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Create a PDF from one or more PNG images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -61,11 +61,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="PNG to PDF" />
 
-    <title>PNG to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert one or more PNG images into a single PDF file. Free, secure, and runs entirely in your browser."
-    />
+    <title>PNG to PDF Converter Free Online | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -354,32 +350,105 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is png to pdf really free?
+            What does the quality setting do for PNG images?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            High embeds each PNG as-is, losslessly and at full size. Medium
+            re-encodes the image as JPEG at 75% quality and shrinks anything
+            larger than 2500 pixels on its longest side; Low uses JPEG at 50%
+            with a 1500 pixel limit.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Which setting should I use for screenshots?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            High. Screenshots and diagrams have sharp edges and small text, and
+            the JPEG compression at Medium or Low adds visible blur and
+            artifacts around them. Medium or Low make sense mainly for photos
+            where file size matters more.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What happens to transparent areas?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            At High the PNG keeps its alpha channel and transparent regions show
+            the page behind them, which viewers display as white. Medium and Low
+            convert to JPEG, which has no transparency, so use High for images
+            with transparent backgrounds.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What page size will each page be?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The page matches the image's pixel dimensions at one point per
+            pixel, so a 1920 by 1080 screenshot gives a page about 26.7 by 15
+            inches; at Medium or Low a downscaled image gives a proportionally
+            smaller page. Use
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >
+            afterward if you need A4 or Letter.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I put several PNGs into one PDF and control the order?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Every file you add becomes one page in the order shown in the
+            list; remove and re-add files to change the order. The output is
+            always a single PDF, not one file per image.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is the PDF about the same size as my PNGs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            At High the PNG data is stored unchanged, so the PDF is roughly the
+            sum of the image sizes plus a little overhead. If that's too large,
+            choose Medium or Low, or run the PDF through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What if a PNG can't be embedded?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            PNGs with unusual color profiles or bit depths that the PDF library
+            rejects are redrawn and stored as JPEG at 90% quality instead, so
+            the conversion still completes with a small quality trade-off.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the images uploaded?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Each PNG is read, optionally recompressed, and embedded with
+            pdf-lib inside your browser, so screenshots of internal tools or
+            private conversations never leave your device.
           </p>
         </details>
       </div>

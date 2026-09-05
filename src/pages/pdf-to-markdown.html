@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to Markdown online free - PDF to Markdown easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF text and tables to Markdown format. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to markdown, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to Markdown online free - PDF to Markdown easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF text and tables to Markdown format. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="PDF to Markdown Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to Markdown online free - PDF to Markdown easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF text and tables to Markdown format. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to Markdown" />
 
     <title>PDF to Markdown - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF files to Markdown format. Extract text with optional embedded images. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -340,32 +336,103 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to markdown really free?
+            How well does PDF to Markdown preserve the document structure?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Headings, paragraphs, lists, and basic bold and italic formatting
+            are converted, and each page is separated by a horizontal rule (---)
+            in the output. Heading levels are inferred from font sizes, so a
+            document with inconsistent styling may come out with some headings
+            at the wrong level.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What does the Include Images option do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            When it's checked, pictures from the PDF are embedded directly in
+            the Markdown as base64 data, so the single .md file is
+            self-contained but can get large. Leave it off for text-heavy
+            documents to keep the output small and readable in a plain editor.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why is the Markdown empty or almost empty?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The converter reads the PDF's text layer, so a scanned document
+            that's only images has nothing to convert. Run it through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            first to add a text layer, then convert the result.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How does it handle multi-column layouts, footnotes, and sidebars?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Complex layouts are the weak spot: multi-column text can be
+            interleaved, and sidebars or footnotes may land in the wrong place.
+            Expect to review and tidy the output for magazine-style pages, while
+            single-column documents need little cleanup.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several PDFs to Markdown at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Upload multiple PDFs and click Convert once. One file downloads as
+            filename.md; several come back as markdown-files.zip with one .md
+            per PDF, and duplicate names get a numbered suffix.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is this the same as PDF to Text?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No.
+            <a href="/pdf-to-text" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to Text</a
+            >
+            gives you raw text with no structure, which is better for feeding
+            into scripts. PDF to Markdown keeps headings, lists, and emphasis so
+            the result is ready to paste into Obsidian, a wiki, or a static site
+            generator.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If the file needs a password to open, you're prompted for it before
+            conversion starts and the text is extracted as usual. The password
+            isn't stored anywhere, and the Markdown output has no protection of
+            its own.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded to convert it to Markdown?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Conversion runs on a PyMuPDF engine loaded into your browser as
+            WebAssembly, and the .md file or ZIP is generated on your machine.
+            Research papers, contracts, and internal docs stay private.
           </p>
         </details>
       </div>

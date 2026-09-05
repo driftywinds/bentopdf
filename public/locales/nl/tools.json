@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "Ja! Schakel de optie \"Herhalen\" in en de overlay-pagina's worden herhaald over alle basispagina's. Een watermerk van één pagina wordt op elke pagina toegepast.",
     "faqPrivacyQuestion": "Zijn mijn bestanden privé en veilig?",
     "faqPrivacyAnswer": "Absoluut! Alle verwerking vindt plaats in jouw browser. Jouw bestanden verlaten nooit jouw apparaat, wat volledige privacy garandeert."
+  },
+  "unlockPdf": {
+    "name": "PDF Ontgrendelen",
+    "subtitle": "Een PDF ontgrendelen door het verwijderen van de wachtwoordbeveiliging."
+  },
+  "protectPdf": {
+    "name": "PDF Versleutelen",
+    "subtitle": "Een PDF vergrendelen door toevoeging van een toegangswachtwoord."
   }
 }

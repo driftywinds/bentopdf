@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Edit Attachments online free - Edit attachments PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="View or remove attachments in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="edit attachments, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Edit Attachments online free - Edit attachments PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="View or remove attachments in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Edit Attachments Free" />
     <meta
       name="twitter:description"
-      content="★ Edit Attachments online free - Edit attachments PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="View or remove attachments in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Edit Attachments" />
 
     <title>Edit Attachments - BentoPDF</title>
-    <meta
-      name="description"
-      content="View and remove attachments from your PDF documents. Manage embedded files easily. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -325,32 +321,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is edit attachments really free?
+            How do I see what files are attached to a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the PDF and the tool scans it and lists every embedded file
+            by name, marking each one as a document-level attachment or as a
+            page attachment with its page number. If nothing is embedded, it
+            tells you so instead of showing an empty list.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Can I remove just one attachment instead of all of them?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Click the trash icon next to any attachment to mark it, and click
+            again to unmark it before saving. Remove All Attachments selects
+            everything at once, and the new PDF is written with only the marked
+            files taken out.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does removing attachments change the rest of the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The pages, text, and images are untouched. The attachments you keep
+            are re-embedded under their original names and, for page
+            attachments, on their original pages, but any description text
+            stored with them isn't carried over.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will deleting attachments make my PDF smaller?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Usually, and often by a lot, because embedded files are stored in
+            full inside the PDF. A document carrying a large spreadsheet or
+            image attachment can drop to a fraction of its size once that file
+            is removed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What is the difference between a document-level and a page-level
+            attachment?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Document-level attachments live in the PDF's embedded files list and
+            show up in a viewer's attachments panel. Page-level attachments are
+            file attachment annotations pinned to a spot on one page, usually
+            shown as a paperclip or pushpin icon. The tool lists and removes
+            both kinds.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I download the attachments before deleting them?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool only lists and removes them. To save the embedded files to
+            your computer first, run the PDF through
+            <a
+              href="/extract-attachments"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Extract Attachments</a
+            >, then come back here to strip them.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add or replace an attachment here?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No, this tool only removes attachments. Use
+            <a
+              href="/add-attachments"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Add Attachments</a
+            >
+            to embed new files, and combine the two steps when you want to swap
+            an outdated attachment for a newer version.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are the attachments uploaded anywhere when I edit them?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PDF is parsed by a cpdf engine running as WebAssembly in
+            your browser, the attachment list is built locally, and the cleaned
+            file is saved straight from your browser. Neither the document nor
+            its attachments is sent to a server, which matters when the
+            attachments are the sensitive part.
           </p>
         </details>
       </div>

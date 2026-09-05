@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Repair PDF online free - Repair PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Recover data from corrupted or damaged PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="repair pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Repair PDF online free - Repair PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Recover data from corrupted or damaged PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Repair PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Repair PDF online free - Repair PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Recover data from corrupted or damaged PDF files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -335,32 +335,101 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is repair pdf really free?
+            What kinds of damaged PDF can this fix?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            It rebuilds the file's internal structure, which recovers broken or
+            missing cross-reference tables, wrong object numbers and stream
+            lengths, endings cut off by an incomplete download, and quirks left
+            by buggy PDF generators. If the actual content data is still in the
+            file, it usually comes back.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What can't Repair PDF recover?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Files where most of the content bytes are gone, files that aren't
+            really PDFs despite the extension, and encrypted files whose
+            password you don't have. It also can't regenerate image data: a
+            corrupted picture inside an otherwise fixed PDF stays corrupted.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            How does the repair work?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Each file is passed through QPDF, which reads whatever structure it
+            can find, reconstructs the object table, and writes a clean new PDF.
+            The rewritten file downloads as repaired-&lt;original name&gt;.pdf.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I repair a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes, if you know the password. You're asked for it before the repair
+            starts, and the repaired copy is written without encryption, so run
+            it through
+            <a href="/protect-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Protect PDF</a
+            >
+            again if it still needs a password.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I repair several PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. One repaired file downloads directly, and several download
+            together as repaired_pdfs.zip. Files that couldn't be repaired are
+            listed by name in a message, and the rest still download.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            The repair failed. What else can I try?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Open the file in a web browser such as Chrome or Firefox, which have
+            their own recovery logic, and use the browser's print or save
+            function to write a new PDF. If the file is encrypted, remove the
+            password first with the
+            <a href="/unlock-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >password removal tool</a
+            >
+            and then repair the result.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will repairing change how my PDF looks?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The page content, fonts, and images are carried over as they
+            are; only the surrounding file structure is rewritten.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my damaged PDF uploaded to a server for repair?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. QPDF runs as WebAssembly inside your browser, so the broken file
+            is read and rewritten on your own device. A file that fails to
+            repair here was never copied anywhere either.
           </p>
         </details>
       </div>

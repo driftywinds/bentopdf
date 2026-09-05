@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to Greyscale online free - PDF to greyscale easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert all colors to black and white. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to greyscale, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to Greyscale online free - PDF to greyscale easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert all colors to black and white. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="PDF to Greyscale Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to Greyscale online free - PDF to greyscale easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert all colors to black and white. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to Greyscale" />
 
     <title>PDF to Greyscale - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF colors to greyscale/black and white. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -316,32 +312,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to greyscale really free?
+            Does converting a PDF to grayscale make it smaller?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Often, yes. Each page is stored as a grayscale JPEG at 90% quality,
+            which is smaller than a color image, so color-heavy files usually
+            shrink. A text-only PDF can grow instead, because its compact vector
+            text becomes a full-page image.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will the text still be selectable after conversion?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            No. Every page is rendered at 2x scale, desaturated, and re-embedded
+            as a JPEG image, so the output is image-based and text can't be
+            selected or searched. If you need searchable text again, run the
+            result through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I adjust brightness or contrast, or keep some pages in color?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Not here. This tool has no options and converts every page using a
+            standard luminance formula. For brightness, contrast, or saturation
+            controls use
+            <a
+              href="/adjust-colors"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Adjust Colors</a
+            >, and to convert only some pages, split those out first and merge
+            the results afterward.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is grayscale the same as black and white?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Grayscale keeps shades of gray, so photos, shaded charts, and
+            highlights stay readable, while true black and white drops
+            everything to two tones; this tool produces grayscale. If you need
+            1-bit output,
+            <a href="/pdf-to-tiff" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to TIFF</a
+            >
+            has a Black &amp; White mode.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the page size or print quality change?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The page dimensions are preserved. Pages are rendered at 2x scale,
+            about 144 dpi, which looks fine on screen and is acceptable for
+            office printing, but fine detail won't be as crisp as the vector
+            original.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why convert a PDF to grayscale before printing?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A grayscale file prints the same on any printer and avoids color
+            charges, and some print shops, courts, and government portals
+            require grayscale submissions. Converting first also shows how
+            colored charts and highlights will look in gray before you print.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens to annotations, form fields, and links?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            They're flattened into the page image. Form fields stop being
+            fillable, comments become part of the picture, and clickable links
+            no longer work.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded to convert it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering and the grayscale filter run on a canvas in your
+            browser tab, and the new PDF is assembled there too. Nothing is sent
+            to a server.
           </p>
         </details>
       </div>

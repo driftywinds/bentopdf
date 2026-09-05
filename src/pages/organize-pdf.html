@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Organize PDF Online Free - Organize PDF Tool | BentoPDF"
+      content="Organize PDF Pages Free - Reorder, Delete, Rotate | BentoPDF"
     />
     <meta
       name="description"
-      content="★ Organize PDF online free - Organize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Organize Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="organize pdf, reorder pages, arrange pdf" />
     <meta name="author" content="BentoPDF" />
@@ -28,11 +28,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/organize-pdf" />
     <meta
       property="og:title"
-      content="Organize PDF Online Free - Organize PDF Tool | BentoPDF"
+      content="Organize PDF Pages Free - Reorder, Delete, Rotate | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ Organize PDF online free - Organize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Organize Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -45,10 +45,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/organize-pdf" />
-    <meta name="twitter:title" content="Organize PDF Free" />
+    <meta
+      name="twitter:title"
+      content="Organize PDF Pages Free - Reorder, Delete, Rotate | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ Organize PDF online free - Organize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Organize Pdf online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -61,11 +64,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Organize PDF" />
 
-    <title>Duplicate and Organize PDF Pages - BentoPDF</title>
-    <meta
-      name="description"
-      content="Reorder, duplicate, and organize PDF pages. Free and secure."
-    />
+    <title>Organize PDF Pages Free - Reorder, Delete, Rotate | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -356,32 +355,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is organize pdf really free?
+            How do I move a page to a different position?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Drag its thumbnail to the new spot in the grid; the page number
+            labels update as you go. For a whole-document rearrangement, type
+            the new order in the page order box, for example 3, 1, 2, 4, and
+            click Apply.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What does the page order box expect?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            A comma-separated list of the original page numbers in the order you
+            want them, and it must mention every page exactly once. 3, 1, 2 for
+            a three-page file works; 3, 1 (a page missing) or 1, 1, 2 (a repeat)
+            is rejected. Use the duplicate and delete buttons for copies and
+            removals.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I duplicate a page more than once?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Yes. Each click on the green duplicate button adds another copy
+            right after the page, and every copy can then be dragged anywhere
+            independently. This is handy for putting several blank copies of a
+            form page in one file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I delete pages here too?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Click the red delete button on a thumbnail to drop it from the
+            output; the only rule is that the last remaining page can't be
+            deleted. For removing many pages by range,
+            <a
+              href="/delete-pages"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Delete Pages</a
+            >
+            is quicker.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does reordering pages keep my bookmarks?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Page content, images, and annotations on each page are kept.
+            Bookmarks aren't, because the reorganized file is assembled fresh
+            from copied pages, so a document with a navigation outline will lose
+            it. Recreate it afterward with the
+            <a href="/bookmark" class="text-indigo-300 hover:text-indigo-400"
+              >Bookmark</a
+            >
+            tool if needed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the quality of the pages affected?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Pages are copied as-is rather than re-rendered, so text stays
+            selectable and images keep their original resolution. The output is
+            saved under the same name as the original file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded while I rearrange its pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The thumbnails are rendered by your browser and the new file is
+            assembled locally, so nothing is sent anywhere, even for large
+            documents.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I organize pages from more than one PDF at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No, this tool works on a single file. To pull pages from several
+            documents into one sequence, use
+            <a href="/merge-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Merge PDF</a
+            >
+            in Page Mode, which shows thumbnails from every file in one grid.
           </p>
         </details>
       </div>

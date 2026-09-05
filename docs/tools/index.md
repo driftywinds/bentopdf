@@ -95,7 +95,7 @@ Extract content from PDFs into images, documents, and data formats.
 - [**PDF to Excel**](./pdf-to-excel) — Extract tables from PDF and convert to Excel (XLSX).
 - [**PDF to Greyscale**](./pdf-to-greyscale) — Convert all colors to black and white.
 - [**PDF to JSON**](./pdf-to-json) — Convert PDF files to JSON format.
-- [**PDF to Word**](./pdf-to-docx) — Convert PDF files to editable Word documents.
+- [**PDF to Word**](./pdf-to-word) — Convert PDF files to editable Word documents.
 - [**Extract Images**](./extract-images) — Extract all embedded images from your PDF files.
 - [**PDF to Markdown**](./pdf-to-markdown) — Convert PDF text and tables to Markdown format.
 - [**Prepare PDF for AI**](./prepare-pdf-for-ai) — Extract PDF content as LlamaIndex JSON for RAG/LLM pipelines.
@@ -171,9 +171,9 @@ Protect, encrypt, and control access to your PDF documents.
 
 <div class="tool-grid">
 
-- [**Encrypt PDF**](./encrypt-pdf) — Lock your PDF by adding a password.
+- [**Encrypt PDF**](./protect-pdf) — Lock your PDF by adding a password.
 - [**Sanitize PDF**](./sanitize-pdf) — Remove metadata, annotations, scripts, and more.
-- [**Decrypt PDF**](./decrypt-pdf) — Unlock PDF by removing password protection.
+- [**Decrypt PDF**](./unlock-pdf) — Unlock PDF by removing password protection.
 - [**Flatten PDF**](./flatten-pdf) — Make form fields and annotations non-editable.
 - [**Remove Metadata**](./remove-metadata) — Strip hidden data from your PDF.
 - [**Change Permissions**](./change-permissions) — Set or change user permissions on a PDF.

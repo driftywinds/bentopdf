@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Image to PDF online free - Image to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert JPG, PNG, BMP, GIF, TIFF, PNM, PGM, PBM, PPM, PAM, JXR, JPX, JP2, PSD, SVG, HEIC, WebP to PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="image to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Image to PDF online free - Image to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert JPG, PNG, BMP, GIF, TIFF, PNM, PGM, PBM, PPM, PAM, JXR, JPX, JP2, PSD, SVG, HEIC, WebP to PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Image to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Image to PDF online free - Image to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert JPG, PNG, BMP, GIF, TIFF, PNM, PGM, PBM, PPM, PAM, JXR, JPX, JP2, PSD, SVG, HEIC, WebP to PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Image to PDF" />
 
     <title>Images to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert images (JPG, PNG, BMP, GIF, TIFF, PNM, PGM, PBM, PPM, PAM, JXR, JP2, PSD, SVG, HEIC, WebP) to PDF. Free, secure, runs in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -356,32 +352,104 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is image to pdf really free?
+            Which image formats can I combine into a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            JPG, JPEG, PNG, BMP, GIF, TIFF, PNM, PGM, PBM, PPM, PAM, JXR, JPX,
+            JP2, PSD, SVG, HEIC, HEIF, and WebP. You can mix formats in one
+            batch, and each image becomes its own page in a single
+            images_to_pdf.pdf file.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What do the High, Medium, and Low quality settings change?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            High Quality embeds your images as they are, with no resizing or
+            re-encoding. Medium re-encodes each image as a JPEG at 75% quality
+            and caps the longest side at 2500 pixels, and Low uses 50% quality
+            with a 1500 pixel cap, which gives much smaller files for email.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Will transparent PNGs keep their transparency?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Only at High Quality, where files are embedded untouched. Medium and
+            Low convert every image to JPEG, which has no alpha channel, so
+            transparent areas are flattened rather than kept.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I control the page order?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Pages follow the order of the file list, which is the order you
+            selected or dropped the images. To change it, remove an image with
+            the trash icon and add it again with Add More Files so it goes to
+            the end.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I set the page size to A4 or Letter?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not in this tool. Each page takes the dimensions of its image, so a
+            tall phone photo produces a tall page and a landscape scan a wide
+            one. If you need uniform paper sizes afterward, run the result
+            through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do iPhone HEIC photos need converting first?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. HEIC and HEIF files are decoded in the browser and turned into
+            PNG before they're embedded, and WebP is handled the same way. This
+            happens automatically and doesn't need an extra step.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my photos uploaded anywhere?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Decoding, compression, and PDF assembly all run in your browser,
+            so the images never leave your device. Large batches of
+            full-resolution photos take longer and use more memory on your
+            machine because of that.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is there a separate tool if all my images are JPGs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            <a href="/jpg-to-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >JPG to PDF</a
+            >
+            gives the same result with a simpler interface, and there are
+            dedicated PNG, HEIC, WebP, and TIFF converters as well. This tool is
+            the one to reach for when your files are in mixed or less common
+            formats such as PSD, JXR, or PNM.
           </p>
         </details>
       </div>

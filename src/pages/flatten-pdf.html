@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Flatten PDF online free - Flatten PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make form fields and annotations non-editable. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="flatten pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Flatten PDF online free - Flatten PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make form fields and annotations non-editable. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Flatten PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Flatten PDF online free - Flatten PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make form fields and annotations non-editable. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Flatten PDF" />
 
     <title>Flatten PDF - Make Forms Non-Editable - BentoPDF</title>
-    <meta
-      name="description"
-      content="Flatten PDF forms and annotations to make them non-editable. Convert interactive PDFs to static documents. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -354,32 +350,106 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is flatten pdf really free?
+            What does flattening a PDF actually do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            It merges interactive elements into the page content: form fields,
+            checkboxes, radio buttons, dropdowns, signature fields, comments,
+            highlights, strikethroughs, sticky notes, stamps, and ink marks. The
+            page looks the same afterward, but nothing can be edited, moved, or
+            deleted.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will the text still be selectable and searchable after flattening?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Yes, flattening doesn't turn pages into images. Regular text,
+            images, bookmarks, and page dimensions are untouched; only form
+            fields and annotations become static page content. If you want every
+            page rasterized, use
+            <a
+              href="/rasterize-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Rasterize PDF</a
+            >
+            instead.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            I filled out a form and want to lock the answers. Is this the right
+            tool?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Yes. Flatten the completed form and the values you entered become
+            part of the page, so recipients can't change them. Do it only after
+            you're finished, because there's no way to unflatten a PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does it say no form was found?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            That appears when the PDF has annotations but no form fields. It
+            isn't an error; the annotations are still flattened and the file
+            downloads normally.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do hyperlinks and comments survive flattening?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Comments, highlights, and other markup are burned into the page and
+            stay visible, but they lose their pop-up notes and can't be edited.
+            Links are annotations too, so a clickable link may stop working even
+            though its text remains on the page.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I flatten several PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Upload multiple files and click Flatten PDF; you get
+            flattened_pdfs.zip with one file per PDF. A single file downloads
+            directly with "flattened_" added to the front of its name.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Should I flatten before or after signing?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Before. Flatten first so form values and annotations can't be
+            altered, then sign. Flattening rewrites page content, so doing it
+            after a
+            <a
+              href="/digital-sign-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >digital signature</a
+            >
+            makes readers report the document as changed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded to flatten it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Flattening runs with pdf-lib inside your browser, so the file
+            and whatever you typed into the form stay on your device.
           </p>
         </details>
       </div>

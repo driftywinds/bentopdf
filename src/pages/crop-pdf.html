@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Crop PDF Online Free - Crop PDF Tool | BentoPDF"
+      content="Crop PDF Online Free - Trim Margins and Resize Pages | BentoPDF"
     />
     <meta
       name="description"
-      content="★ Crop PDF online free - Crop PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Trim the margins of every page in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="crop pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -28,11 +28,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/crop-pdf" />
     <meta
       property="og:title"
-      content="Crop PDF Online Free - Crop PDF Tool | BentoPDF"
+      content="Crop PDF Online Free - Trim Margins and Resize Pages | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ Crop PDF online free - Crop PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Trim the margins of every page in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -45,10 +45,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/crop-pdf" />
-    <meta name="twitter:title" content="Crop PDF Free" />
+    <meta
+      name="twitter:title"
+      content="Crop PDF Online Free - Trim Margins and Resize Pages | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ Crop PDF online free - Crop PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Trim the margins of every page in your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -61,11 +64,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Crop PDF" />
 
-    <title>Crop PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Crop PDF pages visually with precision. Free, secure, and runs entirely in your browser."
-    />
+    <title>
+      Crop PDF Online Free - Trim Margins and Resize Pages | BentoPDF
+    </title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -381,32 +382,110 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is crop pdf really free?
+            Does cropping permanently delete the part of the page outside the
+            box?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Not in the default mode. The tool sets each page's crop box, so
+            viewers and printers show only the selected area while the full page
+            content stays in the file and can be restored by resetting the crop
+            box in a PDF editor. Turn on Flattening Crop if the trimmed area has
+            to be gone for good, for example before sharing an excerpt.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will my text still be selectable after cropping?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            In the default mode, yes: nothing is re-rendered, so text, links,
+            and vector graphics stay exactly as they were. Flattening Crop
+            renders each cropped page as an image, which removes selectable text
+            and usually makes the file larger.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I crop different pages by different amounts?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Yes. Use the page navigation to move through the document and draw a
+            separate box on each page; the tool remembers every box you set, and
+            pages you never drew on keep their original size. To use one box
+            everywhere, check Apply to all pages and the box on the current page
+            is copied to every page.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What page size will the cropped PDF have?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each cropped page takes on the size of its box, so trimming a 1-inch
+            margin from every side of a Letter page leaves a 6.5 x 9 inch page.
+            If you need a standard size like A4 or Letter afterward, run the
+            result through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is there a way to type exact crop measurements?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Cropping is done by dragging the corners or edges of the overlay
+            on the page preview; there's no numeric input for margins or
+            dimensions in this tool. Zooming the browser in helps when a margin
+            is only a few millimeters wide.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does cropping reduce image quality or file size?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The default mode changes neither: the content is untouched, so
+            quality is identical, and the file stays about the same size because
+            the hidden margin data is still inside. Flattening Crop replaces
+            cropped pages with images, which typically makes the file bigger
+            rather than smaller.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my document uploaded while I crop it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The page previews are rendered in your browser and the crop is
+            applied locally, so the file never leaves your computer; the cropped
+            copy is saved under the original file name.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I crop a scanned PDF to remove black edges?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Draw the box inside the dark border on each page, or set it
+            once and use Apply to all pages if every scan has the same border.
+            Because the default crop only hides the edges, use Flattening Crop
+            if the border must be physically removed, and straighten tilted
+            scans first with
+            <a href="/deskew-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Deskew PDF</a
+            >.
           </p>
         </details>
       </div>

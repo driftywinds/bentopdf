@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to PDF/A online free - PDF to PDF/A easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF to PDF/A for long-term archiving. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to pdfa, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to PDF/A online free - PDF to PDF/A easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF to PDF/A for long-term archiving. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF to PDF/A Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to PDF/A online free - PDF to PDF/A easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF to PDF/A for long-term archiving. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to PDF/A" />
 
     <title>PDF to PDF/A - Convert PDF for Long-term Archiving - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert standard PDF files to PDF/A format (PDF/A-1b, PDF/A-2b, PDF/A-3b) for long-term preservation and archiving using Ghostscript directly in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -376,32 +372,105 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf to pdfa really free?
+            Which PDF/A version should I choose?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            PDF/A-2b, the default, suits most archiving and accepts transparency
+            and JPEG 2000 images. Pick PDF/A-1b only when a recipient demands
+            it, since it's the strictest level and forbids transparency and
+            layers, and PDF/A-3b when the archive needs to carry embedded files,
+            such as the XML data used by e-invoicing formats.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What does the conversion actually change in my file?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Ghostscript rewrites the PDF so it meets the standard: every font is
+            embedded as a subset, colors are converted to device-independent
+            color with an sRGB output intent, and features the chosen level
+            forbids are dropped rather than failing the whole run. Page content
+            stays intact and text remains selectable.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why is the PDF/A file bigger than the original?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            PDF/A requires all fonts to be embedded, so any font the original
+            referenced but didn't include is now stored inside the file, and the
+            sRGB color profile is added too.
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            can reduce the size; re-validate afterward if strict compliance
+            matters.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            When should I turn on Pre-flatten?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Only if the normal conversion fails. Pre-flatten renders every page
+            to a 300 DPI image before Ghostscript runs, which gets around broken
+            fonts or unusual transparency but leaves you with no selectable
+            text, so try without it first. It also needs the PyMuPDF module,
+            which loads on first use.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the output guaranteed to pass a PDF/A validator?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not guaranteed. Ghostscript produces conformant output for the vast
+            majority of files, but it isn't a validator, so if a court,
+            repository, or auditor requires proof, check the result with a
+            dedicated PDF/A validator such as veraPDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert multiple PDFs to PDF/A at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Add multiple files and they're converted one after another with
+            the same settings; a single file downloads directly and several
+            download together as pdfa-converted.zip.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my records uploaded to a server for PDF/A conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Ghostscript runs as a WebAssembly module inside your browser, so
+            the conversion happens on your machine and the files never leave it.
+            The module itself is fetched from a CDN the first time you use the
+            tool, which is why the first run takes a little longer.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a password-protected PDF to PDF/A?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The tool asks for the open password first, then converts the
+            decrypted file. PDF/A itself forbids encryption, so the output is
+            always unprotected; a password-protected PDF/A isn't possible.
           </p>
         </details>
       </div>

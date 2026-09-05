@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Add Attachments online free - Add attachments PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Embed one or more files into your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="add attachments, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Add Attachments online free - Add attachments PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Embed one or more files into your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Add Attachments Free" />
     <meta
       name="twitter:description"
-      content="★ Add Attachments online free - Add attachments PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Embed one or more files into your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Add Attachments" />
 
     <title>Add Attachments to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Add file attachments to your PDF documents. Embed files at document or page level. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -389,32 +385,115 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is add attachments really free?
+            What kinds of files can I embed in a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Any file type: spreadsheets, images, ZIP archives, CAD drawings,
+            even executables. The tool doesn't inspect or convert the file; it
+            stores the bytes inside the PDF under the original file name, and
+            you can embed several files in one pass.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What's the difference between document-level and page-level
+            attachments?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Document-level attachments belong to the PDF as a whole and appear
+            in the reader's attachments panel. Page-level attachments are tied
+            to the pages you list in the page range field (for example 1,3,5-7),
+            and the same file is attached to every page in that range. Document
+            level is the safer choice, since some viewers never show page-level
+            attachments.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Where do the attached files show up when someone opens the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            In readers that have an attachments panel, such as Adobe Acrobat
+            Reader or Firefox's built-in viewer, they're listed by file name and
+            can be opened or saved from there. Viewers without that panel won't
+            show them at all, although the files are still inside the PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does embedding files make the PDF bigger?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes, by roughly the size of each attachment, since the file's bytes
+            are stored inside the PDF. A 40 MB spreadsheet attached to a 1 MB
+            report yields a PDF of about 41 MB, so keep attachment size in mind
+            before emailing the result.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the file I attach uploaded anywhere when I embed it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PDF and the attachments are read and combined in your
+            browser by the CoherentPDF WebAssembly module, and the result is
+            downloaded straight from the page. Nothing is sent to a server.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does the tool say an advanced processing module is required?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Embedding uses the CoherentPDF (cpdf) module, which loads on demand
+            from a CDN the first time you use it rather than shipping with the
+            main site. If you self-host BentoPDF or work in an air-gapped setup,
+            you can point the tool at your own copy of the module on the
+            <a
+              href="/wasm-settings"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Advanced Features settings</a
+            >
+            page.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I remove an attachment later?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes.
+            <a
+              href="/edit-attachments"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Edit Attachments</a
+            >
+            lists every embedded file and lets you remove individual ones or all
+            of them, and Extract Attachments saves them back out as separate
+            downloads.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will attaching files break a digital signature on the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Adding attachments rewrites the file, which invalidates any
+            existing digital signature. Attach the files first, then sign the
+            finished PDF with
+            <a
+              href="/digital-sign-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Digital Sign PDF</a
+            >.
           </p>
         </details>
       </div>

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Deskew PDF online free - Automatically straighten tilted scanned pages ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Automatically straighten tilted scanned pages using OpenCV. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -33,7 +33,7 @@
     />
     <meta
       property="og:description"
-      content="★ Deskew PDF online free - Automatically straighten tilted scanned pages ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Automatically straighten tilted scanned pages using OpenCV. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Deskew PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Deskew PDF online free - Automatically straighten tilted scanned pages ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Automatically straighten tilted scanned pages using OpenCV. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -358,35 +358,105 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            What is PDF deskewing?
+            How does the tool detect that a page is tilted?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Deskewing is the process of correcting tilted or rotated pages in
-            scanned documents. When you scan a document, it's common for pages
-            to be slightly skewed. This tool automatically detects and corrects
-            that skew.
+            Each page is rendered to an image at the DPI you choose, then OpenCV
+            analyzes it: it fits a minimum-area rectangle around the dark pixels
+            and, as a fallback, measures the angle of dominant text lines with a
+            Hough transform. The resulting angle is what the results panel
+            reports for that page.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            How accurate is the skew detection?
+            What does the Skew Threshold setting do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Our tool uses OpenCV's advanced image processing algorithms to
-            detect skew angles with high precision. It works best on documents
-            with clear text content.
+            Pages whose detected tilt is below the threshold are left alone. The
+            default of 0.5 degrees catches visible tilt without touching pages
+            that are already straight; drop it to 0.1 degrees when you want the
+            tightest alignment before OCR, or raise it to 1 or 2 degrees to
+            correct only clearly crooked pages.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private?
+            Does deskewing keep the text selectable?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! All processing happens entirely in your browser using
-            WebAssembly. Your files never leave your device.
+            No. Every page in the output, including pages that didn't need
+            correction, is written as an image at the processing DPI, so any
+            existing text layer is lost. Run the result through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            afterward if you need searchable text; OCR works better on
+            straightened pages anyway.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which DPI should I use when deskewing a scan?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            150 DPI is fast and accurate for ordinary letter-sized scans. Use
+            200 or 300 DPI for small print or fine detail, and 100 DPI when
+            speed matters more than precision. The setting also controls the
+            resolution of the output pages, so higher values produce larger
+            files.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the page size change after rotation?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Output pages keep the original page dimensions. The rotated image is
+            padded with white in the corners exposed by the rotation and then
+            fitted onto the page, so content may shrink by a hair but nothing is
+            pushed off the sheet.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it work on every kind of scan?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            It works best on pages with clear horizontal lines of text. Pages
+            that are mostly photos, drawings, or diagonal design elements give
+            the detector little to measure, so the angle can be off; check the
+            results panel and keep your original for those.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I know which pages were corrected?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            After processing, a results panel lists every page with its detected
+            angle and marks the ones that were rotated; pages under the
+            threshold show their angle but are labeled as untouched. If you
+            queued several PDFs, each downloads under its original name and the
+            panel shows the last file processed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my scans uploaded for processing?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PDF rendering and the OpenCV analysis both run in your
+            browser through WebAssembly. The engine is downloaded the first time
+            you use it, but your documents never leave your computer.
           </p>
         </details>
       </div>

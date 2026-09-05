@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF Multi Tool online free - Edit PDFs with multiple tools easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Merge, Split, Organize, Delete, Rotate, Add Blank Pages, Extract and Duplicate in a unified interface. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf multi tool, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF Multi Tool online free - Edit PDFs with multiple tools easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Merge, Split, Organize, Delete, Rotate, Add Blank Pages, Extract and Duplicate in a unified interface. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -51,7 +51,7 @@
     <meta name="twitter:title" content="PDF Multi Tool Free" />
     <meta
       name="twitter:description"
-      content="★ PDF Multi Tool online free - Edit PDFs with multiple tools easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Merge, Split, Organize, Delete, Rotate, Add Blank Pages, Extract and Duplicate in a unified interface. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -473,6 +473,118 @@
     />
 
     <!-- Scripts -->
+    <!-- FAQ Section -->
+    <section class="max-w-4xl mx-auto px-4 py-12">
+      <h2
+        class="text-2xl md:text-3xl font-bold text-white mb-6 text-center"
+        data-i18n="faq.sectionTitle"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What can I do with the PDF Multi Tool that the single-purpose tools
+            can't?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            It puts merging, reordering, rotating, duplicating, deleting,
+            inserting, and splitting in one page grid, so you can do several of
+            them in a single pass without downloading and re-uploading between
+            steps. Every action is covered by undo and redo, so you can
+            experiment before you export.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I combine pages from several PDFs into one document?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Upload all the source files and their pages appear together in one
+            grid, in upload order. Drag pages into the order you want, delete
+            the ones you don't need, and click Export PDF to download the result
+            as a single file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add images as pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Drop JPG, PNG, WebP, HEIC, TIFF, BMP, GIF, or SVG files alongside
+            your PDFs and each image becomes a page you can move, rotate, or
+            delete like any other. Blank A4 pages can also be appended with the
+            Add Blank Page button.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I split one PDF into several files?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Click the scissors icon on a page to place a split marker after it;
+            a dashed line shows where the document will be divided. Export then
+            produces split-documents.zip containing document - 1.pdf, document -
+            2.pdf, and so on.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does rotating pages here reduce quality?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rotation is stored as a page attribute in 90-degree steps rather
+            than re-rendering the content, so text, vectors, and images are
+            untouched. For angles other than 90, 180, or 270 degrees, use
+            <a
+              href="/rotate-custom"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Rotate by Custom Degrees</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I export only some of the pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Tick the checkboxes on the pages you want and use Download selected
+            to get just those pages as selected-pages.pdf. The workspace stays
+            as it is, so you can keep working and export the rest later.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What happens to bookmarks when I export?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The export rebuilds the document page by page, so bookmarks from the
+            source files aren't carried into the new PDF. Page content,
+            including text and images, is copied as-is.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my PDFs uploaded when I use the Multi Tool?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Page thumbnails are rendered and the final PDF or ZIP is
+            assembled in your browser, and damaged files are repaired locally
+            before loading too. Nothing you drop into the grid leaves your
+            computer.
+          </p>
+        </details>
+      </div>
+    </section>
+
     <script type="module" src="/src/js/logic/pdf-multi-tool.ts"></script>
     <script type="module" src="/src/js/main.ts"></script>
 

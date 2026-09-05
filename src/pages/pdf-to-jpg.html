@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="PDF to JPG Converter Free Online - Convert Files | BentoPDF"
+      content="PDF to JPG Converter Free - Convert PDF Pages to Images | BentoPDF"
     />
     <meta
       name="description"
-      content="★ PDF to JPG online free - Convert PDF to JPG easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a JPG image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -31,11 +31,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/pdf-to-jpg" />
     <meta
       property="og:title"
-      content="PDF to JPG Converter Free Online - Convert Files | BentoPDF"
+      content="PDF to JPG Converter Free - Convert PDF Pages to Images | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ PDF to JPG online free - Convert PDF to JPG easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a JPG image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,10 +48,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/pdf-to-jpg" />
-    <meta name="twitter:title" content="PDF to JPG Free" />
+    <meta
+      name="twitter:title"
+      content="PDF to JPG Converter Free - Convert PDF Pages to Images | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ PDF to JPG online free - Convert PDF to JPG easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Convert each PDF page into a JPG image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,11 +67,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="PDF to JPG" />
 
-    <title>PDF to JPG - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF pages to JPG images. Free, secure, and runs entirely in your browser."
-    />
+    <title>
+      PDF to JPG Converter Free - Convert PDF Pages to Images | BentoPDF
+    </title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -365,32 +366,99 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            What quality should I choose?
+            Can I convert just one page of a PDF to JPG?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Use High or Maximum for print-quality images, Medium for web use, or
-            Low to save disk space. Higher quality produces larger file sizes.
+            The tool converts every page in the file. To get a single page, pull
+            it out first with
+            <a
+              href="/extract-pages"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Extract Pages</a
+            >
+            and convert that one-page PDF; it downloads as a plain .jpg instead
+            of a ZIP.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Can I convert specific pages only?
+            What resolution are the JPG images?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! You can choose to convert all pages or select specific pages
-            you want as JPG images.
+            Pages render at 2x their PDF size, which works out to about 144 DPI:
+            a standard 8.5 by 11 inch page becomes roughly a 1,224 by 1,584
+            pixel image. There is no separate DPI setting.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are the JPG files compressed?
+            What JPG quality setting should I use?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes, JPG is a compressed format. You control the quality level -
-            higher quality means less compression and larger files.
+            The slider runs from 10% to 100% with a default of 90%. Around 80 to
+            90% is hard to tell from the original on screen, while lower values
+            shrink the files noticeably at the cost of compression artifacts
+            around text and sharp edges.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why did I get a ZIP file instead of images?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A PDF with more than one page produces filename_jpgs.zip containing
+            page_1.jpg, page_2.jpg, and so on, one image per page. Only
+            single-page PDFs download as a lone .jpg.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Should I choose JPG or PNG for my PDF pages?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            JPG is lossy and produces smaller files, which suits photos and
+            scans meant for email or chat. For text, diagrams, or anything that
+            needs exact pixels,
+            <a href="/pdf-to-png" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to PNG</a
+            >
+            is lossless.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the text in the images be editable or searchable?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. A JPG is a flat picture of the page, so text, links, and form
+            fields become pixels. Keep the PDF if you need those.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a scanned PDF with this tool?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Scanned pages are already images inside the PDF, and they're
+            rendered at 2x page scale like any other page. If the scan was low
+            resolution to begin with, the JPG won't add detail.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my PDF pages uploaded to convert them to JPG?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The pages are drawn onto a canvas and encoded to JPG entirely in
+            your browser, and the images or ZIP are created on your device.
           </p>
         </details>
       </div>

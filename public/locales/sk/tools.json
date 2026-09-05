@@ -1311,5 +1311,13 @@
     "faqSinglePageAnswer": "Áno! Zapnite možnosť \"Opakovať\" a vaše PDF na prekrytie sa bude opakovať na všetkých stranách základu. Jednostranový vodoznak sa aplikuje na každú stranu.",
     "faqPrivacyQuestion": "Sú moje súbory v súkromí a v bezpečí?",
     "faqPrivacyAnswer": "Absolútne! Všetko spracovanie prebieha vo vašom prehliadači. Vaše súbory nikdy neopustia vaše zariadenie, čo zabezpečuje úplné súkromie."
+  },
+  "unlockPdf": {
+    "name": "Dešifrovať PDF",
+    "subtitle": "Odomknúť PDF odstránením ochrany heslom."
+  },
+  "protectPdf": {
+    "name": "Zašifrovať PDF",
+    "subtitle": "Uzamknúť vaše PDF pridaním hesla."
   }
 }

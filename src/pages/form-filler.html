@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Form Filler online free - Fill PDF forms easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Form Filler online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="form filler, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Form Filler online free - Fill PDF forms easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Form Filler online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Form Filler Free" />
     <meta
       name="twitter:description"
-      content="★ Form Filler online free - Fill PDF forms easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Form Filler online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Form Filler" />
 
     <title>PDF Form Filler - BentoPDF</title>
-    <meta
-      name="description"
-      content="Fill PDF forms directly in your browser. Supports both standard AcroForms and legacy XFA forms. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -346,32 +342,112 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is form filler really free?
+            How do I fill out a PDF form that won't let me type in it?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the PDF and it opens in an embedded viewer that turns the
+            form fields into live inputs, so you can type into text boxes, tick
+            checkboxes, and pick from dropdowns and radio buttons. If nothing
+            becomes editable, the document has no real form fields; add some
+            with
+            <a
+              href="/form-creator"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Create PDF Form</a
+            >
+            first.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What is an XFA form and can I fill one here?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            XFA is an older XML-based form format that Chrome and most online
+            tools can't render, which is why those forms show up as blank pages
+            elsewhere. This form filler and Firefox both support XFA, so you can
+            fill and save those forms here.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            How do I save the filled form?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Click Save &amp; Download Filled Form and the viewer writes your
+            entries into the PDF's form fields and downloads the file. The
+            values are stored in the fields themselves, so they show up in other
+            PDF viewers, not just this one.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I sign the form after filling it in?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool fills fields only. Download the filled PDF, then open it
+            in
+            <a href="/sign-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Sign PDF</a
+            >
+            to add your signature where the form expects one.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can someone else edit my answers after I send the filled form?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The fields stay editable in the downloaded file, so a recipient
+            could change them. To lock the answers in place, run the filled PDF
+            through
+            <a href="/flatten-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Flatten PDF</a
+            >, which turns the fields into fixed page content.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I save a partially completed form and finish it later?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Download the form with whatever you've filled in so far; the values
+            are kept in the fields. Upload that same file again later and the
+            viewer shows your earlier entries ready to continue.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the form filler work with password-protected forms?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            If the PDF requires a password to open, the tool prompts for it
+            before loading the form. The downloaded copy is saved without that
+            password, so protect it again with
+            <a href="/protect-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Protect PDF</a
+            >
+            if the form needs to stay locked.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the information I type into the form sent anywhere?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The form is rendered by a PDF.js viewer embedded in the page,
+            your entries are held in that viewer's memory, and the completed PDF
+            is written and downloaded on your device. Nothing you type is
+            transmitted, which is the point when the form holds tax, medical, or
+            ID details.
           </p>
         </details>
       </div>

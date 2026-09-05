@@ -499,7 +499,7 @@ const baseCategories = [
         subtitle: 'Convert PDF files to JSON format.',
       },
       {
-        href: import.meta.env.BASE_URL + 'pdf-to-docx.html',
+        href: import.meta.env.BASE_URL + 'pdf-to-word.html',
         name: 'PDF to Word',
         icon: 'ph-microsoft-word-logo',
         subtitle: 'Convert PDF files to editable Word documents.',
@@ -778,10 +778,10 @@ const baseCategories = [
     name: 'Secure PDF',
     tools: [
       {
-        href: import.meta.env.BASE_URL + 'encrypt-pdf.html',
-        name: 'Encrypt PDF',
+        href: import.meta.env.BASE_URL + 'protect-pdf.html',
+        name: 'Protect PDF',
         icon: 'ph-lock',
-        subtitle: 'Lock your PDF by adding a password.',
+        subtitle: 'Password protect a PDF with strong AES encryption.',
       },
       {
         href: import.meta.env.BASE_URL + 'sanitize-pdf.html',
@@ -790,10 +790,10 @@ const baseCategories = [
         subtitle: 'Remove metadata, annotations, scripts, and more.',
       },
       {
-        href: import.meta.env.BASE_URL + 'decrypt-pdf.html',
-        name: 'Decrypt PDF',
+        href: import.meta.env.BASE_URL + 'unlock-pdf.html',
+        name: 'Unlock PDF',
         icon: 'ph-lock-open',
-        subtitle: 'Unlock PDF by removing password protection.',
+        subtitle: 'Remove the password from a PDF so it opens freely.',
       },
       {
         href: import.meta.env.BASE_URL + 'flatten-pdf.html',

@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF Booklet online free - Create PDF booklets easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Rearrange pages for double-sided booklet printing. Fold and staple to create a booklet. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf booklet, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF Booklet online free - Create PDF booklets easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Rearrange pages for double-sided booklet printing. Fold and staple to create a booklet. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF Booklet Free" />
     <meta
       name="twitter:description"
-      content="★ PDF Booklet online free - Create PDF booklets easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Rearrange pages for double-sided booklet printing. Fold and staple to create a booklet. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF Booklet" />
 
     <title>PDF Booklet - BentoPDF</title>
-    <meta
-      name="description"
-      content="Create printable booklets from PDF files. Rearrange pages for double-sided printing with live preview. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -558,32 +554,101 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf booklet really free?
+            How does booklet page order work when I print?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            In the default 1x2 (Booklet) mode, two pages sit side by side on
+            each side of a sheet in saddle-stitch order: the first sheet's front
+            carries the last page and page 1, its back carries page 2 and the
+            second-to-last page, and so on inward. Print double-sided with the
+            flip-on-short-edge setting, fold the stack in half, and the pages
+            read in sequence.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What if my page count isn't a multiple of 4?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The count is rounded up to the next multiple of 4 and the missing
+            slots are left blank, which lands them at the end of the booklet. A
+            10-page document becomes a 12-page booklet on three sheets, and the
+            preview marks the empty slots as blank.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Which paper sizes can I use?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Pick from Letter, Legal, Tabloid, Ledger, Executive, Folio, and the
+            ISO A, B, and C series from A0 down to C7. Letter is the default,
+            and each source page is scaled to fit its slot on the sheet with a
+            small margin.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Should the output be portrait or landscape?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Auto picks landscape for booklet mode, so two portrait pages sit
+            side by side on a landscape sheet, and portrait for the grid modes.
+            You can force either orientation; the source pages are scaled
+            proportionally to fit whichever you choose.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What are the 2x2, 2x4, and 4x4 grid modes?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            They place 4, 8, or 16 pages per sheet in reading order rather than
+            booklet order, which is useful for handouts or thumbnail proof
+            sheets. Only 1x2 reorders pages for folding; for more grid layouts
+            see
+            <a href="/n-up-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >N-Up PDF</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I rotate landscape pages so they fit the booklet?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The Source Rotation option turns every page 90 degrees clockwise or
+            counter-clockwise before imposition, or alternates the direction
+            between odd and even pages for documents scanned head-to-head. Click
+            Generate Preview to check the layout before downloading.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the booklet lose quality?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Pages are embedded as vector content from the original PDF
+            rather than rasterized, so text stays sharp at any zoom and the file
+            prints at full quality.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded to create the booklet?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The page reordering, scaling, and preview rendering all run in
+            your browser, and the finished booklet PDF is saved from your device
+            without passing through a server.
           </p>
         </details>
       </div>

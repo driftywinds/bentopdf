@@ -13,7 +13,7 @@
     />
     <meta
       name="description"
-      content="★ Convert PDF fonts to outlines online free - Ensure consistent rendering across all devices ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert all fonts to vector outlines for consistent rendering across all devices. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -38,7 +38,7 @@
     />
     <meta
       property="og:description"
-      content="★ Convert PDF fonts to outlines online free - Ensure consistent rendering across all devices ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert all fonts to vector outlines for consistent rendering across all devices. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -56,7 +56,7 @@
     <meta name="twitter:title" content="Font to Outline PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Convert PDF fonts to outlines online free - Ensure consistent rendering across all devices ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Convert all fonts to vector outlines for consistent rendering across all devices. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -332,46 +332,103 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            What does "font to outline" mean?
+            What does converting fonts to outlines do to a PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Converting fonts to outlines means transforming text characters from
-            font-based representations into vector paths/curves. This ensures
-            the PDF looks identical on any device, even if the original fonts
-            aren't installed.
+            Every character of text is replaced by a vector path that draws the
+            same shape, and the output no longer references any font. It renders
+            the same on any device or printer, even ones without the original
+            typeface installed.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            When should I use this tool?
+            When should I outline fonts before printing?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Use this tool when preparing PDFs for professional printing, sharing
-            documents with special fonts, or when you need to ensure consistent
-            appearance across different systems and devices.
+            Print shops often ask for outlined fonts to avoid font substitution
+            or licensing problems on their equipment. Do it as the last step,
+            after all text edits are finished, because the text can't be edited
+            afterward.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Will the text still be selectable?
+            Can I still select, search, or copy text after outlining?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No. After conversion, text becomes vector graphics and is no longer
-            selectable or searchable. If you need searchable text, consider
-            using the OCR tool after conversion.
+            No. Outlined text is just shapes, so selection, Ctrl+F search, copy
+            and paste, and screen reader access all stop working. Keep the
+            original PDF for anything that needs live text.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private?
+            Can I convert outlines back to editable text?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! All processing happens entirely in your browser using
-            WebAssembly. Your files never leave your device.
+            No, the conversion is one-way. If you have lost the original,
+            running
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR</a
+            >
+            on the outlined file adds a recognized text layer for searching, but
+            it won't restore the original fonts or editable text.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is my PDF larger after outlining fonts?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each character is stored as a bezier path instead of a short
+            reference into a font program, and a page of body text can contain
+            thousands of them. The file often grows noticeably; run it through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            afterward if size matters.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does outlining change how the document looks?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Fonts embedded in the PDF are traced exactly, so the appearance
+            stays the same. If a font isn't embedded, Ghostscript substitutes a
+            similar one before outlining, so check the result when a document
+            relies on system fonts.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I outline fonts in several PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Upload multiple PDFs and convert them together; one file
+            downloads as a PDF, and several download as outlined_pdfs.zip with
+            one entry per input.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded during the font conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Ghostscript runs as WebAssembly inside your browser, so the file
+            is processed on your device and the outlined copy is written locally
+            without any upload.
           </p>
         </details>
       </div>

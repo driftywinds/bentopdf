@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ BMP to PDF online free - BMP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more BMP images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="bmp to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ BMP to PDF online free - BMP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more BMP images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="BMP to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ BMP to PDF online free - BMP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more BMP images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="BMP to PDF" />
 
     <title>BMP to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert BMP images to PDF. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -326,32 +322,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is bmp to pdf really free?
+            Can I combine several BMP files into one PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Yes. Every BMP you add becomes its own page in a single PDF, in the
+            order shown in the file list. There's no option to produce one PDF
+            per file, so convert files separately if you need them split.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why is the PDF smaller than my BMP files?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            BMP stores uncompressed pixels, so the files are large. The
+            converter redraws each image and stores it in the PDF as lossless
+            PNG, which usually shrinks it considerably without changing a single
+            pixel.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Is any image quality lost in the conversion?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. Pixels are stored losslessly and there's no quality setting on
+            this tool, so the output has the same resolution and colors as the
+            source. If you need a smaller file afterward, run the PDF through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What page size does the PDF get when I convert a BMP?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each page is sized to the image's pixel dimensions at one point per
+            pixel, so a 2480 by 3508 pixel scan produces a page about 34 by 49
+            inches rather than A4. Viewers and printers scale it to fit, and
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >
+            can resize every page to A4 or Letter afterward.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does it say one of my files is invalid?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Images are decoded by your browser, which handles standard Windows
+            bitmaps. Unusual variants such as OS/2 headers or rare compression
+            modes can fail; re-saving the file as a standard 24-bit BMP or as
+            PNG in any image editor fixes it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I mix BMP with JPG or PNG files?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool accepts only .bmp files and skips anything else you add.
+            Use
+            <a
+              href="/image-to-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Images to PDF</a
+            >
+            when you need to combine several formats into one document.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the BMP's DPI setting affect the result?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The resolution stored in the file header is ignored and page
+            size comes purely from pixel count, so two images with the same
+            pixel dimensions produce identical pages regardless of their DPI.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my BMP files uploaded anywhere?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Decoding uses your browser's own image support and the PDF is
+            assembled locally with pdf-lib, so scanner or medical imaging
+            exports never leave your computer.
           </p>
         </details>
       </div>

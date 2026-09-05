@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ ODS to PDF online free - ODS to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Spreadsheet (ODS) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="ods to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ ODS to PDF online free - ODS to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Spreadsheet (ODS) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="ODS to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ ODS to PDF online free - ODS to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Spreadsheet (ODS) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,10 +64,6 @@
     <title>
       ODS to PDF - Convert OpenDocument Spreadsheet to PDF - BentoPDF
     </title>
-    <meta
-      name="description"
-      content="Convert OpenDocument Spreadsheet (ODS) files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -341,32 +337,100 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is ods to pdf really free?
+            Does the PDF include every sheet in the workbook?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            All sheets are included, in the order they appear in the workbook,
+            following the print layout saved in the file. Hidden sheets and
+            print ranges are handled the way LibreOffice Calc would handle them
+            when printing.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why does my wide spreadsheet get split across several pages?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The converter uses the page style stored in the ODS file, so columns
+            that don't fit the page width continue on following pages, the same
+            way Calc prints them. To keep a table on one page, set landscape
+            orientation, a print scale, or narrower columns in Calc before
+            converting.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Can I change page size or orientation during conversion?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            There are no conversion settings; the PDF follows the paper size,
+            orientation, margins, and scaling saved in the spreadsheet. Adjust
+            those in Calc under Format and Page Style, save the file, and
+            convert again.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will charts, merged cells, and cell colors come through?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The conversion is done by LibreOffice itself running in your
+            browser, so cell formatting, borders, merged cells, and embedded
+            charts are rendered the way Calc would print them.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a Google Sheets file?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Download the sheet from Google Sheets as OpenDocument (.ods) and
+            upload that file. XLSX files aren't accepted here; use
+            <a
+              href="/excel-to-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Excel to PDF</a
+            >
+            for those.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does the first ODS spreadsheet take longer to convert?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The LibreOffice engine is a large WebAssembly download that's
+            fetched the first time you convert in a session, and the progress
+            bar shows it loading. Once it's loaded, further conversions in the
+            same tab start right away.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What is the output called when I convert several files?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            One file downloads under the same name with a .pdf extension. Two or
+            more are converted in sequence and packaged as ods-to-pdf.zip with
+            one PDF per spreadsheet.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my spreadsheet uploaded to a LibreOffice server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The conversion engine is a WebAssembly build of LibreOffice that
+            runs in a worker inside your browser, so budgets, timesheets, and
+            financial records stay on your computer for the whole process.
           </p>
         </details>
       </div>

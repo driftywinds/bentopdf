@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Prepare PDF for AI online free - Prepare PDFs for AI easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract PDF content as LlamaIndex JSON for RAG/LLM pipelines. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="prepare pdf for ai, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Prepare PDF for AI online free - Prepare PDFs for AI easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract PDF content as LlamaIndex JSON for RAG/LLM pipelines. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Prepare PDF for AI Free" />
     <meta
       name="twitter:description"
-      content="★ Prepare PDF for AI online free - Prepare PDFs for AI easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Extract PDF content as LlamaIndex JSON for RAG/LLM pipelines. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Prepare PDF for AI" />
 
     <title>Prepare PDF for AI - Extract for LLM/RAG - BentoPDF</title>
-    <meta
-      name="description"
-      content="Extract PDF content as AI-ready JSON for LlamaIndex, LangChain, and other LLM frameworks. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -355,32 +351,100 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is prepare pdf for ai really free?
+            What does the JSON output contain?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            It follows the LlamaIndex document schema: one document per page
+            with that page's text and metadata fields. It's produced by
+            PyMuPDF's LlamaIndex integration, so it can be loaded directly into
+            LlamaIndex or any pipeline that accepts per-page text with metadata.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            How is this different from PDF to Text or PDF to Markdown?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            <a href="/pdf-to-text" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to Text</a
+            >
+            gives one plain text stream, and PDF to Markdown keeps headings and
+            structure for reading. This tool splits the content page by page and
+            wraps it in structured JSON with metadata, which is what retrieval
+            pipelines need for chunking and citing sources.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does it work on scanned PDFs?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Only if they already have a text layer. Scanned images produce empty
+            or near-empty output, so run them through
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >
+            first and then extract.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I process a whole batch of PDFs?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Upload multiple files and you get pdf-for-ai.zip containing one
+            yourfile_llm.json per PDF; a single file downloads as
+            yourfile_llm.json directly. If one file in the batch fails, the rest
+            still complete and the summary tells you how many failed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I choose which pages to extract or control the chunk size?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. There are no options; every page is extracted with its full text
+            and metadata. Do chunking in your own pipeline, where you can pick
+            sizes that fit your embedding model, and drop pages you don't need
+            there.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I prepare a password-protected PDF for AI tools?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. If a file is encrypted, you're prompted for its password before
+            extraction starts, and the text is pulled from the decrypted copy.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my document sent to an AI service?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Despite the name, nothing is sent to an AI provider or any
+            server; the extraction runs with PyMuPDF compiled to WebAssembly
+            inside your browser. You decide afterward where the JSON goes.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What can I do with the JSON file?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Feed it to a RAG pipeline, build a knowledge base for a chatbot, run
+            LLM analysis over reports, or turn a PDF collection into training
+            data. Because the content is split per page with metadata, answers
+            can point back to the page they came from.
           </p>
         </details>
       </div>

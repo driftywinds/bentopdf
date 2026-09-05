@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF Layers online free - Manage PDF layers easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf Layers online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf layers, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF Layers online free - Manage PDF layers easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf Layers online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF Layers Free" />
     <meta
       name="twitter:description"
-      content="★ PDF Layers online free - Manage PDF layers easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Pdf Layers online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF Layers" />
 
     <title>PDF Layers - Manage OCG Layers - BentoPDF</title>
-    <meta
-      name="description"
-      content="View, toggle, add, and delete Optional Content Groups (OCG) in your PDF files. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -485,32 +481,96 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is pdf layers really free?
+            What are PDF layers, and why does my PDF have none?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Layers are Optional Content Groups (OCGs): named groups of page
+            content that a viewer can show or hide, common in CAD exports, maps,
+            and print files with separate language or markup layers. Most PDFs
+            from office software have none, and the tool then shows an empty
+            list with the option to add one.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Does hiding a layer delete its content?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            No. Unchecking a layer changes the default visibility state saved in
+            the PDF, so it opens hidden but can be switched back on in any
+            viewer with a layers panel. Deleting a layer with the X button
+            removes the layer group itself from the document's layer list.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why can't I toggle or delete some layers?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Layers shown with a lock icon were marked locked by the PDF's
+            creator, so their visibility can't be changed and the add-child and
+            delete buttons are hidden for them. That lock is part of the file
+            and the tool respects it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add a new layer and put content on it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            You can add top-level layers and nested child layers by name, and
+            they're saved into the PDF's layer configuration. This tool doesn't
+            draw content onto a layer; it manages the layer list, so a new layer
+            stays empty until another application assigns content to it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the changes show in Acrobat and other viewers?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Layer names and visibility states are written into the PDF's
+            standard optional content dictionary, so any viewer with layer
+            support reads them. Viewers without a layers panel still honor the
+            default visibility, so a layer you hid stays hidden there.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What is the downloaded file called?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Download Modified PDF saves the edited document under the same
+            filename as the original, so rename it afterward if you want to keep
+            both versions.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I inspect layers in a password-protected PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            You're prompted for the password on upload, and the layer editor
+            works on the decrypted copy. The saved file isn't encrypted.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the drawing uploaded when I edit its layers?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The PDF is opened by PyMuPDF running as WebAssembly in your
+            browser, layer changes are applied in memory, and the download is
+            written on your device, which matters for CAD drawings and site
+            plans that are often confidential.
           </p>
         </details>
       </div>

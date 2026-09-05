@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ ODP to PDF online free - ODP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Presentation (ODP) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="odp to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ ODP to PDF online free - ODP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Presentation (ODP) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="ODP to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ ODP to PDF online free - ODP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert OpenDocument Presentation (ODP) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,10 +64,6 @@
     <title>
       ODP to PDF - Convert OpenDocument Presentation to PDF - BentoPDF
     </title>
-    <meta
-      name="description"
-      content="Convert OpenDocument Presentation (ODP) files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -341,32 +337,93 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is odp to pdf really free?
+            Can I convert a Google Slides presentation to PDF with this tool?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Yes, if you first download it from Google Slides as an ODP file
+            using File &gt; Download &gt; ODP Document. Upload that .odp here
+            and each slide becomes one PDF page.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Are speaker notes included in the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            No. Only the slides themselves are rendered, one per page. Export
+            the notes separately from Impress or Google Slides if you need them
+            alongside the slides.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What happens to animations and slide transitions?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            They're dropped, since a PDF page is static. Text, images, shapes,
+            and slide backgrounds all appear as they do on the slide, but
+            nothing moves or fades.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the PDF keep the slide size and layout?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each slide is rendered at its original dimensions, so a 16:9 deck
+            produces wide pages and a 4:3 deck produces squarer ones. Content is
+            placed where it sits in the presentation.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert PowerPoint files here too?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool only accepts .odp files. For .pptx and .ppt decks use
+            <a
+              href="/powerpoint-to-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >PowerPoint to PDF</a
+            >, which runs on the same LibreOffice engine.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is the first ODP conversion slower than later ones?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The LibreOffice engine has to download the first time you use it in
+            a session, which the notice on the page mentions. Later conversions
+            reuse the cached engine and start immediately.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What do I get if I convert several presentations at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A single presentation downloads directly as a PDF. Several are
+            bundled into odp-to-pdf.zip, with one PDF named after each source
+            file.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my slides uploaded to a server during conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The LibreOffice engine runs in your browser as WebAssembly, so
+            the presentation is rendered and saved as a PDF on your own device.
+            Unreleased decks and internal material stay local.
           </p>
         </details>
       </div>

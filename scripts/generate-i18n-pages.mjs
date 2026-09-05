@@ -59,7 +59,47 @@ function buildUrl(langPrefix, pagePath) {
   if (BASE_PATH && BASE_PATH !== '') parts.push(BASE_PATH.replace(/^\//, ''));
   if (langPrefix) parts.push(langPrefix);
   if (pagePath) parts.push(pagePath.replace(/^\//, ''));
-  return parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
+  const url = parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
+  return langPrefix && !pagePath ? `${url}/` : url;
+}
+
+function resolveTranslation(langResources, key) {
+  let namespace = 'common';
+  let keyPath = key;
+  const colonIndex = key.indexOf(':');
+  if (colonIndex !== -1) {
+    namespace = key.slice(0, colonIndex);
+    keyPath = key.slice(colonIndex + 1);
+  }
+  let node = langResources[namespace];
+  for (const segment of keyPath.split('.')) {
+    if (node == null || typeof node !== 'object') return null;
+    node = node[segment];
+  }
+  return typeof node === 'string' && node ? node : null;
+}
+
+function applyServerTranslations(document, langResources) {
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    const key = element.getAttribute('data-i18n');
+    if (!key) return;
+    const translation = resolveTranslation(langResources, key);
+    if (translation) element.textContent = translation;
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    if (!key) return;
+    const translation = resolveTranslation(langResources, key);
+    if (translation) element.setAttribute('placeholder', translation);
+  });
+
+  document.querySelectorAll('[data-i18n-title]').forEach((element) => {
+    const key = element.getAttribute('data-i18n-title');
+    if (!key) return;
+    const translation = resolveTranslation(langResources, key);
+    if (translation) element.setAttribute('title', translation);
+  });
 }
 
 const ORGANIZATION_LD_MARKER = 'data-bentopdf-organization';
@@ -105,10 +145,24 @@ function buildLocalHomeHref(lang) {
   return `${BASE_PATH}${langSegment}`.replace(/\/+/g, '/');
 }
 
+function removeStaticBreadcrumbLd(document) {
+  for (const script of document.querySelectorAll(
+    `script[type="application/ld+json"]:not([${BREADCRUMB_MARKER}])`
+  )) {
+    try {
+      const parsed = JSON.parse(script.textContent || '');
+      if (parsed && parsed['@type'] === 'BreadcrumbList') script.remove();
+    } catch {
+      continue;
+    }
+  }
+}
+
 function injectToolBreadcrumb(document, lang, toolName, toolUrl) {
   const h1 = document.querySelector('h1[data-i18n^="tools:"]');
   if (!h1) return;
   if (document.querySelector(`[${BREADCRUMB_MARKER}]`)) return;
+  removeStaticBreadcrumbLd(document);
 
   const homeUrl = buildUrl(lang === 'en' ? '' : lang, '');
 
@@ -191,6 +245,8 @@ function processFileForLanguage(
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
+  applyServerTranslations(document, translations[lang]);
+
   let title = null;
   let description = null;
 
@@ -247,14 +303,13 @@ function processFileForLanguage(
   document.head.appendChild(defaultLink);
 
   const localizedUrl = buildUrl(lang, pagePath);
-  const canonicalUrl = buildUrl('', pagePath);
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) {
     canonical = document.createElement('link');
     canonical.rel = 'canonical';
     document.head.appendChild(canonical);
   }
-  canonical.href = canonicalUrl;
+  canonical.href = localizedUrl;
 
   const ogUrl = document.querySelector('meta[property="og:url"]');
   if (ogUrl) ogUrl.content = localizedUrl;
@@ -287,6 +342,8 @@ function processFileForLanguage(
     }
 
     if (href.startsWith('/assets/') || href.includes('/assets/')) return;
+
+    if (href === '/blog' || href.startsWith('/blog/')) return;
 
     const langPrefixRegex = new RegExp(
       `^(${BASE_PATH})?/(${languages.join('|')})(/|$)`

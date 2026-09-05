@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ WPD to PDF online free - WPD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert WordPerfect documents (WPD) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="wpd to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ WPD to PDF online free - WPD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert WordPerfect documents (WPD) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="WPD to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ WPD to PDF online free - WPD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert WordPerfect documents (WPD) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="WPD to PDF" />
 
     <title>WPD to PDF - Convert WordPerfect to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert WordPerfect documents (WPD) to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -339,32 +335,97 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is wpd to pdf really free?
+            Do I need WordPerfect installed to convert WPD files?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            No. The tool loads a LibreOffice engine into your browser, and
+            LibreOffice's WordPerfect filter reads the file directly, so nothing
+            needs to be installed on your computer.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Which WordPerfect versions are supported?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            All major WordPerfect versions that use the .wpd extension,
+            including files from the DOS and early Windows era that current
+            software often refuses to open. The file must actually end in .wpd;
+            other extensions aren't accepted by the picker.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why is the first WordPerfect conversion slow?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            The LibreOffice engine is around 75 MB compressed and is downloaded
+            the first time you convert, with a progress percentage shown while
+            it loads. Later conversions in the same session skip that step and
+            are much faster.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What is preserved from the original document?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Text, page layout, and basic formatting such as fonts, bold and
+            italic, and indents carry over to the PDF. WordPerfect macros and
+            reveal codes are not preserved, since they have no equivalent in a
+            PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several WPD files in one go?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Select or drop multiple files and click Convert to PDF. One file
+            downloads as a PDF with the same name; several are packed into
+            wpd-to-pdf.zip with a PDF for each document.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I turn a WordPerfect file into a Word document instead?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not from this tool. Convert to PDF here first, then run the result
+            through
+            <a href="/pdf-to-word" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to Word</a
+            >
+            if you need an editable .docx.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my old legal or government documents uploaded?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The conversion engine runs entirely in your browser, so the WPD
+            files and the resulting PDFs stay on your device. Only the engine
+            itself is downloaded, not your documents.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why did a file fail to convert?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Damaged files and files that aren't really WordPerfect despite the
+            .wpd extension are the usual causes. If the file opens in desktop
+            LibreOffice, it should convert here as well, since the same import
+            filter is used.
           </p>
         </details>
       </div>

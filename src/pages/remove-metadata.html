@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Remove Metadata online free - Remove metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Strip hidden data from your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="remove metadata, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Remove Metadata online free - Remove metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Strip hidden data from your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Remove Metadata Free" />
     <meta
       name="twitter:description"
-      content="★ Remove Metadata online free - Remove metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Strip hidden data from your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Remove Metadata" />
 
     <title>Remove Metadata - Strip Hidden Data from PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Remove all metadata from your PDF files. Strip hidden data including author, title, creation date, and more. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -333,32 +329,121 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is remove metadata really free?
+            What metadata exactly gets removed?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The document info fields (Title, Author, Subject, Keywords, Creator,
+            Producer, and the creation and modification dates), the XMP metadata
+            stream, the document ID pair in the trailer, and
+            application-specific PieceInfo left behind by tools like Illustrator
+            or InDesign. There are no options; it always clears all of these.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What stays in the file?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            All visible content, plus form fields, annotations, bookmarks,
+            links, and any file attachments. Names stored inside those elements,
+            such as the author on a sticky-note comment, are not touched. To
+            strip comments, scripts, and attachments as well, use
+            <a
+              href="/sanitize-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Sanitize PDF</a
+            >.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does it remove metadata from images inside the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. Image data is left as it is, so any EXIF or XMP information a
+            photo carried when it was placed into the PDF stays with that image.
+            If that matters,
+            <a
+              href="/rasterize-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Rasterize PDF</a
+            >
+            re-renders every page as a fresh image, at the cost of selectable
+            text.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How can I confirm the metadata is gone?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Open the cleaned file in
+            <a
+              href="/view-metadata"
+              class="text-indigo-300 hover:text-indigo-400"
+              >View Metadata</a
+            >
+            and check that the fields are blank. Running the same check on the
+            original first shows you exactly what is about to be removed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can this be undone?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The cleaned file keeps no record of the removed values. Keep
+            your original copy if you may need the author, dates, or other
+            details later.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will removing metadata reduce the file size?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A little, since the XMP block and info fields are dropped, usually
+            only a few kilobytes. For a real reduction, follow up with
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it remove comments, annotations, or hidden text?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No, it only targets metadata. Comments and markup are annotations,
+            which stay;
+            <a
+              href="/remove-annotations"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Remove Annotations</a
+            >
+            handles those. Hidden or white text remains part of the page
+            content, so review the document itself if it went through several
+            revisions.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded while the metadata is removed?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The file is opened and rewritten by a PDF library in your
+            browser, which is the point when the goal is anonymity: the document
+            never touches a server, and no server log records what you cleaned.
           </p>
         </details>
       </div>

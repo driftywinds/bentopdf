@@ -7,11 +7,11 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="OCR PDF Online Free - OCR PDF Tool | BentoPDF"
+      content="OCR PDF Free Online - Make Scanned PDFs Searchable | BentoPDF"
     />
     <meta
       name="description"
-      content="★ OCR PDF online free - OCR PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make a PDF searchable and copyable. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -31,11 +31,11 @@
     <meta property="og:url" content="https://www.bentopdf.com/ocr-pdf" />
     <meta
       property="og:title"
-      content="OCR PDF Online Free - OCR PDF Tool | BentoPDF"
+      content="OCR PDF Free Online - Make Scanned PDFs Searchable | BentoPDF"
     />
     <meta
       property="og:description"
-      content="★ OCR PDF online free - OCR PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make a PDF searchable and copyable. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,10 +48,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bentopdf.com/ocr-pdf" />
-    <meta name="twitter:title" content="OCR PDF Free" />
+    <meta
+      name="twitter:title"
+      content="OCR PDF Free Online - Make Scanned PDFs Searchable | BentoPDF"
+    />
     <meta
       name="twitter:description"
-      content="★ OCR PDF online free - OCR PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Make a PDF searchable and copyable. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -64,11 +67,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="OCR PDF" />
 
-    <title>OCR PDF - Make PDF Searchable - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert scanned PDFs into searchable documents using OCR. Extract text from images and create searchable PDFs. Free, secure, and runs entirely in your browser."
-    />
+    <title>OCR PDF Free Online - Make Scanned PDFs Searchable | BentoPDF</title>
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -645,32 +644,106 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is ocr pdf really free?
+            How do I know if my PDF needs OCR?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Open the file in any viewer and try to select a line of text. If
+            nothing highlights or search finds no matches, the pages are just
+            images (a scan or a photo) and OCR is what adds the missing text. A
+            PDF that already has selectable text doesn't need this tool.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Which languages can it recognize?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Over 100 Tesseract language packs are listed, from English and
+            Spanish to Arabic, Hindi, Japanese, and Chinese. Tick every language
+            that appears in the document; the packs are loaded together so
+            mixed-language pages are recognized in one pass. Some self-hosted
+            deployments bundle a shorter list and say so above the language
+            picker.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does OCR change how my document looks?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            No. The original pages are copied unchanged and an invisible text
+            layer is drawn on top, positioned word by word to match the scan.
+            You see the same image as before, but you can now search, select,
+            and copy the text.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which resolution setting should I use?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            High (288 DPI) is the default and handles typical office documents.
+            Drop to Standard (192 DPI) when speed matters or the file is long,
+            and use Ultra (384 DPI) for small print, footnotes, or poor scans.
+            Higher settings take noticeably longer since every page is rendered
+            at that size before recognition.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What does the character whitelist do?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            It restricts the output to a fixed set of characters, which cuts
+            down on errors like a lowercase l being read as a 1. The Invoice
+            preset allows only digits and the symbols $ . , / - # :, Numbers
+            Only suits serial numbers or meter readings, and Custom lets you
+            type your own set.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can it read handwriting?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not reliably. Tesseract is trained on printed text, so neat block
+            capitals sometimes work but cursive mostly produces noise. Results
+            are best on clean, well-lit printed pages; the Binarize option helps
+            with faded or low-contrast scans, and
+            <a href="/deskew-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Deskew PDF</a
+            >
+            straightens tilted ones first.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I get just the recognized text instead of a PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. When OCR finishes, the extracted text appears in a box where
+            you can review it, copy it to the clipboard, or download it as
+            ocr-text.txt. The searchable PDF download is separate, so you can
+            take either or both.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does OCR upload my scans to a server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Tesseract runs as WebAssembly inside your browser; the only
+            downloads are the OCR engine and the language packs you selected,
+            fetched the first time they're needed. The scanned pages and the
+            recognized text stay on your device.
           </p>
         </details>
       </div>

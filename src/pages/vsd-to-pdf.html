@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ VSD to PDF online free - VSD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Microsoft Visio (VSD, VSDX) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="vsd to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ VSD to PDF online free - VSD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Microsoft Visio (VSD, VSDX) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="VSD to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ VSD to PDF online free - VSD to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert Microsoft Visio (VSD, VSDX) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="VSD to PDF" />
 
     <title>VSD to PDF - Convert Microsoft Publisher to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert Microsoft Visio (VSD, VSDX) files to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -339,32 +335,97 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is vsd to pdf really free?
+            How do I open a Visio file without Visio?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Upload the .vsd or .vsdx file and click Convert to PDF. A
+            LibreOffice engine compiled to WebAssembly loads in your browser,
+            renders the diagram, and downloads a PDF you can open, print, or
+            share on any device without a Visio license.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Which Visio formats are supported?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Both the legacy binary .vsd format from Visio 2003 and earlier and
+            the XML-based .vsdx format from Visio 2013 and later, and you can
+            mix them in one batch. Files saved as .vsdm or .vdx aren't accepted,
+            so re-save those as .vsdx first.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Does a multi-page Visio diagram become a multi-page PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Each Visio page becomes one PDF page, and the page size and
+            orientation from the drawing are kept, so a landscape network
+            diagram stays landscape.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why does my old .vsd file look slightly different after conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Older .vsd files generally convert with lower fidelity than .vsdx,
+            so unusual shapes, custom stencils, or text formatting can render a
+            little differently. Fonts that aren't available are substituted,
+            which can shift labels; check the output if the diagram is going
+            into formal documentation.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several diagrams at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Add as many .vsd and .vsdx files as you need, remove any you don't
+            want, and convert them together. One file downloads as a PDF with
+            the same base name; several come back in vsd-to-pdf.zip, with
+            duplicate names given a numbered suffix.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is my first Visio conversion slow?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The engine is roughly 75 MB compressed and has to be downloaded and
+            started once per session, with a progress percentage shown while it
+            loads. Later conversions in the same session skip that step and
+            finish quickly.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the text in the PDF selectable?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Shape labels and connector text are written into the PDF as text, so
+            you can select, copy, and search them. The diagram itself is drawn
+            as vector shapes, so it stays sharp when zoomed or printed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my Visio file uploaded to convert it?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The conversion engine runs entirely in your browser, so network
+            diagrams, floor plans, and org charts are rendered on your own
+            machine and the PDF is saved from there. Nothing is transmitted to a
+            server.
           </p>
         </details>
       </div>

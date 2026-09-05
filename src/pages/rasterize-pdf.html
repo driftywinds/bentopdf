@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Rasterize PDF online free - Rasterize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF to image-based PDF. Flatten layers and remove selectable text. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="rasterize pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Rasterize PDF online free - Rasterize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PDF to image-based PDF. Flatten layers and remove selectable text. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Rasterize PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Rasterize PDF online free - Rasterize PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Convert PDF to image-based PDF. Flatten layers and remove selectable text. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="Rasterize PDF" />
 
     <title>Rasterize PDF - Convert to Image-Based PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF to image-based PDF. Flatten layers, remove selectable text. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -371,32 +367,108 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is rasterize pdf really free?
+            What does rasterizing a PDF actually do?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Every page is rendered to a bitmap and the bitmaps are reassembled
+            into a new PDF. The result looks the same but contains no text
+            objects, fonts, layers, form fields, or hidden content, only a
+            picture of each page, much like a photocopy.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Which DPI should I choose when rasterizing?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            150, the default, is fine for reading on screen and ordinary office
+            printing. Use 300 for print-quality output or when someone will zoom
+            in on fine print, 600 only for archival or professional printing,
+            and 72 when the smallest possible file matters more than sharpness.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            PNG or JPEG?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            PNG is lossless, so text edges stay crisp, but files are bigger.
+            JPEG (saved at quality 95) is noticeably smaller and works well for
+            scanned or photographic pages, but can leave faint artifacts around
+            sharp text. Grayscale is available with either and shrinks files
+            further for black-and-white documents.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why is the rasterized file bigger than the original?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A text PDF stores a few kilobytes of font and glyph data per page,
+            whereas a 300 DPI image of a Letter page is 2550 x 3300 pixels.
+            Lower the DPI, switch to JPEG, or run the result through
+            <a
+              href="/compress-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Compress PDF</a
+            >
+            if size matters.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I make the text selectable again afterward?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not from the rasterized file itself; the operation is one-way, so
+            keep the original. You can add a searchable text layer back with
+            <a href="/ocr-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >OCR PDF</a
+            >, though recognized text is never as exact as the original.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How is this different from flattening a PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Flattening merges form fields and annotations into the page but
+            keeps text as text. Rasterizing goes further and turns everything,
+            text included, into pixels. If you only need to lock form fields or
+            comments,
+            <a href="/flatten-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >Flatten PDF</a
+            >
+            keeps the file searchable and much smaller.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my confidential documents uploaded to be rasterized?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering is done by the PyMuPDF WebAssembly module running in
+            your browser, so the pages are drawn and repacked on your own
+            machine. That's what makes the tool a safe way to strip hidden text
+            and layers from a sensitive file before sharing it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I rasterize several PDFs at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. Add as many as you like; each is processed with the same DPI,
+            format, and grayscale settings, and the results download together as
+            rasterized-pdfs.zip. A single file downloads on its own.
           </p>
         </details>
       </div>

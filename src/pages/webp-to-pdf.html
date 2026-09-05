@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ WebP to PDF online free - WebP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more WebP images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="webp to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ WebP to PDF online free - WebP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more WebP images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="WebP to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ WebP to PDF online free - WebP to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Create a PDF from one or more WebP images. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="WebP to PDF" />
 
     <title>WebP to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert one or more WebP images into a single PDF file. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -357,32 +353,104 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is webp to pdf really free?
+            Does each WebP image become its own page?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            Yes. Every image is placed on a separate page sized to the image
+            itself, in the order the files appear in the list, and the whole set
+            downloads as one file named from_webps.pdf.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What page size will my WebP images get in the PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The page matches the image's pixel dimensions at one point per
+            pixel, so a 1600 x 1200 image produces a 1600 x 1200 point page,
+            roughly 22 x 17 inches. To get standard A4 or Letter pages, run the
+            result through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            What do the quality settings change for WebP images?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            High keeps the full pixel dimensions with the lightest compression.
+            Medium, the default, re-encodes as JPEG at about 75 percent and
+            scales images down so the longest side is at most 2500 pixels; Low
+            uses about 50 percent and a 1500 pixel cap, which gives the smallest
+            files.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will transparent areas stay transparent?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Images are re-encoded through the browser's canvas as JPEG when
+            they're embedded, and JPEG has no alpha channel, so see-through
+            regions come out as a solid background. Flatten the image onto a
+            white background in an image editor first if that matters.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert an animated WebP?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Only the first frame is used, since the browser decodes the file as
+            a still image before it's placed on the page. Each animation becomes
+            a single static page.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I mix WebP with JPG or PNG files in the same PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Not on this page; the file picker accepts .webp only. Use
+            <a
+              href="/image-to-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Images to PDF</a
+            >, which takes WebP, JPG, PNG, and other formats together in a
+            single conversion.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are my images uploaded to make the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Each WebP is decoded by your browser's own image engine and
+            written into the PDF locally, so the pictures never leave your
+            device.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I reorder or remove images before converting?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            You can remove any file from the list with its delete icon, but
+            there's no drag reordering on this page, so pages follow the order
+            in which you selected the files. Pick them in the order you want
+            them to appear.
           </p>
         </details>
       </div>

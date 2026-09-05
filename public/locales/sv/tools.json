@@ -1312,5 +1312,13 @@
     "faqSinglePageAnswer": "Ja! Aktivera alternativet \"Upprepa\" och dina överläggsidor upprepas på alla bassidor. En ensidig vattenstämpel tillämpas på varje sida.",
     "faqPrivacyQuestion": "Är mina filer privata och säkra?",
     "faqPrivacyAnswer": "Absolut! All bearbetning sker i din webbläsare. Dina filer lämnar aldrig din enhet, vilket garanterar fullständig integritet."
+  },
+  "unlockPdf": {
+    "name": "Dekryptera PDF",
+    "subtitle": "Lås upp PDF genom att ta bort lösenordsskydd."
+  },
+  "protectPdf": {
+    "name": "Kryptera PDF",
+    "subtitle": "Lås din PDF genom att lägga till ett lösenord."
   }
 }

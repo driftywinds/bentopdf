@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ View Metadata online free - View metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Inspect the hidden properties of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="view metadata, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ View Metadata online free - View metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Inspect the hidden properties of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="View Metadata Free" />
     <meta
       name="twitter:description"
-      content="★ View Metadata online free - View metadata PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Inspect the hidden properties of your PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="View Metadata" />
 
     <title>View PDF Metadata - BentoPDF</title>
-    <meta
-      name="description"
-      content="View all metadata from your PDF documents including title, author, subject, keywords, and custom fields. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -323,32 +319,109 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is view metadata really free?
+            What information can a PDF reveal about me?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The Info dictionary often holds the author's name (usually the
+            operating system or Office username), the software used, and
+            creation and modification timestamps. XMP metadata can add document
+            IDs, revision history, and application details, and filled form
+            field values are shown too. If you're about to publish or share the
+            file, run
+            <a
+              href="/remove-metadata"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Remove Metadata</a
+            >
+            afterward.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            What is the difference between the Info dictionary and XMP metadata?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            The Info dictionary is the older set of fixed fields: Title, Author,
+            Subject, Keywords, Creator, Producer, and dates. XMP is an XML block
+            with namespaces such as Dublin Core, xmp, and pdf, and it can hold
+            far more. The two are meant to agree but often don't, which is why
+            the tool shows both.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Why are the dates shown differently from what Acrobat displays?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            PDF dates are stored as strings like D:20240101120000Z. The tool
+            converts them to a readable date in your local time zone, so the
+            hour can differ from a viewer that shows the raw value or uses a
+            different zone.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How can I tell which program created the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Look at the Creator field (the application that made the original
+            document, such as Word or InDesign) and the Producer field (the
+            library that wrote the PDF, such as Acrobat Distiller or a PDF
+            engine). The XMP section usually repeats them as xmp:CreatorTool and
+            pdf:Producer.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it show the values filled into form fields?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The Interactive Form Fields section lists each field name with its
+            current value, or Not Set when empty, which is a quick way to check
+            what data a filled form contains before sending it.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I copy or export the metadata?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The Copy Metadata as JSON button puts the Info dictionary fields on
+            your clipboard as a JSON object. The XMP tree and form field values
+            are displayed on the page but aren't included in the copied JSON.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I change what I see here?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            This tool is read-only. Use
+            <a
+              href="/edit-metadata"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Edit Metadata</a
+            >
+            to change the title, author, keywords, and dates, or Remove Metadata
+            to strip everything before publishing.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the PDF uploaded to read its metadata?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The file is parsed by pdf.js in your browser as soon as you
+            select it, and nothing is transmitted, so you can inspect a
+            sensitive document before deciding where it goes.
           </p>
         </details>
       </div>

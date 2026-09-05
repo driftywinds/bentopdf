@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Change Permissions online free - Change permissions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Set or change user permissions on a PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="change permissions, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Change Permissions online free - Change permissions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Set or change user permissions on a PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -54,7 +54,7 @@
     <meta name="twitter:title" content="Change Permissions Free" />
     <meta
       name="twitter:description"
-      content="★ Change Permissions online free - Change permissions PDFs easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Set or change user permissions on a PDF. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -68,10 +68,6 @@
     <meta name="apple-mobile-web-app-title" content="Change Permissions" />
 
     <title>Change PDF Permissions - Manage PDF Security - BentoPDF</title>
-    <meta
-      name="description"
-      content="Change PDF permissions and passwords. Set or modify user permissions, encryption, and access controls. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -445,32 +441,111 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is change permissions really free?
+            What is the difference between a user password and an owner
+            password?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The user password is required to open the PDF at all. The owner
+            password protects the permission settings and is what someone needs
+            to change or remove them later. Set only an owner password if anyone
+            should be able to open the file but with printing, copying, or
+            editing restricted.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Why does the tool ask for an owner password when I set permissions?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            Permission flags are only enforced when an owner password exists;
+            without one, PDF readers treat the file as unrestricted. The tool
+            therefore requires a New Owner Password whenever you set permissions
+            or a user password.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            How do I stop people from copying text or printing my PDF?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Uncheck "Allow Copying Text" and "Allow Printing", enter a New Owner
+            Password, and click Change Permissions. Adobe Reader and other
+            compliant viewers will then block those actions. Some third-party
+            tools ignore permission flags, so for sensitive material consider
+            <a
+              href="/rasterize-pdf"
+              class="text-indigo-300 hover:text-indigo-400"
+              >rasterizing the pages</a
+            >
+            as well.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which permissions can I control?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Seven checkboxes: printing, copying text, modifying content,
+            annotating, filling forms, document assembly (inserting, deleting,
+            or rotating pages), and page extraction. An unchecked box means the
+            action is not allowed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What encryption does Change Permissions use?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The output is encrypted with 256-bit AES. That also makes this a
+            quick way to upgrade an old RC4-encrypted PDF: enter its current
+            password, set new passwords, and the file is rewritten with AES-256.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I change permissions on a PDF that is already password
+            protected?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes, enter the existing password in the Current Password field. The
+            tool opens the file with it, then re-encrypts it with your new
+            passwords and permission settings; a wrong current password produces
+            an error and nothing is changed.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I remove all restrictions instead of changing them?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Leave both new password fields empty and click Change Permissions.
+            The output is fully decrypted with no passwords and no permission
+            flags. If you don't have the current password, use
+            <a
+              href="/remove-restrictions"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Remove Restrictions</a
+            >
+            instead, which works without one when the PDF opens freely.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF or its owner password sent anywhere when I change
+            permissions?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The encryption is done by QPDF compiled to WebAssembly inside
+            your browser tab, so the file and every password you type stay on
+            your device.
           </p>
         </details>
       </div>

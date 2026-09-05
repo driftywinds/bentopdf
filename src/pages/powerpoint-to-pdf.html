@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PowerPoint to PDF online free - Convert PowerPoint to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PowerPoint presentations (PPTX, PPT, ODP) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -38,7 +38,7 @@
     />
     <meta
       property="og:description"
-      content="★ PowerPoint to PDF online free - Convert PowerPoint to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert PowerPoint presentations (PPTX, PPT, ODP) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -57,7 +57,7 @@
     <meta name="twitter:title" content="PowerPoint to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ PowerPoint to PDF online free - Convert PowerPoint to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser"
+      content="Convert PowerPoint presentations (PPTX, PPT, ODP) to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -71,10 +71,6 @@
     <meta name="apple-mobile-web-app-title" content="PowerPoint to PDF" />
 
     <title>PowerPoint to PDF - Convert PPTX, PPT to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PowerPoint presentations (PPTX, PPT, ODP) to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -347,32 +343,100 @@
       <div class="faq-list">
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is powerpoint to pdf really free?
+            Why does my first PowerPoint conversion take a while?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+            The converter is a full LibreOffice build compiled to WebAssembly,
+            about 75 MB, that your browser downloads and starts the first time
+            you convert. Once loaded it stays ready, so a second presentation in
+            the same session converts far faster.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Are my files private and secure?
+            Will animations, transitions, and embedded videos show up?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+            No. Every slide is captured as a static page, so animations and
+            transitions are dropped and a video appears only as whatever the
+            slide shows in its place. Replace videos with a screenshot before
+            converting if you need a visual.
           </p>
         </details>
         <details class="faq-d">
           <summary class="faq-d-q">
-            Is there a file size limit?
+            Are speaker notes included?
             <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
           <p class="faq-d-a">
-            No! Process files of any size, as many times as you want, completely
-            free.
+            Not in this export; only the slides are rendered, one per page. If
+            you need a notes version, print to PDF from PowerPoint's notes view
+            instead.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which file types are accepted?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Modern .pptx, legacy .ppt, and OpenDocument .odp presentations, in
+            any mix, several at a time. Keynote and Google Slides decks need to
+            be exported to .pptx first.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What page size do the PDF pages have?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each page matches the slide's own dimensions, so a 16:9 deck
+            produces landscape pages in that ratio rather than being forced onto
+            Letter or A4. If you need a standard paper size for printing, run
+            the result through
+            <a
+              href="/fix-page-size"
+              class="text-indigo-300 hover:text-indigo-400"
+              >Fix Page Size</a
+            >.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why do some fonts look different in the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The in-browser engine ships with its own fonts and can't see fonts
+            installed on your computer, so a deck that uses a font it doesn't
+            have is rendered with a substitute, which can shift line breaks.
+            Sticking to common fonts keeps the layout closest to the original.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What do I get when I convert several presentations at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Each file becomes a separate PDF with the original name, and they're
+            bundled into powerpoint-converted.zip. A single file downloads
+            straight away as a PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my presentation uploaded to a server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The LibreOffice engine is downloaded to your browser and runs
+            there; the presentation is opened and converted on your own machine.
+            Confidential pitch decks and internal reviews never leave your
+            device.
           </p>
         </details>
       </div>
