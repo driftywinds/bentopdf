@@ -239,7 +239,9 @@
     "legal": "قانوني",
     "termsAndConditions": "الشروط والأحكام",
     "privacyPolicy": "سياسة الخصوصية",
-    "followUs": "تابعنا"
+    "followUs": "تابعنا",
+    "privacyShort": "الخصوصية",
+    "termsShort": "الشروط"
   },
   "merge": {
     "title": "دمج ملفات PDF",

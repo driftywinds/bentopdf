@@ -273,8 +273,14 @@
     </style>
   </head>
 
-  <body class="antialiased bg-gray-900 h-screen flex flex-col overflow-hidden">
+  <body
+    class="antialiased bg-gray-900 h-[100dvh] flex flex-col overflow-hidden"
+  >
     {{> navbar }}
+
+    <h1 class="sr-only">
+      PDF Workflow Builder Free Online - Chain PDF Tools Into One Run
+    </h1>
 
     <!-- Main Workflow Layout -->
     <div id="workflow-app" class="flex flex-1 min-h-0">
@@ -336,6 +342,17 @@
             <span class="hidden md:inline">Save</span>
           </button>
           <button
+            id="faq-open-btn"
+            type="button"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-2.5 md:px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
+            aria-haspopup="dialog"
+            aria-controls="faq-modal"
+            aria-expanded="false"
+          >
+            <i class="ph ph-question text-sm"></i>
+            <span class="hidden md:inline">FAQ</span>
+          </button>
+          <button
             id="load-btn"
             class="bg-gray-700 hover:bg-gray-600 text-white px-2.5 md:px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
           >
@@ -393,6 +410,8 @@
         <div id="settings-content" class="flex-1 p-3 space-y-3"></div>
       </aside>
     </div>
+
+    {{> footer-compact }}
 
     <!-- Loader Modal -->
     <div
@@ -555,123 +574,146 @@
     <script type="module">
       import '@phosphor-icons/web/regular';
     </script>
-    <!-- FAQ Section -->
-    <section class="max-w-4xl mx-auto px-4 py-12">
-      <h2
-        class="text-2xl md:text-3xl font-bold text-white mb-6 text-center"
-        data-i18n="faq.sectionTitle"
+    <!-- FAQ Modal -->
+    <div
+      id="faq-modal"
+      class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="faq-modal-title"
+      aria-hidden="true"
+    >
+      <div
+        class="bg-gray-800 rounded-lg w-full max-w-3xl max-h-[85vh] overflow-y-auto relative border border-gray-700 shadow-2xl"
       >
-        Frequently Asked Questions
-      </h2>
-      <div class="faq-list">
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            What is the PDF Workflow Builder for?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            It chains several PDF operations into one run. Instead of opening a
-            tool, downloading, and feeding the result into the next tool for
-            each step, you connect nodes on a canvas, such as PDF Input,
-            Compress, Watermark, and Download, set each node's options, and
-            click Run to process everything in sequence.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Can I run the same workflow on many PDFs at once?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Yes. The PDF Input node accepts multiple files; a Merge node
-            combines them into one document, while other nodes process each PDF
-            separately. When more than one file comes out the end, the Download
-            node bundles them into a ZIP automatically.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Why won't it let me connect two nodes?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Sockets are typed: PDF (a single document), MultiPDF (several
-            documents), and Image. A node that expects a single PDF won't accept
-            a MultiPDF output, so put a Merge node in between, and image outputs
-            only feed nodes that take images. Connections always run from the
-            bottom of one node to the top of the next.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Why does it complain that Encrypt must be the last step?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Once a PDF is encrypted, later nodes can't read it, so the engine
-            rejects a workflow where anything other than the output sits after
-            Encrypt. Move Encrypt to just before Download. Password-protected
-            inputs are the opposite case: the run pauses and asks for the
-            password.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            What happens if one step fails?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            The run stops at that node, which turns red with an error message,
-            and nothing downstream is produced. Fix the setting or the input and
-            run again; it's easiest to build a two-node version first and add
-            steps once that works.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Can I save a workflow and reuse it later?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Yes. Save stores it as a named template in your browser's local
-            storage, and Load brings it back in a later session on the same
-            browser. Export writes the layout to a workflow.json file you can
-            back up or send to a colleague, and Import restores nodes,
-            positions, connections, and settings from that file.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Does a saved workflow contain my documents?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            No. Templates and exported JSON files hold only the node types,
-            their settings, positions, and connections; the PDFs are chosen
-            fresh each time you run. Settings are saved as typed, so avoid
-            exporting a workflow with a password entered in an Encrypt node if
-            you plan to share it.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Are the files processed on a server?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            No. Every node runs in your browser with the same engines as the
-            individual tools, and the only network activity is fetching a
-            processing module such as Ghostscript the first time a node needs
-            one. Your PDFs never leave the machine, even in a long multi-step
-            run.
-          </p>
-        </details>
+        <button
+          id="faq-close-btn"
+          type="button"
+          class="absolute top-3 right-3 z-10 flex items-center justify-center w-9 h-9 rounded-lg bg-gray-700 hover:bg-gray-600 text-white"
+          aria-label="Close FAQ"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <section class="max-w-4xl mx-auto px-6 pt-12 pb-8">
+          <h2
+            id="faq-modal-title"
+            class="text-2xl md:text-3xl font-bold text-white mb-6 text-center"
+            data-i18n="faq.sectionTitle"
+          >
+            Frequently Asked Questions
+          </h2>
+          <div class="faq-list">
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                What is the PDF Workflow Builder for?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                It chains several PDF operations into one run. Instead of
+                opening a tool, downloading, and feeding the result into the
+                next tool for each step, you connect nodes on a canvas, such as
+                PDF Input, Compress, Watermark, and Download, set each node's
+                options, and click Run to process everything in sequence.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Can I run the same workflow on many PDFs at once?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Yes. The PDF Input node accepts multiple files; a Merge node
+                combines them into one document, while other nodes process each
+                PDF separately. When more than one file comes out the end, the
+                Download node bundles them into a ZIP automatically.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Why won't it let me connect two nodes?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Sockets are typed: PDF (a single document), MultiPDF (several
+                documents), and Image. A node that expects a single PDF won't
+                accept a MultiPDF output, so put a Merge node in between, and
+                image outputs only feed nodes that take images. Connections
+                always run from the bottom of one node to the top of the next.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Why does it complain that Encrypt must be the last step?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Once a PDF is encrypted, later nodes can't read it, so the
+                engine rejects a workflow where anything other than the output
+                sits after Encrypt. Move Encrypt to just before Download.
+                Password-protected inputs are the opposite case: the run pauses
+                and asks for the password.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                What happens if one step fails?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                The run stops at that node, which turns red with an error
+                message, and nothing downstream is produced. Fix the setting or
+                the input and run again; it's easiest to build a two-node
+                version first and add steps once that works.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Can I save a workflow and reuse it later?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Yes. Save stores it as a named template in your browser's local
+                storage, and Load brings it back in a later session on the same
+                browser. Export writes the layout to a workflow.json file you
+                can back up or send to a colleague, and Import restores nodes,
+                positions, connections, and settings from that file.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Does a saved workflow contain my documents?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                No. Templates and exported JSON files hold only the node types,
+                their settings, positions, and connections; the PDFs are chosen
+                fresh each time you run. Settings are saved as typed, so avoid
+                exporting a workflow with a password entered in an Encrypt node
+                if you plan to share it.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Are the files processed on a server?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                No. Every node runs in your browser with the same engines as the
+                individual tools, and the only network activity is fetching a
+                processing module such as Ghostscript the first time a node
+                needs one. Your PDFs never leave the machine, even in a long
+                multi-step run.
+              </p>
+            </details>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
 
     <script type="module" src="/src/js/logic/pdf-workflow-page.ts"></script>
     <script type="module" src="/src/js/mobileMenu.ts"></script>
     <script type="module" src="/src/js/main.ts"></script>
+    <script type="module" src="/src/js/faqModal.ts"></script>
 
     <script type="application/ld+json">
       {

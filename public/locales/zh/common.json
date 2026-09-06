@@ -239,7 +239,9 @@
     "legal": "法律",
     "termsAndConditions": "服务条款",
     "privacyPolicy": "隐私政策",
-    "followUs": "关注我们"
+    "followUs": "关注我们",
+    "privacyShort": "隐私",
+    "termsShort": "条款"
   },
   "merge": {
     "title": "合并 PDF",

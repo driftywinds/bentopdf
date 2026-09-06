@@ -239,7 +239,9 @@
     "legal": "Legale",
     "termsAndConditions": "Termini e condizioni",
     "privacyPolicy": "Informativa sulla privacy",
-    "followUs": "Seguici"
+    "followUs": "Seguici",
+    "privacyShort": "Privacy",
+    "termsShort": "Termini"
   },
   "merge": {
     "title": "Unisci PDF",

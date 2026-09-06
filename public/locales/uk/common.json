@@ -239,7 +239,9 @@
     "legal": "Правова інформація",
     "termsAndConditions": "Умови використання",
     "privacyPolicy": "Політика конфіденційності",
-    "followUs": "Слідкуйте за нами"
+    "followUs": "Слідкуйте за нами",
+    "privacyShort": "Конфіденційність",
+    "termsShort": "Умови"
   },
   "merge": {
     "title": "Об’єднання PDF",

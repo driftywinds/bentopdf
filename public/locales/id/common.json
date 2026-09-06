@@ -239,7 +239,9 @@
     "legal": "Hukum",
     "termsAndConditions": "Syarat dan Ketentuan",
     "privacyPolicy": "Kebijakan Privasi",
-    "followUs": "Ikuti Kami"
+    "followUs": "Ikuti Kami",
+    "privacyShort": "Privasi",
+    "termsShort": "Ketentuan"
   },
   "merge": {
     "title": "Gabung PDF",

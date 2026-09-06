@@ -239,7 +239,9 @@
     "legal": "Правовая информация",
     "termsAndConditions": "Условия предоставления услуг",
     "privacyPolicy": "Политика приватности",
-    "followUs": "Подпишитесь"
+    "followUs": "Подпишитесь",
+    "privacyShort": "Конфиденциальность",
+    "termsShort": "Условия"
   },
   "merge": {
     "title": "Объединить PDF",

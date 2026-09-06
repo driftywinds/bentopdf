@@ -123,35 +123,7 @@
   <body
     class="antialiased bg-gray-900 h-[100dvh] overflow-hidden flex flex-col"
   >
-    <!-- Navigation -->
-    <nav class="bg-gray-800 border-b border-gray-700 flex-none z-30">
-      <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex-shrink-0 flex items-center">
-            <img
-              src="{{baseUrl}}{{#if brandLogo}}{{brandLogo}}{{else}}images/favicon-no-bg.svg{{/if}}"
-              alt="{{#if brandName}}{{brandName}}{{else}}Bento PDF{{/if}} Logo"
-              class="h-8 w-8"
-            />
-            <span class="text-white font-bold text-xl ml-2">
-              <a href="/"
-                >{{#if brandName}}{{brandName}}{{else}}BentoPDF{{/if}}</a
-              >
-            </span>
-            <span class="text-gray-400 ml-3 text-sm sm:text-base"
-              >PDF Multi Tool</span
-            >
-          </div>
-          <button
-            id="close-tool-btn"
-            class="flex items-center gap-1 bg-gray-700 hover:bg-gray-600 text-white px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded text-xs sm:text-sm md:text-base"
-          >
-            <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-            <span data-i18n="common.close">Close</span>
-          </button>
-        </div>
-      </div>
-    </nav>
+    {{> navbar }}
 
     <!-- SEO H1 (visually hidden but present for search engines) -->
     <h1 class="sr-only">PDF Multi Tool Free Online - Edit & Organize PDFs</h1>
@@ -360,6 +332,30 @@
               >Export PDF</span
             >
           </button>
+
+          <div class="border-l border-gray-600 h-5 sm:h-6 mx-1"></div>
+
+          <button
+            id="faq-open-btn"
+            type="button"
+            class="flex items-center gap-1 sm:gap-2 bg-gray-700 hover:bg-gray-600 text-white px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded text-xs sm:text-sm md:text-base"
+            aria-label="FAQ"
+            aria-haspopup="dialog"
+            aria-controls="faq-modal"
+            aria-expanded="false"
+          >
+            <i data-lucide="circle-help" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+            <span class="hidden sm:inline">FAQ</span>
+          </button>
+
+          <button
+            id="close-tool-btn"
+            class="flex items-center gap-1 sm:gap-2 bg-gray-700 hover:bg-gray-600 text-white px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded text-xs sm:text-sm md:text-base"
+            aria-label="Close"
+          >
+            <i data-lucide="x" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+            <span class="hidden sm:inline" data-i18n="common.close">Close</span>
+          </button>
         </div>
       </div>
 
@@ -409,6 +405,8 @@
         ></div>
       </div>
     </div>
+
+    {{> footer-compact }}
 
     <!-- Loading Overlay -->
     <div
@@ -473,120 +471,145 @@
     />
 
     <!-- Scripts -->
-    <!-- FAQ Section -->
-    <section class="max-w-4xl mx-auto px-4 py-12">
-      <h2
-        class="text-2xl md:text-3xl font-bold text-white mb-6 text-center"
-        data-i18n="faq.sectionTitle"
+    <!-- FAQ Modal -->
+    <div
+      id="faq-modal"
+      class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="faq-modal-title"
+      aria-hidden="true"
+    >
+      <div
+        class="bg-gray-800 rounded-lg w-full max-w-3xl max-h-[85vh] overflow-y-auto relative border border-gray-700 shadow-2xl"
       >
-        Frequently Asked Questions
-      </h2>
-      <div class="faq-list">
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            What can I do with the PDF Multi Tool that the single-purpose tools
-            can't?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            It puts merging, reordering, rotating, duplicating, deleting,
-            inserting, and splitting in one page grid, so you can do several of
-            them in a single pass without downloading and re-uploading between
-            steps. Every action is covered by undo and redo, so you can
-            experiment before you export.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            How do I combine pages from several PDFs into one document?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Upload all the source files and their pages appear together in one
-            grid, in upload order. Drag pages into the order you want, delete
-            the ones you don't need, and click Export PDF to download the result
-            as a single file.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Can I add images as pages?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Drop JPG, PNG, WebP, HEIC, TIFF, BMP, GIF, or SVG files alongside
-            your PDFs and each image becomes a page you can move, rotate, or
-            delete like any other. Blank A4 pages can also be appended with the
-            Add Blank Page button.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            How do I split one PDF into several files?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Click the scissors icon on a page to place a split marker after it;
-            a dashed line shows where the document will be divided. Export then
-            produces split-documents.zip containing document - 1.pdf, document -
-            2.pdf, and so on.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Does rotating pages here reduce quality?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            No. Rotation is stored as a page attribute in 90-degree steps rather
-            than re-rendering the content, so text, vectors, and images are
-            untouched. For angles other than 90, 180, or 270 degrees, use
-            <a
-              href="/rotate-custom"
-              class="text-indigo-300 hover:text-indigo-400"
-              >Rotate by Custom Degrees</a
-            >.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Can I export only some of the pages?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            Tick the checkboxes on the pages you want and use Download selected
-            to get just those pages as selected-pages.pdf. The workspace stays
-            as it is, so you can keep working and export the rest later.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            What happens to bookmarks when I export?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            The export rebuilds the document page by page, so bookmarks from the
-            source files aren't carried into the new PDF. Page content,
-            including text and images, is copied as-is.
-          </p>
-        </details>
-        <details class="faq-d">
-          <summary class="faq-d-q">
-            Are my PDFs uploaded when I use the Multi Tool?
-            <i data-lucide="plus" class="faq-d-icon"></i>
-          </summary>
-          <p class="faq-d-a">
-            No. Page thumbnails are rendered and the final PDF or ZIP is
-            assembled in your browser, and damaged files are repaired locally
-            before loading too. Nothing you drop into the grid leaves your
-            computer.
-          </p>
-        </details>
+        <button
+          id="faq-close-btn"
+          type="button"
+          class="absolute top-3 right-3 z-10 flex items-center justify-center w-9 h-9 rounded-lg bg-gray-700 hover:bg-gray-600 text-white"
+          aria-label="Close FAQ"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <section class="max-w-4xl mx-auto px-6 pt-12 pb-8">
+          <h2
+            id="faq-modal-title"
+            class="text-2xl md:text-3xl font-bold text-white mb-6 text-center"
+            data-i18n="faq.sectionTitle"
+          >
+            Frequently Asked Questions
+          </h2>
+          <div class="faq-list">
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                What can I do with the PDF Multi Tool that the single-purpose
+                tools can't?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                It puts merging, reordering, rotating, duplicating, deleting,
+                inserting, and splitting in one page grid, so you can do several
+                of them in a single pass without downloading and re-uploading
+                between steps. Every action is covered by undo and redo, so you
+                can experiment before you export.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                How do I combine pages from several PDFs into one document?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Upload all the source files and their pages appear together in
+                one grid, in upload order. Drag pages into the order you want,
+                delete the ones you don't need, and click Export PDF to download
+                the result as a single file.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Can I add images as pages?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Drop JPG, PNG, WebP, HEIC, TIFF, BMP, GIF, or SVG files
+                alongside your PDFs and each image becomes a page you can move,
+                rotate, or delete like any other. Blank A4 pages can also be
+                appended with the Add Blank Page button.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                How do I split one PDF into several files?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Click the scissors icon on a page to place a split marker after
+                it; a dashed line shows where the document will be divided.
+                Export then produces split-documents.zip containing document -
+                1.pdf, document - 2.pdf, and so on.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Does rotating pages here reduce quality?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                No. Rotation is stored as a page attribute in 90-degree steps
+                rather than re-rendering the content, so text, vectors, and
+                images are untouched. For angles other than 90, 180, or 270
+                degrees, use
+                <a
+                  href="/rotate-custom"
+                  class="text-indigo-300 hover:text-indigo-400"
+                  >Rotate by Custom Degrees</a
+                >.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Can I export only some of the pages?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                Tick the checkboxes on the pages you want and use Download
+                selected to get just those pages as selected-pages.pdf. The
+                workspace stays as it is, so you can keep working and export the
+                rest later.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                What happens to bookmarks when I export?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                The export rebuilds the document page by page, so bookmarks from
+                the source files aren't carried into the new PDF. Page content,
+                including text and images, is copied as-is.
+              </p>
+            </details>
+            <details class="faq-d">
+              <summary class="faq-d-q">
+                Are my PDFs uploaded when I use the Multi Tool?
+                <i data-lucide="plus" class="faq-d-icon"></i>
+              </summary>
+              <p class="faq-d-a">
+                No. Page thumbnails are rendered and the final PDF or ZIP is
+                assembled in your browser, and damaged files are repaired
+                locally before loading too. Nothing you drop into the grid
+                leaves your computer.
+              </p>
+            </details>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
 
     <script type="module" src="/src/js/logic/pdf-multi-tool.ts"></script>
     <script type="module" src="/src/js/main.ts"></script>
+    <script type="module" src="/src/js/faqModal.ts"></script>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">

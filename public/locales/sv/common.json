@@ -239,7 +239,9 @@
     "legal": "Juridiskt",
     "termsAndConditions": "Villkor",
     "privacyPolicy": "Integritetspolicy",
-    "followUs": "Följ oss"
+    "followUs": "Följ oss",
+    "privacyShort": "Integritet",
+    "termsShort": "Villkor"
   },
   "merge": {
     "title": "Sammanfoga PDF:er",

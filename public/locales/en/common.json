@@ -239,7 +239,9 @@
     "legal": "Legal",
     "termsAndConditions": "Terms and Conditions",
     "privacyPolicy": "Privacy Policy",
-    "followUs": "Follow Us"
+    "followUs": "Follow Us",
+    "privacyShort": "Privacy",
+    "termsShort": "Terms"
   },
   "merge": {
     "title": "Merge PDFs",

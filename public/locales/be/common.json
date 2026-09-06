@@ -239,7 +239,9 @@
     "legal": "Прававая інфармацыя",
     "termsAndConditions": "Умовы выкарыстання",
     "privacyPolicy": "Палітыка прыватнасці",
-    "followUs": "Сачыце за намі"
+    "followUs": "Сачыце за намі",
+    "privacyShort": "Прыватнасць",
+    "termsShort": "Умовы"
   },
   "merge": {
     "title": "Аб'яднаць PDF",

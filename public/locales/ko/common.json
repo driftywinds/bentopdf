@@ -239,7 +239,9 @@
     "legal": "법적 고지",
     "termsAndConditions": "이용약관",
     "privacyPolicy": "개인정보처리방침",
-    "followUs": "팔로우"
+    "followUs": "팔로우",
+    "privacyShort": "개인정보",
+    "termsShort": "이용약관"
   },
   "merge": {
     "title": "PDF 병합",

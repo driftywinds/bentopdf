@@ -239,7 +239,9 @@
     "legal": "Juridisch",
     "termsAndConditions": "Algemene voorwaarden",
     "privacyPolicy": "Privacybeleid",
-    "followUs": "Volgen"
+    "followUs": "Volgen",
+    "privacyShort": "Privacy",
+    "termsShort": "Voorwaarden"
   },
   "merge": {
     "title": "PDF's samenvoegen",

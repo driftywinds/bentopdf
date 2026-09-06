@@ -239,7 +239,9 @@
     "legal": "Mentions légales",
     "termsAndConditions": "Conditions générales",
     "privacyPolicy": "Politique de confidentialité",
-    "followUs": "Nous suivre"
+    "followUs": "Nous suivre",
+    "privacyShort": "Confidentialité",
+    "termsShort": "Conditions"
   },
   "merge": {
     "title": "Fusionner des PDF",

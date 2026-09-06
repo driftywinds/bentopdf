@@ -239,7 +239,9 @@
     "legal": "Pháp lý",
     "termsAndConditions": "Điều khoản và Điều kiện",
     "privacyPolicy": "Chính sách Bảo mật",
-    "followUs": "Theo dõi chúng tôi"
+    "followUs": "Theo dõi chúng tôi",
+    "privacyShort": "Quyền riêng tư",
+    "termsShort": "Điều khoản"
   },
   "merge": {
     "title": "Gộp PDF",

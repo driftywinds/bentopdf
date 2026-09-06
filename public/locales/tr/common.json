@@ -239,7 +239,9 @@
     "legal": "Yasal",
     "termsAndConditions": "Kullanım Koşulları",
     "privacyPolicy": "Gizlilik Politikası",
-    "followUs": "Bizi Takip Edin"
+    "followUs": "Bizi Takip Edin",
+    "privacyShort": "Gizlilik",
+    "termsShort": "Koşullar"
   },
   "merge": {
     "title": "PDF Birleştir",

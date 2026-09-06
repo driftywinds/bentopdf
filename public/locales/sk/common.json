@@ -239,7 +239,9 @@
     "legal": "Právne informácie",
     "termsAndConditions": "Obchodné podmienky",
     "privacyPolicy": "Zásady ochrany osobných údajov",
-    "followUs": "Sledujte nás"
+    "followUs": "Sledujte nás",
+    "privacyShort": "Súkromie",
+    "termsShort": "Podmienky"
   },
   "merge": {
     "title": "Zlúčiť PDF",

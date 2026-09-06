@@ -239,7 +239,9 @@
     "legal": "Jurídico",
     "termsAndConditions": "Termos e Condições",
     "privacyPolicy": "Política de Privacidade",
-    "followUs": "Siga-nos"
+    "followUs": "Siga-nos",
+    "privacyShort": "Privacidade",
+    "termsShort": "Termos"
   },
   "merge": {
     "title": "Mesclar PDFs",

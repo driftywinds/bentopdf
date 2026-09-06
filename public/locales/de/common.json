@@ -239,7 +239,9 @@
     "legal": "Rechtliches",
     "termsAndConditions": "Nutzungsbedingungen",
     "privacyPolicy": "Datenschutzrichtlinie",
-    "followUs": "Folge uns"
+    "followUs": "Folge uns",
+    "privacyShort": "Datenschutz",
+    "termsShort": "AGB"
   },
   "merge": {
     "title": "PDFs zusammenführen",

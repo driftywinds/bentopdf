@@ -239,7 +239,9 @@
     "legal": "法的情報",
     "termsAndConditions": "利用規約",
     "privacyPolicy": "プライバシーポリシー",
-    "followUs": "フォローする"
+    "followUs": "フォローする",
+    "privacyShort": "プライバシー",
+    "termsShort": "利用規約"
   },
   "merge": {
     "title": "PDFの結合",
