@@ -288,7 +288,8 @@
       "noCompromises": "Geen compromissen."
     },
     "mission": {
-      "title": "Onze missie",
+      "title": "Onze",
+      "titleDim": "missie",
       "description": "Ons doel is om de meest complete PDF-toolbox te bieden die je privacy respecteert en nooit om betaling vraagt. Wij geloven dat essentiële documententools voor iedereen, overal en zonder obstakels toegankelijk moeten zijn."
     },
     "philosophy": {
