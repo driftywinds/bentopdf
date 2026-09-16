@@ -1,6 +1,6 @@
 {
   "nav": {
-    "home": "Thuis",
+    "home": "Startpagina",
     "about": "Over",
     "contact": "Contact",
     "licensing": "Licentie",
@@ -385,6 +385,6 @@
     "title": "Tool niet beschikbaar",
     "heading": "Deze tool is uitgeschakeld",
     "message": "Deze tool is niet beschikbaar in deze implementatie. Neem contact op met de beheerder voor meer informatie.",
-    "backHome": "Terug naar Thuis"
+    "backHome": "Terug naar Startpagina"
   }
 }
