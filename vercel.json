@@ -91,7 +91,7 @@
       "permanent": true
     }
   ],
-  "rewrites": [{ "source": "/docs/:path*", "destination": "/docs/index.html" }],
+  "rewrites": [{ "source": "/docs/:path*", "destination": "/docs/index" }],
   "headers": [
     {
       "source": "/(.*)",
