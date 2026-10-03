@@ -91,7 +91,6 @@
       "permanent": true
     }
   ],
-  "rewrites": [{ "source": "/docs/:path*", "destination": "/docs/index" }],
   "headers": [
     {
       "source": "/(.*)",
@@ -165,7 +164,7 @@
       ]
     },
     {
-      "source": "/docs/(.*)",
+      "source": "/docs/:path*",
       "headers": [
         {
           "key": "Content-Security-Policy",
