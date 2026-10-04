@@ -91,7 +91,6 @@
       "permanent": true
     }
   ],
-  "rewrites": [{ "source": "/docs/:path*", "destination": "/docs/index" }],
   "headers": [
     {
       "source": "/(.*)",
@@ -165,7 +164,16 @@
       ]
     },
     {
-      "source": "/docs/(.*)",
+      "source": "/docs",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://rawcdn.githack.com; connect-src 'self' https://api.github.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://bentopdf-cors-proxy.bentopdf.workers.dev https://rawcdn.githack.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
+        }
+      ]
+    },
+    {
+      "source": "/docs/:path*",
       "headers": [
         {
           "key": "Content-Security-Policy",
