@@ -5,7 +5,7 @@
  * Version: 1.1.0
  */
 
-const CACHE_VERSION = 'bentopdf-v11';
+const CACHE_VERSION = 'bentopdf-v12';
 const CACHE_NAME = `${CACHE_VERSION}-static`;
 
 const trustedCdnOrigins = new Set(['https://cdn.jsdelivr.net']);
@@ -208,9 +208,10 @@ async function findCachedFile(fileName, requestUrl) {
   const requests = await cache.keys();
   for (const req of requests) {
     const reqUrl = new URL(req.url);
-    const trustedOrigin =
-      reqUrl.origin === location.origin || trustedCdnOrigins.has(reqUrl.origin);
-    if (trustedOrigin && reqUrl.pathname.split('/').pop() === fileName) {
+    if (
+      reqUrl.origin === location.origin &&
+      reqUrl.pathname.split('/').pop() === fileName
+    ) {
       const response = await cache.match(req);
       if (response) {
         const clone = response.clone();
