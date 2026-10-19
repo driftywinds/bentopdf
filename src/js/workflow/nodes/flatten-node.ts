@@ -3,7 +3,10 @@ import { BaseWorkflowNode } from './base-node';
 import { pdfSocket } from '../sockets';
 import type { SocketData } from '../types';
 import { requirePdfInput, processBatch } from '../types';
-import { flattenAnnotations } from '../../utils/flatten-annotations.js';
+import {
+  flattenAnnotations,
+  flattenFormsInDoc,
+} from '../../utils/flatten-annotations.js';
 import {
   loadPdfDocument,
   removeUnreferencedObjects,
@@ -30,8 +33,7 @@ export class FlattenNode extends BaseWorkflowNode {
         const pdfDoc = await loadPdfDocument(input.bytes);
 
         try {
-          const form = pdfDoc.getForm();
-          form.flatten();
+          flattenFormsInDoc(pdfDoc);
         } catch (err) {
           console.error('Flatten form error (may have no forms):', err);
         }

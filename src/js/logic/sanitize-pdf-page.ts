@@ -149,14 +149,25 @@ async function runSanitize() {
       new Blob([new Uint8Array(result.bytes)], { type: 'application/pdf' }),
       pageState.file?.name || 'document.pdf'
     );
-    showAlert(
-      'Success',
-      'PDF has been sanitized and downloaded.',
-      'success',
-      () => {
-        resetState();
-      }
-    );
+    if (result.skipped.length > 0) {
+      showAlert(
+        'Sanitized With Warnings',
+        `The PDF was downloaded, but these steps could not be completed: ${result.skipped.join(', ')}. The content they cover may still be in the file.`,
+        'warning',
+        () => {
+          resetState();
+        }
+      );
+    } else {
+      showAlert(
+        'Success',
+        'PDF has been sanitized and downloaded.',
+        'success',
+        () => {
+          resetState();
+        }
+      );
+    }
   } catch (e: unknown) {
     console.error('Sanitization Error:', e);
     const msg = e instanceof Error ? e.message : String(e);

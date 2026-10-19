@@ -163,7 +163,7 @@ export async function convertToPdfA(
   }
 
   const args = [
-    '-dNOSAFER',
+    '-dSAFER',
     '-dBATCH',
     '-dNOPAUSE',
     '-sDEVICE=pdfwrite',
@@ -418,7 +418,7 @@ export async function convertFontsToOutlines(
   onProgress?.('Converting fonts to outlines...');
 
   const args = [
-    '-dNOSAFER',
+    '-dSAFER',
     '-dBATCH',
     '-dNOPAUSE',
     '-sDEVICE=pdfwrite',

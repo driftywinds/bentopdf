@@ -17,6 +17,15 @@ import {
 } from './load-pdf-document.js';
 
 const ANNOTATION_TEXT_KEYS = ['Contents', 'RC', 'T', 'Subj'];
+const NON_TEXT_KEYS = new Set(
+  ['CreationDate', 'ModDate', 'M', 'ID'].map((key) => PDFName.of(key))
+);
+const SIGNATURE_TYPES = new Set(
+  ['Sig', 'DocTimeStamp'].map((type) => PDFName.of(type))
+);
+const SIGNATURE_BINARY_KEYS = new Set(
+  ['Contents', 'Cert'].map((key) => PDFName.of(key))
+);
 
 function decodeText(value: PDFObject | undefined): string | null {
   if (value instanceof PDFString || value instanceof PDFHexString) {
@@ -33,11 +42,20 @@ function decodeStream(stream: PDFRawStream): Uint8Array | null {
   }
 }
 
-function removeTextFromDocument(doc: PDFDocument, term: string): void {
+function removeTextFromDocument(doc: PDFDocument, terms: string[]): void {
   const context = doc.context;
-  const needle = term.toLowerCase();
-  const pattern = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-  const contains = (text: string) => text.toLowerCase().includes(needle);
+  const needles = terms.map((term) => term.toLowerCase());
+  const pattern = new RegExp(
+    [...terms]
+      .sort((a, b) => b.length - a.length)
+      .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('|'),
+    'gi'
+  );
+  const contains = (text: string) => {
+    const lowered = text.toLowerCase();
+    return needles.some((needle) => lowered.includes(needle));
+  };
   const valueContains = (value: PDFObject | undefined): boolean => {
     if (value instanceof PDFArray) return value.asArray().some(valueContains);
     const text = decodeText(value);
@@ -180,7 +198,11 @@ function removeTextFromDocument(doc: PDFDocument, term: string): void {
 
   const scrubContainer = (container: PDFDict | PDFArray) => {
     if (container instanceof PDFDict) {
+      const type = container.get(PDFName.of('Type'));
+      const isSignature = type instanceof PDFName && SIGNATURE_TYPES.has(type);
       for (const [key, value] of container.entries()) {
+        if (NON_TEXT_KEYS.has(key)) continue;
+        if (isSignature && SIGNATURE_BINARY_KEYS.has(key)) continue;
         const replacement = scrubValue(value);
         if (replacement) container.set(key, replacement);
       }
@@ -218,11 +240,12 @@ function removeTextFromDocument(doc: PDFDocument, term: string): void {
 
 export async function redactDocumentData(
   pdf: Uint8Array,
-  term?: string
+  terms: readonly string[] = []
 ): Promise<Uint8Array> {
   const doc = await loadPdfDocument(pdf);
-  if (term) {
-    removeTextFromDocument(doc, term);
+  const searchTerms = terms.filter((term) => term.length > 0);
+  if (searchTerms.length > 0) {
+    removeTextFromDocument(doc, searchTerms);
   } else {
     for (const page of doc.getPages()) page.node.delete(PDFName.of('Thumb'));
   }

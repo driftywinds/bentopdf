@@ -7,7 +7,64 @@ import {
   PDFNumber,
   PDFOperator,
   PDFOperatorNames,
+  PDFObject,
+  PDFTextField,
 } from 'pdf-lib';
+
+const HIDDEN_ANNOTATION_FLAGS = 0x02 | 0x20;
+
+function isHiddenAnnotation(annot: PDFDict): boolean {
+  const flags = annot.lookup(PDFName.of('F'));
+  return (
+    flags instanceof PDFNumber &&
+    (flags.asNumber() & HIDDEN_ANNOTATION_FLAGS) !== 0
+  );
+}
+
+function detachAnnotations(pdfDoc: PDFDocument, refs: Set<PDFObject>) {
+  for (const page of pdfDoc.getPages()) {
+    const annots = page.node.Annots();
+    if (!annots) continue;
+    for (let i = annots.size() - 1; i >= 0; i--) {
+      if (refs.has(annots.get(i))) annots.remove(i);
+    }
+  }
+  for (const ref of refs) {
+    if (ref instanceof PDFRef) pdfDoc.context.delete(ref);
+  }
+}
+
+function removeHiddenFormFields(pdfDoc: PDFDocument) {
+  const form = pdfDoc.getForm();
+  const removedRefs = new Set<PDFObject>();
+  for (const field of form.getFields()) {
+    const removeAll = field instanceof PDFTextField && field.isPassword();
+    const kids = field.acroField.Kids();
+    if (kids) {
+      for (let i = kids.size() - 1; i >= 0; i--) {
+        const widget = kids.lookup(i);
+        if (
+          removeAll ||
+          (widget instanceof PDFDict && isHiddenAnnotation(widget))
+        ) {
+          removedRefs.add(kids.get(i));
+          kids.remove(i);
+        }
+      }
+      if (kids.size() > 0) continue;
+    } else if (!removeAll && !isHiddenAnnotation(field.acroField.dict)) {
+      continue;
+    }
+    form.acroForm.removeField(field.acroField);
+    removedRefs.add(field.ref);
+  }
+  if (removedRefs.size > 0) detachAnnotations(pdfDoc, removedRefs);
+}
+
+export function flattenFormsInDoc(pdfDoc: PDFDocument): void {
+  removeHiddenFormFields(pdfDoc);
+  pdfDoc.getForm().flatten();
+}
 
 function extractNumbers(arr: PDFArray, count: number): number[] | null {
   if (arr.size() < count) return null;
@@ -68,9 +125,7 @@ export function flattenAnnotations(pdfDoc: PDFDocument): void {
         continue;
       }
 
-      const flagsObj = annot.get(PDFName.of('F'));
-      const flags = flagsObj instanceof PDFNumber ? flagsObj.asNumber() : 0;
-      if (flags & 0x02) {
+      if (isHiddenAnnotation(annot)) {
         hasChanges = true;
         continue;
       }

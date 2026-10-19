@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { JSDOM } from 'jsdom';
 import { fileURLToPath } from 'url';
+import { serializeJsonLd } from './json-ld.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -133,7 +134,7 @@ function injectOrganizationLd(document) {
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
   script.setAttribute(ORGANIZATION_LD_MARKER, '');
-  script.textContent = JSON.stringify(data, null, 2);
+  script.textContent = serializeJsonLd(data);
   document.body.appendChild(script);
 }
 
@@ -214,7 +215,7 @@ function injectToolBreadcrumb(document, lang, toolName, toolUrl) {
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
   script.setAttribute(BREADCRUMB_MARKER, '');
-  script.textContent = JSON.stringify(ld, null, 2);
+  script.textContent = serializeJsonLd(ld);
   document.body.appendChild(script);
 }
 

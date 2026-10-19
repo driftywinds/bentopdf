@@ -1,8 +1,10 @@
 import { showAlert } from '../ui.js';
 import { downloadFile, formatBytes } from '../utils/helpers.js';
 import { batchDecryptIfNeeded } from '../utils/password-prompt.js';
-import { PDFDocument } from 'pdf-lib';
-import { flattenAnnotations } from '../utils/flatten-annotations.js';
+import {
+  flattenAnnotations,
+  flattenFormsInDoc,
+} from '../utils/flatten-annotations.js';
 import { icons, createIcons } from 'lucide';
 import JSZip from 'jszip';
 import { deduplicateFileName } from '../utils/deduplicate-filename.js';
@@ -15,11 +17,6 @@ import {
 const pageState: FlattenPdfState = {
   files: [],
 };
-
-function flattenFormsInDoc(pdfDoc: PDFDocument) {
-  const form = pdfDoc.getForm();
-  form.flatten();
-}
 
 function resetState() {
   pageState.files = [];

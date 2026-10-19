@@ -184,7 +184,7 @@ describe('redactDocumentData', () => {
       SECRET.toLowerCase()
     );
 
-    const output = await redactDocumentData(input, secret());
+    const output = await redactDocumentData(input, [secret()]);
     const text = await allText(output);
 
     expect(text.toLowerCase()).not.toContain(SECRET.toLowerCase());
@@ -198,6 +198,62 @@ describe('redactDocumentData', () => {
     const annots = result.getPages()[0].node.Annots();
     expect(annots?.size()).toBe(2);
     expect(result.getPages()[0].node.get(PDFName.of('Thumb'))).toBeUndefined();
+  });
+
+  it('keeps dates intact when the redacted text is short', async () => {
+    const doc = await PDFDocument.create();
+    doc.addPage();
+    const created = new Date(Date.UTC(2026, 0, 2, 3, 4, 5));
+    doc.setCreationDate(created);
+    doc.setModificationDate(created);
+    doc.setTitle('Invoice 20 of 2026');
+    const output = await redactDocumentData(await doc.save(), ['20']);
+    const result = await PDFDocument.load(output, { updateMetadata: false });
+    expect(result.getCreationDate()?.toISOString()).toBe(created.toISOString());
+    expect(Number.isNaN(result.getModificationDate()?.getTime())).toBe(false);
+    expect(result.getTitle()).toBe('Invoice  of 26');
+  });
+
+  it('removes the text from signature fields but keeps the signature value', async () => {
+    const doc = await PDFDocument.create();
+    doc.addPage();
+    const signatureValue = PDFHexString.of('3082ABCDEF01');
+    const signature = doc.context.register(
+      doc.context.obj({
+        Type: 'Sig',
+        Name: PDFString.of(`Signed by ${SECRET}`),
+        Reason: PDFString.of(`Approved by ${SECRET}`),
+        Contents: signatureValue,
+      })
+    );
+    doc.catalog.set(PDFName.of('TestSig'), signature);
+    const output = await redactDocumentData(await doc.save(), [SECRET]);
+    const result = await PDFDocument.load(output, { updateMetadata: false });
+    const saved = result.catalog.lookup(PDFName.of('TestSig'), PDFDict);
+    expect(saved.lookup(PDFName.of('Name'), PDFHexString).decodeText()).toBe(
+      'Signed by '
+    );
+    expect(saved.lookup(PDFName.of('Reason'), PDFHexString).decodeText()).toBe(
+      'Approved by '
+    );
+    expect(
+      Array.from(saved.lookup(PDFName.of('Contents'), PDFHexString).asBytes())
+    ).toEqual(Array.from(signatureValue.asBytes()));
+  });
+
+  it('removes several terms in one pass, longest match first', async () => {
+    const doc = await PDFDocument.create();
+    doc.addPage();
+    doc.setTitle('Report by John Smith for Acme and John');
+    doc.setSubject('acme corp');
+    const output = await redactDocumentData(await doc.save(), [
+      'John',
+      'John Smith',
+      'Acme',
+    ]);
+    const result = await PDFDocument.load(output, { updateMetadata: false });
+    expect(result.getTitle()).toBe('Report by  for  and ');
+    expect(result.getSubject()).toBe(' corp');
   });
 
   it('only drops thumbnails and leftovers when no search text is given', async () => {

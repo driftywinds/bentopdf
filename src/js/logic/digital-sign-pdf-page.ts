@@ -6,6 +6,7 @@ import {
   downloadFile,
 } from '../utils/helpers.js';
 import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
+import { sanitizeTranslationHtml } from '../utils/translation-html.js';
 import { t } from '../i18n/i18n';
 import {
   signPdf,
@@ -404,7 +405,7 @@ async function handleCertFile(file: File): Promise<void> {
 
         const certStatus = getElement<HTMLDivElement>('cert-status');
         if (certStatus) {
-          certStatus.innerHTML = `${t('tools:digitalSignPdf.certificateLoaded')} <i data-lucide="check" class="inline w-4 h-4"></i>`;
+          certStatus.innerHTML = `${sanitizeTranslationHtml(t('tools:digitalSignPdf.certificateLoaded'))} <i data-lucide="check" class="inline w-4 h-4"></i>`;
           createIcons({ icons });
           certStatus.className = 'text-xs text-green-400';
         }
@@ -559,7 +560,7 @@ async function handlePasswordInput(): Promise<void> {
 
     const certStatus = getElement<HTMLDivElement>('cert-status');
     if (certStatus) {
-      certStatus.innerHTML = `${t('tools:digitalSignPdf.certificateUnlocked')} <i data-lucide="check-circle" class="inline w-4 h-4"></i>`;
+      certStatus.innerHTML = `${sanitizeTranslationHtml(t('tools:digitalSignPdf.certificateUnlocked'))} <i data-lucide="check-circle" class="inline w-4 h-4"></i>`;
       createIcons({ icons });
       certStatus.className = 'text-xs text-green-400';
     }

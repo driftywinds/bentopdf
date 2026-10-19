@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { JSDOM } from 'jsdom';
 import { fileURLToPath } from 'url';
+import { serializeJsonLd } from './json-ld.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,7 +63,7 @@ function fixApplicationCategory(document) {
       data.applicationCategory !== 'UtilitiesApplication'
     ) {
       data.applicationCategory = 'UtilitiesApplication';
-      script.textContent = JSON.stringify(data, null, 2);
+      script.textContent = serializeJsonLd(data);
     }
   }
 }
@@ -92,15 +93,11 @@ function injectFaqSchema(document) {
   if (items.length === 0) return false;
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
-  script.textContent = JSON.stringify(
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: items,
-    },
-    null,
-    2
-  );
+  script.textContent = serializeJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items,
+  });
   document.body.appendChild(script);
   return true;
 }
@@ -109,17 +106,13 @@ function injectWebsiteSchema(document) {
   if (hasLdType(document, 'WebSite')) return;
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
-  script.textContent = JSON.stringify(
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: 'BentoPDF',
-      alternateName: ['Bento PDF', 'BentoPDF.com'],
-      url: `${SITE_URL}/`,
-    },
-    null,
-    2
-  );
+  script.textContent = serializeJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'BentoPDF',
+    alternateName: ['Bento PDF', 'BentoPDF.com'],
+    url: `${SITE_URL}/`,
+  });
   document.body.appendChild(script);
 }
 

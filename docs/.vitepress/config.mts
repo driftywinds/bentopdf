@@ -7,6 +7,7 @@ export default defineConfig({
     description: "Documentation for BentoPDF - The free, open-source, privacy-first PDF toolkit",
     base: '/docs/',
     cleanUrls: true,
+    metaChunk: true,
 
     transformPageData(pageData) {
         const relPath = pageData.relativePath.replace(/\.md$/, '')

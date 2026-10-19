@@ -112,7 +112,7 @@ export class RedactNode extends BaseWorkflowNode {
 
         const resultBytes = await redactDocumentData(
           redactedBytes,
-          mode === 'text' ? searchText : undefined
+          mode === 'text' ? [searchText] : []
         );
 
         const resultDoc = await loadPdfDocument(resultBytes);
