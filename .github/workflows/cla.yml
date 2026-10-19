@@ -35,7 +35,7 @@ jobs:
           path-to-document: 'https://github.com/${{ github.repository }}/blob/main/ICLA.md'
           
           # Branch to store signatures
-          branch: 'main'
+          branch: 'cla-signatures'
           
           # Allowlist for bot accounts (won't need to sign CLA)
           allowlist: 'bot*,*[bot],dependabot*,renovate*,github-actions*'
