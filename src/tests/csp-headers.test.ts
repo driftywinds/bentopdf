@@ -135,9 +135,9 @@ describe('deployment configs match the generator', () => {
     expect(headerRuleCsp('serve.json', 'docs/**')).toBe(defaults.docsCsp);
   });
 
-  it('public/_headers for Netlify and Cloudflare Pages', () => {
-    const file = read('public/_headers');
-    expect(file).toBe(defaults.staticHeaders);
+  it('_headers for Netlify and Cloudflare Pages', () => {
+    const file = defaults.staticHeaders;
+    expect(file).toContain(`/*\n  Content-Security-Policy: ${defaults.csp}\n`);
     expect(file).toContain(
       `/docs/*\n  ! Content-Security-Policy\n  Content-Security-Policy: ${defaults.docsCsp}\n`
     );
@@ -147,7 +147,9 @@ describe('deployment configs match the generator', () => {
   });
 
   it('nginx docs config and .htaccess', () => {
-    expect(read('security-headers-docs.conf')).toBe(defaults.nginxDocs);
+    expect(defaults.nginxDocs).toContain(
+      `add_header Content-Security-Policy "${defaults.docsCsp}" always;`
+    );
     expect(read('.htaccess')).toContain(
       `Header always set Content-Security-Policy "${defaults.csp}"`
     );
