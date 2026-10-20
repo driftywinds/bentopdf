@@ -1134,6 +1134,8 @@ function showNodeSettings(node: BaseWorkflowNode) {
     y0: 'Top edge in points',
     x1: 'Right edge in points',
     y1: 'Bottom edge in points',
+    targetKilobytes:
+      'Finds the best quality under this size. 0 means no target.',
     retainPageLabels:
       "Off (default): natural 1–N numbering. On: each file's original page labels are preserved (may produce duplicate labels).",
   };

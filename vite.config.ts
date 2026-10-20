@@ -617,7 +617,12 @@ export default defineConfig(() => {
     },
     optimizeDeps: {
       include: ['pdfkit', 'blob-stream'],
-      exclude: ['coherentpdf', 'wasm-vips', 'bentopdf-pdfium'],
+      exclude: [
+        'coherentpdf',
+        'wasm-vips',
+        'bentopdf-pdfium',
+        'hyper-compress-wasm',
+      ],
     },
     server: {
       host: process.env.VITE_DEV_HOST || 'localhost',
