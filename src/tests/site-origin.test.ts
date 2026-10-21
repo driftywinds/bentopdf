@@ -35,6 +35,21 @@ describe('rebaseDefaultOrigin', () => {
     expect(rebaseDefaultOrigin(html, 'https://pdf.example.org')).toBe(html);
   });
 
+  it('leaves other ports and userinfo URLs alone', () => {
+    const html =
+      'href="https://www.bentopdf.com:8443/blog/" href="https://www.bentopdf.com@other.example/"';
+    expect(rebaseDefaultOrigin(html, 'https://pdf.example.org')).toBe(html);
+  });
+
+  it('inserts the site URL literally', () => {
+    expect(
+      rebaseDefaultOrigin(
+        'href="https://www.bentopdf.com/blog/"',
+        'https://example.org/$&'
+      )
+    ).toBe('href="https://example.org/$&/blog/"');
+  });
+
   it('is a no-op for the default site URL', () => {
     expect(rebaseDefaultOrigin(PAGE, DEFAULT_SITE_URL)).toBe(PAGE);
   });
