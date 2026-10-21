@@ -3,15 +3,14 @@ import path from 'path';
 import { JSDOM } from 'jsdom';
 import { fileURLToPath } from 'url';
 import { serializeJsonLd } from './json-ld.mjs';
+import { DEFAULT_SITE_URL, rebaseDefaultOrigin } from './site-origin.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
-const SITE_URL = (process.env.SITE_URL || 'https://www.bentopdf.com').replace(
-  /\/+$/,
-  ''
-);
+const SITE_URL = (process.env.SITE_URL || DEFAULT_SITE_URL).replace(/\/+$/, '');
+const BLOG_DIST_DIR = path.join(DIST_DIR, 'blog');
 
 const FALLBACK_SOCIAL_IMAGE = '/images/og-tools.png';
 
@@ -20,6 +19,26 @@ function listTopLevelHtml() {
     .readdirSync(DIST_DIR)
     .filter((f) => f.endsWith('.html'))
     .map((f) => path.join(DIST_DIR, f));
+}
+
+// generate-blog.mjs writes the blog index and posts with SITE_URL, but
+// hand-written blog pages (blog/author-alam.html) carry the official origin
+// literally, and generate-i18n-pages.mjs only rewrites top-level pages. Rebase
+// them here so a custom-SITE_URL build passes seo-audit's canonical check.
+function rebaseBlogPages() {
+  if (!fs.existsSync(BLOG_DIST_DIR)) return 0;
+  let rebased = 0;
+  for (const f of fs.readdirSync(BLOG_DIST_DIR)) {
+    if (!f.endsWith('.html')) continue;
+    const file = path.join(BLOG_DIST_DIR, f);
+    const html = fs.readFileSync(file, 'utf-8');
+    const out = rebaseDefaultOrigin(html, SITE_URL);
+    if (out !== html) {
+      fs.writeFileSync(file, out);
+      rebased++;
+    }
+  }
+  return rebased;
 }
 
 function imageExists(url) {
@@ -159,8 +178,9 @@ function enhance() {
     fs.writeFileSync(file, dom.serialize());
     dom.window.close();
   }
+  const rebasedBlogPages = rebaseBlogPages();
   console.log(
-    `SEO enhance: ${files.length} pages processed, ${faqSchemaCount} FAQPage schemas added.`
+    `SEO enhance: ${files.length} pages processed, ${faqSchemaCount} FAQPage schemas added, ${rebasedBlogPages} blog pages rebased to ${SITE_URL}.`
   );
 }
 
