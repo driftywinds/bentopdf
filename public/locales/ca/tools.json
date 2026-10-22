@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Preferits",
     "popularTools": "Eines populars",
     "editAnnotate": "Edita i anota",
     "convertToPdf": "Converteix a PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Protegeix els PDF",
     "input": "Entrada",
     "output": "Sortida"
+  },
+  "favorites": {
+    "add": "Afegeix als preferits",
+    "remove": "Treu dels preferits",
+    "hintLabel": "Consell",
+    "hint": "Mantén premuda una eina per afegir-la als preferits.",
+    "hideHint": "Amaga el consell"
   },
   "convertToPdf": "Converteix a PDF",
   "pdfMultiTool": {

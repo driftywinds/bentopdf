@@ -1211,7 +1211,8 @@ body.lp ::selection {
 }
 
 .lp .category-group:first-child,
-.lp #search-results + .category-group {
+.lp #search-results + .category-group,
+.lp .tool-fav-hint + .category-group {
   margin-top: 0;
 }
 
@@ -1301,7 +1302,8 @@ body.lp ::selection {
   outline-offset: -2px;
 }
 
-.lp #tool-grid:not(.compact-mode) .tool-card:hover {
+.lp #tool-grid:not(.compact-mode) .tool-card:hover,
+.lp #tool-grid:not(.compact-mode) .tool-tile:hover .tool-card {
   background: var(--lp-bg-3);
   transform: none;
   box-shadow: none;

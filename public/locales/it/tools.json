@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Preferiti",
     "popularTools": "Strumenti popolari",
     "editAnnotate": "Modifica e Annota",
     "convertToPdf": "Converti in PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Proteggi PDF",
     "input": "Input",
     "output": "Output"
+  },
+  "favorites": {
+    "add": "Aggiungi ai preferiti",
+    "remove": "Rimuovi dai preferiti",
+    "hintLabel": "Suggerimento",
+    "hint": "Tieni premuto uno strumento per aggiungerlo ai preferiti.",
+    "hideHint": "Nascondi suggerimento"
   },
   "convertToPdf": "Converti in PDF",
   "pdfMultiTool": {

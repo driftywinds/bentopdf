@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favoriler",
     "popularTools": "Popüler Araçlar",
     "editAnnotate": "Düzenle & Açıklama Ekle",
     "convertToPdf": "PDF'ye Dönüştür",
@@ -9,6 +10,13 @@
     "securePdf": "PDF Güvenliği",
     "input": "Giriş",
     "output": "Çıkış"
+  },
+  "favorites": {
+    "add": "Favorilere ekle",
+    "remove": "Favorilerden kaldır",
+    "hintLabel": "İpucu",
+    "hint": "Bir aracı favorilerinize eklemek için basılı tutun.",
+    "hideHint": "İpucunu gizle"
   },
   "convertToPdf": "PDF'ye Dönüştür",
   "pdfMultiTool": {

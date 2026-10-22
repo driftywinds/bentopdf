@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "علاقه‌مندی‌ها",
     "popularTools": "ابزارهای پرکاربرد",
     "editAnnotate": "ویرایش و حاشیه‌نویسی",
     "convertToPdf": "تبدیل به PDF",
@@ -9,6 +10,13 @@
     "securePdf": "ایمن‌سازی PDF",
     "input": "ورودی",
     "output": "خروجی"
+  },
+  "favorites": {
+    "add": "افزودن به علاقه‌مندی‌ها",
+    "remove": "حذف از علاقه‌مندی‌ها",
+    "hintLabel": "نکته",
+    "hint": "برای افزودن یک ابزار به علاقه‌مندی‌ها، آن را لمس کرده و نگه دارید.",
+    "hideHint": "پنهان کردن نکته"
   },
   "convertToPdf": "تبدیل به PDF",
   "pdfMultiTool": {

@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Вибране",
     "popularTools": "Популярні інструменти",
     "editAnnotate": "Редагування та анотації",
     "convertToPdf": "Конвертація у PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Захист PDF",
     "input": "Ввід",
     "output": "Вивід"
+  },
+  "favorites": {
+    "add": "Додати до вибраного",
+    "remove": "Видалити з вибраного",
+    "hintLabel": "Порада",
+    "hint": "Натисніть і утримуйте інструмент, щоб додати його до вибраного.",
+    "hideHint": "Сховати пораду"
   },
   "convertToPdf": "Конвертувати в PDF",
   "pdfMultiTool": {
