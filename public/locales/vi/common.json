@@ -212,7 +212,7 @@
     },
     "browserBased": {
       "question": "Xử lý dựa trên trình duyệt giữ tôi an toàn như thế nào?",
-      "answer": "Bằng cách chạy hoàn toàn bên trong trình duyệt của bạn, BentoPDF đảm bảo rằng tệp của bạn không bao giờ rời khỏi thiết bị. Điều này loại bỏ các rủi ro về hack máy chủ, vi phạm dữ liệu hoặc truy cập trái phép. Tệp của bạn vẫn thuộc về bạn—luôn luôn."
+      "answer": "Bằng cách chạy hoàn toàn bên trong trình duyệt của bạn, BentoPDF đảm bảo rằng tệp của bạn không bao giờ rời khỏi thiết bị. Điều này loại bỏ các rủi ro về hack máy chủ, vi phạm dữ liệu hoặc truy cập trái phép. Tệp của bạn vẫn thuộc về bạn, luôn luôn."
     },
     "analytics": {
       "question": "Bạn có sử dụng cookie hoặc phân tích để theo dõi tôi không?",
@@ -239,7 +239,9 @@
     "legal": "Pháp lý",
     "termsAndConditions": "Điều khoản và Điều kiện",
     "privacyPolicy": "Chính sách Bảo mật",
-    "followUs": "Theo dõi chúng tôi"
+    "followUs": "Theo dõi chúng tôi",
+    "privacyShort": "Quyền riêng tư",
+    "termsShort": "Điều khoản"
   },
   "merge": {
     "title": "Gộp PDF",
@@ -286,13 +288,14 @@
       "noCompromises": "Không thỏa hiệp."
     },
     "mission": {
-      "title": "Sứ mệnh của chúng tôi",
+      "title": "Sứ mệnh",
+      "titleDim": "của chúng tôi",
       "description": "Cung cấp bộ công cụ PDF toàn diện nhất tôn trọng quyền riêng tư của bạn và không bao giờ yêu cầu thanh toán. Chúng tôi tin rằng các công cụ tài liệu thiết yếu nên có thể truy cập được cho mọi người, ở mọi nơi, không có rào cản."
     },
     "philosophy": {
       "label": "Triết lý cốt lõi của chúng tôi",
       "title": "Quyền riêng tư trước tiên. Luôn luôn.",
-      "description": "Trong thời đại mà dữ liệu là hàng hóa, chúng tôi có cách tiếp cận khác. Tất cả quá trình xử lý cho các công cụ Bentopdf diễn ra cục bộ trong trình duyệt của bạn. Điều này có nghĩa là tệp của bạn không bao giờ chạm vào máy chủ của chúng tôi, chúng tôi không bao giờ thấy tài liệu của bạn và chúng tôi không theo dõi những gì bạn làm. Tài liệu của bạn vẫn hoàn toàn và rõ ràng là riêng tư. Đó không chỉ là một tính năng; đó là nền tảng của chúng tôi."
+      "description": "Trong thời đại mà dữ liệu là hàng hóa, chúng tôi có cách tiếp cận khác. Tất cả quá trình xử lý cho các công cụ BentoPDF diễn ra cục bộ trong trình duyệt của bạn. Điều này có nghĩa là tệp của bạn không bao giờ chạm vào máy chủ của chúng tôi, chúng tôi không bao giờ thấy tài liệu của bạn và chúng tôi không theo dõi những gì bạn làm. Tài liệu của bạn vẫn hoàn toàn và rõ ràng là riêng tư. Đó không chỉ là một tính năng; đó là nền tảng của chúng tôi."
     },
     "whyBentopdf": {
       "title": "Tại sao chọn",
@@ -315,7 +318,7 @@
     },
     "cta": {
       "title": "Sẵn sàng bắt đầu?",
-      "description": "Tham gia cùng hàng nghìn người dùng tin tưởng Bentopdf cho nhu cầu tài liệu hàng ngày của họ. Trải nghiệm sự khác biệt mà quyền riêng tư và hiệu suất có thể tạo ra.",
+      "description": "Tham gia cùng hàng nghìn người dùng tin tưởng BentoPDF cho nhu cầu tài liệu hàng ngày của họ. Trải nghiệm sự khác biệt mà quyền riêng tư và hiệu suất có thể tạo ra.",
       "button": "Khám phá tất cả công cụ"
     }
   },

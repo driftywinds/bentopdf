@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Form Creator online free - Create PDF forms easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Form Creator online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="form creator, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ Form Creator online free - Create PDF forms easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Form Creator online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="Form Creator Free" />
     <meta
       name="twitter:description"
-      content="★ Form Creator online free - Create PDF forms easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Form Creator online. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -107,7 +107,7 @@
       >
         <button
           id="back-to-tools-upload"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools"
@@ -250,7 +250,7 @@
       >
         <button
           id="back-to-tools-creator"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools"
@@ -258,12 +258,12 @@
           >
         </button>
 
-        <h1
+        <h2
           class="text-2xl font-bold text-white mb-2"
           data-i18n="tools:createPdfForm.name"
         >
           Create PDF Form
-        </h1>
+        </h2>
         <p class="text-gray-400 mb-6" data-i18n="tools:createPdfForm.subtitle">
           Create fillable PDF forms with drag-and-drop text fields.
         </p>
@@ -650,41 +650,109 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Is form creator really free?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I add fillable fields to a PDF I already have?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+          <p class="faq-d-a">
+            Upload the PDF and its pages appear in the editor; pick a field type
+            from the toolbar and click on the page to place it, then drag or
+            resize it as needed. If the PDF already has form fields, they're
+            detected and loaded so you can move, edit, or delete them alongside
+            the new ones.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Are my files private and secure?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I make a form from scratch without an existing PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+          <p class="faq-d-a">
+            Click Create Blank PDF and choose Letter, A4, A5, Legal, Tabloid,
+            A3, or custom dimensions in points. Use Add Page for multi-page
+            forms.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Is there a file size limit?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which field types are available?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            No! Process files of any size, as many times as you want, completely
-            free.
+          <p class="faq-d-a">
+            Text (single line, multi-line, or divided into comb boxes),
+            checkbox, radio button groups, dropdown, list box, push button,
+            signature, date, image, and barcode. Each field has a properties
+            panel for name, default value, font size, text color, alignment,
+            tooltip, and required or read-only flags. Signature fields are
+            standard AcroForm signature fields, which only appear in viewers
+            that support signing.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do radio buttons get grouped so only one can be selected?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Every radio field has a group name, RadioGroup1 by default. Fields
+            that share the same group name become one mutually exclusive set, so
+            give each question its own group name and set a distinct export
+            value on each option.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can a button show or hide another field, or reset the form?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Button actions include Reset Form, Print Form, Open URL, Run
+            JavaScript, and Show/Hide Field, which targets another field and can
+            show, hide, or toggle it. They're stored as standard PDF actions, so
+            they run in Acrobat and other viewers that support form scripting.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How does the date field work?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            It's a text field with a date format attached, mm/dd/yyyy by default
+            or a custom pattern such as dd/mm/yyyy. Viewers that support
+            AcroForm JavaScript validate the typed value and format it; simpler
+            viewers treat it as ordinary text.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are barcodes and images real form fields?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A barcode (QR Code, Code 128, Code 39, EAN-13, UPC-A, DataMatrix, or
+            PDF417) is generated from the value you enter and drawn onto the
+            page as a fixed image, so the person filling the form can't change
+            it. The image field is a button that lets the user pick a picture
+            from their computer, which works in Acrobat and other viewers that
+            support image import.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the form or the uploaded PDF stored on a server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The editor runs in your browser, the fields are written into the
+            PDF with pdf-lib on your device, and Download PDF Form saves the
+            result locally under the original filename. You can test the result
+            in
+            <a href="/form-filler" class="text-indigo-300 hover:text-indigo-400"
+              >PDF Form Filler</a
+            >.
           </p>
         </details>
       </div>

@@ -62,6 +62,17 @@ When the build completes, you can find the website at `https://[your-github-user
 
 If/when you merge changes from the source BentoPDF repository, the build and deploy action will automatically be kicked off and the new version will be automatically deployed to GitHub Pages.
 
+> **Note:** GitHub Pages cannot set custom response headers, so a GitHub Pages deployment is served without BentoPDF's Content-Security-Policy and other security headers. If you need them, use one of the other hosts below or put a proxy or CDN that can add headers in front of your Pages site.
+
+## Security headers
+
+BentoPDF ships a Content-Security-Policy and other security headers for each static host:
+
+- **Netlify and Cloudflare Pages** read `_headers` from the deployed folder. `npm run build` writes `dist/_headers` with `scripts/generate-security-headers.mjs`, so any `VITE_WASM_*`, `VITE_TESSERACT_*`, `VITE_CORS_PROXY_URL` or `VITE_OCR_FONT_BASE_URL` values you set at build time are allowed by the policy. If you add your own `public/_headers`, the build ships yours instead. The release `dist-{version}.zip` already contains it.
+- **Vercel** uses the `headers` block in `vercel.json`. It holds the default policy, so if you point the `VITE_*` URLs at your own servers, update the Content-Security-Policy there to match the `dist/_headers` your build produces.
+- **`npx serve`** reads `serve.json` from the folder it serves. To use the repository's `serve.json` with the build output, run `npx serve dist -c ../serve.json`.
+- **GitHub Pages** cannot set headers (see the note above).
+
 ## SEO and search engine indexing
 
 By default, every self-hosted BentoPDF build emits canonical URLs and an

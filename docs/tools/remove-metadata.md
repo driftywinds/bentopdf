@@ -46,5 +46,5 @@ No options to configure. The tool is thorough by design: it clears everything.
 ## Related Tools
 
 - [Sanitize PDF](./sanitize-pdf) -- remove metadata plus scripts, attachments, and more
-- [Encrypt PDF](./encrypt-pdf) -- protect the cleaned PDF with a password
+- [Encrypt PDF](./protect-pdf) -- protect the cleaned PDF with a password
 - [Compress PDF](./compress-pdf) -- removing metadata can slightly reduce file size; compress for more savings

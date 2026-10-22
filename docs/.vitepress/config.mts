@@ -7,6 +7,7 @@ export default defineConfig({
     description: "Documentation for BentoPDF - The free, open-source, privacy-first PDF toolkit",
     base: '/docs/',
     cleanUrls: true,
+    metaChunk: true,
 
     transformPageData(pageData) {
         const relPath = pageData.relativePath.replace(/\.md$/, '')
@@ -115,7 +116,7 @@ export default defineConfig({
                         { text: 'PDF to Excel', link: '/tools/pdf-to-excel' },
                         { text: 'PDF to Greyscale', link: '/tools/pdf-to-greyscale' },
                         { text: 'PDF to JSON', link: '/tools/pdf-to-json' },
-                        { text: 'PDF to Word', link: '/tools/pdf-to-docx' },
+                        { text: 'PDF to Word', link: '/tools/pdf-to-word' },
                         { text: 'Extract Images', link: '/tools/extract-images' },
                         { text: 'PDF to Markdown', link: '/tools/pdf-to-markdown' },
                         { text: 'Prepare PDF for AI', link: '/tools/prepare-pdf-for-ai' },
@@ -176,9 +177,9 @@ export default defineConfig({
                     text: 'Secure PDF',
                     collapsed: true,
                     items: [
-                        { text: 'Encrypt PDF', link: '/tools/encrypt-pdf' },
+                        { text: 'Protect PDF', link: '/tools/protect-pdf' },
                         { text: 'Sanitize PDF', link: '/tools/sanitize-pdf' },
-                        { text: 'Decrypt PDF', link: '/tools/decrypt-pdf' },
+                        { text: 'Unlock PDF', link: '/tools/unlock-pdf' },
                         { text: 'Flatten PDF', link: '/tools/flatten-pdf' },
                         { text: 'Remove Metadata', link: '/tools/remove-metadata' },
                         { text: 'Change Permissions', link: '/tools/change-permissions' },

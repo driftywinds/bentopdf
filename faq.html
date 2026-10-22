@@ -49,6 +49,7 @@
     <meta name="twitter:site" content="@BentoPDF" />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
+    <link href="/src/css/landing.css" rel="stylesheet" />
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest" />
@@ -75,10 +76,13 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
   </head>
 
-  <body class="antialiased bg-gray-900 text-gray-300">
+  <body class="lp antialiased bg-gray-900 text-gray-300">
     {{> navbar }}
 
-    <div id="app" class="min-h-screen container mx-auto p-4 md:p-8">
+    <div
+      id="app"
+      class="min-h-screen container mx-auto px-4 pt-4 md:px-8 md:pt-8"
+    >
       <section id="faq-hero" class="text-center py-16 md:py-24">
         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
           Frequently Asked Questions
@@ -89,42 +93,32 @@
         </p>
       </section>
 
-      <div class="max-w-4xl mx-auto space-y-4">
-        <details
-          class="bg-gray-800 border border-gray-700 rounded-lg p-5 group"
-        >
-          <summary class="flex items-center justify-between cursor-pointer">
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <h3 class="font-semibold text-white text-lg">
               Are my files safe and private?
             </h3>
-            <i
-              data-lucide="plus"
-              class="w-6 h-6 text-indigo-400 icon flex-shrink-0"
-            ></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <div class="mt-4 text-gray-400">
+          <div class="faq-d-a">
             <p>
               <strong>Absolutely.</strong> This is the most important feature of
               BentoPDF. All processing happens 100% locally in your web browser.
-              Your files are never uploaded to any server, which means we—or
-              anyone else—can never see them. Your privacy is guaranteed.
+              Your files are never uploaded to any server, which means we, or
+              anyone else, can never see them. Your privacy is guaranteed.
             </p>
           </div>
         </details>
 
-        <details
-          class="bg-gray-800 border border-gray-700 rounded-lg p-5 group"
-        >
-          <summary class="flex items-center justify-between cursor-pointer">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <h3 class="font-semibold text-white text-lg">
               Is BentoPDF really free? What's the catch?
             </h3>
-            <i
-              data-lucide="plus"
-              class="w-6 h-6 text-indigo-400 icon flex-shrink-0"
-            ></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <div class="mt-4 text-gray-400">
+          <div class="faq-d-a">
             <p>
               Yes, it's completely free, and there's no catch. There are no
               hidden fees, no subscription plans, no usage limits, and no
@@ -134,19 +128,14 @@
           </div>
         </details>
 
-        <details
-          class="bg-gray-800 border border-gray-700 rounded-lg p-5 group"
-        >
-          <summary class="flex items-center justify-between cursor-pointer">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <h3 class="font-semibold text-white text-lg">
               Do I need an internet connection to use the tools?
             </h3>
-            <i
-              data-lucide="plus"
-              class="w-6 h-6 text-indigo-400 icon flex-shrink-0"
-            ></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <div class="mt-4 text-gray-400">
+          <div class="faq-d-a">
             <p>
               After you load the website for the first time, most tools will
               work completely offline! Because all the processing libraries are
@@ -158,19 +147,14 @@
           </div>
         </details>
 
-        <details
-          class="bg-gray-800 border border-gray-700 rounded-lg p-5 group"
-        >
-          <summary class="flex items-center justify-between cursor-pointer">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <h3 class="font-semibold text-white text-lg">
               Are there any file size or usage limitations?
             </h3>
-            <i
-              data-lucide="plus"
-              class="w-6 h-6 text-indigo-400 icon flex-shrink-0"
-            ></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <div class="mt-4 text-gray-400">
+          <div class="faq-d-a">
             <p>
               No, we do not impose any artificial limits on file size, the
               number of files, or how many times you can use a tool. The only
@@ -181,19 +165,14 @@
           </div>
         </details>
 
-        <details
-          class="bg-gray-800 border border-gray-700 rounded-lg p-5 group"
-        >
-          <summary class="flex items-center justify-between cursor-pointer">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <h3 class="font-semibold text-white text-lg">
               Why did my PDF fail to process?
             </h3>
-            <i
-              data-lucide="plus"
-              class="w-6 h-6 text-indigo-400 icon flex-shrink-0"
-            ></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <div class="mt-4 text-gray-400">
+          <div class="faq-d-a">
             <p>Failures are rare but can happen for a few reasons:</p>
             <ul class="list-disc list-inside mt-2 space-y-1">
               <li>
@@ -212,19 +191,14 @@
           </div>
         </details>
 
-        <details
-          class="bg-gray-800 border border-gray-700 rounded-lg p-5 group"
-        >
-          <summary class="flex items-center justify-between cursor-pointer">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <h3 class="font-semibold text-white text-lg">
               Do you track my activity on BentoPDF?
             </h3>
-            <i
-              data-lucide="plus"
-              class="w-6 h-6 text-indigo-400 icon flex-shrink-0"
-            ></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <div class="mt-4 text-gray-400">
+          <div class="faq-d-a">
             <p>
               No. BentoPDF does not track you at all. We do not use cookies,
               analytics, or any tracking scripts, not even on the live website
@@ -234,19 +208,14 @@
           </div>
         </details>
 
-        <details
-          class="bg-gray-800 border border-gray-700 rounded-lg p-5 group"
-        >
-          <summary class="flex items-center justify-between cursor-pointer">
+        <details class="faq-d">
+          <summary class="faq-d-q">
             <h3 class="font-semibold text-white text-lg">
               What technology does BentoPDF use?
             </h3>
-            <i
-              data-lucide="plus"
-              class="w-6 h-6 text-indigo-400 icon flex-shrink-0"
-            ></i>
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <div class="mt-4 text-gray-400">
+          <div class="faq-d-a">
             <p>
               BentoPDF is built on the power of modern web technologies. We
               primarily use JavaScript libraries like
@@ -259,22 +228,24 @@
         </details>
       </div>
 
-      <div class="section-divider mt-16"></div>
-
-      <section id="contact-section" class="text-center py-16">
-        <h2 class="text-3xl font-bold text-white mb-4">
-          Still have questions?
-        </h2>
-        <p class="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-          If you can't find the answer you're looking for, feel free to reach
-          out to our support team. We're always Bento to help.
-        </p>
-        <a
-          href="contact.html"
-          class="inline-block px-8 py-3 rounded-full bg-gray-700 text-white font-semibold focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-400 hover:bg-gray-600 transition-colors duration-200"
-        >
-          Contact Us
-        </a>
+      <section id="contact-section" class="lp-sec">
+        <div class="lp-frame">
+          <div class="lp-cta">
+            <h2 class="lp-h2">Still have questions?</h2>
+            <p>
+              If you can't find the answer you're looking for, feel free to
+              reach out. We're always happy to help.
+            </p>
+            <div class="lp-cta-actions">
+              <span class="lp-brackets">
+                <a href="contact.html" class="lp-btn lp-btn--primary">
+                  <span data-i18n="footer.contactUs">Contact Us</span>
+                  <i data-lucide="arrow-right"></i>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
@@ -293,7 +264,7 @@
             "name": "Are my files safe and private?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Absolutely. This is the most important feature of BentoPDF. All processing happens 100% locally in your web browser. Your files are never uploaded to any server, which means we—or anyone else—can never see them. Your privacy is guaranteed."
+              "text": "Absolutely. This is the most important feature of BentoPDF. All processing happens 100% locally in your web browser. Your files are never uploaded to any server, which means we, or anyone else, can never see them. Your privacy is guaranteed."
             }
           },
           {

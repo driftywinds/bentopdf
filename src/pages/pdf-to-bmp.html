@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ PDF to BMP online free - PDF to BMP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a BMP image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="pdf to bmp, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ PDF to BMP online free - PDF to BMP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a BMP image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="PDF to BMP Free" />
     <meta
       name="twitter:description"
-      content="★ PDF to BMP online free - PDF to BMP easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert each PDF page into a BMP image. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="PDF to BMP" />
 
     <title>PDF to BMP - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert PDF pages to BMP images. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -107,7 +103,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -311,41 +307,101 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Is pdf to bmp really free?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What resolution are the BMP images?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+          <p class="faq-d-a">
+            Pages render at a fixed 2x scale, so a Letter page (8.5 x 11 inches)
+            becomes a 1224 x 1584 pixel image, about 144 pixels per inch.
+            There's no DPI setting on this tool; for an adjustable scale use
+            <a href="/pdf-to-png" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to PNG</a
+            >.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Are my files private and secure?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How is a multi-page PDF delivered?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+          <p class="faq-d-a">
+            A one-page PDF downloads as a single .bmp named after the file. A
+            multi-page PDF downloads as a ZIP named filename_bmps.zip containing
+            page_1.bmp, page_2.bmp, and so on, one image per page.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Is there a file size limit?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why are the BMP files so large?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            No! Process files of any size, as many times as you want, completely
-            free.
+          <p class="faq-d-a">
+            BMP stores raw pixel data without compression, so a page takes the
+            same space whether it's blank or full of detail, and files are far
+            larger than a PNG or JPG of the same page. If your target software
+            accepts PNG, that format is lossless too at a fraction of the size.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert several PDFs to BMP in one batch?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No, one PDF per run; if you drop several files only the first is
+            used. Convert them one after another, or pick the pages you need
+            first with Extract Pages so each run stays small.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does the conversion keep transparency or vector quality?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Every page becomes a flat raster image on a white background,
+            and text becomes pixels, so the BMP can't be searched or enlarged
+            without softening. Keep the original PDF for editing.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a password-protected PDF to BMP?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes, if you know the password: the tool prompts for it when the file
+            loads and then renders the pages normally. A file with an unknown
+            password can't be opened.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is my PDF uploaded to convert it to BMP?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. Rendering happens on a canvas in your browser and the images are
+            packed into the ZIP locally, so the document never leaves your
+            computer. Large PDFs just take longer because your own machine does
+            the rendering.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which tool should I use instead if BMP isn't required?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            For lossless output with small files, PDF to PNG; for photos and the
+            smallest files,
+            <a href="/pdf-to-jpg" class="text-indigo-300 hover:text-indigo-400"
+              >PDF to JPG</a
+            >; for multi-page fax or scanning systems, PDF to TIFF. BMP mainly
+            makes sense when a legacy application or device insists on it.
           </p>
         </details>
       </div>

@@ -1,7 +1,10 @@
 import { PDFDocument, PDFName } from 'pdf-lib';
 import { createIcons, icons } from 'lucide';
 import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
-import { loadPdfDocument } from '../utils/load-pdf-document.js';
+import {
+  loadPdfDocument,
+  removeUnreferencedObjects,
+} from '../utils/load-pdf-document.js';
 import { escapeHtml } from '../utils/helpers.js';
 
 // State management
@@ -142,7 +145,9 @@ async function processRemoveAnnotations() {
       }
     }
 
-    const newPdfBytes = await pageState.pdfDoc.save();
+    const newPdfBytes = await removeUnreferencedObjects(
+      await pageState.pdfDoc.save()
+    );
     downloadFile(
       new Blob([new Uint8Array(newPdfBytes)], { type: 'application/pdf' }),
       pageState.file?.name || 'document.pdf'
@@ -189,6 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
   processBtn?.addEventListener('click', processRemoveAnnotations);
 
   backBtn?.addEventListener('click', () => {
-    window.location.href = '../../index.html';
+    window.location.href = import.meta.env.BASE_URL;
   });
 });

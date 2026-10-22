@@ -40,6 +40,6 @@ The tool uses QPDF's `--decrypt` and `--remove-restrictions` flags to produce a 
 
 ## Related Tools
 
-- [Decrypt PDF](./decrypt-pdf) -- unlock a PDF when you know the user password
-- [Encrypt PDF](./encrypt-pdf) -- re-apply encryption with new settings
+- [Decrypt PDF](./unlock-pdf) -- unlock a PDF when you know the user password
+- [Encrypt PDF](./protect-pdf) -- re-apply encryption with new settings
 - [Change Permissions](./change-permissions) -- selectively modify which actions are allowed

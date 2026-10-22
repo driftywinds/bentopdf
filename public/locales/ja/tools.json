@@ -27,29 +27,7 @@
   },
   "compressPdf": {
     "name": "PDFの圧縮",
-    "subtitle": "PDFのファイルサイズを小さくします。",
-    "algorithmLabel": "圧縮アルゴリズム",
-    "condense": "コンデンス（推奨）",
-    "photon": "フォトン（写真を多く含むPDF用）",
-    "condenseInfo": "コンデンスは高度な圧縮技術を採用しています: 不要なデータを削除、画像を最適化しフォントをサブセット化します。ほとんどのPDFに最適です。",
-    "photonInfo": "フォトンはページを画像に変換します。写真が多いPDFやスキャンしたPDFにおすすめです。",
-    "photonWarning": "警告: テキストは選択できなくなり、リンクは機能しなくなります。",
-    "levelLabel": "圧縮レベル",
-    "light": "ライト（品質維持）",
-    "balanced": "バランス（推奨）",
-    "aggressive": "アグレッシブ（ファイルをより小さく）",
-    "extreme": "エクストリーム（最大圧縮）",
-    "grayscale": "グレースケールに変換",
-    "grayscaleHint": "カラー情報を削除してファイルサイズを削減します。",
-    "customSettings": "カスタム設定",
-    "customSettingsHint": "圧縮パラメータの微調整:",
-    "outputQuality": "出力品質",
-    "resizeImagesTo": "画像のリサイズ",
-    "onlyProcessAbove": "上記の処理のみ",
-    "removeMetadata": "メタデータを削除する",
-    "subsetFonts": "サブセットフォント (未使用のグリフの削除)",
-    "removeThumbnails": "埋め込みサムネイルを削除する",
-    "compressButton": "PDFを圧縮"
+    "subtitle": "PDFのファイルサイズを小さくします。"
   },
   "pdfEditor": {
     "name": "PDFエディター",
@@ -60,6 +38,8 @@
     "subtitle": "段落をクリックしてその場で編集。テキストは自動で再配置され、フォントやスタイルも変更できます。",
     "saved": "PDF を保存しました！({{size}} KB)",
     "failedToLoad": "PDF テキストエディタを読み込めませんでした。",
+    "loadingFonts": "フォントを読み込み中...",
+    "fontsUnavailable": "一部の文字に必要なフォントをダウンロードできませんでした。接続を確認してもう一度お試しください。このままでは、保存した PDF でそれらの文字が正しく表示されない可能性があります。",
     "howToUpload": "PDF をアップロード",
     "howToClick": "段落をクリック",
     "howToRestyle": "自由にスタイル変更",
@@ -1312,5 +1292,13 @@
     "faqSinglePageAnswer": "はい！ 「ループ」オプションを有効にすると、オーバーレイPDFページがすべてのベース ページにわたって繰り返されます。単一ページのウォーターマークはすべてのページに適用されます。",
     "faqPrivacyQuestion": "私のファイルは非公開で安全ですか？",
     "faqPrivacyAnswer": "絶対に！すべての処理はブラウザ内で行われます。ファイルがデバイスの外に出ることはなく、完全なプライバシーが確保されます。"
+  },
+  "unlockPdf": {
+    "name": "PDFの復号化",
+    "subtitle": "パスワード保護を解除してPDFのロックを解除します。"
+  },
+  "protectPdf": {
+    "name": "PDFの暗号化",
+    "subtitle": "パスワードを追加してPDFをロックします。"
   }
 }

@@ -27,29 +27,7 @@
   },
   "compressPdf": {
     "name": "PDF komprimieren",
-    "subtitle": "Die Dateigröße Ihrer PDF reduzieren.",
-    "algorithmLabel": "Komprimierungsalgorithmus",
-    "condense": "Condense (Empfohlen)",
-    "photon": "Photon (Für bildlastige PDFs)",
-    "condenseInfo": "Condense nutzt fortschrittliche Komprimierung: entfernt unnötige Daten, optimiert Bilder, reduziert Schriftarten. Optimal für die meisten PDFs.",
-    "photonInfo": "Photon wandelt Seiten in Bilder um. Für bildlastige/gescannte PDFs.",
-    "photonWarning": "Warnung: Text wird nicht mehr auswählbar und Links funktionieren nicht mehr.",
-    "levelLabel": "Komprimierungsstufe",
-    "light": "Leicht (Qualität erhalten)",
-    "balanced": "Ausgewogen (Empfohlen)",
-    "aggressive": "Aggressiv (Kleinere Dateien)",
-    "extreme": "Extrem (Maximale Komprimierung)",
-    "grayscale": "In Graustufen umwandeln",
-    "grayscaleHint": "Reduziert Dateigröße durch Entfernen von Farbinformationen",
-    "customSettings": "Erweiterte Einstellungen",
-    "customSettingsHint": "Komprimierungsparameter anpassen:",
-    "outputQuality": "Ausgabequalität",
-    "resizeImagesTo": "Bilder anpassen auf",
-    "onlyProcessAbove": "Nur verarbeiten über",
-    "removeMetadata": "Metadaten entfernen",
-    "subsetFonts": "Schriftarten optimieren (ungenutzte Zeichen entfernen)",
-    "removeThumbnails": "Eingebettete Miniaturansichten entfernen",
-    "compressButton": "PDF komprimieren"
+    "subtitle": "Die Dateigröße Ihrer PDF reduzieren."
   },
   "pdfEditor": {
     "name": "PDF-Editor",
@@ -60,6 +38,8 @@
     "subtitle": "Auf einen beliebigen Absatz klicken und ihn direkt bearbeiten – mit Live-Umbruch, Schriftarten und Formatierung.",
     "saved": "PDF erfolgreich gespeichert! ({{size}} KB)",
     "failedToLoad": "Der PDF-Texteditor konnte nicht geladen werden.",
+    "loadingFonts": "Schriftarten werden geladen...",
+    "fontsUnavailable": "Eine für einige Zeichen benötigte Schriftart konnte nicht heruntergeladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut, sonst werden diese Zeichen im gespeicherten PDF möglicherweise nicht korrekt angezeigt.",
     "howToUpload": "PDF hochladen",
     "howToClick": "Absatz anklicken",
     "howToRestyle": "Alles umgestalten",
@@ -1311,5 +1291,13 @@
     "faqSinglePageAnswer": "Ja! Aktivieren Sie die Option \"Wiederholen\" und Ihre Überlagerungsseiten werden auf allen Basisseiten wiederholt. Ein einseitiges Wasserzeichen wird auf jeder Seite angewendet.",
     "faqPrivacyQuestion": "Sind meine Dateien privat und sicher?",
     "faqPrivacyAnswer": "Absolut! Die gesamte Verarbeitung findet in Ihrem Browser statt. Ihre Dateien verlassen niemals Ihr Gerät, was vollständige Privatsphäre gewährleistet."
+  },
+  "unlockPdf": {
+    "name": "PDF entschlüsseln",
+    "subtitle": "PDF durch Entfernen des Passwortschutzes entsperren."
+  },
+  "protectPdf": {
+    "name": "PDF verschlüsseln",
+    "subtitle": "Ihre PDF durch Hinzufügen eines Passworts sperren."
   }
 }

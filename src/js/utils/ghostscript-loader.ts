@@ -163,7 +163,7 @@ export async function convertToPdfA(
   }
 
   const args = [
-    '-dNOSAFER',
+    '-dSAFER',
     '-dBATCH',
     '-dNOPAUSE',
     '-sDEVICE=pdfwrite',
@@ -418,7 +418,7 @@ export async function convertFontsToOutlines(
   onProgress?.('Converting fonts to outlines...');
 
   const args = [
-    '-dNOSAFER',
+    '-dSAFER',
     '-dBATCH',
     '-dNOPAUSE',
     '-sDEVICE=pdfwrite',
@@ -486,4 +486,82 @@ export async function convertFileToOutlines(
   const copy = new Uint8Array(result.length);
   copy.set(result);
   return new Blob([copy], { type: 'application/pdf' });
+}
+
+const CMYK_COLOR_SPACES = /\/DeviceCMYK|\/DeviceN\b|\/Separation\b/;
+const FOUR_CHANNELS = /\/N\s+4\b/g;
+const COUNT_DICTIONARIES = /\/ObjStm|\/Linearized/;
+
+const RGB_ARGS = [
+  '-dSAFER',
+  '-dBATCH',
+  '-dNOPAUSE',
+  '-dQUIET',
+  '-sDEVICE=pdfwrite',
+  '-sColorConversionStrategy=sRGB',
+  '-sColorConversionStrategyForImages=sRGB',
+  '-dConvertCMYKImagesToRGB=true',
+  '-dProcessColorModel=/DeviceRGB',
+  '-dAutoFilterColorImages=true',
+  '-dAutoFilterGrayImages=true',
+  '-dColorImageFilter=/DCTEncode',
+  '-dGrayImageFilter=/DCTEncode',
+  '-dCompatibilityLevel=1.4',
+];
+
+export function pdfUsesCmyk(pdfData: Uint8Array): boolean {
+  const text = new TextDecoder('latin1').decode(pdfData);
+  if (CMYK_COLOR_SPACES.test(text)) return true;
+  for (const match of text.matchAll(FOUR_CHANNELS)) {
+    const start = text.lastIndexOf('<<', match.index);
+    const end = text.indexOf('>>', match.index);
+    if (!COUNT_DICTIONARIES.test(text.slice(start, end))) return true;
+  }
+  return false;
+}
+
+export async function convertPdfToRgb(
+  pdfData: Uint8Array
+): Promise<Uint8Array> {
+  const gs = cachedGsModule ?? (cachedGsModule = await loadGsModule());
+  const inputPath = '/tmp/rgb-input.pdf';
+  const outputPath = '/tmp/rgb-output.pdf';
+  gs.FS.writeFile(inputPath, pdfData);
+  try {
+    const exitCode = gs.callMain([
+      ...RGB_ARGS,
+      `-sOutputFile=${outputPath}`,
+      inputPath,
+    ]);
+    if (exitCode !== 0) {
+      throw new Error(
+        `Ghostscript RGB conversion failed with exit code ${exitCode}`
+      );
+    }
+    return gs.FS.readFile(outputPath);
+  } finally {
+    for (const path of [inputPath, outputPath]) {
+      try {
+        gs.FS.unlink(path);
+      } catch {
+        continue;
+      }
+    }
+  }
+}
+
+export async function normalizeCmykForDocx(pdf: Blob): Promise<Blob> {
+  if (!isWasmAvailable('ghostscript')) return pdf;
+  const pdfData = new Uint8Array(await pdf.arrayBuffer());
+  if (!pdfUsesCmyk(pdfData)) return pdf;
+  try {
+    const rgb = await convertPdfToRgb(pdfData);
+    return new Blob([new Uint8Array(rgb)], { type: 'application/pdf' });
+  } catch (e) {
+    console.warn(
+      '[Ghostscript] RGB conversion failed, converting the original PDF:',
+      e
+    );
+    return pdf;
+  }
 }

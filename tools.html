@@ -144,7 +144,9 @@
         <div
           id="tools-grid"
           class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-        ></div>
+        >
+          {{> tool-links-static }}
+        </div>
 
         <div id="no-results" class="hidden text-center py-12">
           <i
@@ -182,7 +184,7 @@
           icon: 'microsoft-powerpoint-logo',
         },
         {
-          name: 'pdf-to-docx',
+          name: 'pdf-to-word',
           title: 'PDF to Word',
           category: 'converter',
           icon: 'microsoft-word-logo',
@@ -600,13 +602,13 @@
 
         // Security
         {
-          name: 'encrypt-pdf',
+          name: 'protect-pdf',
           title: 'Encrypt PDF',
           category: 'security',
           icon: 'lock',
         },
         {
-          name: 'decrypt-pdf',
+          name: 'unlock-pdf',
           title: 'Decrypt PDF',
           category: 'security',
           icon: 'lock-open',

@@ -56,6 +56,16 @@ function collectBuiltinTrustedHosts(): Set<string> {
 
 const BUILTIN_TRUSTED_HOSTS = collectBuiltinTrustedHosts();
 
+function isOutdatedCdnPin(packageName: WasmPackage, url: string): boolean {
+  const current = CDN_DEFAULTS[packageName];
+  const packagePrefix = current.slice(0, current.lastIndexOf('@') + 1);
+  return url !== current && url.startsWith(packagePrefix);
+}
+
+function withTrailingSlash(url: string): string {
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
 class WasmProviderManager {
   private config: WasmProviderConfig;
   private validationCache: Map<WasmPackage, boolean> = new Map();
@@ -80,7 +90,12 @@ class WasmProviderManager {
       for (const key of ['pymupdf', 'ghostscript', 'cpdf'] as WasmPackage[]) {
         const url = parsed[key];
         if (typeof url !== 'string') continue;
-        if (this.isTrustedUrl(url)) {
+        if (isOutdatedCdnPin(key, url)) {
+          dropped = true;
+          console.warn(
+            `[WasmProvider] Ignoring outdated stored URL for ${key}: ${url}. Using the current default instead.`
+          );
+        } else if (this.isTrustedUrl(url)) {
           safe[key] = url;
         } else {
           dropped = true;
@@ -134,10 +149,15 @@ class WasmProviderManager {
   }
 
   setUrl(packageName: WasmPackage, url: string): void {
-    const normalizedUrl = url.endsWith('/') ? url : `${url}/`;
+    const normalizedUrl = withTrailingSlash(url);
     const host = hostnameOf(normalizedUrl);
     if (!host) {
       throw new Error('Invalid URL');
+    }
+    const envDefault = this.getEnvDefault(packageName);
+    if (envDefault && normalizedUrl === withTrailingSlash(envDefault)) {
+      this.removeUrl(packageName);
+      return;
     }
     this.trustedHosts.add(host);
     this.config[packageName] = normalizedUrl;
@@ -321,7 +341,6 @@ class WasmProviderManager {
         'Extract Images',
         'Extract Tables',
         'EPUB/MOBI/FB2/XPS/CBZ to PDF',
-        'Image Compression',
         'Deskew PDF',
         'PDF Layers',
       ],

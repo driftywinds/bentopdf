@@ -1,2 +1,7 @@
 # Handlebars partials with template syntax inside HTML attributes
 src/partials/footer.html
+
+blog/posts/
+
+public/pdfjs-viewer/
+public/pdfjs-annotation-viewer/

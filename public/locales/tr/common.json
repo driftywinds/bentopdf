@@ -222,7 +222,7 @@
   "testimonials": {
     "title": "Kullanıcılarımız",
     "users": "Ne Diyor",
-    "say": ""
+    "say": " "
   },
   "support": {
     "title": "Çalışmamı Beğendiniz mi?",
@@ -239,7 +239,9 @@
     "legal": "Yasal",
     "termsAndConditions": "Kullanım Koşulları",
     "privacyPolicy": "Gizlilik Politikası",
-    "followUs": "Bizi Takip Edin"
+    "followUs": "Bizi Takip Edin",
+    "privacyShort": "Gizlilik",
+    "termsShort": "Koşullar"
   },
   "merge": {
     "title": "PDF Birleştir",
@@ -287,12 +289,13 @@
     },
     "mission": {
       "title": "Misyonumuz",
+      "titleDim": " ",
       "description": "Gizliliğinize saygı duyan ve asla ödeme talep etmeyen en kapsamlı PDF araç setini sağlamak. Temel belge araçlarının her yerde, herkes için erişilebilir olması gerektiğine inanıyoruz."
     },
     "philosophy": {
       "label": "Temel Felsefemiz",
       "title": "Öncelik Her Zaman Gizlilik.",
-      "description": "Verinin bir meta olarak kabul edildiği bir çağda, farklı bir yaklaşım benimsiyoruz. Bentopdf araçları için tüm işlemler tarayıcınızda yerel olarak gerçekleşir. Bu, dosyalarınızın sunucularımıza asla dokunmadığı, belgelerinizi asla görmediğimiz ve ne yaptığınızı takip etmediğimiz anlamına gelir. Belgeleriniz tamamen ve kesinlikle özel kalır. Bu sadece bir özellik değil, temelimizdir."
+      "description": "Verinin bir meta olarak kabul edildiği bir çağda, farklı bir yaklaşım benimsiyoruz. BentoPDF araçları için tüm işlemler tarayıcınızda yerel olarak gerçekleşir. Bu, dosyalarınızın sunucularımıza asla dokunmadığı, belgelerinizi asla görmediğimiz ve ne yaptığınızı takip etmediğimiz anlamına gelir. Belgeleriniz tamamen ve kesinlikle özel kalır. Bu sadece bir özellik değil, temelimizdir."
     },
     "whyBentopdf": {
       "title": "Neden",

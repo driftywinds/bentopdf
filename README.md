@@ -1,8 +1,13 @@
 <p align="center"><img src="public/images/favicon-no-bg.svg" width="80"></p>
 <h1 align="center">BentoPDF</h1>
+<p align="center"><sub>Supported by</sub></p>
 <p align="center">
+  <a href="https://vercel.com/open-source-program">
+    <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" height="30" />
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://www.digitalocean.com/?refcode=d93c189ef6d0&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
-    <img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%203.svg" alt="DigitalOcean Referral Badge">
+    <img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%203.svg" alt="DigitalOcean Referral Badge" height="44">
   </a>
 </p>
 
@@ -29,6 +34,7 @@
   - [Convert to PDF](#convert-to-pdf)
   - [Convert from PDF](#convert-from-pdf)
   - [Secure & Optimize PDFs](#secure--optimize-pdfs)
+- [Other Products](#-other-products)
 - [Translations](#-translations)
 - [Getting Started](#-getting-started)
   - [Prerequisites](#prerequisites)
@@ -124,8 +130,7 @@ We're incredibly grateful to all our sponsors and supporters who help keep Bento
 [![Sponsor me on GitHub](https://img.shields.io/badge/Become%20a%20Sponsor-%E2%9D%A4-ff69b4?style=for-the-badge)](https://github.com/sponsors/alam00000)
 [![Buy me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?style=for-the-badge&logo=kofi)](https://ko-fi.com/alio01)
 
-<!-- sponsors -->
-<!-- sponsors -->
+<!-- sponsors --><a href="https://github.com/gaedeke"><img src="https:&#x2F;&#x2F;github.com&#x2F;gaedeke.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/stiflerbox"><img src="https:&#x2F;&#x2F;github.com&#x2F;stiflerbox.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/shollyethan"><img src="https:&#x2F;&#x2F;github.com&#x2F;shollyethan.png" width="60px" alt="User avatar: Ethan Sholly" /></a><a href="https://github.com/KnudH"><img src="https:&#x2F;&#x2F;github.com&#x2F;KnudH.png" width="60px" alt="User avatar: Knud Hollander" /></a><a href="https://github.com/mohannadhussain"><img src="https:&#x2F;&#x2F;github.com&#x2F;mohannadhussain.png" width="60px" alt="User avatar: Mohannad Hussain" /></a><a href="https://github.com/chaoscastle"><img src="https:&#x2F;&#x2F;github.com&#x2F;chaoscastle.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/RobertGonzales1"><img src="https:&#x2F;&#x2F;github.com&#x2F;RobertGonzales1.png" width="60px" alt="User avatar: Robert Gonzales" /></a><a href="https://github.com/michivonah"><img src="https:&#x2F;&#x2F;github.com&#x2F;michivonah.png" width="60px" alt="User avatar: Michi" /></a><a href="https://github.com/bmikaili"><img src="https:&#x2F;&#x2F;github.com&#x2F;bmikaili.png" width="60px" alt="User avatar: Berzan" /></a><a href="https://github.com/Thanyanit-J"><img src="https:&#x2F;&#x2F;github.com&#x2F;Thanyanit-J.png" width="60px" alt="User avatar: Thanyanit Jongjitragan" /></a><a href="https://github.com/AceofSpades5757"><img src="https:&#x2F;&#x2F;github.com&#x2F;AceofSpades5757.png" width="60px" alt="User avatar: Kyle L. Davis" /></a><a href="https://github.com/Jacco011"><img src="https:&#x2F;&#x2F;github.com&#x2F;Jacco011.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/Pallandos"><img src="https:&#x2F;&#x2F;github.com&#x2F;Pallandos.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/haritvsmurali"><img src="https:&#x2F;&#x2F;github.com&#x2F;haritvsmurali.png" width="60px" alt="User avatar: Hari Haran" /></a><a href="https://github.com/mrtoadie"><img src="https:&#x2F;&#x2F;github.com&#x2F;mrtoadie.png" width="60px" alt="User avatar: Toadie" /></a><a href="https://github.com/sam12dr21"><img src="https:&#x2F;&#x2F;github.com&#x2F;sam12dr21.png" width="60px" alt="User avatar: " /></a><!-- sponsors -->
 
 ---
 
@@ -175,6 +180,7 @@ BentoPDF offers a comprehensive suite of tools to handle all your PDF needs.
 | Tool Name                 | Description                                                                                                                                                                                     |
 | :------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **PDF Editor**            | Annotate, highlight, redact, comment, add shapes/images, search, and view PDFs.                                                                                                                 |
+| **Edit PDF Text**         | Edit existing text directly in your PDF. Reuses the document's embedded fonts and keeps the rest of the page untouched.                                                                         |
 | **Create Fillable Forms** | Create professional fillable PDF forms with text fields, checkboxes, dropdowns, radio buttons, signatures, and more. Fully compliant with PDF standards for compatibility with all PDF viewers. |
 | **PDF Form Filler**       | Fill in forms directly in the browser. Also supports XFA forms.                                                                                                                                 |
 | **Add Page Numbers**      | Easily add page numbers with customizable formatting.                                                                                                                                           |
@@ -1219,16 +1225,20 @@ BentoPDF was originally built using **HTML**, **CSS**, and **vanilla JavaScript*
 
 ---
 
+## 📦 Other Products
+
+| Product            | Description                                                                                                                           | Links                                                                                                  |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------- |
+| **Kura**           | PDF standards and preflight engine. Converts to every PDF/A level, PDF/UA, PDF/X, PDF/E and PDF/VT, and can perform preflight checks. | [Website](https://kura.bentopdf.com) · [GitHub](https://github.com/alam00000/bentopdf-kura)            |
+| **Hyper Compress** | The best open source PDF compression engine.                                                                                          | [Website](https://hyper.bentopdf.com) · [GitHub](https://github.com/alam00000/bentopdf-hyper-compress) |
+
+---
+
 ## 🗺️ Roadmap
 
 ### Planned Features:
 
 - **HTML to PDF**: Convert HTML files or web pages into PDF documents.
-- **Markdown to PDF**: Enhanced support for converting `.md` files to PDF.
-- **Convert to PDF/A**: Convert PDFs to the PDF/A archival format.
-- **Edit PDF Content**: Directly edit text and other content within your PDF.
-- **PDF to Office**: Converts PDF files into editable Word, Excel, and PowerPoint formats.
-- **Office to PDF**: Converts Word, Excel, and PowerPoint documents into optimized PDFs.
 
 Contributions and discussions on the roadmap are welcome! Join the conversation via [Discord](https://discord.gg/Bgq3Ay3f2w).
 

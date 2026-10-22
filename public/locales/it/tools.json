@@ -27,29 +27,7 @@
   },
   "compressPdf": {
     "name": "Comprimi PDF",
-    "subtitle": "Riduci le dimensioni del tuo PDF.",
-    "algorithmLabel": "Algoritmo di compressione",
-    "condense": "Condensa (Consigliato)",
-    "photon": "Photon (Per PDF con molte foto)",
-    "condenseInfo": "Condensa usa la compressione avanzata: rimuove peso inutile, ottimizza le immagini, riduce i font. Migliore per la maggior parte dei PDF.",
-    "photonInfo": "Photon converte le pagine in immagini. Usalo per PDF con molte foto o scannerizzati.",
-    "photonWarning": "Attenzione: il testo non sarà selezionabile e i link smetteranno di funzionare.",
-    "levelLabel": "Livello di compressione",
-    "light": "Leggero (Preserva qualità)",
-    "balanced": "Bilanciato (Consigliato)",
-    "aggressive": "Aggressivo (File più piccoli)",
-    "extreme": "Estremo (Compressione massima)",
-    "grayscale": "Converti in scala di grigi",
-    "grayscaleHint": "Riduce le dimensioni rimuovendo le informazioni di colore",
-    "customSettings": "Impostazioni personalizzate",
-    "customSettingsHint": "Affina i parametri di compressione:",
-    "outputQuality": "Qualità di output",
-    "resizeImagesTo": "Ridimensiona le immagini a",
-    "onlyProcessAbove": "Elabora solo sopra",
-    "removeMetadata": "Rimuovi metadati",
-    "subsetFonts": "Riduci i font (rimuovi glifi non usati)",
-    "removeThumbnails": "Rimuovi miniature incorporate",
-    "compressButton": "Comprimi PDF"
+    "subtitle": "Riduci le dimensioni del tuo PDF."
   },
   "pdfEditor": {
     "name": "Editor PDF",
@@ -60,6 +38,8 @@
     "subtitle": "Clicca su un paragrafo qualsiasi e modificalo direttamente con ricomposizione del testo in tempo reale, caratteri e stili.",
     "saved": "PDF salvato correttamente! ({{size}} KB)",
     "failedToLoad": "Impossibile caricare l'editor di testo PDF.",
+    "loadingFonts": "Caricamento dei font...",
+    "fontsUnavailable": "Impossibile scaricare un font necessario per alcuni caratteri. Controlla la connessione e riprova, altrimenti questi caratteri potrebbero non essere visualizzati correttamente nel PDF salvato.",
     "howToUpload": "Carica PDF",
     "howToClick": "Fai clic su un paragrafo",
     "howToRestyle": "Ridefinisci lo stile",
@@ -1312,5 +1292,13 @@
     "faqSinglePageAnswer": "Sì! Attiva l'opzione \"Ripeti\" e le pagine di sovrapposizione si ripeteranno su tutte le pagine base. Una filigrana di una pagina verrà applicata a ogni pagina.",
     "faqPrivacyQuestion": "I miei file sono privati e sicuri?",
     "faqPrivacyAnswer": "Assolutamente! Tutta l'elaborazione avviene nel tuo browser. I tuoi file non lasciano mai il tuo dispositivo, garantendo la massima privacy."
+  },
+  "unlockPdf": {
+    "name": "Decrittografa PDF",
+    "subtitle": "Sblocca il PDF rimuovendo la protezione tramite password."
+  },
+  "protectPdf": {
+    "name": "Cripta PDF",
+    "subtitle": "Proteggi il tuo PDF aggiungendo una password."
   }
 }

@@ -1,12 +1,12 @@
 {{#if simpleMode}} {{> footer-simple}} {{else}}
-<footer class="mt-16 border-t-2 border-gray-700 py-8">
+<footer class="border-t border-white/10 py-12">
   <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
       <div class="mb-8 md:mb-0">
         <div class="flex items-center justify-center md:justify-start mb-4">
           <img
             id="footer-logo"
-            src="{{baseUrl}}{{#if brandLogo}}{{brandLogo}}{{else}}images/favicon.svg{{/if}}"
+            src="{{baseUrl}}{{#if brandLogo}}{{brandLogo}}{{else}}images/favicon-no-bg.svg{{/if}}"
             alt="{{#if brandName}}{{brandName}}{{else}}Bento PDF{{/if}} Logo"
             class="h-10 w-10 mr-3"
           />
@@ -19,6 +19,19 @@
           <span data-i18n="footer.version">Version</span>
           <span id="app-version">{{appVersion}}</span>
         </p>
+        <a
+          href="https://www.digitalocean.com/?refcode=d93c189ef6d0&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hide-section inline-block mt-4"
+        >
+          <img
+            src="{{baseUrl}}images/badge.svg"
+            alt="DigitalOcean Referral Badge"
+            width="150"
+            height="32"
+          />
+        </a>
       </div>
 
       <div>
@@ -28,7 +41,7 @@
         <ul class="space-y-2 text-gray-400">
           <li>
             <a
-              href="about.html"
+              href="/about"
               class="hover:text-indigo-400"
               data-i18n="footer.aboutUs"
               >About Us</a
@@ -36,7 +49,7 @@
           </li>
           <li>
             <a
-              href="faq.html"
+              href="/faq"
               class="hover:text-indigo-400"
               data-i18n="footer.faqLink"
               >FAQ</a
@@ -44,7 +57,7 @@
           </li>
           <li>
             <a
-              href="contact.html"
+              href="/contact"
               class="hover:text-indigo-400"
               data-i18n="footer.contactUs"
               >Contact Us</a
@@ -60,7 +73,7 @@
         <ul class="space-y-2 text-gray-400">
           <li>
             <a
-              href="licensing.html"
+              href="/licensing"
               class="hover:text-indigo-400"
               data-i18n="nav.licensing"
               >Licensing</a
@@ -68,7 +81,7 @@
           </li>
           <li>
             <a
-              href="terms.html"
+              href="/terms"
               class="hover:text-indigo-400"
               data-i18n="footer.termsAndConditions"
               >Terms and Conditions</a
@@ -76,14 +89,14 @@
           </li>
           <li>
             <a
-              href="privacy.html"
+              href="/privacy"
               class="hover:text-indigo-400"
               data-i18n="footer.privacyPolicy"
               >Privacy Policy</a
             >
           </li>
           <li>
-            <a href="wasm-settings.html" class="hover:text-indigo-400"
+            <a href="/wasm-settings" class="hover:text-indigo-400"
               >Advanced Settings</a
             >
           </li>

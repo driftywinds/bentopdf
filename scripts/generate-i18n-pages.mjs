@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { JSDOM } from 'jsdom';
 import { fileURLToPath } from 'url';
+import { serializeJsonLd } from './json-ld.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,7 +60,47 @@ function buildUrl(langPrefix, pagePath) {
   if (BASE_PATH && BASE_PATH !== '') parts.push(BASE_PATH.replace(/^\//, ''));
   if (langPrefix) parts.push(langPrefix);
   if (pagePath) parts.push(pagePath.replace(/^\//, ''));
-  return parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
+  const url = parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
+  return langPrefix && !pagePath ? `${url}/` : url;
+}
+
+function resolveTranslation(langResources, key) {
+  let namespace = 'common';
+  let keyPath = key;
+  const colonIndex = key.indexOf(':');
+  if (colonIndex !== -1) {
+    namespace = key.slice(0, colonIndex);
+    keyPath = key.slice(colonIndex + 1);
+  }
+  let node = langResources[namespace];
+  for (const segment of keyPath.split('.')) {
+    if (node == null || typeof node !== 'object') return null;
+    node = node[segment];
+  }
+  return typeof node === 'string' && node ? node : null;
+}
+
+function applyServerTranslations(document, langResources) {
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    const key = element.getAttribute('data-i18n');
+    if (!key) return;
+    const translation = resolveTranslation(langResources, key);
+    if (translation) element.textContent = translation;
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    if (!key) return;
+    const translation = resolveTranslation(langResources, key);
+    if (translation) element.setAttribute('placeholder', translation);
+  });
+
+  document.querySelectorAll('[data-i18n-title]').forEach((element) => {
+    const key = element.getAttribute('data-i18n-title');
+    if (!key) return;
+    const translation = resolveTranslation(langResources, key);
+    if (translation) element.setAttribute('title', translation);
+  });
 }
 
 const ORGANIZATION_LD_MARKER = 'data-bentopdf-organization';
@@ -93,7 +134,7 @@ function injectOrganizationLd(document) {
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
   script.setAttribute(ORGANIZATION_LD_MARKER, '');
-  script.textContent = JSON.stringify(data, null, 2);
+  script.textContent = serializeJsonLd(data);
   document.body.appendChild(script);
 }
 
@@ -105,10 +146,24 @@ function buildLocalHomeHref(lang) {
   return `${BASE_PATH}${langSegment}`.replace(/\/+/g, '/');
 }
 
+function removeStaticBreadcrumbLd(document) {
+  for (const script of document.querySelectorAll(
+    `script[type="application/ld+json"]:not([${BREADCRUMB_MARKER}])`
+  )) {
+    try {
+      const parsed = JSON.parse(script.textContent || '');
+      if (parsed && parsed['@type'] === 'BreadcrumbList') script.remove();
+    } catch {
+      continue;
+    }
+  }
+}
+
 function injectToolBreadcrumb(document, lang, toolName, toolUrl) {
   const h1 = document.querySelector('h1[data-i18n^="tools:"]');
   if (!h1) return;
   if (document.querySelector(`[${BREADCRUMB_MARKER}]`)) return;
+  removeStaticBreadcrumbLd(document);
 
   const homeUrl = buildUrl(lang === 'en' ? '' : lang, '');
 
@@ -160,7 +215,7 @@ function injectToolBreadcrumb(document, lang, toolName, toolUrl) {
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
   script.setAttribute(BREADCRUMB_MARKER, '');
-  script.textContent = JSON.stringify(ld, null, 2);
+  script.textContent = serializeJsonLd(ld);
   document.body.appendChild(script);
 }
 
@@ -171,18 +226,31 @@ function resolveToolName(translationKey, langTools) {
   return enEntry && enEntry.name ? enEntry.name : null;
 }
 
+function translationKeyForFile(filenameNoExt) {
+  return KEY_MAPPING[filenameNoExt] || toCamelCase(filenameNoExt);
+}
+
+function translatedLangsForFile(filenameNoExt, translations) {
+  const translationKey = translationKeyForFile(filenameNoExt);
+  return languages.filter(
+    (l) =>
+      l === 'en' ||
+      filenameNoExt === 'index' ||
+      Boolean(translations[l] && translations[l].tools[translationKey])
+  );
+}
+
 function processFileForLanguage(
   originalContent,
   file,
   lang,
   translations,
-  langDir
+  langDir,
+  translatedLangs
 ) {
   const filenameNoExt = file.replace('.html', '');
-  let translationKey = toCamelCase(filenameNoExt);
-  if (KEY_MAPPING[filenameNoExt]) {
-    translationKey = KEY_MAPPING[filenameNoExt];
-  }
+  const translationKey = translationKeyForFile(filenameNoExt);
+  const isTranslated = translatedLangs.includes(lang);
 
   const { tools } = translations[lang];
   const dom = new JSDOM(originalContent);
@@ -190,6 +258,8 @@ function processFileForLanguage(
 
   document.documentElement.lang = lang;
   document.documentElement.dir = ['ar', 'fa'].includes(lang) ? 'rtl' : 'ltr';
+
+  applyServerTranslations(document, translations[lang]);
 
   let title = null;
   let description = null;
@@ -232,22 +302,25 @@ function processFileForLanguage(
 
   const pagePath = filenameNoExt === 'index' ? '' : filenameNoExt;
 
-  languages.forEach((l) => {
-    const link = document.createElement('link');
-    link.rel = 'alternate';
-    link.hreflang = l;
-    link.href = buildUrl(l === 'en' ? '' : l, pagePath);
-    document.head.appendChild(link);
-  });
+  if (isTranslated) {
+    translatedLangs.forEach((l) => {
+      const link = document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = l;
+      link.href = buildUrl(l === 'en' ? '' : l, pagePath);
+      document.head.appendChild(link);
+    });
 
-  const defaultLink = document.createElement('link');
-  defaultLink.rel = 'alternate';
-  defaultLink.hreflang = 'x-default';
-  defaultLink.href = buildUrl('', pagePath);
-  document.head.appendChild(defaultLink);
+    const defaultLink = document.createElement('link');
+    defaultLink.rel = 'alternate';
+    defaultLink.hreflang = 'x-default';
+    defaultLink.href = buildUrl('', pagePath);
+    document.head.appendChild(defaultLink);
+  }
 
+  const englishUrl = buildUrl('', pagePath);
   const localizedUrl = buildUrl(lang, pagePath);
-  const canonicalUrl = buildUrl('', pagePath);
+  const canonicalUrl = isTranslated ? localizedUrl : englishUrl;
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) {
     canonical = document.createElement('link');
@@ -257,9 +330,9 @@ function processFileForLanguage(
   canonical.href = canonicalUrl;
 
   const ogUrl = document.querySelector('meta[property="og:url"]');
-  if (ogUrl) ogUrl.content = localizedUrl;
+  if (ogUrl) ogUrl.content = canonicalUrl;
   const twitterUrl = document.querySelector('meta[name="twitter:url"]');
-  if (twitterUrl) twitterUrl.content = localizedUrl;
+  if (twitterUrl) twitterUrl.content = canonicalUrl;
 
   injectOrganizationLd(document);
 
@@ -288,6 +361,8 @@ function processFileForLanguage(
 
     if (href.startsWith('/assets/') || href.includes('/assets/')) return;
 
+    if (href === '/blog' || href.startsWith('/blog/')) return;
+
     const langPrefixRegex = new RegExp(
       `^(${BASE_PATH})?/(${languages.join('|')})(/|$)`
     );
@@ -313,7 +388,7 @@ function processFileForLanguage(
   fs.writeFileSync(path.join(langDir, file), result);
 }
 
-function updateEnglishFile(filePath, originalContent) {
+function updateEnglishFile(filePath, originalContent, translatedLangs) {
   const filenameNoExt = path.basename(filePath, '.html');
   const dom = new JSDOM(originalContent);
   const document = dom.window.document;
@@ -325,7 +400,7 @@ function updateEnglishFile(filePath, originalContent) {
   const pagePath = filenameNoExt === 'index' ? '' : filenameNoExt;
   const canonicalUrl = buildUrl('', pagePath);
 
-  languages.forEach((l) => {
+  translatedLangs.forEach((l) => {
     const link = document.createElement('link');
     link.rel = 'alternate';
     link.hreflang = l;
@@ -402,6 +477,10 @@ async function generateI18nPages() {
   for (const file of htmlFiles) {
     const filePath = path.join(DIST_DIR, file);
     const originalContent = fs.readFileSync(filePath, 'utf-8');
+    const translatedLangs = translatedLangsForFile(
+      file.replace('.html', ''),
+      translations
+    );
 
     for (const lang of languages) {
       if (lang === 'en') continue;
@@ -413,7 +492,8 @@ async function generateI18nPages() {
         file,
         lang,
         translations,
-        langDir
+        langDir,
+        translatedLangs
       );
 
       processed++;
@@ -425,7 +505,7 @@ async function generateI18nPages() {
       await new Promise((resolve) => setImmediate(resolve));
     }
 
-    updateEnglishFile(filePath, originalContent);
+    updateEnglishFile(filePath, originalContent, translatedLangs);
   }
 
   console.log('✅ i18n pages generated successfully!');

@@ -216,7 +216,7 @@
     },
     "analytics": {
       "question": "Använder ni cookies eller analys för att spåra mig?",
-      "answer": "Nej. BentoPDF spårar dig inte alls. Vi använder inga cookies, ingen analys och inga spårningsskript – inte ens på den publika webbplatsen bentopdf.com. Vi vet aldrig vem du är eller vad du gör med verktygen."
+      "answer": "Nej. BentoPDF spårar dig inte alls. Vi använder inga cookies, ingen analys och inga spårningsskript, inte ens på den publika webbplatsen bentopdf.com. Vi vet aldrig vem du är eller vad du gör med verktygen."
     }
   },
   "testimonials": {
@@ -239,7 +239,9 @@
     "legal": "Juridiskt",
     "termsAndConditions": "Villkor",
     "privacyPolicy": "Integritetspolicy",
-    "followUs": "Följ oss"
+    "followUs": "Följ oss",
+    "privacyShort": "Integritet",
+    "termsShort": "Villkor"
   },
   "merge": {
     "title": "Sammanfoga PDF:er",
@@ -286,7 +288,8 @@
       "noCompromises": "Inga kompromisser."
     },
     "mission": {
-      "title": "Vårt uppdrag",
+      "title": "Vårt",
+      "titleDim": "uppdrag",
       "description": "Att tillhandahålla den mest omfattande PDF-verktygslådan som respekterar din integritet och aldrig ber om betalning. Vi tycker att viktiga dokumentverktyg ska vara tillgängliga för alla, överallt, utan hinder."
     },
     "philosophy": {
@@ -315,7 +318,7 @@
     },
     "cta": {
       "title": "Redo att komma igång?",
-      "description": "Gå med i tusentals användare som litar på Bentopdf för sina dagliga dokumentbehov. Upplev skillnaden som integritet och prestanda kan göra.",
+      "description": "Gå med i tusentals användare som litar på BentoPDF för sina dagliga dokumentbehov. Upplev skillnaden som integritet och prestanda kan göra.",
       "button": "Utforska alla verktyg"
     }
   },

@@ -1,6 +1,18 @@
 import type { AppConfig } from '@/types';
 
-const disabledToolsSet = new Set<string>(__DISABLED_TOOLS__);
+const RENAMED_TOOL_IDS: Record<string, string> = {
+  'decrypt-pdf': 'unlock-pdf',
+  'encrypt-pdf': 'protect-pdf',
+  'pdf-to-docx': 'pdf-to-word',
+};
+
+function normalizeToolId(toolId: string): string {
+  return RENAMED_TOOL_IDS[toolId] ?? toolId;
+}
+
+const disabledToolsSet = new Set<string>(
+  __DISABLED_TOOLS__.map(normalizeToolId)
+);
 let runtimeConfigLoaded = false;
 let editorDisabledCategories: string[] = [];
 
@@ -23,7 +35,7 @@ export async function loadRuntimeConfig(): Promise<void> {
     if (Array.isArray(config.disabledTools)) {
       for (const toolId of config.disabledTools) {
         if (typeof toolId === 'string') {
-          disabledToolsSet.add(toolId);
+          disabledToolsSet.add(normalizeToolId(toolId));
         }
       }
     }

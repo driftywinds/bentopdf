@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ Convert Email to PDF online free - EML to PDF, MSG to PDF ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert email files (EML, MSG) to PDF format. Supports Outlook exports and standard email formats. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="keywords"
@@ -35,7 +35,7 @@
     />
     <meta
       property="og:description"
-      content="★ Convert Email to PDF online free - EML to PDF, MSG to PDF ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert email files (EML, MSG) to PDF format. Supports Outlook exports and standard email formats. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -51,7 +51,7 @@
     <meta name="twitter:title" content="Email to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ Convert Email to PDF online free - EML to PDF, MSG to PDF ★ No signup ★ Privacy-first ★ Works in browser"
+      content="Convert email files (EML, MSG) to PDF format. Supports Outlook exports and standard email formats. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -65,10 +65,6 @@
     <meta name="apple-mobile-web-app-title" content="Email to PDF" />
 
     <title>Email to PDF - Convert EML/MSG to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert email files (EML, MSG) to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -110,7 +106,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -387,56 +383,100 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            What email formats are supported?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            How do I get an .eml or .msg file out of my email client?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            BentoPDF supports both .eml (standard email format) and .msg
-            (Microsoft Outlook) files. These are the most common formats for
-            exported or saved emails.
+          <p class="faq-d-a">
+            In Gmail, open the message, use the three-dot menu, and choose
+            Download message to save an .eml file. Outlook for Windows saves a
+            .msg when you drag a message to a folder or use Save As; Apple Mail
+            and Thunderbird save .eml through their Save As commands. Drop the
+            saved file into the tool.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Is email to PDF conversion really free?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Do inline images and formatting survive the conversion?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+          <p class="faq-d-a">
+            HTML emails keep their layout, fonts, and colors, and images
+            embedded in the message itself (the cid: kind used for signatures
+            and pasted screenshots) are included. Images that the email loads
+            from a web server aren't downloaded, so those spots come out empty.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Are my emails kept private?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I hide the CC and BCC lines?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Absolutely! All processing happens in your browser. Your email files
-            never leave your device, ensuring complete privacy for sensitive
-            communications.
+          <p class="faq-d-a">
+            Turn off Include CC and BCC before converting and the header block
+            shows only From, To, Date, and Subject. The same panel has a toggle
+            for the attachments list at the bottom of the PDF.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            What about email attachments?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Which page sizes are available?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            The PDF displays a list of attachments at the bottom and also embeds
-            the actual files into the PDF. You can access them via the
-            Attachments panel in PDF readers like Adobe Reader or Foxit.
+          <p class="faq-d-a">
+            A4, US Letter, and Legal, with a 50-point margin on every side. Long
+            emails flow onto as many pages as needed. The page size applies to
+            the whole batch, so pick it before you click Convert.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert a whole thread or mailbox (.mbox, .pst) at once?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The tool reads individual message files only, one email per PDF. It
+            doesn't open .mbox or .pst mailboxes, so export the messages you
+            need as separate .eml or .msg files first; you can then drop them
+            all in together and get a ZIP of PDFs.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are links in the email clickable in the PDF?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Web and mailto links are re-created as clickable links wherever the
+            link text can be matched on the page. Very short link text (three
+            characters or fewer) isn't matched, so those particular links appear
+            as plain text.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            What is the converted email's PDF named?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            A single email becomes a PDF with the same base name as the .eml or
+            .msg file. Several emails are packaged into emails-converted.zip
+            with one PDF per message.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does converting an email trigger tracking pixels or contact the
+            sender's server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The message is parsed and rendered entirely in your browser, and
+            no remote images, scripts, or stylesheets referenced by the email
+            are fetched. Open-tracking pixels never fire, and the email's
+            contents never leave your device.
           </p>
         </details>
       </div>

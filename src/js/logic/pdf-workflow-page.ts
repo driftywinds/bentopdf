@@ -43,7 +43,7 @@ import {
   templateNameExists,
   deleteTemplate,
 } from '@/js/workflow/serialization';
-import { getAvailableTesseractLanguageEntries } from '@/js/utils/tesseract-language-availability.js';
+import { getControlSpec } from '@/js/workflow/nodes/control-specs';
 import { isToolDisabled } from '@/js/utils/disabled-tools.js';
 import { IMAGE_ACCEPT } from '@/js/utils/image-input-utils.js';
 
@@ -1124,180 +1124,7 @@ function showNodeSettings(node: BaseWorkflowNode) {
     return;
   }
 
-  const dropdownOptions: Record<string, { label: string; value: string }[]> = {
-    format: [
-      { label: 'JPG', value: 'jpg' },
-      { label: 'PNG', value: 'png' },
-      { label: 'WebP', value: 'webp' },
-      { label: 'SVG', value: 'svg' },
-    ],
-    position: [
-      { label: 'Bottom Center', value: 'bottom-center' },
-      { label: 'Bottom Left', value: 'bottom-left' },
-      { label: 'Bottom Right', value: 'bottom-right' },
-      { label: 'Top Center', value: 'top-center' },
-      { label: 'Top Left', value: 'top-left' },
-      { label: 'Top Right', value: 'top-right' },
-    ],
-    orientation: [
-      { label: 'Auto (Keep Original)', value: 'auto' },
-      { label: 'Portrait', value: 'portrait' },
-      { label: 'Landscape', value: 'landscape' },
-    ],
-    direction: [
-      { label: 'Vertical', value: 'vertical' },
-      { label: 'Horizontal', value: 'horizontal' },
-    ],
-    pagesPerSheet: [
-      { label: '2', value: '2' },
-      { label: '4', value: '4' },
-      { label: '9', value: '9' },
-      { label: '16', value: '16' },
-    ],
-    fontFamily: [
-      { label: 'Helvetica', value: 'helv' },
-      { label: 'Times Roman', value: 'times' },
-      { label: 'Courier', value: 'cour' },
-      { label: 'Times Italic', value: 'tiro' },
-    ],
-    pageSize: [
-      { label: 'A4', value: 'a4' },
-      { label: 'Letter', value: 'letter' },
-      { label: 'Legal', value: 'legal' },
-    ],
-    targetSize: [
-      { label: 'A4', value: 'A4' },
-      { label: 'Letter', value: 'Letter' },
-      { label: 'Legal', value: 'Legal' },
-      { label: 'A3', value: 'A3' },
-      { label: 'A5', value: 'A5' },
-      { label: 'Tabloid', value: 'Tabloid' },
-      { label: 'Custom', value: 'Custom' },
-    ],
-    scalingMode: [
-      { label: 'Fit (keep full page visible)', value: 'fit' },
-      { label: 'Fill (cover full target page)', value: 'fill' },
-    ],
-    customUnits: [
-      { label: 'Millimeters (mm)', value: 'mm' },
-      { label: 'Inches (in)', value: 'in' },
-    ],
-    numberFormat: [
-      { label: 'Simple (1, 2, 3)', value: 'simple' },
-      { label: 'Page X of Y', value: 'page_x_of_y' },
-    ],
-    angle: [
-      { label: '90° Clockwise', value: '90' },
-      { label: '180°', value: '180' },
-      { label: '90° Counter-clockwise', value: '270' },
-    ],
-    blankPosition: [
-      { label: 'End', value: 'end' },
-      { label: 'Beginning', value: 'start' },
-      { label: 'After Page...', value: 'after' },
-    ],
-    resolution: [
-      { label: 'Standard (192 DPI)', value: '2.0' },
-      { label: 'High (288 DPI)', value: '3.0' },
-      { label: 'Ultra (384 DPI)', value: '4.0' },
-    ],
-    language: getAvailableTesseractLanguageEntries().map(([code, name]) => ({
-      label: name,
-      value: code,
-    })),
-    gridMode: [
-      { label: '1x2 (Booklet)', value: '1x2' },
-      { label: '2x2 (4-up)', value: '2x2' },
-      { label: '2x4 (8-up)', value: '2x4' },
-      { label: '4x4 (16-up)', value: '4x4' },
-    ],
-    paperSize: [
-      { label: 'Letter', value: 'Letter' },
-      { label: 'A4', value: 'A4' },
-      { label: 'A3', value: 'A3' },
-      { label: 'Tabloid', value: 'Tabloid' },
-      { label: 'Legal', value: 'Legal' },
-    ],
-    rasterizeDpi: [
-      { label: '72 (Screen)', value: '72' },
-      { label: '150 (Default)', value: '150' },
-      { label: '200 (Good)', value: '200' },
-      { label: '300 (Print)', value: '300' },
-      { label: '600 (High Quality)', value: '600' },
-    ],
-    imageFormat: [
-      { label: 'PNG (Lossless)', value: 'png' },
-      { label: 'JPEG (Smaller file size)', value: 'jpeg' },
-    ],
-    skewThreshold: [
-      { label: '0.1° (Very Sensitive)', value: '0.1' },
-      { label: '0.5° (Default)', value: '0.5' },
-      { label: '1.0° (Normal)', value: '1.0' },
-      { label: '2.0° (Less Sensitive)', value: '2.0' },
-    ],
-    processingDpi: [
-      { label: '100 (Fast)', value: '100' },
-      { label: '150 (Default)', value: '150' },
-      { label: '200 (Better)', value: '200' },
-      { label: '300 (Best Quality)', value: '300' },
-    ],
-    level: [
-      { label: 'PDF/A-1b (Strict, no transparency)', value: 'PDF/A-1b' },
-      { label: 'PDF/A-2b (Recommended)', value: 'PDF/A-2b' },
-      { label: 'PDF/A-3b (Modern, allows attachments)', value: 'PDF/A-3b' },
-    ],
-    algorithm: [
-      { label: 'Condense (Smart, requires PyMuPDF)', value: 'condense' },
-      { label: 'Photon (Rasterize pages)', value: 'photon' },
-    ],
-    compressionLevel: [
-      { label: 'Light', value: 'light' },
-      { label: 'Balanced', value: 'balanced' },
-      { label: 'Aggressive', value: 'aggressive' },
-      { label: 'Extreme', value: 'extreme' },
-    ],
-    redactMode: [
-      { label: 'Search Text', value: 'text' },
-      { label: 'Area (Coordinates)', value: 'area' },
-    ],
-  };
-
-  const booleanControls = new Set([
-    'grayscale',
-    'border',
-    'margins',
-    'separator',
-    'sepia',
-    'includeCcBcc',
-    'includeAttachments',
-    'binarize',
-    'preFlatten',
-    'flattenForms',
-    'removeMetadata',
-    'removeAnnotations',
-    'removeJavascript',
-    'removeEmbeddedFiles',
-    'removeLayers',
-    'removeLinks',
-    'removeStructureTree',
-    'removeMarkInfo',
-    'removeFonts',
-    'subsetFonts',
-    'convertToGrayscale',
-    'removeThumbnails',
-    'retainPageLabels',
-  ]);
-  const multiSelectDropdowns = new Set(['language']);
   const advancedControls = new Set(['resolution', 'binarize', 'whitelist']);
-
-  const colorControls = new Set([
-    'color',
-    'borderColor',
-    'backgroundColor',
-    'separatorColor',
-    'fontColor',
-    'fillColor',
-  ]);
 
   const controlHints: Record<string, string> = {
     pages: 'e.g. 1-3, 5, 7-9',
@@ -1307,6 +1134,8 @@ function showNodeSettings(node: BaseWorkflowNode) {
     y0: 'Top edge in points',
     x1: 'Right edge in points',
     y1: 'Bottom edge in points',
+    targetKilobytes:
+      'Finds the best quality under this size. 0 means no target.',
     retainPageLabels:
       "Off (default): natural 1–N numbering. On: each file's original page labels are preserved (may produce duplicate labels).",
   };
@@ -1333,15 +1162,17 @@ function showNodeSettings(node: BaseWorkflowNode) {
     controlWrappers[key] = wrapper;
     const ctrl = control as { value?: unknown; type?: string };
     const currentValue = String(ctrl.value ?? '');
+    const spec = getControlSpec(node.nodeType, key);
 
     const controlLabel = document.createElement('label');
     controlLabel.className = 'block text-xs text-gray-400 mb-1';
     controlLabel.textContent = formatLabel(key);
     wrapper.appendChild(controlLabel);
 
-    if (dropdownOptions[key] && multiSelectDropdowns.has(key)) {
+    if (spec?.kind === 'multiselect') {
+      const { options, separator } = spec;
       const selectedValues = new Set(
-        currentValue ? currentValue.split('+') : []
+        currentValue ? currentValue.split(separator) : []
       );
       const container = document.createElement('div');
       container.className = 'flex flex-col gap-1';
@@ -1364,7 +1195,7 @@ function showNodeSettings(node: BaseWorkflowNode) {
       function updateTags() {
         tagsDiv.innerHTML = '';
         for (const val of selectedValues) {
-          const opt = dropdownOptions[key].find((o) => o.value === val);
+          const opt = options.find((o) => o.value === val);
           if (!opt) continue;
           const tag = document.createElement('span');
           tag.className =
@@ -1388,13 +1219,13 @@ function showNodeSettings(node: BaseWorkflowNode) {
 
       function updateCtrl() {
         (ctrl as { value: string }).value =
-          Array.from(selectedValues).join('+');
+          Array.from(selectedValues).join(separator);
       }
 
       function renderList(filter: string) {
         listDiv.innerHTML = '';
         const lowerFilter = filter.toLowerCase();
-        for (const opt of dropdownOptions[key]) {
+        for (const opt of options) {
           if (lowerFilter && !opt.label.toLowerCase().includes(lowerFilter))
             continue;
           const label = document.createElement('label');
@@ -1427,10 +1258,10 @@ function showNodeSettings(node: BaseWorkflowNode) {
       updateTags();
       renderList('');
       wrapper.appendChild(container);
-    } else if (dropdownOptions[key]) {
+    } else if (spec?.kind === 'select') {
       const select = document.createElement('select');
       select.className = inputClass;
-      for (const opt of dropdownOptions[key]) {
+      for (const opt of spec.options) {
         const option = document.createElement('option');
         option.value = opt.value;
         option.textContent = opt.label;
@@ -1438,13 +1269,14 @@ function showNodeSettings(node: BaseWorkflowNode) {
         select.appendChild(option);
       }
       select.addEventListener('change', () => {
-        (ctrl as { value: string }).value = select.value;
+        ctrl.value =
+          typeof ctrl.value === 'number' ? Number(select.value) : select.value;
         if (conditionalVisibility[key]) {
           applyConditionalVisibility(key, select.value);
         }
       });
       wrapper.appendChild(select);
-    } else if (booleanControls.has(key)) {
+    } else if (spec?.kind === 'boolean') {
       const toggle = document.createElement('button');
       toggle.type = 'button';
       const isOn = currentValue === 'true';
@@ -1461,7 +1293,7 @@ function showNodeSettings(node: BaseWorkflowNode) {
         dot.className = `pointer-events-none absolute top-[3px] left-[3px] h-[18px] w-[18px] rounded-full bg-white shadow-md transition-transform duration-200 ${on ? 'translate-x-5' : 'translate-x-0'}`;
       });
       wrapper.appendChild(toggle);
-    } else if (colorControls.has(key)) {
+    } else if (spec?.kind === 'color') {
       const colorRow = document.createElement('div');
       colorRow.className = 'flex items-center gap-2';
       const colorInput = document.createElement('input');
@@ -1489,18 +1321,25 @@ function showNodeSettings(node: BaseWorkflowNode) {
       const input = document.createElement('input');
       input.type = 'number';
       input.className = inputClass;
+      if (spec?.kind === 'number') {
+        input.min = String(spec.min);
+        input.max = String(spec.max);
+        input.step = spec.step === undefined ? 'any' : String(spec.step);
+      }
       input.value = currentValue;
       input.addEventListener('input', () => {
         const num = parseFloat(input.value);
         if (!isNaN(num)) {
-          (ctrl as { value: number }).value = num;
+          ctrl.value = node.sanitizeControlValue(key, num);
         }
+      });
+      input.addEventListener('change', () => {
+        input.value = String(ctrl.value ?? '');
       });
       wrapper.appendChild(input);
     } else {
       const input = document.createElement('input');
-      const isPasswordField = key === 'password' || key === 'ownerPassword';
-      input.type = isPasswordField ? 'password' : 'text';
+      input.type = spec?.kind === 'password' ? 'password' : 'text';
       input.className = inputClass;
       input.value = currentValue;
       input.addEventListener('input', () => {

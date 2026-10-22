@@ -39,5 +39,5 @@ Converts PDF files to Markdown (`.md`) format, preserving headings, paragraphs, 
 ## Related Tools
 
 - [PDF to Text](./pdf-to-text)
-- [PDF to Word](./pdf-to-docx)
+- [PDF to Word](./pdf-to-word)
 - [Prepare PDF for AI](./prepare-pdf-for-ai)

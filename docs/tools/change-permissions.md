@@ -56,6 +56,6 @@ If you set only an owner password (no user password), anyone can open the file b
 
 ## Related Tools
 
-- [Encrypt PDF](./encrypt-pdf) -- simple password protection without granular permissions
-- [Decrypt PDF](./decrypt-pdf) -- remove encryption entirely
+- [Encrypt PDF](./protect-pdf) -- simple password protection without granular permissions
+- [Decrypt PDF](./unlock-pdf) -- remove encryption entirely
 - [Remove Restrictions](./remove-restrictions) -- strip all restrictions when you have the owner password

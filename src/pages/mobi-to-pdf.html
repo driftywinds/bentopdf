@@ -11,7 +11,7 @@
     />
     <meta
       name="description"
-      content="★ MOBI to PDF online free - MOBI to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert MOBI e-books to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta name="keywords" content="mobi to pdf, online pdf" />
     <meta name="author" content="BentoPDF" />
@@ -32,7 +32,7 @@
     />
     <meta
       property="og:description"
-      content="★ MOBI to PDF online free - MOBI to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert MOBI e-books to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       property="og:image"
@@ -48,7 +48,7 @@
     <meta name="twitter:title" content="MOBI to PDF Free" />
     <meta
       name="twitter:description"
-      content="★ MOBI to PDF online free - MOBI to PDF easily ★ No signup ★ Unlimited files ★ Privacy-first ★ Works in browser ★ Fast & secure"
+      content="Convert MOBI e-books to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser."
     />
     <meta
       name="twitter:image"
@@ -62,10 +62,6 @@
     <meta name="apple-mobile-web-app-title" content="MOBI to PDF" />
 
     <title>MOBI to PDF - Convert XPS/OMOBI to PDF - BentoPDF</title>
-    <meta
-      name="description"
-      content="Convert XPS and OXPS documents to PDF format. Free, secure, and runs entirely in your browser."
-    />
 
     <link href="/src/css/styles.css" rel="stylesheet" />
 
@@ -107,7 +103,7 @@
       >
         <button
           id="back-to-tools"
-          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold"
+          class="flex items-center gap-2 text-indigo-300 hover:text-indigo-400 mb-6 font-semibold"
         >
           <i data-lucide="arrow-left" class="cursor-pointer"></i>
           <span class="cursor-pointer" data-i18n="tools.backToTools">
@@ -329,41 +325,87 @@
       >
         Frequently Asked Questions
       </h2>
-      <div class="space-y-4">
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Is mobi to pdf really free?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+      <div class="faq-list">
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert books bought from the Kindle store?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Yes! BentoPDF is 100% free with no hidden fees, no signup required,
-            and unlimited file processing.
+          <p class="faq-d-a">
+            Only if they're DRM-free. Most Kindle store purchases carry DRM and
+            the tool can't open them. Personal documents, public domain books,
+            and titles from DRM-free stores convert normally.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Are my files private and secure?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Does it accept AZW, AZW3, or KFX files?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            Absolutely! All processing happens in your browser. Your files never
-            leave your device, ensuring complete privacy.
+          <p class="faq-d-a">
+            No. Only files with the .mobi extension are accepted. Convert other
+            Kindle formats to MOBI or EPUB with another program first; EPUB
+            files can then go through
+            <a href="/epub-to-pdf" class="text-indigo-300 hover:text-indigo-400"
+              >EPUB to PDF</a
+            >.
           </p>
         </details>
-        <details class="bg-gray-800 p-5 rounded-lg border border-gray-700">
-          <summary
-            class="cursor-pointer font-semibold text-white flex items-center justify-between"
-          >
-            Is there a file size limit?
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Will the page count match my Kindle's page numbers?
+            <i data-lucide="plus" class="faq-d-icon"></i>
           </summary>
-          <p class="mt-3 text-gray-400">
-            No! Process files of any size, as many times as you want, completely
-            free.
+          <p class="faq-d-a">
+            No. MOBI text reflows to fit whatever screen it's on, so the engine
+            lays it out onto fixed-size pages of its own. PDF page numbers won't
+            line up with Kindle locations, and there's no setting for page size
+            or font size.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Are images and formatting preserved?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Headings, bold and italic text, lists, and embedded images carry
+            over. The text stays real text rather than an image, so it's
+            selectable and searchable in the PDF.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Can I convert more than one book at a time?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            Yes. One file downloads as a PDF named after the book; several files
+            are converted one after another and delivered as mobi-converted.zip
+            with one PDF each.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Why did my conversion fail?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            The usual cause is DRM. Corrupted downloads and files that were
+            renamed to .mobi without actually being MOBI files also fail. If the
+            same book opens in Calibre, converting it there to a fresh MOBI
+            usually produces a file this tool can handle.
+          </p>
+        </details>
+        <details class="faq-d">
+          <summary class="faq-d-q">
+            Is the ebook uploaded to a server?
+            <i data-lucide="plus" class="faq-d-icon"></i>
+          </summary>
+          <p class="faq-d-a">
+            No. The conversion engine (PyMuPDF compiled to WebAssembly) is
+            downloaded from a CDN the first time you use it and then runs inside
+            your browser, so the book itself never leaves your device.
           </p>
         </details>
       </div>

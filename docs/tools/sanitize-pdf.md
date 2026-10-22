@@ -49,5 +49,5 @@ All options are enabled by default. Uncheck any you want to preserve.
 
 - [Remove Metadata](./remove-metadata) -- strip only metadata without touching other content
 - [Flatten PDF](./flatten-pdf) -- flatten forms and annotations specifically
-- [Encrypt PDF](./encrypt-pdf) -- add password protection after sanitizing
+- [Encrypt PDF](./protect-pdf) -- add password protection after sanitizing
 - [Rasterize PDF](./rasterize-pdf) -- the nuclear option: convert to images to eliminate all hidden content

@@ -239,7 +239,9 @@
     "legal": "Jurídico",
     "termsAndConditions": "Termos e Condições",
     "privacyPolicy": "Política de Privacidade",
-    "followUs": "Siga-nos"
+    "followUs": "Siga-nos",
+    "privacyShort": "Privacidade",
+    "termsShort": "Termos"
   },
   "merge": {
     "title": "Mesclar PDFs",
@@ -286,7 +288,8 @@
       "noCompromises": "Sem concessões."
     },
     "mission": {
-      "title": "Nossa Missão",
+      "title": "Nossa",
+      "titleDim": "Missão",
       "description": "Fornecer o kit de ferramentas PDF mais completo, respeitando sua privacidade e sem cobrar por isso. Ferramentas essenciais devem ser acessíveis a todos, sem barreiras."
     },
     "philosophy": {

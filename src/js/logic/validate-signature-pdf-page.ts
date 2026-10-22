@@ -377,9 +377,9 @@ function createSignatureCard(
       result.cryptoVerified === true &&
       result.coverageStatus === 'partial'
     ) {
-      statusColor = 'text-red-400';
-      statusIcon = 'x-circle';
-      statusText = 'Invalid — Modified After Signing (partial coverage)';
+      statusColor = 'text-yellow-400';
+      statusIcon = 'alert-triangle';
+      statusText = 'Modified After Signing (signed part intact)';
     } else {
       statusColor = 'text-red-400';
       statusIcon = 'x-circle';

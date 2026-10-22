@@ -67,19 +67,73 @@ function findAll(html, regex) {
   return out;
 }
 
+const LOCALE_DIRS = new Set(
+  fs
+    .readdirSync(LOCALES_DIR)
+    .filter((d) => fs.statSync(path.join(LOCALES_DIR, d)).isDirectory())
+);
+
+const KEY_MAPPING = { index: 'home', 404: 'notFound' };
+const toCamelCase = (str) =>
+  str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+
+const toolsByLang = {};
+for (const lang of LOCALE_DIRS) {
+  const toolsPath = path.join(LOCALES_DIR, lang, 'tools.json');
+  toolsByLang[lang] = fs.existsSync(toolsPath)
+    ? JSON.parse(fs.readFileSync(toolsPath, 'utf-8'))
+    : {};
+}
+
 function expectedCanonicalForFile(rel) {
   const parts = rel.split('/');
   const fileName = parts.pop();
   const baseName = fileName.replace(/\.html$/, '');
   const slug = baseName === 'index' ? '' : baseName;
+  const translationKey = KEY_MAPPING[baseName] || toCamelCase(baseName);
   const segments = [SITE_URL];
   if (BASE_PATH) segments.push(BASE_PATH.replace(/^\//, ''));
+  for (const dir of parts) {
+    if (dir === 'blog') {
+      segments.push(dir);
+    } else if (LOCALE_DIRS.has(dir)) {
+      const translated =
+        baseName === 'index' ||
+        Boolean(toolsByLang[dir] && toolsByLang[dir][translationKey]);
+      if (translated) segments.push(dir);
+    }
+  }
   if (slug) segments.push(slug);
   return segments.join('/').replace(/\/+$/, '') || SITE_URL;
 }
 
-function auditHtml(file) {
+function auditHtml(file, knownSlugs) {
   const html = fs.readFileSync(file.full, 'utf-8');
+  const isLocalized = file.rel.split('/').some((seg) => LOCALE_DIRS.has(seg));
+
+  if (!isLocalized && /[—–]/.test(html)) {
+    fail(
+      'em-dash',
+      `${file.rel}: contains an em or en dash (house style forbids them)`
+    );
+  }
+
+  if (!isLocalized) {
+    const internal = findAll(html, /<a[^>]+href=["'](\/[^"'#?]*)["']/g);
+    for (const href of internal) {
+      const clean = href.replace(/\/$/, '');
+      if (clean === '') continue;
+      const seg = clean.slice(1);
+      if (seg.includes('/')) continue;
+      if (LOCALE_DIRS.has(seg) || seg === 'blog' || seg === 'docs') continue;
+      if (!knownSlugs.has(seg)) {
+        fail(
+          'dead-link',
+          `${file.rel}: links to "${href}" but no such page exists in dist`
+        );
+      }
+    }
+  }
   const titles = findAll(html, /<title[^>]*>[\s\S]*?<\/title>/g);
   if (titles.length === 0) {
     fail('title', `${file.rel}: no <title>`);
@@ -147,7 +201,7 @@ function auditHtml(file) {
     );
   }
 
-  const emptyI18n = html.match(/<span[^>]*data-i18n="[^"]+"[^>]*>\s*<\/span>/g);
+  const emptyI18n = html.match(/<span[^>]*data-i18n="[^"]+"[^>]*><\/span>/g);
   if (emptyI18n && emptyI18n.length > 0) {
     fail(
       'data-i18n',
@@ -176,8 +230,74 @@ function auditHtml(file) {
           `${file.rel}: hreflang href host "${url.hostname}" != expected "${HOST}"`
         );
       }
+      const trimmed = url.pathname.replace(/^\/|\/$/g, '');
+      if (LOCALE_DIRS.has(trimmed) && !url.pathname.endsWith('/')) {
+        fail(
+          'hreflang',
+          `${file.rel}: language-home hreflang "${m[1]}" must end with "/" (the server 301s the slashless form)`
+        );
+      }
     } catch {
       fail('hreflang', `${file.rel}: hreflang href "${m[1]}" not a valid URL`);
+    }
+  }
+
+  const descriptions = findAll(
+    html,
+    /<meta[^>]+name=["']description["'][^>]*content=["']([^"']*)["']/g
+  );
+  if (descriptions.length > 1) {
+    fail(
+      'description',
+      `${file.rel}: ${descriptions.length} meta description tags (expected 1)`
+    );
+  }
+  for (const desc of descriptions) {
+    if (desc.includes('★')) {
+      fail('description', `${file.rel}: meta description contains "★"`);
+    }
+  }
+
+  const isTopLevel = !file.rel.includes('/');
+  if (isTopLevel) {
+    const socialImages = findAll(
+      html,
+      /<meta[^>]+(?:property=["']og:image["']|name=["']twitter:image["'])[^>]*content=["']([^"']+)["']/g
+    );
+    for (const image of socialImages) {
+      let pathname;
+      try {
+        pathname = image.startsWith('http') ? new URL(image).pathname : image;
+      } catch {
+        continue;
+      }
+      if (
+        pathname.startsWith('/images/') &&
+        !fs.existsSync(path.join(DIST_DIR, pathname.replace(/^\//, '')))
+      ) {
+        fail(
+          'social-image',
+          `${file.rel}: og/twitter image "${pathname}" does not exist in dist`
+        );
+      }
+    }
+
+    if (html.includes('faq-d') && !html.includes('"FAQPage"')) {
+      fail(
+        'faq-schema',
+        `${file.rel}: visible FAQ section without FAQPage JSON-LD`
+      );
+    }
+
+    const internalHtmlLinks = findAll(
+      html,
+      /<a[^>]+href=["'](\/?[a-z0-9][a-z0-9-]*\.html)["']/g
+    );
+    for (const href of internalHtmlLinks) {
+      fail(
+        'internal-link',
+        `${file.rel}: internal link "${href}" should be extensionless`
+      );
     }
   }
 }
@@ -248,7 +368,12 @@ function main() {
     fail('audit', 'no HTML files found in dist/');
   }
 
-  for (const file of files) auditHtml(file);
+  const knownSlugs = new Set(
+    files
+      .filter((f) => !f.rel.includes('/'))
+      .map((f) => f.rel.replace(/\.html$/, ''))
+  );
+  for (const file of files) auditHtml(file, knownSlugs);
   auditSitemap();
 
   const total = failures.length + warnings.length;

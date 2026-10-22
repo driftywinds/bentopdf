@@ -40,4 +40,4 @@ This tool has no configurable options. All text content is extracted from every 
 
 - [PDF to Markdown](./pdf-to-markdown)
 - [Prepare PDF for AI](./prepare-pdf-for-ai)
-- [PDF to Word](./pdf-to-docx)
+- [PDF to Word](./pdf-to-word)

@@ -27,29 +27,7 @@
   },
   "compressPdf": {
     "name": "Comprimir PDF",
-    "subtitle": "Reduza o tamanho do arquivo do seu PDF.",
-    "algorithmLabel": "Algoritmo de Compressão",
-    "condense": "Condense (Recomendado)",
-    "photon": "Photon (Para PDFs com Muitas Fotos)",
-    "condenseInfo": "Condense usa compressão avançada: remove dados desnecessários, otimiza imagens, subconjunta fontes. Ideal para a maioria dos PDFs.",
-    "photonInfo": "Photon converte páginas em imagens. Use para PDFs com muitas fotos/digitalizados.",
-    "photonWarning": "Aviso: O texto ficará não selecionável e os links deixarão de funcionar.",
-    "levelLabel": "Nível de Compressão",
-    "light": "Leve (Preservar Qualidade)",
-    "balanced": "Equilibrado (Recomendado)",
-    "aggressive": "Agressivo (Arquivos Menores)",
-    "extreme": "Extremo (Compressão Máxima)",
-    "grayscale": "Converter para Escala de Cinza",
-    "grayscaleHint": "Reduz o tamanho do arquivo removendo informações de cor",
-    "customSettings": "Configurações Personalizadas",
-    "customSettingsHint": "Ajuste fino dos parâmetros de compressão:",
-    "outputQuality": "Qualidade de Saída",
-    "resizeImagesTo": "Redimensionar Imagens Para",
-    "onlyProcessAbove": "Processar Apenas Acima de",
-    "removeMetadata": "Remover metadados",
-    "subsetFonts": "Subconjunto de fontes (remover glifos não utilizados)",
-    "removeThumbnails": "Remover miniaturas incorporadas",
-    "compressButton": "Comprimir PDF"
+    "subtitle": "Reduza o tamanho do arquivo do seu PDF."
   },
   "pdfEditor": {
     "name": "Editor de PDF",
@@ -60,6 +38,8 @@
     "subtitle": "Clique em qualquer parágrafo e edite-o no local com reorganização do texto em tempo real, fontes e estilos.",
     "saved": "PDF salvo com sucesso! ({{size}} KB)",
     "failedToLoad": "Não foi possível carregar o editor de texto PDF.",
+    "loadingFonts": "Carregando fontes...",
+    "fontsUnavailable": "Não foi possível baixar uma fonte necessária para alguns caracteres. Verifique sua conexão e tente novamente; caso contrário, esses caracteres podem não aparecer corretamente no PDF salvo.",
     "howToUpload": "Enviar PDF",
     "howToClick": "Clique em um parágrafo",
     "howToRestyle": "Reestilize tudo",
@@ -1312,5 +1292,13 @@
     "faqSinglePageAnswer": "Sim! Ative a opção \"Repetir\" e as páginas de sobreposição se repetirão em todas as páginas base. Uma marca d'água de uma página será aplicada a cada página.",
     "faqPrivacyQuestion": "Os meus ficheiros são privados e seguros?",
     "faqPrivacyAnswer": "Com certeza! Todo o processamento acontece no seu navegador. Os seus ficheiros nunca saem do seu dispositivo, garantindo total privacidade."
+  },
+  "unlockPdf": {
+    "name": "Descriptografar PDF",
+    "subtitle": "Desbloqueie o PDF removendo a proteção por senha."
+  },
+  "protectPdf": {
+    "name": "Criptografar PDF",
+    "subtitle": "Bloqueie seu PDF adicionando uma senha."
   }
 }
