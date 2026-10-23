@@ -3,14 +3,13 @@ import path from 'path';
 import { marked } from 'marked';
 import { fileURLToPath } from 'url';
 import { serializeJsonLd } from './json-ld.mjs';
-import { DEFAULT_SITE_URL } from './site-origin.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const POSTS_DIR = path.resolve(__dirname, '../blog/posts');
 const BLOG_DIR = path.resolve(__dirname, '../blog');
-const SITE_URL = (process.env.SITE_URL || DEFAULT_SITE_URL).replace(/\/+$/, '');
+const SITE_URL = 'https://www.bentopdf.com';
 const AUTHOR = {
   name: 'Alam',
   url: `${SITE_URL}/blog/author-alam`,
