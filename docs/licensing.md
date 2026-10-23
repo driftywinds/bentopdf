@@ -3,12 +3,12 @@
 BentoPDF is dual-licensed under **AGPL-3.0** (for open-source projects) and a **Commercial License** (for proprietary/closed-source applications).
 
 ::: tip Full Details
-For complete licensing information, delivery details, AGPL component notices, and invoicing, visit our [Licensing Page](https://bentopdf.com/licensing.html).
+For complete licensing information, delivery details, AGPL component notices, and invoicing, visit our [Licensing Page](https://www.bentopdf.com/licensing).
 :::
 
 ## Get a Commercial License
 
-**[Get Lifetime License for $79](https://ko-fi.com/s/f32ca4cb75)** — A one-time purchase that includes all future updates forever.
+**[Get Lifetime License for $79](https://buy.polar.sh/polar_cl_ThDfffbl733x7oAodcIryCzhlO57ZtcWPq6HJ1qMChd)**. A one-time purchase that includes all future updates forever.
 
 ## When Do You Need a Commercial License?
 
@@ -56,10 +56,10 @@ The commercial license covers BentoPDF's own code. If you configure and use AGPL
 
 ## Invoicing
 
-- Ko-fi does not automatically issue invoices.
-- An official invoice will be provided immediately upon request.
+- Payments are handled by [Polar](https://polar.sh), which automatically emails an invoice after purchase.
+- Polar handles VAT invoices for businesses in applicable regions. Select **"I'm purchasing as a business"** at checkout and enter your billing address and Tax/VAT number.
 
-**Contact us:** [contact@bentopdf.com](mailto:contact@bentopdf.com) with your purchase details.
+**Questions?** Contact [contact@bentopdf.com](mailto:contact@bentopdf.com) with your purchase details.
 
 ## What's Included
 
@@ -89,4 +89,4 @@ Components like CoherentPDF are licensed under AGPL v3 and remain under that lic
 
 ### How do I get an invoice?
 
-Email [contact@bentopdf.com](mailto:contact@bentopdf.com) with your Ko-fi purchase confirmation, and we'll send an official invoice.
+Polar emails your invoice automatically after purchase. For a VAT invoice, select "I'm purchasing as a business" at checkout. If you need anything else, email [contact@bentopdf.com](mailto:contact@bentopdf.com) with your purchase details.

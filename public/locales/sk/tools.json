@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Obľúbené",
     "popularTools": "Populárne nástroje",
     "editAnnotate": "Úprava a anotácia",
     "convertToPdf": "Previesť do PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Zabezpečenie PDF",
     "input": "Vstup",
     "output": "Výstup"
+  },
+  "favorites": {
+    "add": "Pridať do obľúbených",
+    "remove": "Odstrániť z obľúbených",
+    "hintLabel": "Tip",
+    "hint": "Podržte prst na nástroji a pridajte ho do obľúbených.",
+    "hideHint": "Skryť tip"
   },
   "convertToPdf": "Previesť do PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Napíšte alebo vložte Markdown a exportujte ho ako krásne naformátované PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Náhľad",
-    "btnUpload": "Nahrať",
+    "btnUpload": "Vybrať",
     "btnSyncScroll": "Synchrónne posúvanie",
     "btnSettings": "Nastavenia",
     "btnExportPdf": "Exportovať PDF",

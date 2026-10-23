@@ -60,8 +60,7 @@ function buildUrl(langPrefix, pagePath) {
   if (BASE_PATH && BASE_PATH !== '') parts.push(BASE_PATH.replace(/^\//, ''));
   if (langPrefix) parts.push(langPrefix);
   if (pagePath) parts.push(pagePath.replace(/^\//, ''));
-  const url = parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
-  return langPrefix && !pagePath ? `${url}/` : url;
+  return parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
 }
 
 function resolveTranslation(langResources, key) {
@@ -142,7 +141,7 @@ const BREADCRUMB_MARKER = 'data-bentopdf-breadcrumb';
 const BRAND_NAME = process.env.VITE_BRAND_NAME || 'BentoPDF';
 
 function buildLocalHomeHref(lang) {
-  const langSegment = lang === 'en' ? '/' : `/${lang}/`;
+  const langSegment = lang === 'en' ? '/' : `/${lang}`;
   return `${BASE_PATH}${langSegment}`.replace(/\/+/g, '/');
 }
 
@@ -257,7 +256,7 @@ function processFileForLanguage(
   const document = dom.window.document;
 
   document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.dir = ['ar', 'fa'].includes(lang) ? 'rtl' : 'ltr';
 
   applyServerTranslations(document, translations[lang]);
 
@@ -378,7 +377,10 @@ function processFileForLanguage(
       newHref = `${BASE_PATH}/${lang}/${href}`;
     }
 
-    link.setAttribute('href', newHref);
+    link.setAttribute(
+      'href',
+      newHref.replace(/^([^?#]*[^/?#])\/(?=$|[?#])/, '$1')
+    );
   });
 
   const result = dom.serialize();

@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "お気に入り",
     "popularTools": "人気のツール",
     "editAnnotate": "編集と注釈",
     "convertToPdf": "PDFに変換",
@@ -9,6 +10,13 @@
     "securePdf": "安全なPDF",
     "input": "入力",
     "output": "出力"
+  },
+  "favorites": {
+    "add": "お気に入りに追加",
+    "remove": "お気に入りから削除",
+    "hintLabel": "ヒント",
+    "hint": "ツールを長押しするとお気に入りに追加できます。",
+    "hideHint": "ヒントを非表示"
   },
   "convertToPdf": "PDFに変換",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Markdownを記述または貼り付けて、見栄えの良いPDFとしてエクスポートします。",
     "paneMarkdown": "マークダウン",
     "panePreview": "プレビュー",
-    "btnUpload": "アップロード",
+    "btnUpload": "選択",
     "btnSyncScroll": "同期スクロール",
     "btnSettings": "設定",
     "btnExportPdf": "PDFをエクスポート",

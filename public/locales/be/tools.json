@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Абранае",
     "popularTools": "Папулярныя інструменты",
     "editAnnotate": "Рэдагаванне і анатацыі",
     "convertToPdf": "Канвертацыя ў PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Бяспека PDF",
     "input": "Увод",
     "output": "Вывад"
+  },
+  "favorites": {
+    "add": "Дадаць у абранае",
+    "remove": "Выдаліць з абранага",
+    "hintLabel": "Парада",
+    "hint": "Націсніце і ўтрымлівайце інструмент, каб дадаць яго ў абранае.",
+    "hideHint": "Схаваць параду"
   },
   "convertToPdf": "Канвертаваць у PDF",
   "pdfMultiTool": {
@@ -842,7 +850,7 @@
     "subtitle": "Напісаць або ўставіць Markdown і экспартаваць яго ў прыгожа аформлены PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Папярэдні прагляд",
-    "btnUpload": "Запампаваць",
+    "btnUpload": "Выбраць",
     "btnSyncScroll": "Сінхранізацыя пракруткі",
     "btnSettings": "Налады",
     "btnExportPdf": "Экспартаваць PDF",

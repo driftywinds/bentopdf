@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Вибране",
     "popularTools": "Популярні інструменти",
     "editAnnotate": "Редагування та анотації",
     "convertToPdf": "Конвертація у PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Захист PDF",
     "input": "Ввід",
     "output": "Вивід"
+  },
+  "favorites": {
+    "add": "Додати до вибраного",
+    "remove": "Видалити з вибраного",
+    "hintLabel": "Порада",
+    "hint": "Натисніть і утримуйте інструмент, щоб додати його до вибраного.",
+    "hideHint": "Сховати пораду"
   },
   "convertToPdf": "Конвертувати в PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Напишіть або вставте Markdown і експортуйте його у красиво оформлений PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Попередній перегляд",
-    "btnUpload": "Завантажити",
+    "btnUpload": "Вибрати",
     "btnSyncScroll": "Синхронізувати прокрутку",
     "btnSettings": "Налаштування",
     "btnExportPdf": "Експортувати у PDF",

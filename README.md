@@ -71,9 +71,9 @@ Have questions, feature requests, or want to chat with the community? Join our D
 
 ## 📚 Documentation
 
-[![Documentation](https://img.shields.io/badge/Docs-VitePress-646cff?style=for-the-badge&logo=vite&logoColor=white)](https://bentopdf.com/docs/)
+[![Documentation](https://img.shields.io/badge/Docs-VitePress-646cff?style=for-the-badge&logo=vite&logoColor=white)](https://www.bentopdf.com/docs)
 
-Visit our [Documentation](https://bentopdf.com/docs/) for:
+Visit our [Documentation](https://www.bentopdf.com/docs) for:
 
 - **Getting Started** guide
 - **Tools Reference** (50+ tools)
@@ -100,7 +100,7 @@ BentoPDF is **dual-licensed** to fit your needs:
 
 > **One-time purchase** · **Unlimited devices & users** · **Lifetime updates** · **No AGPL obligations**
 
-📖 For more details, see our [Licensing Page](https://bentopdf.com/licensing.html)
+📖 For more details, see our [Licensing Page](https://www.bentopdf.com/licensing)
 
 ### AGPL Components (Pre-configured via CDN)
 
@@ -308,6 +308,7 @@ BentoPDF is available in multiple languages:
 | Vietnamese          | [![Vietnamese](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/vi/common.json)             |
 | Korean              | [![Korean](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/ko/common.json)                 |
 | Russian             | [![Russian](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/ru/common.json)                |
+| Persian (Farsi)     | [![Persian](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/fa/common.json)                |
 
 Want to help translate BentoPDF into your language? Check out our [Translation Guide](TRANSLATION.md)!
 
@@ -809,7 +810,7 @@ systemctl --user daemon-reload
 systemctl --user enable --now bentopdf
 ```
 
-For detailed Quadlet configuration, see [Self-Hosting Docker Guide](https://bentopdf.com/docs/self-hosting/docker).
+For detailed Quadlet configuration, see [Self-Hosting Docker Guide](https://www.bentopdf.com/docs/self-hosting/docker).
 
 ### 🏢 Self-Hosted build (Simple Mode)
 
@@ -865,7 +866,7 @@ Or set the same variables when building from source — see [Custom Branding](#-
 > - **AGPL-3.0** (free): allowed if your deployment publishes its full source code under AGPL — this includes any branding modifications, custom configuration, and any code you build on top of it.
 > - **Commercial license** ($79 lifetime): required for closed-source / proprietary deployments — e.g., a private SaaS where you don't open-source your branding fork or surrounding business logic.
 >
-> See the [Licensing page](https://bentopdf.com/licensing.html) for the full comparison.
+> See the [Licensing page](https://www.bentopdf.com/licensing) for the full comparison.
 
 ### 🎨 Custom Branding
 
@@ -929,7 +930,7 @@ docker run -d -p 3000:8080 \
   ghcr.io/alam00000/bentopdf-simple:latest
 ```
 
-Both methods can be combined — the lists are merged. For the full list of tool IDs, see the [self-hosting docs](https://bentopdf.com/docs/self-hosting/docker#disabling-specific-tools).
+Both methods can be combined — the lists are merged. For the full list of tool IDs, see the [self-hosting docs](https://www.bentopdf.com/docs/self-hosting/docker#disabling-specific-tools).
 
 You can also disable specific features inside the PDF Editor (e.g., redaction, forms) without disabling the entire editor. Add `editorDisabledCategories` to your `config.json`:
 
@@ -939,7 +940,7 @@ You can also disable specific features inside the PDF Editor (e.g., redaction, f
 }
 ```
 
-For the full list of editor categories, see the [self-hosting docs](https://bentopdf.com/docs/self-hosting/docker#disabling-editor-features).
+For the full list of editor categories, see the [self-hosting docs](https://www.bentopdf.com/docs/self-hosting/docker#disabling-editor-features).
 
 ### 🔕 Disabling the GitHub Star Counter
 

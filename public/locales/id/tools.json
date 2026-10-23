@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favorit",
     "popularTools": "Alat Populer",
     "editAnnotate": "Edit & Anotasi",
     "convertToPdf": "Konversi ke PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Amankan PDF",
     "input": "Masukan",
     "output": "Keluaran"
+  },
+  "favorites": {
+    "add": "Tambahkan ke favorit",
+    "remove": "Hapus dari favorit",
+    "hintLabel": "Tips",
+    "hint": "Tekan lama sebuah alat untuk menambahkannya ke favorit.",
+    "hideHint": "Sembunyikan tips"
   },
   "convertToPdf": "Konversi ke PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Tulis atau tempel Markdown dan ekspor sebagai PDF yang diformat dengan indah.",
     "paneMarkdown": "Markdown",
     "panePreview": "Pratinjau",
-    "btnUpload": "Unggah",
+    "btnUpload": "Pilih",
     "btnSyncScroll": "Sinkron Gulir",
     "btnSettings": "Pengaturan",
     "btnExportPdf": "Ekspor PDF",

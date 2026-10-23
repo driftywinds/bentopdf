@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "المفضلة",
     "popularTools": "الأدوات الشائعة",
     "editAnnotate": "تعديل وتعليق",
     "convertToPdf": "تحويل إلى PDF",
@@ -9,6 +10,13 @@
     "securePdf": "تأمين PDF",
     "input": "إدخال",
     "output": "إخراج"
+  },
+  "favorites": {
+    "add": "إضافة إلى المفضلة",
+    "remove": "إزالة من المفضلة",
+    "hintLabel": "تلميح",
+    "hint": "اضغط مطولًا على أي أداة لإضافتها إلى المفضلة.",
+    "hideHint": "إخفاء التلميح"
   },
   "convertToPdf": "تحويل إلى PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "اكتب أو الصق Markdown وصدّره كـ PDF منسق بشكل جميل.",
     "paneMarkdown": "Markdown",
     "panePreview": "معاينة",
-    "btnUpload": "رفع",
+    "btnUpload": "اختيار",
     "btnSyncScroll": "مزامنة التمرير",
     "btnSettings": "الإعدادات",
     "btnExportPdf": "تصدير PDF",

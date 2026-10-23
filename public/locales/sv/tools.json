@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favoriter",
     "popularTools": "Populära verktyg",
     "editAnnotate": "Redigera & Kommentera",
     "convertToPdf": "Konvertera till PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Säkra PDF",
     "input": "Inmatning",
     "output": "Utdata"
+  },
+  "favorites": {
+    "add": "Lägg till i favoriter",
+    "remove": "Ta bort från favoriter",
+    "hintLabel": "Tips",
+    "hint": "Tryck och håll på ett verktyg för att lägga till det i dina favoriter.",
+    "hideHint": "Dölj tips"
   },
   "convertToPdf": "Konvertera till PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Skriv eller klistra in Markdown och exportera som en vackert formaterad PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Förhandsvisning",
-    "btnUpload": "Ladda upp",
+    "btnUpload": "Välj",
     "btnSyncScroll": "Synkronisera scroll",
     "btnSettings": "Inställningar",
     "btnExportPdf": "Exportera PDF",

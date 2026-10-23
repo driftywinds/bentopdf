@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Ulubione",
     "popularTools": "Popularne narzędzia",
     "editAnnotate": "Edytuj i adnotuj",
     "convertToPdf": "Konwertuj na PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Zabezpiecz PDF",
     "input": "Wejście",
     "output": "Wyjście"
+  },
+  "favorites": {
+    "add": "Dodaj do ulubionych",
+    "remove": "Usuń z ulubionych",
+    "hintLabel": "Wskazówka",
+    "hint": "Naciśnij i przytrzymaj narzędzie, aby dodać je do ulubionych.",
+    "hideHint": "Ukryj wskazówkę"
   },
   "convertToPdf": "Konwertuj na PDF",
   "pdfMultiTool": {
@@ -677,7 +685,7 @@
     "subtitle": "Napisz lub wklej Markdown i wyeksportuj jako pięknie sformatowany PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Podgląd",
-    "btnUpload": "Prześlij",
+    "btnUpload": "Wybierz",
     "btnSyncScroll": "Zsynchronizowane przewijanie",
     "btnSettings": "Ustawienia",
     "btnExportPdf": "Eksportuj PDF",

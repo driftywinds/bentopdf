@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Yêu thích",
     "popularTools": "Công cụ phổ biến",
     "editAnnotate": "Chỉnh sửa & Ghi chú",
     "convertToPdf": "Chuyển đổi sang PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Bảo mật PDF",
     "input": "Đầu vào",
     "output": "Đầu ra"
+  },
+  "favorites": {
+    "add": "Thêm vào yêu thích",
+    "remove": "Xóa khỏi yêu thích",
+    "hintLabel": "Mẹo",
+    "hint": "Nhấn giữ một công cụ để thêm vào mục yêu thích.",
+    "hideHint": "Ẩn mẹo"
   },
   "convertToPdf": "Chuyển đổi sang PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Viết hoặc dán Markdown và xuất nó thành PDF được định dạng đẹp.",
     "paneMarkdown": "Markdown",
     "panePreview": "Xem trước",
-    "btnUpload": "Tải lên",
+    "btnUpload": "Chọn",
     "btnSyncScroll": "Cuộn đồng bộ",
     "btnSettings": "Cài đặt",
     "btnExportPdf": "Xuất PDF",

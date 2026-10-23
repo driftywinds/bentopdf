@@ -111,7 +111,7 @@ function listDocsHtml(dir, prefix) {
       );
     } else if (entry.name.endsWith('.html') && entry.name !== '404.html') {
       const slug = entry.name.replace(/\.html$/, '');
-      urls.push(slug === 'index' ? `${prefix}/` : `${prefix}/${slug}`);
+      urls.push(slug === 'index' ? prefix : `${prefix}/${slug}`);
     }
   }
   return urls;
@@ -130,7 +130,7 @@ function addDocsToSitemap() {
     return;
   }
   let xml = fs.readFileSync(sitemapPath, 'utf-8');
-  if (xml.includes(`<loc>${siteUrl}/docs/</loc>`)) return;
+  if (xml.includes(`<loc>${siteUrl}/docs</loc>`)) return;
 
   const urls = listDocsHtml(targetDocsPath, '/docs');
   const entries = urls

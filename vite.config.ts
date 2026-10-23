@@ -49,6 +49,8 @@ const SUPPORTED_LANGUAGES = [
   'ja',
   'uk',
   'sk',
+  'ca',
+  'fa',
 ] as const;
 const LANG_REGEX = new RegExp(
   `^/(${SUPPORTED_LANGUAGES.join('|')})(?:/(.*))?$`
@@ -513,11 +515,18 @@ function rewriteHtmlPathsPlugin(): Plugin {
 
       for (const fileName of Object.keys(bundle)) {
         if (!fileName.endsWith('.html')) continue;
-        const diskPath = resolve(outDir, fileName);
-        if (!fs.existsSync(diskPath)) continue;
+        const diskPath = [
+          resolve(outDir, fileName),
+          resolve(outDir, fileName.replace(/^src\/pages\//, '')),
+        ].find((candidate) => fs.existsSync(candidate));
+        if (!diskPath) continue;
         const source = fs.readFileSync(diskPath, 'utf8');
         const updated = source
           .replace(hrefRegex, `href="${normalizedBase}`)
+          .replaceAll(
+            `href="${normalizedBase}"`,
+            `href="${normalizedBase.slice(0, -1)}"`
+          )
           .replace(srcRegex, `src="${normalizedBase}`)
           .replace(contentRegex, `content="${normalizedBase}`);
         if (updated !== source) {

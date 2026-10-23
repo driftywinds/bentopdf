@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favoriler",
     "popularTools": "Popüler Araçlar",
     "editAnnotate": "Düzenle & Açıklama Ekle",
     "convertToPdf": "PDF'ye Dönüştür",
@@ -9,6 +10,13 @@
     "securePdf": "PDF Güvenliği",
     "input": "Giriş",
     "output": "Çıkış"
+  },
+  "favorites": {
+    "add": "Favorilere ekle",
+    "remove": "Favorilerden kaldır",
+    "hintLabel": "İpucu",
+    "hint": "Bir aracı favorilerinize eklemek için basılı tutun.",
+    "hideHint": "İpucunu gizle"
   },
   "convertToPdf": "PDF'ye Dönüştür",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Write or paste Markdown and export it as a beautifully formatted PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Preview",
-    "btnUpload": "Upload",
+    "btnUpload": "Seç",
     "btnSyncScroll": "Sync Scroll",
     "btnSettings": "Settings",
     "btnExportPdf": "Export PDF",

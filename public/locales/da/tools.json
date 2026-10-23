@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favoritter",
     "popularTools": "Populære værktøjer",
     "editAnnotate": "Rediger og annotér",
     "convertToPdf": "Konverter til PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Sikre PDF",
     "input": "Input",
     "output": "Output"
+  },
+  "favorites": {
+    "add": "Føj til favoritter",
+    "remove": "Fjern fra favoritter",
+    "hintLabel": "Tip",
+    "hint": "Tryk og hold på et værktøj for at føje det til dine favoritter.",
+    "hideHint": "Skjul tip"
   },
   "convertToPdf": "Konvertér til PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Skriv eller indsæt Markdown og eksportér som en flot formateret PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Forhåndsvisning",
-    "btnUpload": "Upload",
+    "btnUpload": "Vælg",
     "btnSyncScroll": "Synkron rulning",
     "btnSettings": "Indstillinger",
     "btnExportPdf": "Eksportér PDF",

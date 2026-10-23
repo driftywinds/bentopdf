@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "즐겨찾기",
     "popularTools": "인기 도구",
     "editAnnotate": "편집 및 주석",
     "convertToPdf": "PDF로 변환",
@@ -9,6 +10,13 @@
     "securePdf": "PDF 보안",
     "input": "입력",
     "output": "출력"
+  },
+  "favorites": {
+    "add": "즐겨찾기에 추가",
+    "remove": "즐겨찾기에서 제거",
+    "hintLabel": "팁",
+    "hint": "도구를 길게 누르면 즐겨찾기에 추가할 수 있습니다.",
+    "hideHint": "팁 숨기기"
   },
   "convertToPdf": "PDF로 변환",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Markdown을 작성하거나 붙여넣고 깔끔하게 서식이 적용된 PDF로 내보냅니다.",
     "paneMarkdown": "Markdown",
     "panePreview": "미리보기",
-    "btnUpload": "업로드",
+    "btnUpload": "선택",
     "btnSyncScroll": "스크롤 동기화",
     "btnSettings": "설정",
     "btnExportPdf": "PDF 내보내기",

@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favorieten",
     "popularTools": "Populaire Tools",
     "editAnnotate": "Bewerken & Annoteren",
     "convertToPdf": "Converteren naar PDF",
@@ -9,6 +10,13 @@
     "securePdf": "PDF beveiligen",
     "input": "Invoer",
     "output": "Uitvoer"
+  },
+  "favorites": {
+    "add": "Toevoegen aan favorieten",
+    "remove": "Verwijderen uit favorieten",
+    "hintLabel": "Tip",
+    "hint": "Houd een tool ingedrukt om hem aan je favorieten toe te voegen.",
+    "hideHint": "Tip verbergen"
   },
   "convertToPdf": "Naar PDF converteren",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "Schrijf of plak Markdown en zet het om in een opgemaakte PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Voorbeeld",
-    "btnUpload": "Laden",
+    "btnUpload": "Selecteren",
     "btnSyncScroll": "Synchroon bladeren",
     "btnSettings": "Instellingen",
     "btnExportPdf": "PDF exporteren",

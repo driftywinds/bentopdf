@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "我的最愛",
     "popularTools": "熱門工具",
     "editAnnotate": "編輯與註解",
     "convertToPdf": "轉換為 PDF",
@@ -9,6 +10,13 @@
     "securePdf": "安全 PDF",
     "input": "輸入",
     "output": "輸出"
+  },
+  "favorites": {
+    "add": "加入我的最愛",
+    "remove": "從我的最愛移除",
+    "hintLabel": "提示",
+    "hint": "長按工具即可加入我的最愛。",
+    "hideHint": "隱藏提示"
   },
   "convertToPdf": "轉換為 PDF",
   "pdfMultiTool": {
@@ -840,7 +848,7 @@
     "subtitle": "編寫或貼上 Markdown 並匯出為精美格式的 PDF。",
     "paneMarkdown": "Markdown",
     "panePreview": "預覽",
-    "btnUpload": "上傳",
+    "btnUpload": "選擇",
     "btnSyncScroll": "同步捲動",
     "btnSettings": "設定",
     "btnExportPdf": "匯出 PDF",
