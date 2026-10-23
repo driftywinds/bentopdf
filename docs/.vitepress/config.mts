@@ -11,8 +11,8 @@ export default defineConfig({
 
     transformPageData(pageData) {
         const relPath = pageData.relativePath.replace(/\.md$/, '')
-        const slug = relPath === 'index' ? '' : relPath.replace(/\/index$/, '/')
-        const canonicalUrl = slug ? `${SITE_URL}/docs/${slug}` : `${SITE_URL}/docs/`
+        const slug = relPath === 'index' ? '' : relPath.replace(/\/index$/, '')
+        const canonicalUrl = slug ? `${SITE_URL}/docs/${slug}` : `${SITE_URL}/docs`
         pageData.frontmatter.head ??= []
         pageData.frontmatter.head.push(['link', { rel: 'canonical', href: canonicalUrl }])
     },

@@ -85,6 +85,11 @@ for (const lang of LOCALE_DIRS) {
     : {};
 }
 
+function hasTrailingSlash(href) {
+  const { pathname } = new URL(href);
+  return pathname !== '/' && pathname.endsWith('/');
+}
+
 function expectedCanonicalForFile(rel) {
   const parts = rel.split('/');
   const fileName = parts.pop();
@@ -121,7 +126,11 @@ function auditHtml(file, knownSlugs) {
   if (!isLocalized) {
     const internal = findAll(html, /<a[^>]+href=["'](\/[^"'#?]*)["']/g);
     for (const href of internal) {
-      const clean = href.replace(/\/$/, '');
+      const clean = (
+        BASE_PATH && (href === BASE_PATH || href.startsWith(`${BASE_PATH}/`))
+          ? href.slice(BASE_PATH.length)
+          : href
+      ).replace(/\/$/, '');
       if (clean === '') continue;
       const seg = clean.slice(1);
       if (seg.includes('/')) continue;
@@ -162,6 +171,12 @@ function auditHtml(file, knownSlugs) {
     }
     try {
       const url = new URL(actual);
+      if (hasTrailingSlash(actual)) {
+        fail(
+          'canonical',
+          `${file.rel}: canonical "${actual}" ends with "/" (the server redirects it to the slashless form)`
+        );
+      }
       if (url.hostname !== HOST) {
         warn(
           'canonical',
@@ -230,11 +245,10 @@ function auditHtml(file, knownSlugs) {
           `${file.rel}: hreflang href host "${url.hostname}" != expected "${HOST}"`
         );
       }
-      const trimmed = url.pathname.replace(/^\/|\/$/g, '');
-      if (LOCALE_DIRS.has(trimmed) && !url.pathname.endsWith('/')) {
+      if (hasTrailingSlash(m[1])) {
         fail(
           'hreflang',
-          `${file.rel}: language-home hreflang "${m[1]}" must end with "/" (the server 301s the slashless form)`
+          `${file.rel}: hreflang "${m[1]}" ends with "/" (the server redirects it to the slashless form)`
         );
       }
     } catch {
@@ -334,6 +348,12 @@ function auditSitemap() {
 
     try {
       const url = new URL(loc);
+      if (hasTrailingSlash(loc)) {
+        fail(
+          'sitemap',
+          `sitemap URL ends with "/" (the server redirects it to the slashless form): ${loc}`
+        );
+      }
       if (url.hostname !== HOST) {
         fail(
           'sitemap',

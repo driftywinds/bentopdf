@@ -3,7 +3,7 @@
 BentoPDF is dual-licensed under **AGPL-3.0** (for open-source projects) and a **Commercial License** (for proprietary/closed-source applications).
 
 ::: tip Full Details
-For complete licensing information, delivery details, AGPL component notices, and invoicing, visit our [Licensing Page](https://bentopdf.com/licensing.html).
+For complete licensing information, delivery details, AGPL component notices, and invoicing, visit our [Licensing Page](https://www.bentopdf.com/licensing).
 :::
 
 ## Get a Commercial License

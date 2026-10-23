@@ -7,6 +7,97 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/ua/change-text-color",
+      "destination": "/uk/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/change-text-color",
+      "destination": "/uk/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/change-text-color",
+      "destination": "/:locale/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/change-text-color",
+      "destination": "/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/ua/pdf-to-docx",
+      "destination": "/uk/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/pdf-to-docx",
+      "destination": "/uk/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/pdf-to-docx",
+      "destination": "/:locale/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/pdf-to-docx",
+      "destination": "/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/ua/decrypt-pdf",
+      "destination": "/uk/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/decrypt-pdf",
+      "destination": "/uk/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/decrypt-pdf",
+      "destination": "/:locale/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/decrypt-pdf",
+      "destination": "/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/ua/encrypt-pdf",
+      "destination": "/uk/protect-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/encrypt-pdf",
+      "destination": "/uk/protect-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/encrypt-pdf",
+      "destination": "/:locale/protect-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/encrypt-pdf",
+      "destination": "/protect-pdf",
+      "permanent": true
+    },
+    { "source": "/ua", "destination": "/uk", "permanent": true },
+    {
+      "source": "/ua/src/pages/:page",
+      "destination": "/uk/:page",
+      "permanent": true
+    },
+    {
+      "source": "/en/src/pages/:page",
+      "destination": "/:page",
+      "permanent": true
+    },
     { "source": "/ua/:path*", "destination": "/uk/:path*", "permanent": true },
     { "source": "/en/:path*", "destination": "/:path*", "permanent": true },
     {

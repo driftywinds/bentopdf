@@ -20,6 +20,7 @@ import type {
   AppliedRedactionTracker,
   DocManagerPlugin,
   FreeTextSystemFontAnnotation,
+  ViewerCommandsPlugin,
   RedactionPluginLite,
 } from '@/types';
 
@@ -328,12 +329,8 @@ async function handleFiles(files: FileList) {
       pdfWrapper.classList.remove('hidden');
 
       const { default: EmbedPDF } = await import('bentopdf-viewer');
-      const disabledCategories = [
-        ...getEditorDisabledCategories(),
-        'document-export',
-      ];
       viewerInstance = EmbedPDF.init({
-        disabledCategories,
+        disabledCategories: getEditorDisabledCategories(),
         type: 'container',
         target: pdfContainer,
         worker: true,
@@ -425,7 +422,7 @@ async function handleFiles(files: FileList) {
       }
       downloadBtn.classList.remove('hidden');
 
-      downloadBtn.onclick = async () => {
+      const downloadEditedPdf = async () => {
         try {
           const documentId = activeDocuments.getActiveDocumentId();
           const pendingCount = redactionPlugin?.getState().pendingCount ?? 0;
@@ -541,6 +538,19 @@ async function handleFiles(files: FileList) {
           showAlert('Error', 'Failed to download the edited PDF.');
         }
       };
+      downloadBtn.onclick = downloadEditedPdf;
+
+      const commands = registry.getPlugin('commands')?.provides() as unknown as
+        | ViewerCommandsPlugin
+        | undefined;
+      commands?.unregisterCommand('document:export');
+      commands?.registerCommand({
+        id: 'document:export',
+        labelKey: 'document.export',
+        icon: 'download',
+        categories: ['document', 'document-export'],
+        action: () => void downloadEditedPdf(),
+      });
 
       const backBtn = document.getElementById('back-to-tools');
       if (backBtn) {

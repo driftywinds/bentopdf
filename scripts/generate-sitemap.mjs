@@ -81,7 +81,7 @@ function buildUrl(lang, pageName) {
   if (lang === 'en') {
     return pagePath ? `${SITE_URL}/${pagePath}` : SITE_URL;
   }
-  return pagePath ? `${SITE_URL}/${lang}/${pagePath}` : `${SITE_URL}/${lang}/`;
+  return pagePath ? `${SITE_URL}/${lang}/${pagePath}` : `${SITE_URL}/${lang}`;
 }
 
 function generateSitemap() {
@@ -177,7 +177,7 @@ function generateSitemap() {
       .map((file) => file.replace('.html', ''));
     for (const name of blogFiles) {
       const url =
-        name === 'index' ? `${SITE_URL}/blog/` : `${SITE_URL}/blog/${name}`;
+        name === 'index' ? `${SITE_URL}/blog` : `${SITE_URL}/blog/${name}`;
       const sourcePath = path.join(projectRoot, 'blog', `${name}.html`);
       let lastmod;
       try {

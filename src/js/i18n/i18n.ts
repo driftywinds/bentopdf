@@ -184,7 +184,10 @@ export const changeLanguage = (lang: SupportedLanguage): void => {
   if (lang === 'en') {
     newRelativePath = pagePathWithoutLang;
   } else {
-    newRelativePath = `/${lang}${pagePathWithoutLang}`;
+    newRelativePath =
+      pagePathWithoutLang === '/'
+        ? `/${lang}`
+        : `/${lang}${pagePathWithoutLang}`;
   }
 
   let newPath: string;
@@ -293,7 +296,9 @@ export const rewriteLinks = (): void => {
       newHref = `/${currentLang}/${href}`;
     }
 
-    newHref = newHref.replace(/([^:])\/+/g, '$1/');
+    newHref = newHref
+      .replace(/([^:])\/+/g, '$1/')
+      .replace(/^([^?#]*[^/?#])\/(?=$|[?#])/, '$1');
 
     link.setAttribute('href', newHref);
   });
