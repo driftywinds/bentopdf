@@ -50,7 +50,6 @@ export async function loadPyMuPDF(): Promise<PyMuPDFInstance> {
     }
 
     const pymupdfUrl = WasmProvider.getUrl('pymupdf')!;
-    const gsUrl = WasmProvider.getUrl('ghostscript')!;
     const normalizedPymupdf = pymupdfUrl.endsWith('/')
       ? pymupdfUrl
       : `${pymupdfUrl}/`;
@@ -67,7 +66,6 @@ export async function loadPyMuPDF(): Promise<PyMuPDFInstance> {
 
       cachedPyMuPDF = new module.PyMuPDF({
         assetPath: `${normalizedPymupdf}assets/`,
-        ghostscriptUrl: gsUrl,
       });
 
       await cachedPyMuPDF.load();

@@ -9,6 +9,7 @@ import {
 import { state } from '../state.js';
 import { createIcons, icons } from 'lucide';
 import { loadPyMuPDF } from '../utils/pymupdf-loader.js';
+import { normalizeCmykForDocx } from '../utils/ghostscript-loader.js';
 import { batchDecryptIfNeeded } from '../utils/password-prompt.js';
 import { deduplicateFileName } from '../utils/deduplicate-filename.js';
 
@@ -112,7 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = state.files[0];
         showLoader(`Converting ${file.name}...`);
 
-        const docxBlob = await pymupdf.pdfToDocx(file);
+        const docxBlob = await pymupdf.pdfToDocx(
+          await normalizeCmykForDocx(file)
+        );
         const outName = file.name.replace(/\.pdf$/i, '') + '.docx';
 
         downloadFile(docxBlob, outName);
@@ -135,7 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
             `Converting ${i + 1}/${state.files.length}: ${file.name}...`
           );
 
-          const docxBlob = await pymupdf.pdfToDocx(file);
+          const docxBlob = await pymupdf.pdfToDocx(
+            await normalizeCmykForDocx(file)
+          );
           const baseName = file.name.replace(/\.pdf$/i, '');
           const arrayBuffer = await docxBlob.arrayBuffer();
           const zipEntryName = deduplicateFileName(

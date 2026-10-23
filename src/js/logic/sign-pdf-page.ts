@@ -7,8 +7,14 @@ import {
 } from '../utils/helpers.js';
 import { loadPdfWithPasswordPrompt } from '../utils/password-prompt.js';
 import { t } from '../i18n/i18n';
-import { loadPdfDocument } from '../utils/load-pdf-document.js';
-import { flattenAnnotations } from '../utils/flatten-annotations.js';
+import {
+  loadPdfDocument,
+  removeUnreferencedObjects,
+} from '../utils/load-pdf-document.js';
+import {
+  flattenAnnotations,
+  flattenFormsInDoc,
+} from '../utils/flatten-annotations.js';
 import type { SignState, PDFViewerWindow } from '@/types';
 
 const signState: SignState = {
@@ -285,7 +291,7 @@ async function applyAndSaveSignatures() {
       const pdfBytes = new Uint8Array(rawPdfBytes);
       const pdfDoc = await loadPdfDocument(pdfBytes);
       try {
-        pdfDoc.getForm().flatten();
+        flattenFormsInDoc(pdfDoc);
       } catch (e: unknown) {
         const msg = e instanceof Error ? e.message : String(e);
         if (!msg.includes('getForm')) {
@@ -298,7 +304,9 @@ async function applyAndSaveSignatures() {
         const msg = e instanceof Error ? e.message : String(e);
         console.warn('Could not flatten annotations:', msg);
       }
-      const flattenedPdfBytes = await pdfDoc.save();
+      const flattenedPdfBytes = await removeUnreferencedObjects(
+        await pdfDoc.save()
+      );
 
       const blob = new Blob([new Uint8Array(flattenedPdfBytes)], {
         type: 'application/pdf',

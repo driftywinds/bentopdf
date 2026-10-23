@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "즐겨찾기",
     "popularTools": "인기 도구",
     "editAnnotate": "편집 및 주석",
     "convertToPdf": "PDF로 변환",
@@ -9,6 +10,13 @@
     "securePdf": "PDF 보안",
     "input": "입력",
     "output": "출력"
+  },
+  "favorites": {
+    "add": "즐겨찾기에 추가",
+    "remove": "즐겨찾기에서 제거",
+    "hintLabel": "팁",
+    "hint": "도구를 길게 누르면 즐겨찾기에 추가할 수 있습니다.",
+    "hideHint": "팁 숨기기"
   },
   "convertToPdf": "PDF로 변환",
   "pdfMultiTool": {
@@ -27,29 +35,7 @@
   },
   "compressPdf": {
     "name": "PDF 압축",
-    "subtitle": "PDF 파일 크기를 줄입니다.",
-    "algorithmLabel": "압축 알고리즘",
-    "condense": "Condense (권장)",
-    "photon": "Photon (사진이 많은 PDF용)",
-    "condenseInfo": "Condense는 불필요한 데이터 제거, 이미지 최적화, 폰트 서브셋 등 고급 압축을 적용합니다. 대부분의 PDF에 적합합니다.",
-    "photonInfo": "Photon은 페이지를 이미지로 변환합니다. 사진이 많거나 스캔된 PDF에 적합합니다.",
-    "photonWarning": "주의: 텍스트 선택이 불가능해지고 링크가 작동하지 않게 됩니다.",
-    "levelLabel": "압축 수준",
-    "light": "낮음 (품질 유지)",
-    "balanced": "보통 (권장)",
-    "aggressive": "높음 (파일 크기 우선)",
-    "extreme": "최대 (최고 압축률)",
-    "grayscale": "흑백으로 변환",
-    "grayscaleHint": "색상 정보를 제거하여 파일 크기를 줄입니다",
-    "customSettings": "사용자 설정",
-    "customSettingsHint": "압축 세부 설정을 조정합니다:",
-    "outputQuality": "출력 품질",
-    "resizeImagesTo": "이미지 크기 조정",
-    "onlyProcessAbove": "이 크기 이상만 처리",
-    "removeMetadata": "메타데이터 제거",
-    "subsetFonts": "폰트 서브셋 (미사용 글자 제거)",
-    "removeThumbnails": "내장 미리보기 이미지 제거",
-    "compressButton": "PDF 압축하기"
+    "subtitle": "PDF 파일 크기를 줄입니다."
   },
   "pdfEditor": {
     "name": "PDF 편집기",
@@ -862,7 +848,7 @@
     "subtitle": "Markdown을 작성하거나 붙여넣고 깔끔하게 서식이 적용된 PDF로 내보냅니다.",
     "paneMarkdown": "Markdown",
     "panePreview": "미리보기",
-    "btnUpload": "업로드",
+    "btnUpload": "선택",
     "btnSyncScroll": "스크롤 동기화",
     "btnSettings": "설정",
     "btnExportPdf": "PDF 내보내기",

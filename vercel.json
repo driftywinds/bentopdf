@@ -7,6 +7,97 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/ua/change-text-color",
+      "destination": "/uk/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/change-text-color",
+      "destination": "/uk/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/change-text-color",
+      "destination": "/:locale/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/change-text-color",
+      "destination": "/text-color",
+      "permanent": true
+    },
+    {
+      "source": "/ua/pdf-to-docx",
+      "destination": "/uk/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/pdf-to-docx",
+      "destination": "/uk/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/pdf-to-docx",
+      "destination": "/:locale/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/pdf-to-docx",
+      "destination": "/pdf-to-word",
+      "permanent": true
+    },
+    {
+      "source": "/ua/decrypt-pdf",
+      "destination": "/uk/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/decrypt-pdf",
+      "destination": "/uk/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/decrypt-pdf",
+      "destination": "/:locale/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/decrypt-pdf",
+      "destination": "/unlock-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/ua/encrypt-pdf",
+      "destination": "/uk/protect-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/ua/src/pages/encrypt-pdf",
+      "destination": "/uk/protect-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(ar|be|da|de|es|fr|id|it|ja|ko|nl|pl|pt|ru|sk|sv|tr|uk|vi|zh|zh-TW)/src/pages/encrypt-pdf",
+      "destination": "/:locale/protect-pdf",
+      "permanent": true
+    },
+    {
+      "source": "/(en|tools|src/pages|en/src/pages)/encrypt-pdf",
+      "destination": "/protect-pdf",
+      "permanent": true
+    },
+    { "source": "/ua", "destination": "/uk", "permanent": true },
+    {
+      "source": "/ua/src/pages/:page",
+      "destination": "/uk/:page",
+      "permanent": true
+    },
+    {
+      "source": "/en/src/pages/:page",
+      "destination": "/:page",
+      "permanent": true
+    },
     { "source": "/ua/:path*", "destination": "/uk/:path*", "permanent": true },
     { "source": "/en/:path*", "destination": "/:path*", "permanent": true },
     {
@@ -97,7 +188,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval' blob: https://cdn.jsdelivr.net; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://rawcdn.githack.com; connect-src 'self' blob: https://api.github.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://bentopdf-cors-proxy.bentopdf.workers.dev https://rawcdn.githack.com; object-src 'none'; base-uri 'self'; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval' blob: https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/ https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm@0.1.1/assets/ https://cdn.jsdelivr.net/npm/coherentpdf@2.5.5/dist/ https://cdn.jsdelivr.net/npm/tesseract.js@v7.0.0/dist/ https://cdn.jsdelivr.net/npm/tesseract.js-core@v7.0.0/; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://rawcdn.githack.com; connect-src 'self' blob: https://api.github.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://bentopdf-cors-proxy.bentopdf.workers.dev https://rawcdn.githack.com; object-src 'none'; base-uri 'self'; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self'"
         },
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
@@ -168,7 +259,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://rawcdn.githack.com; connect-src 'self' https://api.github.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://bentopdf-cors-proxy.bentopdf.workers.dev https://rawcdn.githack.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-DQUgNM9X0iH2019NkUxeBvnBoEoRKkHBc/I0iLqPNPA=' 'sha256-La1r0VSk0Po4KFI0duEKhmPu+u0I416JW3oONqtdf4M='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://rawcdn.githack.com; connect-src 'self' https://api.github.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://bentopdf-cors-proxy.bentopdf.workers.dev https://rawcdn.githack.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
         }
       ]
     },
@@ -177,7 +268,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://rawcdn.githack.com; connect-src 'self' https://api.github.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://bentopdf-cors-proxy.bentopdf.workers.dev https://rawcdn.githack.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-DQUgNM9X0iH2019NkUxeBvnBoEoRKkHBc/I0iLqPNPA=' 'sha256-La1r0VSk0Po4KFI0duEKhmPu+u0I416JW3oONqtdf4M='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://rawcdn.githack.com; connect-src 'self' https://api.github.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://bentopdf-cors-proxy.bentopdf.workers.dev https://rawcdn.githack.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
         }
       ]
     },

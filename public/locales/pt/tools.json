@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favoritos",
     "popularTools": "Ferramentas Populares",
     "editAnnotate": "Editar e Anotar",
     "convertToPdf": "Converter para PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Segurança de PDF",
     "input": "Entrada",
     "output": "Saída"
+  },
+  "favorites": {
+    "add": "Adicionar aos favoritos",
+    "remove": "Remover dos favoritos",
+    "hintLabel": "Dica",
+    "hint": "Toque e segure uma ferramenta para adicioná-la aos favoritos.",
+    "hideHint": "Ocultar dica"
   },
   "convertToPdf": "Converter para PDF",
   "pdfMultiTool": {
@@ -27,29 +35,7 @@
   },
   "compressPdf": {
     "name": "Comprimir PDF",
-    "subtitle": "Reduza o tamanho do arquivo do seu PDF.",
-    "algorithmLabel": "Algoritmo de Compressão",
-    "condense": "Condense (Recomendado)",
-    "photon": "Photon (Para PDFs com Muitas Fotos)",
-    "condenseInfo": "Condense usa compressão avançada: remove dados desnecessários, otimiza imagens, subconjunta fontes. Ideal para a maioria dos PDFs.",
-    "photonInfo": "Photon converte páginas em imagens. Use para PDFs com muitas fotos/digitalizados.",
-    "photonWarning": "Aviso: O texto ficará não selecionável e os links deixarão de funcionar.",
-    "levelLabel": "Nível de Compressão",
-    "light": "Leve (Preservar Qualidade)",
-    "balanced": "Equilibrado (Recomendado)",
-    "aggressive": "Agressivo (Arquivos Menores)",
-    "extreme": "Extremo (Compressão Máxima)",
-    "grayscale": "Converter para Escala de Cinza",
-    "grayscaleHint": "Reduz o tamanho do arquivo removendo informações de cor",
-    "customSettings": "Configurações Personalizadas",
-    "customSettingsHint": "Ajuste fino dos parâmetros de compressão:",
-    "outputQuality": "Qualidade de Saída",
-    "resizeImagesTo": "Redimensionar Imagens Para",
-    "onlyProcessAbove": "Processar Apenas Acima de",
-    "removeMetadata": "Remover metadados",
-    "subsetFonts": "Subconjunto de fontes (remover glifos não utilizados)",
-    "removeThumbnails": "Remover miniaturas incorporadas",
-    "compressButton": "Comprimir PDF"
+    "subtitle": "Reduza o tamanho do arquivo do seu PDF."
   },
   "pdfEditor": {
     "name": "Editor de PDF",
@@ -862,7 +848,7 @@
     "subtitle": "Escreva ou cole Markdown e exporte como um belo formato PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Pré-visualizar",
-    "btnUpload": "Upload",
+    "btnUpload": "Selecionar",
     "btnSyncScroll": "Sincronizar Scroll",
     "btnSettings": "Configurações",
     "btnExportPdf": "Exportar PDF",

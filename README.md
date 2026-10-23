@@ -71,9 +71,9 @@ Have questions, feature requests, or want to chat with the community? Join our D
 
 ## 📚 Documentation
 
-[![Documentation](https://img.shields.io/badge/Docs-VitePress-646cff?style=for-the-badge&logo=vite&logoColor=white)](https://bentopdf.com/docs/)
+[![Documentation](https://img.shields.io/badge/Docs-VitePress-646cff?style=for-the-badge&logo=vite&logoColor=white)](https://www.bentopdf.com/docs)
 
-Visit our [Documentation](https://bentopdf.com/docs/) for:
+Visit our [Documentation](https://www.bentopdf.com/docs) for:
 
 - **Getting Started** guide
 - **Tools Reference** (50+ tools)
@@ -100,7 +100,7 @@ BentoPDF is **dual-licensed** to fit your needs:
 
 > **One-time purchase** · **Unlimited devices & users** · **Lifetime updates** · **No AGPL obligations**
 
-📖 For more details, see our [Licensing Page](https://bentopdf.com/licensing.html)
+📖 For more details, see our [Licensing Page](https://www.bentopdf.com/licensing)
 
 ### AGPL Components (Pre-configured via CDN)
 
@@ -130,8 +130,7 @@ We're incredibly grateful to all our sponsors and supporters who help keep Bento
 [![Sponsor me on GitHub](https://img.shields.io/badge/Become%20a%20Sponsor-%E2%9D%A4-ff69b4?style=for-the-badge)](https://github.com/sponsors/alam00000)
 [![Buy me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20Coffee-yellow?style=for-the-badge&logo=kofi)](https://ko-fi.com/alio01)
 
-<!-- sponsors -->
-<!-- sponsors -->
+<!-- sponsors --><a href="https://github.com/gaedeke"><img src="https:&#x2F;&#x2F;github.com&#x2F;gaedeke.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/stiflerbox"><img src="https:&#x2F;&#x2F;github.com&#x2F;stiflerbox.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/shollyethan"><img src="https:&#x2F;&#x2F;github.com&#x2F;shollyethan.png" width="60px" alt="User avatar: Ethan Sholly" /></a><a href="https://github.com/KnudH"><img src="https:&#x2F;&#x2F;github.com&#x2F;KnudH.png" width="60px" alt="User avatar: Knud Hollander" /></a><a href="https://github.com/mohannadhussain"><img src="https:&#x2F;&#x2F;github.com&#x2F;mohannadhussain.png" width="60px" alt="User avatar: Mohannad Hussain" /></a><a href="https://github.com/chaoscastle"><img src="https:&#x2F;&#x2F;github.com&#x2F;chaoscastle.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/RobertGonzales1"><img src="https:&#x2F;&#x2F;github.com&#x2F;RobertGonzales1.png" width="60px" alt="User avatar: Robert Gonzales" /></a><a href="https://github.com/michivonah"><img src="https:&#x2F;&#x2F;github.com&#x2F;michivonah.png" width="60px" alt="User avatar: Michi" /></a><a href="https://github.com/bmikaili"><img src="https:&#x2F;&#x2F;github.com&#x2F;bmikaili.png" width="60px" alt="User avatar: Berzan" /></a><a href="https://github.com/Thanyanit-J"><img src="https:&#x2F;&#x2F;github.com&#x2F;Thanyanit-J.png" width="60px" alt="User avatar: Thanyanit Jongjitragan" /></a><a href="https://github.com/AceofSpades5757"><img src="https:&#x2F;&#x2F;github.com&#x2F;AceofSpades5757.png" width="60px" alt="User avatar: Kyle L. Davis" /></a><a href="https://github.com/Jacco011"><img src="https:&#x2F;&#x2F;github.com&#x2F;Jacco011.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/Pallandos"><img src="https:&#x2F;&#x2F;github.com&#x2F;Pallandos.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/haritvsmurali"><img src="https:&#x2F;&#x2F;github.com&#x2F;haritvsmurali.png" width="60px" alt="User avatar: Hari Haran" /></a><a href="https://github.com/mrtoadie"><img src="https:&#x2F;&#x2F;github.com&#x2F;mrtoadie.png" width="60px" alt="User avatar: Toadie" /></a><a href="https://github.com/sam12dr21"><img src="https:&#x2F;&#x2F;github.com&#x2F;sam12dr21.png" width="60px" alt="User avatar: " /></a><!-- sponsors -->
 
 ---
 
@@ -309,6 +308,7 @@ BentoPDF is available in multiple languages:
 | Vietnamese          | [![Vietnamese](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/vi/common.json)             |
 | Korean              | [![Korean](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/ko/common.json)                 |
 | Russian             | [![Russian](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/ru/common.json)                |
+| Persian (Farsi)     | [![Persian](https://img.shields.io/badge/Complete-green?style=flat-square)](public/locales/fa/common.json)                |
 
 Want to help translate BentoPDF into your language? Check out our [Translation Guide](TRANSLATION.md)!
 
@@ -810,7 +810,7 @@ systemctl --user daemon-reload
 systemctl --user enable --now bentopdf
 ```
 
-For detailed Quadlet configuration, see [Self-Hosting Docker Guide](https://bentopdf.com/docs/self-hosting/docker).
+For detailed Quadlet configuration, see [Self-Hosting Docker Guide](https://www.bentopdf.com/docs/self-hosting/docker).
 
 ### 🏢 Self-Hosted build (Simple Mode)
 
@@ -866,7 +866,7 @@ Or set the same variables when building from source — see [Custom Branding](#-
 > - **AGPL-3.0** (free): allowed if your deployment publishes its full source code under AGPL — this includes any branding modifications, custom configuration, and any code you build on top of it.
 > - **Commercial license** ($79 lifetime): required for closed-source / proprietary deployments — e.g., a private SaaS where you don't open-source your branding fork or surrounding business logic.
 >
-> See the [Licensing page](https://bentopdf.com/licensing.html) for the full comparison.
+> See the [Licensing page](https://www.bentopdf.com/licensing) for the full comparison.
 
 ### 🎨 Custom Branding
 
@@ -930,7 +930,7 @@ docker run -d -p 3000:8080 \
   ghcr.io/alam00000/bentopdf-simple:latest
 ```
 
-Both methods can be combined — the lists are merged. For the full list of tool IDs, see the [self-hosting docs](https://bentopdf.com/docs/self-hosting/docker#disabling-specific-tools).
+Both methods can be combined — the lists are merged. For the full list of tool IDs, see the [self-hosting docs](https://www.bentopdf.com/docs/self-hosting/docker#disabling-specific-tools).
 
 You can also disable specific features inside the PDF Editor (e.g., redaction, forms) without disabling the entire editor. Add `editorDisabledCategories` to your `config.json`:
 
@@ -940,7 +940,7 @@ You can also disable specific features inside the PDF Editor (e.g., redaction, f
 }
 ```
 
-For the full list of editor categories, see the [self-hosting docs](https://bentopdf.com/docs/self-hosting/docker#disabling-editor-features).
+For the full list of editor categories, see the [self-hosting docs](https://www.bentopdf.com/docs/self-hosting/docker#disabling-editor-features).
 
 ### 🔕 Disabling the GitHub Star Counter
 

@@ -1,82 +1,319 @@
 import forge from 'node-forge';
-import { ExtractedSignature, SignatureValidationResult } from '@/types';
+import { SignatureValidationResult } from '@/types';
+import type { ExtractedSignatureWithError, PdfValueSpan } from '@/types';
 
 const INSECURE_DIGEST_OIDS = new Set<string>([
   '1.2.840.113549.2.5',
   '1.3.14.3.2.26',
 ]);
 
-export function extractSignatures(pdfBytes: Uint8Array): ExtractedSignature[] {
-  const signatures: ExtractedSignature[] = [];
+const PDF_WHITESPACE = new Set('\0\t\n\f\r ');
+const PDF_TOKEN_TERMINATORS = new Set('\0\t\n\f\r ()<>[]{}/%');
+const PDF_STRING_ESCAPES: Record<string, string> = {
+  n: '\n',
+  r: '\r',
+  t: '\t',
+  b: '\b',
+  f: '\f',
+  '\r\n': '',
+  '\r': '',
+  '\n': '',
+};
+
+export function extractSignatures(
+  pdfBytes: Uint8Array
+): ExtractedSignatureWithError[] {
+  const signatures: ExtractedSignatureWithError[] = [];
   const pdfString = new TextDecoder('latin1').decode(pdfBytes);
 
-  // Find all signature objects for /Type /Sig
-  const sigRegex = /\/Type\s*\/Sig\b/g;
-  let sigMatch;
-  let sigIndex = 0;
+  // Find all signature dictionaries (see isSignatureDictionary)
+  const objectHeader = /\d+\s+\d+\s+obj\b/g;
+  let endobj = -1;
 
-  while ((sigMatch = sigRegex.exec(pdfString)) !== null) {
-    try {
-      const searchStart = Math.max(0, sigMatch.index - 5000);
-      const searchEnd = Math.min(pdfString.length, sigMatch.index + 10000);
-      const context = pdfString.substring(searchStart, searchEnd);
-      const byteRangeMatch = context.match(
-        /\/ByteRange\s*\[\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*\]/
-      );
-      if (!byteRangeMatch) continue;
+  while (objectHeader.exec(pdfString) !== null) {
+    const start = objectHeader.lastIndex;
+    if (endobj < start) {
+      endobj = pdfString.indexOf('endobj', start);
+      if (endobj < 0) endobj = pdfString.length;
+    }
+    const body = pdfString.slice(0, endobj);
+    const dictionaries: Map<string, PdfValueSpan>[] = [];
+    const end = parsePdfValue(
+      body,
+      skipPdfWhitespace(body, start),
+      dictionaries,
+      0
+    );
+    objectHeader.lastIndex = end < 0 ? endobj : end;
+    if (end < 0) continue;
 
-      const byteRange = [
-        parseInt(byteRangeMatch[1], 10),
-        parseInt(byteRangeMatch[2], 10),
-        parseInt(byteRangeMatch[3], 10),
-        parseInt(byteRangeMatch[4], 10),
-      ];
-
-      const contentsMatch = context.match(/\/Contents\s*<([0-9A-Fa-f]+)>/);
-      if (!contentsMatch) continue;
-
-      const hexContents = contentsMatch[1];
-      const contentsBytes = hexToBytes(hexContents);
-
-      const reasonMatch = context.match(/\/Reason\s*\(([^)]*)\)/);
-      const locationMatch = context.match(/\/Location\s*\(([^)]*)\)/);
-      const contactMatch = context.match(/\/ContactInfo\s*\(([^)]*)\)/);
-      const nameMatch = context.match(/\/Name\s*\(([^)]*)\)/);
-      const timeMatch = context.match(
-        /\/M\s*\(D:(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/
-      );
-
-      let signingTime: string | undefined;
-      if (timeMatch) {
-        signingTime = `${timeMatch[1]}-${timeMatch[2]}-${timeMatch[3]}T${timeMatch[4]}:${timeMatch[5]}:${timeMatch[6]}`;
+    for (const entries of dictionaries) {
+      if (isSignatureDictionary(pdfString, entries)) {
+        signatures.push(
+          readSignatureDictionary(
+            pdfString,
+            pdfBytes,
+            entries,
+            signatures.length
+          )
+        );
       }
-
-      signatures.push({
-        index: sigIndex++,
-        contents: contentsBytes,
-        byteRange,
-        reason: reasonMatch
-          ? decodeURIComponent(escape(reasonMatch[1]))
-          : undefined,
-        location: locationMatch
-          ? decodeURIComponent(escape(locationMatch[1]))
-          : undefined,
-        contactInfo: contactMatch
-          ? decodeURIComponent(escape(contactMatch[1]))
-          : undefined,
-        name: nameMatch ? decodeURIComponent(escape(nameMatch[1])) : undefined,
-        signingTime,
-      });
-    } catch (e) {
-      console.warn('Error extracting signature at index', sigIndex, e);
     }
   }
 
   return signatures;
 }
 
+/**
+ * /Type is optional in a signature dictionary (PDF 32000-1, 12.8.1, Table
+ * 252), and some signers leave it out, so a dictionary without /Type that
+ * carries both /ByteRange and /Contents is a signature too. Document
+ * timestamps (/Type /DocTimeStamp, /SubFilter /ETSI.RFC3161) hold an RFC 3161
+ * token rather than a CMS signature over the document and stay out.
+ */
+function isSignatureDictionary(
+  pdfString: string,
+  entries: Map<string, PdfValueSpan>
+): boolean {
+  const name = (key: string) => {
+    const span = entries.get(key);
+    return span ? pdfString.slice(span.start, span.end) : undefined;
+  };
+  const type = name('Type');
+  if (type !== undefined) return type === '/Sig';
+  return (
+    entries.has('ByteRange') &&
+    entries.has('Contents') &&
+    name('SubFilter') !== '/ETSI.RFC3161'
+  );
+}
+
+function readSignatureDictionary(
+  pdfString: string,
+  pdfBytes: Uint8Array,
+  entries: Map<string, PdfValueSpan>,
+  index: number
+): ExtractedSignatureWithError {
+  const text = (key: string) => decodePdfText(pdfBytes, entries.get(key));
+  const timeMatch = text('M')?.match(
+    /^D:(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/
+  );
+  const signature: ExtractedSignatureWithError = {
+    index,
+    contents: new Uint8Array(0),
+    byteRange: [],
+    reason: text('Reason'),
+    location: text('Location'),
+    contactInfo: text('ContactInfo'),
+    name: text('Name'),
+    signingTime: timeMatch
+      ? `${timeMatch[1]}-${timeMatch[2]}-${timeMatch[3]}T${timeMatch[4]}:${timeMatch[5]}:${timeMatch[6]}`
+      : undefined,
+  };
+
+  const rangeSpan = entries.get('ByteRange');
+  const rangeMatch = rangeSpan
+    ? /^\[\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*\]$/.exec(
+        pdfString.slice(rangeSpan.start, rangeSpan.end)
+      )
+    : null;
+  if (!rangeMatch) {
+    signature.extractionError =
+      'Signature has a missing or malformed /ByteRange';
+    return signature;
+  }
+
+  signature.byteRange = rangeMatch.slice(1).map(Number);
+  const byteRangeError = getByteRangeError(
+    signature.byteRange,
+    pdfBytes.length
+  );
+  if (byteRangeError) {
+    signature.extractionError = byteRangeError;
+    return signature;
+  }
+
+  const gapStart = signature.byteRange[0] + signature.byteRange[1];
+  const gapEnd = signature.byteRange[2];
+  const gap = pdfString.slice(gapStart, gapEnd);
+  if (gap.length % 2 !== 0 || !/^<[0-9A-Fa-f]+>$/.test(gap)) {
+    signature.extractionError =
+      'The bytes excluded by /ByteRange are not exactly a hex-encoded signature';
+    return signature;
+  }
+
+  const contentsSpan = entries.get('Contents');
+  if (contentsSpan?.start !== gapStart || contentsSpan.end !== gapEnd) {
+    signature.extractionError =
+      'The bytes excluded by /ByteRange are not the /Contents of this signature';
+    return signature;
+  }
+
+  const contents = hexToBytes(gap.slice(1, -1));
+  const derObjectLength = getDerObjectLength(contents);
+  if (
+    derObjectLength === null ||
+    derObjectLength > contents.length ||
+    contents.subarray(derObjectLength).some((byte) => byte !== 0)
+  ) {
+    signature.extractionError =
+      'Signature /Contents is not a single DER object followed by zero padding';
+    return signature;
+  }
+
+  signature.contents = contents.slice(0, derObjectLength);
+  return signature;
+}
+
+function getByteRangeError(
+  byteRange: number[],
+  fileLength: number
+): string | null {
+  if (
+    byteRange.length !== 4 ||
+    !byteRange.every((value) => Number.isSafeInteger(value) && value >= 0)
+  ) {
+    return 'Malformed ByteRange';
+  }
+  const [start1, len1, start2, len2] = byteRange;
+  if (start1 !== 0) {
+    return 'ByteRange does not start at the beginning of the file';
+  }
+  if (start1 + len1 > start2 || start2 + len2 > fileLength) {
+    return 'ByteRange out of bounds';
+  }
+  return null;
+}
+
+function skipPdfWhitespace(text: string, pos: number): number {
+  while (pos < text.length) {
+    if (text[pos] === '%') {
+      while (pos < text.length && text[pos] !== '\n' && text[pos] !== '\r') {
+        pos++;
+      }
+    } else if (PDF_WHITESPACE.has(text[pos])) {
+      pos++;
+    } else {
+      break;
+    }
+  }
+  return pos;
+}
+
+function findTokenEnd(text: string, pos: number): number {
+  while (pos < text.length && !PDF_TOKEN_TERMINATORS.has(text[pos])) pos++;
+  return pos;
+}
+
+function findLiteralStringEnd(text: string, start: number): number {
+  let depth = 0;
+  for (let pos = start; pos < text.length; pos++) {
+    if (text[pos] === '\\') {
+      pos++;
+    } else if (text[pos] === '(') {
+      depth++;
+    } else if (text[pos] === ')') {
+      depth--;
+      if (depth === 0) return pos + 1;
+    }
+  }
+  return -1;
+}
+
+function parsePdfValue(
+  text: string,
+  start: number,
+  dictionaries: Map<string, PdfValueSpan>[],
+  depth: number
+): number {
+  if (depth > 32 || start >= text.length) return -1;
+
+  if (text.startsWith('<<', start)) {
+    const entries = new Map<string, PdfValueSpan>();
+    dictionaries.push(entries);
+    let pos = skipPdfWhitespace(text, start + 2);
+    while (!text.startsWith('>>', pos)) {
+      const keyEnd = text[pos] === '/' ? findTokenEnd(text, pos + 1) : pos;
+      const valueStart = skipPdfWhitespace(text, keyEnd);
+      const valueEnd = parsePdfValue(text, valueStart, dictionaries, depth + 1);
+      if (valueEnd < 0) return -1;
+      if (keyEnd > pos) {
+        entries.set(text.slice(pos + 1, keyEnd), {
+          start: valueStart,
+          end: valueEnd,
+        });
+      }
+      pos = skipPdfWhitespace(text, valueEnd);
+    }
+    return pos + 2;
+  }
+
+  if (text[start] === '<') {
+    const end = text.indexOf('>', start);
+    return end < 0 ? -1 : end + 1;
+  }
+
+  if (text[start] === '(') return findLiteralStringEnd(text, start);
+
+  if (text[start] === '[') {
+    let pos = skipPdfWhitespace(text, start + 1);
+    while (text[pos] !== ']') {
+      const end = parsePdfValue(text, pos, dictionaries, depth + 1);
+      if (end < 0) return -1;
+      pos = skipPdfWhitespace(text, end);
+    }
+    return pos + 1;
+  }
+
+  const end = findTokenEnd(text, text[start] === '/' ? start + 1 : start);
+  return end > start ? end : -1;
+}
+
+function decodePdfText(
+  pdfBytes: Uint8Array,
+  span: PdfValueSpan | undefined
+): string | undefined {
+  if (!span) return undefined;
+  const raw = uint8ToLatin1(pdfBytes.subarray(span.start, span.end));
+  let text: string;
+  if (raw.startsWith('(')) {
+    text = raw
+      .slice(1, -1)
+      .replace(/\\([0-7]{1,3}|\r\n|[\s\S])/g, (_, escaped: string) =>
+        /^[0-7]/.test(escaped)
+          ? String.fromCharCode(parseInt(escaped, 8) & 0xff)
+          : (PDF_STRING_ESCAPES[escaped] ?? escaped)
+      );
+  } else if (/^<[0-9A-Fa-f\s]*>$/.test(raw)) {
+    const hex = raw.slice(1, -1).replace(/\s/g, '');
+    text = uint8ToLatin1(hexToBytes(hex.length % 2 ? hex + '0' : hex));
+  } else {
+    return undefined;
+  }
+
+  const bytes = latin1ToUint8(text);
+  if (text.startsWith('\xfe\xff')) {
+    return new TextDecoder('utf-16be').decode(bytes.subarray(2));
+  }
+  try {
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  } catch {
+    return text;
+  }
+}
+
+function getDerObjectLength(bytes: Uint8Array): number | null {
+  if (bytes.length < 2) return null;
+  if (bytes[1] < 0x80) return 2 + bytes[1];
+  const count = bytes[1] & 0x7f;
+  if (count === 0 || count > 4 || bytes.length < 2 + count) return null;
+  let length = 0;
+  for (let i = 0; i < count; i++) length = length * 256 + bytes[2 + i];
+  return 2 + count + length;
+}
+
 export async function validateSignature(
-  signature: ExtractedSignature,
+  signature: ExtractedSignatureWithError,
   pdfBytes: Uint8Array,
   trustedCert?: forge.pki.Certificate
 ): Promise<SignatureValidationResult> {
@@ -99,6 +336,13 @@ export async function validateSignature(
     contactInfo: signature.contactInfo,
   };
 
+  if (signature.extractionError) {
+    result.errorMessage = signature.extractionError;
+    result.cryptoVerified = false;
+    result.cryptoVerificationStatus = 'failed';
+    return result;
+  }
+
   try {
     const binaryString = String.fromCharCode.apply(
       null,
@@ -113,6 +357,8 @@ export async function validateSignature(
         authenticatedAttributes?: forge.asn1.Asn1[];
         signature?: string;
         signatureAlgorithm?: forge.asn1.Asn1[];
+        issuer?: forge.asn1.Asn1;
+        serial?: string;
       };
     };
 
@@ -121,7 +367,12 @@ export async function validateSignature(
       return result;
     }
 
-    const signerCert = p7.certificates[0] as forge.pki.Certificate;
+    const certificates = p7.certificates as forge.pki.Certificate[];
+    const signerCert = findSignerCertificate(
+      certificates,
+      p7.rawCapture?.issuer,
+      p7.rawCapture?.serial
+    );
 
     const subjectCN = signerCert.subject.getField('CN');
     const subjectO = signerCert.subject.getField('O');
@@ -148,27 +399,11 @@ export async function validateSignature(
     // Check trust against provided certificate (cryptographic, not name/serial match)
     if (trustedCert) {
       try {
-        const trustedPem = forge.pki.certificateToPem(trustedCert);
-        const isSameCert =
-          forge.pki.certificateToPem(signerCert) === trustedPem;
-
-        let cryptoIssued = false;
-        const chain = [
+        result.isTrusted = chainsToTrustedCert(
           signerCert,
-          ...(p7.certificates as forge.pki.Certificate[]),
-        ];
-        for (const cert of chain) {
-          try {
-            if (trustedCert.verify(cert)) {
-              cryptoIssued = true;
-              break;
-            }
-          } catch {
-            continue;
-          }
-        }
-
-        result.isTrusted = isSameCert || cryptoIssued;
+          certificates,
+          trustedCert
+        );
       } catch {
         result.isTrusted = false;
       }
@@ -267,6 +502,70 @@ export async function validateSignature(
   return result;
 }
 
+function findSignerCertificate(
+  certificates: forge.pki.Certificate[],
+  issuer: forge.asn1.Asn1 | undefined,
+  serial: string | undefined
+): forge.pki.Certificate {
+  if (issuer && serial) {
+    const serialHex = forge.util.createBuffer(serial).toHex();
+    const issuerDer = forge.asn1.toDer(issuer).getBytes();
+    const match = certificates.find(
+      (cert) =>
+        cert.serialNumber === serialHex &&
+        forge.asn1
+          .toDer(forge.pki.distinguishedNameToAsn1(cert.issuer))
+          .getBytes() === issuerDer
+    );
+    if (match) return match;
+  }
+  return certificates[0];
+}
+
+function isIssuedBy(
+  issuer: forge.pki.Certificate,
+  child: forge.pki.Certificate
+): boolean {
+  try {
+    return issuer.verify(child);
+  } catch {
+    return false;
+  }
+}
+
+function isCertificateAuthority(cert: forge.pki.Certificate): boolean {
+  const basicConstraints = cert.getExtension('basicConstraints') as
+    | { cA?: boolean }
+    | undefined;
+  return basicConstraints?.cA === true;
+}
+
+function chainsToTrustedCert(
+  signerCert: forge.pki.Certificate,
+  certificates: forge.pki.Certificate[],
+  trustedCert: forge.pki.Certificate
+): boolean {
+  const trustedPem = forge.pki.certificateToPem(trustedCert);
+  const visited = new Set<string>();
+  let current = signerCert;
+
+  for (let depth = 0; depth < 10; depth++) {
+    const currentPem = forge.pki.certificateToPem(current);
+    if (currentPem === trustedPem || isIssuedBy(trustedCert, current)) {
+      return true;
+    }
+    if (visited.has(currentPem)) return false;
+    visited.add(currentPem);
+
+    const parent = certificates.find(
+      (cert) => isCertificateAuthority(cert) && isIssuedBy(cert, current)
+    );
+    if (!parent) return false;
+    current = parent;
+  }
+  return false;
+}
+
 export async function validatePdfSignatures(
   pdfBytes: Uint8Array,
   trustedCert?: forge.pki.Certificate
@@ -286,13 +585,7 @@ function hexToBytes(hex: string): Uint8Array {
   for (let i = 0; i < hex.length; i += 2) {
     bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
   }
-
-  let actualLength = bytes.length;
-  while (actualLength > 0 && bytes[actualLength - 1] === 0) {
-    actualLength--;
-  }
-
-  return bytes.slice(0, actualLength);
+  return bytes;
 }
 
 function getDigestAlgorithmName(oid: string): string {
@@ -690,8 +983,9 @@ async function performCryptoVerification(
   if (!fields) {
     return { status: 'failed', reason: 'Could not parse signer info' };
   }
-  if (byteRange.length !== 4) {
-    return { status: 'failed', reason: 'Malformed ByteRange' };
+  const byteRangeError = getByteRangeError(byteRange, pdfBytes.length);
+  if (byteRangeError) {
+    return { status: 'failed', reason: byteRangeError };
   }
 
   const md = createMd(fields.digestOid);
@@ -703,17 +997,6 @@ async function performCryptoVerification(
   }
 
   const [start1, len1, start2, len2] = byteRange;
-  if (
-    start1 < 0 ||
-    len1 < 0 ||
-    start2 < 0 ||
-    len2 < 0 ||
-    start1 + len1 > pdfBytes.length ||
-    start2 + len2 > pdfBytes.length
-  ) {
-    return { status: 'failed', reason: 'ByteRange out of bounds' };
-  }
-
   const signedContent = new Uint8Array(len1 + len2);
   signedContent.set(pdfBytes.subarray(start1, start1 + len1), 0);
   signedContent.set(pdfBytes.subarray(start2, start2 + len2), len1);

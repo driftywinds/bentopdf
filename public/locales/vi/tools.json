@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Yêu thích",
     "popularTools": "Công cụ phổ biến",
     "editAnnotate": "Chỉnh sửa & Ghi chú",
     "convertToPdf": "Chuyển đổi sang PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Bảo mật PDF",
     "input": "Đầu vào",
     "output": "Đầu ra"
+  },
+  "favorites": {
+    "add": "Thêm vào yêu thích",
+    "remove": "Xóa khỏi yêu thích",
+    "hintLabel": "Mẹo",
+    "hint": "Nhấn giữ một công cụ để thêm vào mục yêu thích.",
+    "hideHint": "Ẩn mẹo"
   },
   "convertToPdf": "Chuyển đổi sang PDF",
   "pdfMultiTool": {
@@ -27,29 +35,7 @@
   },
   "compressPdf": {
     "name": "Nén PDF",
-    "subtitle": "Giảm kích thước tệp PDF của bạn.",
-    "algorithmLabel": "Thuật toán nén",
-    "condense": "Condense (Khuyến nghị)",
-    "photon": "Photon (Dành cho PDF nhiều ảnh)",
-    "condenseInfo": "Condense sử dụng nén nâng cao: loại bỏ dữ liệu thừa, tối ưu hóa hình ảnh, gọn phông chữ. Phù hợp với hầu hết PDF.",
-    "photonInfo": "Photon chuyển đổi trang thành hình ảnh. Dùng cho PDF nhiều ảnh/quét.",
-    "photonWarning": "Cảnh báo: Văn bản sẽ không thể chọn được và liên kết sẽ không hoạt động.",
-    "levelLabel": "Mức độ nén",
-    "light": "Nhẹ (Giữ chất lượng)",
-    "balanced": "Cân bằng (Khuyến nghị)",
-    "aggressive": "Mạnh (Tệp nhỏ hơn)",
-    "extreme": "Cực đoan (Nén tối đa)",
-    "grayscale": "Chuyển sang thang xám",
-    "grayscaleHint": "Giảm kích thước tệp bằng cách loại bỏ thông tin màu",
-    "customSettings": "Cài đặt tùy chỉnh",
-    "customSettingsHint": "Tinh chỉnh các thông số nén:",
-    "outputQuality": "Chất lượng đầu ra",
-    "resizeImagesTo": "Thay đổi kích thước ảnh thành",
-    "onlyProcessAbove": "Chỉ xử lý khi trên",
-    "removeMetadata": "Xóa siêu dữ liệu",
-    "subsetFonts": "Gọn phông chữ (xóa ký tự không dùng)",
-    "removeThumbnails": "Xóa hình thu nhỏ nhúng",
-    "compressButton": "Nén PDF"
+    "subtitle": "Giảm kích thước tệp PDF của bạn."
   },
   "pdfEditor": {
     "name": "Trình chỉnh sửa PDF",
@@ -862,7 +848,7 @@
     "subtitle": "Viết hoặc dán Markdown và xuất nó thành PDF được định dạng đẹp.",
     "paneMarkdown": "Markdown",
     "panePreview": "Xem trước",
-    "btnUpload": "Tải lên",
+    "btnUpload": "Chọn",
     "btnSyncScroll": "Cuộn đồng bộ",
     "btnSettings": "Cài đặt",
     "btnExportPdf": "Xuất PDF",

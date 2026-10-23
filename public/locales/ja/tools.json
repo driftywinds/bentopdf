@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "お気に入り",
     "popularTools": "人気のツール",
     "editAnnotate": "編集と注釈",
     "convertToPdf": "PDFに変換",
@@ -9,6 +10,13 @@
     "securePdf": "安全なPDF",
     "input": "入力",
     "output": "出力"
+  },
+  "favorites": {
+    "add": "お気に入りに追加",
+    "remove": "お気に入りから削除",
+    "hintLabel": "ヒント",
+    "hint": "ツールを長押しするとお気に入りに追加できます。",
+    "hideHint": "ヒントを非表示"
   },
   "convertToPdf": "PDFに変換",
   "pdfMultiTool": {
@@ -27,29 +35,7 @@
   },
   "compressPdf": {
     "name": "PDFの圧縮",
-    "subtitle": "PDFのファイルサイズを小さくします。",
-    "algorithmLabel": "圧縮アルゴリズム",
-    "condense": "コンデンス（推奨）",
-    "photon": "フォトン（写真を多く含むPDF用）",
-    "condenseInfo": "コンデンスは高度な圧縮技術を採用しています: 不要なデータを削除、画像を最適化しフォントをサブセット化します。ほとんどのPDFに最適です。",
-    "photonInfo": "フォトンはページを画像に変換します。写真が多いPDFやスキャンしたPDFにおすすめです。",
-    "photonWarning": "警告: テキストは選択できなくなり、リンクは機能しなくなります。",
-    "levelLabel": "圧縮レベル",
-    "light": "ライト（品質維持）",
-    "balanced": "バランス（推奨）",
-    "aggressive": "アグレッシブ（ファイルをより小さく）",
-    "extreme": "エクストリーム（最大圧縮）",
-    "grayscale": "グレースケールに変換",
-    "grayscaleHint": "カラー情報を削除してファイルサイズを削減します。",
-    "customSettings": "カスタム設定",
-    "customSettingsHint": "圧縮パラメータの微調整:",
-    "outputQuality": "出力品質",
-    "resizeImagesTo": "画像のリサイズ",
-    "onlyProcessAbove": "上記の処理のみ",
-    "removeMetadata": "メタデータを削除する",
-    "subsetFonts": "サブセットフォント (未使用のグリフの削除)",
-    "removeThumbnails": "埋め込みサムネイルを削除する",
-    "compressButton": "PDFを圧縮"
+    "subtitle": "PDFのファイルサイズを小さくします。"
   },
   "pdfEditor": {
     "name": "PDFエディター",
@@ -862,7 +848,7 @@
     "subtitle": "Markdownを記述または貼り付けて、見栄えの良いPDFとしてエクスポートします。",
     "paneMarkdown": "マークダウン",
     "panePreview": "プレビュー",
-    "btnUpload": "アップロード",
+    "btnUpload": "選択",
     "btnSyncScroll": "同期スクロール",
     "btnSettings": "設定",
     "btnExportPdf": "PDFをエクスポート",

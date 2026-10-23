@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "收藏",
     "popularTools": "热门工具",
     "editAnnotate": "编辑与注释",
     "convertToPdf": "转换为 PDF",
@@ -9,6 +10,13 @@
     "securePdf": "安全 PDF",
     "input": "输入",
     "output": "输出"
+  },
+  "favorites": {
+    "add": "添加到收藏",
+    "remove": "从收藏中移除",
+    "hintLabel": "提示",
+    "hint": "长按工具即可将其添加到收藏。",
+    "hideHint": "隐藏提示"
   },
   "convertToPdf": "转换为 PDF",
   "pdfMultiTool": {
@@ -27,29 +35,7 @@
   },
   "compressPdf": {
     "name": "压缩 PDF",
-    "subtitle": "减小您的 PDF 文件大小。",
-    "algorithmLabel": "压缩算法",
-    "condense": "Condense（推荐）",
-    "photon": "Photon（适用于图片较多的 PDF）",
-    "condenseInfo": "Condense 使用高级压缩：移除冗余数据、优化图片、精简字体。适用于大多数 PDF。",
-    "photonInfo": "Photon 将页面转换为图片。适用于图片较多/扫描的 PDF。",
-    "photonWarning": "警告：文本将无法选择，链接将失效。",
-    "levelLabel": "压缩级别",
-    "light": "轻度（保持质量）",
-    "balanced": "平衡（推荐）",
-    "aggressive": "积极（更小文件）",
-    "extreme": "极限（最大压缩）",
-    "grayscale": "转换为灰度",
-    "grayscaleHint": "通过移除颜色信息来减小文件大小",
-    "customSettings": "自定义设置",
-    "customSettingsHint": "微调压缩参数：",
-    "outputQuality": "输出质量",
-    "resizeImagesTo": "调整图片至",
-    "onlyProcessAbove": "仅处理高于",
-    "removeMetadata": "移除元数据",
-    "subsetFonts": "精简字体（移除未使用的字符）",
-    "removeThumbnails": "移除嵌入的缩略图",
-    "compressButton": "压缩 PDF"
+    "subtitle": "减小您的 PDF 文件大小。"
   },
   "pdfEditor": {
     "name": "PDF 编辑器",
@@ -862,7 +848,7 @@
     "subtitle": "编写或粘贴 Markdown 并将其导出为精美格式的 PDF。",
     "paneMarkdown": "Markdown",
     "panePreview": "预览",
-    "btnUpload": "上传",
+    "btnUpload": "选择",
     "btnSyncScroll": "同步滚动",
     "btnSettings": "设置",
     "btnExportPdf": "导出 PDF",

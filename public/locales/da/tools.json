@@ -1,5 +1,6 @@
 {
   "categories": {
+    "favorites": "Favoritter",
     "popularTools": "Populære værktøjer",
     "editAnnotate": "Rediger og annotér",
     "convertToPdf": "Konverter til PDF",
@@ -9,6 +10,13 @@
     "securePdf": "Sikre PDF",
     "input": "Input",
     "output": "Output"
+  },
+  "favorites": {
+    "add": "Føj til favoritter",
+    "remove": "Fjern fra favoritter",
+    "hintLabel": "Tip",
+    "hint": "Tryk og hold på et værktøj for at føje det til dine favoritter.",
+    "hideHint": "Skjul tip"
   },
   "convertToPdf": "Konvertér til PDF",
   "pdfMultiTool": {
@@ -27,29 +35,7 @@
   },
   "compressPdf": {
     "name": "Komprimér PDF",
-    "subtitle": "Reducer filstørrelsen på din PDF.",
-    "algorithmLabel": "Komprimeringsalgoritme",
-    "condense": "Kondenser (anbefalet)",
-    "photon": "Photon (til billedtunge PDF’er)",
-    "condenseInfo": "Kondenser bruger avanceret komprimering: fjerner overflødigt indhold, optimerer billeder, udvælger skrifttyper. Bedst til de fleste PDF’er.",
-    "photonInfo": "Photon konverterer sider til billeder. Bruges til billedtunge eller scannede PDF’er.",
-    "photonWarning": "Advarsel: Tekst bliver ikke valgbar, og links holder op med at virke.",
-    "levelLabel": "Komprimeringsniveau",
-    "light": "Let (bevar kvalitet)",
-    "balanced": "Balanceret (anbefalet)",
-    "aggressive": "Aggressiv (mindre filer)",
-    "extreme": "Ekstrem (maksimal komprimering)",
-    "grayscale": "Konverter til gråtoner",
-    "grayscaleHint": "Reducerer filstørrelsen ved at fjerne farveinformation",
-    "customSettings": "Brugerdefinerede indstillinger",
-    "customSettingsHint": "Finjustér komprimeringsparametre:",
-    "outputQuality": "Outputkvalitet",
-    "resizeImagesTo": "Skalér billeder til",
-    "onlyProcessAbove": "Behandl kun over",
-    "removeMetadata": "Fjern metadata",
-    "subsetFonts": "Delvis skrifttypeindlæsning (fjern ubrugte tegn)",
-    "removeThumbnails": "Fjern indlejrede miniaturer",
-    "compressButton": "Komprimér PDF"
+    "subtitle": "Reducer filstørrelsen på din PDF."
   },
   "pdfEditor": {
     "name": "PDF-editor",
@@ -862,7 +848,7 @@
     "subtitle": "Skriv eller indsæt Markdown og eksportér som en flot formateret PDF.",
     "paneMarkdown": "Markdown",
     "panePreview": "Forhåndsvisning",
-    "btnUpload": "Upload",
+    "btnUpload": "Vælg",
     "btnSyncScroll": "Synkron rulning",
     "btnSettings": "Indstillinger",
     "btnExportPdf": "Eksportér PDF",

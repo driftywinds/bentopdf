@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { JSDOM } from 'jsdom';
 import { fileURLToPath } from 'url';
+import { serializeJsonLd } from './json-ld.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,8 +60,7 @@ function buildUrl(langPrefix, pagePath) {
   if (BASE_PATH && BASE_PATH !== '') parts.push(BASE_PATH.replace(/^\//, ''));
   if (langPrefix) parts.push(langPrefix);
   if (pagePath) parts.push(pagePath.replace(/^\//, ''));
-  const url = parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
-  return langPrefix && !pagePath ? `${url}/` : url;
+  return parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
 }
 
 function resolveTranslation(langResources, key) {
@@ -133,7 +133,7 @@ function injectOrganizationLd(document) {
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
   script.setAttribute(ORGANIZATION_LD_MARKER, '');
-  script.textContent = JSON.stringify(data, null, 2);
+  script.textContent = serializeJsonLd(data);
   document.body.appendChild(script);
 }
 
@@ -141,7 +141,7 @@ const BREADCRUMB_MARKER = 'data-bentopdf-breadcrumb';
 const BRAND_NAME = process.env.VITE_BRAND_NAME || 'BentoPDF';
 
 function buildLocalHomeHref(lang) {
-  const langSegment = lang === 'en' ? '/' : `/${lang}/`;
+  const langSegment = lang === 'en' ? '/' : `/${lang}`;
   return `${BASE_PATH}${langSegment}`.replace(/\/+/g, '/');
 }
 
@@ -214,7 +214,7 @@ function injectToolBreadcrumb(document, lang, toolName, toolUrl) {
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
   script.setAttribute(BREADCRUMB_MARKER, '');
-  script.textContent = JSON.stringify(ld, null, 2);
+  script.textContent = serializeJsonLd(ld);
   document.body.appendChild(script);
 }
 
@@ -256,7 +256,7 @@ function processFileForLanguage(
   const document = dom.window.document;
 
   document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.dir = ['ar', 'fa'].includes(lang) ? 'rtl' : 'ltr';
 
   applyServerTranslations(document, translations[lang]);
 
@@ -377,7 +377,10 @@ function processFileForLanguage(
       newHref = `${BASE_PATH}/${lang}/${href}`;
     }
 
-    link.setAttribute('href', newHref);
+    link.setAttribute(
+      'href',
+      newHref.replace(/^([^?#]*[^/?#])\/(?=$|[?#])/, '$1')
+    );
   });
 
   const result = dom.serialize();
