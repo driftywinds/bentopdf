@@ -29,7 +29,7 @@ import mark from 'markdown-it-mark';
 import taskLists from 'markdown-it-task-lists';
 import anchor from 'markdown-it-anchor';
 import tocDoneRight from 'markdown-it-toc-done-right';
-import { applyTranslations } from '../i18n/i18n';
+import { applyTranslations, trHtml, trText } from '../i18n/i18n';
 import type {
   WindowWithLucide,
   WindowWithI18next,
@@ -352,7 +352,7 @@ export class MarkdownEditor {
                 <div class="theme-toggle-slider active" id="themeToggle"></div>
                 <i data-lucide="sun" width="16" height="16"></i>
               </div>
-              <button class="md-editor-btn md-editor-btn-secondary" id="mdSyncScroll" title="Toggle sync scroll">
+              <button class="md-editor-btn md-editor-btn-secondary" id="mdSyncScroll" title="${trHtml('Toggle sync scroll')}">
                 <i data-lucide="git-compare"></i>
                 <span data-i18n="tools:markdownToPdf.btnSyncScroll">Sync Scroll</span>
               </button>
@@ -738,7 +738,9 @@ export class MarkdownEditor {
           console.error('Mermaid rendering error:', error);
           const errorDiv = document.createElement('div');
           errorDiv.className = 'mermaid-error';
-          errorDiv.textContent = `Mermaid Error: ${(error as Error).message}`;
+          errorDiv.textContent = trText('Mermaid Error: {{error}}', {
+            error: (error as Error).message,
+          });
           pre.replaceWith(errorDiv);
         }
       }

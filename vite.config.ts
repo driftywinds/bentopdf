@@ -78,7 +78,6 @@ function loadPages(): Set<string> {
     'licensing',
     'kura',
     'hyper-compress',
-    'tools',
     '404',
     'pdf-converter',
     'pdf-editor',
@@ -392,6 +391,148 @@ function languageRouterPlugin(): Plugin {
   };
 }
 
+function languageRedirectPlugin(): Plugin {
+  const sourcePath = resolve(__dirname, 'src/js/language-redirect.js');
+  let isBuild = false;
+  let fileName = '';
+  return {
+    name: 'language-redirect',
+    configResolved(config) {
+      isBuild = config.command === 'build';
+    },
+    buildStart() {
+      if (!isBuild) return;
+      const hash = createHash('sha256')
+        .update(fs.readFileSync(sourcePath))
+        .digest('hex')
+        .slice(0, 10);
+      fileName = `assets/language-redirect-${hash}.js`;
+    },
+    generateBundle() {
+      if (!isBuild) return;
+      this.emitFile({
+        type: 'asset',
+        fileName,
+        source: fs.readFileSync(sourcePath, 'utf-8'),
+      });
+    },
+    transformIndexHtml: {
+      order: 'post',
+      handler() {
+        const base = `${getBasePath()}/`;
+        return [
+          {
+            tag: 'script',
+            attrs: {
+              src: isBuild
+                ? `${base}${fileName}`
+                : `${base}src/js/language-redirect.js`,
+              'data-language-redirect': '',
+              'data-base': base,
+              'data-languages': SUPPORTED_LANGUAGES.filter(
+                (lang) => lang !== 'en'
+              ).join(','),
+              'data-default-language':
+                process.env.VITE_DEFAULT_LANGUAGE || 'en',
+            },
+            injectTo: 'head-prepend',
+          },
+        ];
+      },
+    },
+  };
+}
+
+type JsonRecord = Record<string, unknown>;
+
+function devPageTranslationsPlugin(): Plugin {
+  const cache = new Map<string, { mtimeMs: number; data: JsonRecord }>();
+  const loadJson = (file: string): JsonRecord => {
+    if (!fs.existsSync(file)) return {};
+    const { mtimeMs } = fs.statSync(file);
+    const cached = cache.get(file);
+    if (cached && cached.mtimeMs === mtimeMs) return cached.data;
+    const data = JSON.parse(fs.readFileSync(file, 'utf-8')) as JsonRecord;
+    cache.set(file, { mtimeMs, data });
+    return data;
+  };
+
+  return {
+    name: 'dev-page-translations',
+    apply: 'serve',
+    enforce: 'post',
+    async transformIndexHtml(html, ctx) {
+      const basePath = getBasePath();
+      let pathname = (ctx.originalUrl ?? ctx.path).split('?')[0];
+      if (basePath && pathname.startsWith(basePath)) {
+        pathname = pathname.slice(basePath.length) || '/';
+      }
+      const lang = pathname.match(LANG_REGEX)?.[1];
+      if (!lang) return html;
+      const rootRelative = html.replace(
+        /(\s(?:src|href)=["'])(?=src\/)/g,
+        `$1${basePath}/`
+      );
+      if (lang === 'en') return rootRelative;
+      const content = loadJson(
+        resolve(__dirname, 'translations', lang, 'content.json')
+      );
+      const resources = {
+        common: loadJson(
+          resolve(__dirname, 'public/locales', lang, 'common.json')
+        ),
+        tools: loadJson(
+          resolve(__dirname, 'public/locales', lang, 'tools.json')
+        ),
+      };
+      const pageName =
+        ctx.path
+          .split('/')
+          .pop()
+          ?.replace(/\.html$/, '') || 'index';
+      const jsdomModule = 'jsdom';
+      const [{ JSDOM }, { processPage }, { applyServerTranslations }] =
+        (await Promise.all([
+          import(jsdomModule),
+          import('./scripts/content-segments.mjs'),
+          import('./scripts/server-translations.mjs'),
+        ])) as [
+          {
+            JSDOM: new (markup: string) => {
+              window: { document: Document };
+              serialize(): string;
+            };
+          },
+          {
+            processPage: (
+              document: Document,
+              pageName: string,
+              options: { translate: (id: string) => string | null }
+            ) => unknown;
+          },
+          {
+            applyServerTranslations: (
+              document: Document,
+              resources: Record<string, JsonRecord>
+            ) => void;
+          },
+        ];
+      const dom = new JSDOM(rootRelative);
+      const document = dom.window.document;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = ['ar', 'fa'].includes(lang)
+        ? 'rtl'
+        : 'ltr';
+      applyServerTranslations(document, resources);
+      processPage(document, pageName, {
+        translate: (id: string) =>
+          typeof content[id] === 'string' ? (content[id] as string) : null,
+      });
+      return dom.serialize();
+    },
+  };
+}
+
 function flattenPagesPlugin(): Plugin {
   return {
     name: 'flatten-pages',
@@ -565,6 +706,8 @@ export default defineConfig(() => {
         },
       }),
       languageRouterPlugin(),
+      devPageTranslationsPlugin(),
+      languageRedirectPlugin(),
       flattenPagesPlugin(),
       rewriteHtmlPathsPlugin(),
       swPrecachePlugin(),
@@ -664,7 +807,6 @@ export default defineConfig(() => {
           licensing: resolve(__dirname, 'licensing.html'),
           kura: resolve(__dirname, 'kura.html'),
           'hyper-compress': resolve(__dirname, 'hyper-compress.html'),
-          tools: resolve(__dirname, 'tools.html'),
           ...Object.fromEntries(
             fs
               .readdirSync(resolve(__dirname, 'blog'))

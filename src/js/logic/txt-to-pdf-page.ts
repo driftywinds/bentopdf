@@ -3,6 +3,8 @@ import { downloadFile, formatBytes } from '../utils/helpers.js';
 import { createIcons, icons } from 'lucide';
 import { loadPyMuPDF } from '../utils/pymupdf-loader.js';
 
+import { trText, onPageReady } from '../i18n/i18n.js';
+
 let files: File[] = [];
 let currentMode: 'upload' | 'text' = 'upload';
 
@@ -38,7 +40,9 @@ const updateUI = () => {
 
       const sizeSpan = document.createElement('span');
       sizeSpan.className = 'text-gray-400 text-xs ml-2';
-      sizeSpan.textContent = `(${formatBytes(file.size)})`;
+      sizeSpan.textContent = trText('({{size}})', {
+        size: formatBytes(file.size),
+      });
 
       const removeBtn = document.createElement('button');
       removeBtn.className = 'ml-4 text-red-400 hover:text-red-300';
@@ -142,7 +146,9 @@ async function convert() {
     console.error('[TxtToPDF] Error:', e);
     showAlert(
       'Error',
-      `Failed to convert text to PDF. ${e instanceof Error ? e.message : ''}`
+      trText('Failed to convert text to PDF. {{error}}', {
+        error: e instanceof Error ? e.message : '',
+      })
     );
   } finally {
     hideLoader();
@@ -161,7 +167,7 @@ function updateTextareaDirection(textarea: HTMLTextAreaElement) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+onPageReady(() => {
   const fileInput = document.getElementById('file-input') as HTMLInputElement;
   const dropZone = document.getElementById('drop-zone');
   const addMoreBtn = document.getElementById('add-more-btn');

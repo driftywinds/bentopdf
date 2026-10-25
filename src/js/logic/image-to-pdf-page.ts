@@ -14,14 +14,12 @@ import {
   preprocessImageFile,
 } from '@/js/utils/image-input-utils.js';
 
+import { trText, onPageReady } from '../i18n/i18n.js';
+
 let files: File[] = [];
 let pymupdf: PyMuPDFInstance | null = null;
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializePage);
-} else {
-  initializePage();
-}
+onPageReady(initializePage);
 
 function initializePage() {
   createIcons({ icons });
@@ -143,7 +141,9 @@ function updateUI() {
 
       const sizeSpan = document.createElement('span');
       sizeSpan.className = 'flex-shrink-0 text-gray-400 text-xs';
-      sizeSpan.textContent = `(${formatBytes(file.size)})`;
+      sizeSpan.textContent = trText('({{size}})', {
+        size: formatBytes(file.size),
+      });
 
       infoContainer.append(nameSpan, sizeSpan);
 

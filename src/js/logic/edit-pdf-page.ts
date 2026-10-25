@@ -24,6 +24,8 @@ import type {
   RedactionPluginLite,
 } from '@/types';
 
+import { trText, onPageReady } from '../i18n/i18n.js';
+
 const FREETEXT_SUBTYPE = 3;
 
 export function trackAppliedRedactions(
@@ -139,7 +141,7 @@ function confirmChoice(
     cancelBtn.type = 'button';
     cancelBtn.className =
       'flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200';
-    cancelBtn.textContent = 'Cancel';
+    cancelBtn.textContent = trText('Cancel');
 
     const confirmBtn = document.createElement('button');
     confirmBtn.type = 'button';
@@ -241,11 +243,7 @@ function removeFileEntry(documentId: string) {
   }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializePage);
-} else {
-  initializePage();
-}
+onPageReady(initializePage);
 
 function initializePage() {
   createIcons({ icons });
@@ -417,7 +415,7 @@ async function handleFiles(files: FileList) {
         downloadBtn = document.createElement('button');
         downloadBtn.id = 'download-edited-pdf';
         downloadBtn.className = 'btn-gradient w-full mt-6';
-        downloadBtn.textContent = 'Download Edited PDF';
+        downloadBtn.textContent = trText('Download Edited PDF');
         pdfWrapper.appendChild(downloadBtn);
       }
       downloadBtn.classList.remove('hidden');
@@ -427,14 +425,17 @@ async function handleFiles(files: FileList) {
           const documentId = activeDocuments.getActiveDocumentId();
           const pendingCount = redactionPlugin?.getState().pendingCount ?? 0;
           if (redactionPlugin && pendingCount > 0) {
-            const marks =
-              pendingCount === 1
-                ? "1 redaction mark that hasn't"
-                : `${pendingCount} redaction marks that haven't`;
             const shouldApply = await confirmChoice(
-              'Apply redactions?',
-              `This document has ${marks} been applied. Until a mark is applied, the content under it is still in the file. Apply all marks and download?`,
-              'Apply and download'
+              trText('Apply redactions?'),
+              pendingCount === 1
+                ? trText(
+                    "This document has 1 redaction mark that hasn't been applied. Until a mark is applied, the content under it is still in the file. Apply all marks and download?"
+                  )
+                : trText(
+                    "This document has {{count}} redaction marks that haven't been applied. Until a mark is applied, the content under it is still in the file. Apply all marks and download?",
+                    { count: pendingCount }
+                  ),
+              trText('Apply and download')
             );
             if (!shouldApply) return;
             try {
@@ -505,9 +506,11 @@ async function handleFiles(files: FileList) {
             });
             if (exported.isEncrypted) {
               const shouldDownload = await confirmChoice(
-                'Encrypted file',
-                "Your redactions are applied to the pages, but this file is encrypted, so BentoPDF can't also remove copies of the redacted text from its properties, bookmarks, and attachments. For a full cleanup, redact an unencrypted copy and add a password afterwards with Protect PDF. Download anyway?",
-                'Download anyway'
+                trText('Encrypted file'),
+                trText(
+                  "Your redactions are applied to the pages, but this file is encrypted, so BentoPDF can't also remove copies of the redacted text from its properties, bookmarks, and attachments. For a full cleanup, redact an unencrypted copy and add a password afterwards with Protect PDF. Download anyway?"
+                ),
+                trText('Download anyway')
               );
               if (!shouldDownload) return;
             } else {

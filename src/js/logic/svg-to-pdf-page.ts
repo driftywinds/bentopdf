@@ -7,13 +7,11 @@ import {
   compressImageBytes,
 } from '../utils/image-compress.js';
 
+import { trText, onPageReady } from '../i18n/i18n.js';
+
 let files: File[] = [];
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializePage);
-} else {
-  initializePage();
-}
+onPageReady(initializePage);
 
 function initializePage() {
   createIcons({ icons });
@@ -133,7 +131,9 @@ function updateUI() {
 
       const sizeSpan = document.createElement('span');
       sizeSpan.className = 'flex-shrink-0 text-gray-400 text-xs';
-      sizeSpan.textContent = `(${formatBytes(file.size)})`;
+      sizeSpan.textContent = trText('({{size}})', {
+        size: formatBytes(file.size),
+      });
 
       infoContainer.append(nameSpan, sizeSpan);
 
@@ -178,7 +178,7 @@ function svgToPng(svgText: string): Promise<Uint8Array> {
       const ctx = canvas.getContext('2d');
       if (!ctx) {
         URL.revokeObjectURL(url);
-        return reject(new Error('Could not get canvas context'));
+        return reject(new Error(trText('Could not get canvas context')));
       }
 
       // Fill with white background for transparency
@@ -189,7 +189,7 @@ function svgToPng(svgText: string): Promise<Uint8Array> {
       canvas.toBlob(async (pngBlob) => {
         URL.revokeObjectURL(url);
         if (!pngBlob) {
-          return reject(new Error('Canvas toBlob conversion failed.'));
+          return reject(new Error(trText('Canvas toBlob conversion failed.')));
         }
         const arrayBuffer = await pngBlob.arrayBuffer();
         resolve(new Uint8Array(arrayBuffer));
@@ -198,7 +198,7 @@ function svgToPng(svgText: string): Promise<Uint8Array> {
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error('Failed to load SVG image'));
+      reject(new Error(trText('Failed to load SVG image')));
     };
 
     img.src = url;
@@ -243,7 +243,9 @@ async function convertToPdf() {
       } catch (error) {
         console.error(`Failed to process ${file.name}:`, error);
         throw new Error(
-          `Could not process "${file.name}". The file may be corrupted.`,
+          trText('Could not process "{{name}}". The file may be corrupted.', {
+            name: file.name,
+          }),
           { cause: error }
         );
       }

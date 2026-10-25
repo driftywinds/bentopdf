@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { canonicalBasePath, isIndexingBlocked } from './indexing-policy.mjs';
+import { createTranslationChecker } from './page-translation.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -90,6 +92,11 @@ for (const lang of LOCALE_DIRS) {
     : {};
 }
 
+const isPageTranslated = createTranslationChecker(
+  toolsByLang,
+  (baseName) => KEY_MAPPING[baseName] || toCamelCase(baseName)
+);
+
 function hasTrailingSlash(href) {
   const { pathname } = new URL(href);
   return pathname !== '/' && pathname.endsWith('/');
@@ -107,15 +114,12 @@ function expectedCanonicalForFile(rel) {
   if (isBlogPage(rel)) {
     return `${OFFICIAL_SITE_URL}/blog${slug ? `/${slug}` : ''}`;
   }
-  const translationKey = KEY_MAPPING[baseName] || toCamelCase(baseName);
   const segments = [SITE_URL];
-  if (BASE_PATH) segments.push(BASE_PATH.replace(/^\//, ''));
+  const canonicalBase = canonicalBasePath();
+  if (canonicalBase) segments.push(canonicalBase.replace(/^\//, ''));
   for (const dir of parts) {
     if (LOCALE_DIRS.has(dir)) {
-      const translated =
-        baseName === 'index' ||
-        Boolean(toolsByLang[dir] && toolsByLang[dir][translationKey]);
-      if (translated) segments.push(dir);
+      if (isPageTranslated(baseName, dir)) segments.push(dir);
     }
   }
   if (slug) segments.push(slug);
@@ -218,6 +222,7 @@ function auditHtml(file, knownSlugs) {
   if (
     robots &&
     /noindex/i.test(robots) &&
+    !isIndexingBlocked() &&
     !NOINDEX_ALLOWLIST.has(file.rel) &&
     !NOINDEX_ALLOWLIST.has(path.basename(file.rel))
   ) {
