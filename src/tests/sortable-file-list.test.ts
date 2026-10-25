@@ -47,9 +47,7 @@ describe('createDragHandle', () => {
     const handle = createDragHandle();
     expect(handle.classList.contains('drag-handle')).toBe(true);
     expect(handle.getAttribute('aria-label')).toBe('Drag to reorder');
-    expect(
-      handle.querySelector('[data-lucide="grip-vertical"]')
-    ).not.toBeNull();
+    expect(handle.querySelector('i.ph.ph-dots-six-vertical')).not.toBeNull();
   });
 });
 

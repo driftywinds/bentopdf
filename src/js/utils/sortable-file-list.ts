@@ -32,7 +32,9 @@ export function createDragHandle(): HTMLElement {
   const label = trText('Drag to reorder');
   handle.title = label;
   handle.setAttribute('aria-label', label);
-  handle.innerHTML = '<i data-lucide="grip-vertical" class="w-4 h-4"></i>';
+  const icon = document.createElement('i');
+  icon.className = 'ph ph-dots-six-vertical text-base';
+  handle.appendChild(icon);
   return handle;
 }
 
