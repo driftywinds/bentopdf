@@ -3,6 +3,7 @@ import { downloadFile, formatBytes } from '../utils/helpers.js';
 import { state } from '../state.js';
 import { createIcons, icons } from 'lucide';
 import { loadPyMuPDF } from '../utils/pymupdf-loader.js';
+import { convertXpsToPdf } from '../utils/xps-repair.js';
 import { deduplicateFileName } from '../utils/deduplicate-filename.js';
 
 import { trText, onPageReady } from '../i18n/i18n.js';
@@ -104,9 +105,7 @@ onPageReady(() => {
           trText('Converting {{name}}...', { name: originalFile.name })
         );
 
-        const pdfBlob = await pymupdf.convertToPdf(originalFile, {
-          filetype: FILETYPE,
-        });
+        const pdfBlob = await convertXpsToPdf(pymupdf, originalFile);
         const fileName = originalFile.name.replace(/\.[^.]+$/, '') + '.pdf';
 
         downloadFile(pdfBlob, fileName);
@@ -136,9 +135,7 @@ onPageReady(() => {
             })
           );
 
-          const pdfBlob = await pymupdf.convertToPdf(file, {
-            filetype: FILETYPE,
-          });
+          const pdfBlob = await convertXpsToPdf(pymupdf, file);
           const baseName = file.name.replace(/\.[^.]+$/, '');
           const pdfBuffer = await pdfBlob.arrayBuffer();
           const zipEntryName = deduplicateFileName(
