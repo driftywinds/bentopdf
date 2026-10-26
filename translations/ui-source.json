@@ -2647,6 +2647,12 @@
     ],
     "fileCount": 1
   },
+  "Drag to reorder": {
+    "files": [
+      "utils/sortable-file-list.ts"
+    ],
+    "fileCount": 1
+  },
   "Drops tagging, which screen readers rely on.": {
     "files": [
       "logic/compress-pdf-page.ts"
