@@ -428,6 +428,7 @@
   "Downloaded {{length}} PDF files in a ZIP archive.": "Файлов PDF скачано в ZIP-архиве: {{length}}.",
   "Downloads started for all files.": "Скачивание всех файлов началось.",
   "Dpi": "DPI",
+  "Drag to reorder": "Перетащите, чтобы изменить порядок",
   "Drops tagging, which screen readers rely on.": "Удаляет теги, на которые опираются программы чтения с экрана.",
   "Duplicate Field Name": "Повторяющееся имя поля",
   "Duplicate Field Names": "Повторяющиеся имена полей",

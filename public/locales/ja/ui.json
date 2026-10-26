@@ -428,6 +428,7 @@
   "Downloaded {{length}} PDF files in a ZIP archive.": "{{length}}個のPDFファイルをZIPアーカイブでダウンロードしました。",
   "Downloads started for all files.": "すべてのファイルのダウンロードを開始しました。",
   "Dpi": "DPI",
+  "Drag to reorder": "ドラッグして並べ替え",
   "Drops tagging, which screen readers rely on.": "スクリーンリーダーが利用するタグ付けが削除されます。",
   "Duplicate Field Name": "フィールド名の重複",
   "Duplicate Field Names": "フィールド名の重複",

@@ -428,6 +428,7 @@
   "Downloaded {{length}} PDF files in a ZIP archive.": "PDF 파일 {{length}}개를 ZIP 압축 파일로 다운로드했습니다.",
   "Downloads started for all files.": "모든 파일의 다운로드가 시작되었습니다.",
   "Dpi": "DPI",
+  "Drag to reorder": "드래그하여 순서 변경",
   "Drops tagging, which screen readers rely on.": "스크린 리더가 사용하는 태그가 제거됩니다.",
   "Duplicate Field Name": "중복된 필드 이름",
   "Duplicate Field Names": "중복된 필드 이름",

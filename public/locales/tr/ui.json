@@ -428,6 +428,7 @@
   "Downloaded {{length}} PDF files in a ZIP archive.": "{{length}} PDF dosyası ZIP arşivi olarak indirildi.",
   "Downloads started for all files.": "Tüm dosyalar için indirme başladı.",
   "Dpi": "DPI",
+  "Drag to reorder": "Yeniden sıralamak için sürükle",
   "Drops tagging, which screen readers rely on.": "Ekran okuyucuların kullandığı etiketlemeyi kaldırır.",
   "Duplicate Field Name": "Yinelenen Alan Adı",
   "Duplicate Field Names": "Yinelenen Alan Adları",

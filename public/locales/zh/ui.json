@@ -428,6 +428,7 @@
   "Downloaded {{length}} PDF files in a ZIP archive.": "已将 {{length}} 个 PDF 文件下载为 ZIP 压缩包。",
   "Downloads started for all files.": "所有文件均已开始下载。",
   "Dpi": "DPI",
+  "Drag to reorder": "拖动以重新排序",
   "Drops tagging, which screen readers rely on.": "会丢弃屏幕阅读器依赖的标签结构。",
   "Duplicate Field Name": "字段名称重复",
   "Duplicate Field Names": "字段名称重复",
