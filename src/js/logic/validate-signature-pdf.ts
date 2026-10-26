@@ -9,6 +9,8 @@ const INSECURE_DIGEST_OIDS = new Set<string>([
   '1.3.14.3.2.26',
 ]);
 
+const MIN_RSA_EXPONENT = new forge.jsbn.BigInteger('65537');
+
 const PDF_WHITESPACE = new Set('\0\t\n\f\r ');
 const PDF_TOKEN_TERMINATORS = new Set('\0\t\n\f\r ()<>[]{}/%');
 const PDF_STRING_ESCAPES: Record<string, string> = {
@@ -379,6 +381,10 @@ export async function validateSignature(
       p7.rawCapture?.issuer,
       p7.rawCapture?.serial
     );
+    if (!signerCert) {
+      result.errorMessage = trText('Could not parse signer info');
+      return result;
+    }
 
     const subjectCN = signerCert.subject.getField('CN');
     const subjectO = signerCert.subject.getField('O');
@@ -512,7 +518,7 @@ function findSignerCertificate(
   certificates: forge.pki.Certificate[],
   issuer: forge.asn1.Asn1 | undefined,
   serial: string | undefined
-): forge.pki.Certificate {
+): forge.pki.Certificate | null {
   if (issuer && serial) {
     const serialHex = forge.util.createBuffer(serial).toHex();
     const issuerDer = forge.asn1.toDer(issuer).getBytes();
@@ -523,15 +529,21 @@ function findSignerCertificate(
           .toDer(forge.pki.distinguishedNameToAsn1(cert.issuer))
           .getBytes() === issuerDer
     );
-    if (match) return match;
+    return match ?? null;
   }
   return certificates[0];
+}
+
+function hasLowRsaExponent(key: unknown): boolean {
+  const exponent = (key as Partial<forge.pki.rsa.PublicKey> | undefined)?.e;
+  return !!exponent && exponent.compareTo(MIN_RSA_EXPONENT) < 0;
 }
 
 function isIssuedBy(
   issuer: forge.pki.Certificate,
   child: forge.pki.Certificate
 ): boolean {
+  if (hasLowRsaExponent(issuer.publicKey)) return false;
   try {
     return issuer.verify(child);
   } catch {
@@ -804,14 +816,19 @@ function parsePssParams(paramsNode: forge.asn1.Asn1 | undefined): {
 function extractSpkiDer(
   p7: forge.pkcs7.PkcsSignedData & {
     rawCapture?: { certificates?: forge.asn1.Asn1 };
-  }
+  },
+  index: number
 ): Uint8Array | null {
   try {
     const certsNode = p7.rawCapture?.certificates;
-    if (!certsNode || !Array.isArray(certsNode.value) || !certsNode.value[0]) {
+    if (
+      !certsNode ||
+      !Array.isArray(certsNode.value) ||
+      !certsNode.value[index]
+    ) {
       return null;
     }
-    const certAsn1 = certsNode.value[0];
+    const certAsn1 = certsNode.value[index];
     if (!Array.isArray(certAsn1.value) || !certAsn1.value[0]) return null;
     const tbs = certAsn1.value[0];
     if (!Array.isArray(tbs.value)) return null;
@@ -1093,7 +1110,7 @@ async function performCryptoVerification(
     signedBytesForVerify = signedContent;
   }
 
-  if (scheme.kind === 'rsa-pkcs1') {
+  if (scheme.kind === 'rsa-pkcs1' && !hasLowRsaExponent(signerCert.publicKey)) {
     try {
       const publicKey = signerCert.publicKey as forge.pki.rsa.PublicKey;
       const md2 = createMd(fields.digestOid)!;
@@ -1105,7 +1122,8 @@ async function performCryptoVerification(
     }
   }
 
-  const spkiDer = extractSpkiDer(p7);
+  const signerIndex = (p7.certificates ?? []).indexOf(signerCert);
+  const spkiDer = signerIndex < 0 ? null : extractSpkiDer(p7, signerIndex);
   if (!spkiDer) {
     return {
       status: 'unsupported',
