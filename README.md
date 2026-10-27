@@ -100,6 +100,8 @@ BentoPDF is **dual-licensed** to fit your needs:
 
 > **One-time purchase** · **Unlimited devices & users** · **Lifetime updates** · **No AGPL obligations**
 
+> **Building on BentoPDF? Hyper Compress is included.** The commercial license covers [Hyper Compress](https://github.com/alam00000/bentopdf-hyper-compress) as a bundled component when you use it through BentoPDF's own tools. Using the engine on its own or in other software needs a separate [Hyper Compress license](https://www.bentopdf.com/hyper-compress#pricing) from $99/year, and [Kura](https://www.bentopdf.com/kura#pricing) is licensed separately from $99/year. See [Bundled Components](https://www.bentopdf.com/licensing#bundled-components).
+
 📖 For more details, see our [Licensing Page](https://www.bentopdf.com/licensing)
 
 ### AGPL Components (Pre-configured via CDN)

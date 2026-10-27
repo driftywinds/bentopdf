@@ -678,8 +678,14 @@ function rewriteHtmlPathsPlugin(): Plugin {
   };
 }
 
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
   const USE_CDN = process.env.VITE_USE_CDN === 'true';
+  const baseUrl = (process.env.BASE_URL || '/').replace(/\/?$/, '/');
+  const docsUrl =
+    baseUrl === '/' &&
+    (command === 'serve' || process.env.INCLUDE_DOCS === 'true')
+      ? '/docs/'
+      : 'https://www.bentopdf.com/docs';
 
   if (USE_CDN) {
     console.log('[Vite] Using CDN for WASM files (with local fallback)');
@@ -698,6 +704,7 @@ export default defineConfig(() => {
         partialDirectory: resolve(__dirname, 'src/partials'),
         context: {
           baseUrl: (process.env.BASE_URL || '/').replace(/\/?$/, '/'),
+          docsUrl,
           simpleMode: process.env.SIMPLE_MODE === 'true',
           brandName: process.env.VITE_BRAND_NAME || '',
           brandLogo: process.env.VITE_BRAND_LOGO || '',
@@ -778,6 +785,21 @@ export default defineConfig(() => {
     },
     server: {
       host: process.env.VITE_DEV_HOST || 'localhost',
+      proxy: {
+        '/docs': {
+          target: 'http://localhost:5174',
+          ws: true,
+          configure: (proxy) => {
+            proxy.on('error', (_error, _req, res) => {
+              if (!('writeHead' in res) || res.headersSent) return;
+              res.writeHead(502, { 'Content-Type': 'text/plain' });
+              res.end(
+                'The docs dev server is not running. Start it with: npm run docs:dev'
+              );
+            });
+          },
+        },
+      },
       watch: {
         ignored: ['!**/node_modules/bentopdf-pdfium/**'],
       },

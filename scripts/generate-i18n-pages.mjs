@@ -366,16 +366,17 @@ function processFileForLanguage(
   }
 
   if (docsLanguages.includes(lang)) {
+    const localDocs = `${BASE_PATH}/docs`;
     document.querySelectorAll('a[href]').forEach((link) => {
       const href = link.getAttribute('href');
-      if (
-        href === OFFICIAL_DOCS_URL ||
-        href?.startsWith(`${OFFICIAL_DOCS_URL}/`)
-      ) {
-        link.setAttribute(
-          'href',
-          href.replace(OFFICIAL_DOCS_URL, `${OFFICIAL_DOCS_URL}/${lang}`)
-        );
+      for (const docsUrl of [OFFICIAL_DOCS_URL, localDocs]) {
+        if (href === docsUrl || href?.startsWith(`${docsUrl}/`)) {
+          link.setAttribute(
+            'href',
+            href.replace(docsUrl, `${docsUrl}/${lang}`)
+          );
+          break;
+        }
       }
     });
   }
@@ -404,7 +405,7 @@ function processFileForLanguage(
       BASE_PATH && href.startsWith(`${BASE_PATH}/`)
         ? href.slice(BASE_PATH.length)
         : href;
-    if (hrefWithoutBase === '/blog' || hrefWithoutBase.startsWith('/blog/')) {
+    if (/^\/(blog|docs)(\/|$)/.test(hrefWithoutBase)) {
       return;
     }
 
