@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | ページ読み込み時のGitHubスター数の取得をスキップし、CSPから `api.github.com` を除外します。Simple Modeのビルドでは常にスキップされます。                                    | `false`                                                        |
 | `SITE_URL`                           | canonical、hreflang、サイトマップのリンクに書き込まれる公開URL。検索エンジンにデプロイ先を独立したサイトとして扱わせたい場合を除き、デフォルトのままにしてください。        | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | カスタムの `SITE_URL` を使う場合、検索結果でbentopdf.comと競合しないよう、すべてのページが `noindex` になります。検索エンジンにインデックスさせるには `true` に設定します。 | `false`                                                        |
+| `COMPRESSION_MODE`                   | 各ファイルの横に保存する事前圧縮コピー：`o` なし、`g` `.gz`（イメージのnginxが配信）、`b` `.br`、`all` 両方。イメージのnginxは `.br` を配信できません。                     | `o`                                                            |
 
 WASMモジュールのURLには、CDNのデフォルトがあらかじめ設定されているため、高度な機能はすべてそのまま動作します。エアギャップ環境やセルフホスト環境では、これらを上書きしてください。
 

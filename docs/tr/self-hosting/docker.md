@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Sayfa yüklenirken GitHub yıldız sayısı çekimini atlar ve `api.github.com` adresini CSP'den çıkarır. Simple Mode derlemeleri bunu her zaman atlar.                                                   | `false`                                                        |
 | `SITE_URL`                           | Canonical, hreflang ve sitemap bağlantılarına yazılan herkese açık URL. Arama motorlarının dağıtımınızı ayrı bir site olarak görmesini istemiyorsanız varsayılan değerde bırakın.                   | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Özel bir `SITE_URL` ile her sayfa `noindex` olarak işaretlenir, böylece kopyanız arama sonuçlarında bentopdf.com ile rekabet etmez. Arama motorlarının dizinlemesine izin vermek için `true` yapın. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Her dosyanın yanına kaydedilen önceden sıkıştırılmış kopyalar: `o` yok, `g` `.gz` (imajdaki nginx sunar), `b` `.br`, `all` ikisi de. İmajdaki nginx `.br` sunamaz.                                  | `o`                                                            |
 
 WASM modül URL'leri CDN varsayılanlarıyla önceden yapılandırılmıştır, tüm gelişmiş özellikler kutudan çıktığı gibi çalışır. İnternetten yalıtılmış veya kendi sunucunuzdaki dağıtımlar için bunları geçersiz kılın.
 

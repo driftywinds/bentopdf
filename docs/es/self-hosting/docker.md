@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Omite la obtención del contador de estrellas de GitHub al cargar la página y elimina `api.github.com` de la CSP. Las compilaciones en Simple Mode siempre la omiten.                                         | `false`                                                        |
 | `SITE_URL`                           | URL pública escrita en los enlaces canonical, hreflang y de sitemap. Déjala por defecto salvo que quieras que los buscadores traten tu despliegue como un sitio propio.                                      | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Con un `SITE_URL` personalizado, todas las páginas se marcan como `noindex` para que tu copia no compita con bentopdf.com en los resultados de búsqueda. Ponlo en `true` para que los buscadores la indexen. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Copias precomprimidas que se guardan junto a cada archivo: `o` ninguna, `g` `.gz` (las sirve el nginx de la imagen), `b` `.br`, `all` ambas. El nginx de la imagen no puede servir `.br`.                    | `o`                                                            |
 
 Las URL de los módulos WASM vienen preconfiguradas con valores predeterminados de CDN, así que todas las funciones avanzadas funcionan desde el primer momento. Sobrescríbelas para despliegues aislados de la red o autoalojados.
 

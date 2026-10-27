@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Sla het ophalen van het aantal GitHub-sterren bij het laden van de pagina over en haal `api.github.com` uit de CSP. Builds in Simple Mode slaan het altijd over.            | `false`                                                        |
 | `SITE_URL`                           | Openbare URL die in canonical-, hreflang- en sitemaplinks wordt geschreven. Laat de standaardwaarde staan, tenzij zoekmachines je implementatie als eigen site moeten zien. | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Bij een aangepaste `SITE_URL` krijgt elke pagina `noindex`, zodat je kopie niet concurreert met bentopdf.com in zoekresultaten. Zet op `true` om indexering toe te staan.   | `false`                                                        |
+| `COMPRESSION_MODE`                   | Voorgecomprimeerde kopieën: `o` geen, `g` `.gz` (geserveerd door de nginx van de image), `b` `.br`, `all` beide. De nginx van de image kan `.br` niet serveren.             | `o`                                                            |
 
 WASM-module-URL's zijn vooraf geconfigureerd met CDN-standaardwaarden, dus alle geavanceerde functies werken direct. Overschrijf ze voor air-gapped of zelfgehoste implementaties.
 

@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Salta il recupero del numero di stelle GitHub al caricamento della pagina e rimuove `api.github.com` dalla CSP. Le build in Simple Mode lo saltano sempre.                                                     | `false`                                                        |
 | `SITE_URL`                           | URL pubblico scritto nei link canonical, hreflang e sitemap. Lascia il valore predefinito, a meno che tu non voglia che i motori di ricerca trattino la tua installazione come un sito a sé.                   | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Con un `SITE_URL` personalizzato, ogni pagina è marcata `noindex` così la tua copia non compete con bentopdf.com nei risultati di ricerca. Imposta `true` per permettere ai motori di ricerca di indicizzarla. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Copie precompresse da salvare accanto a ogni file: `o` nessuna, `g` `.gz` (servite dal nginx dell'immagine), `b` `.br`, `all` entrambe. Il nginx dell'immagine non può servire `.br`.                          | `o`                                                            |
 
 Gli URL dei moduli WASM sono preconfigurati con i valori CDN predefiniti: tutte le funzionalità avanzate funzionano subito. Sostituiscili per installazioni air-gapped o self-hosted.
 

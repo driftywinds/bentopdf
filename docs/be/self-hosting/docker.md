@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Не загружаць колькасць зорак GitHub пры загрузцы старонкі і прыбраць `api.github.com` з CSP. Зборкі Simple Mode заўсёды гэта прапускаюць.                               | `false`                                                        |
 | `SITE_URL`                           | Публічны URL для спасылак canonical, hreflang і sitemap. Пакіньце значэнне па змаўчанні, калі не хочаце, каб пошукавыя сістэмы лічылі ваша разгортванне асобным сайтам. | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | З уласным `SITE_URL` кожная старонка пазначаецца `noindex`, каб ваша копія не канкурыравала з bentopdf.com у выніках пошуку. Задайце `true`, каб дазволіць індэксацыю.  | `false`                                                        |
+| `COMPRESSION_MODE`                   | Папярэдне сціснутыя копіі побач з кожным файлам: `o` няма, `g` `.gz` (іх аддае nginx вобраза), `b` `.br`, `all` абедзве. Nginx вобраза не ўмее аддаваць `.br`.          | `o`                                                            |
 
 URL модуляў WASM загадзя настроены на CDN па змаўчанні: усе пашыраныя функцыі працуюць адразу. Перавызначце іх для ізаляваных або ўласных разгортванняў.
 

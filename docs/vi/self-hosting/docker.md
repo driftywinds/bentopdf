@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Bỏ qua việc lấy số sao GitHub khi tải trang và loại `api.github.com` khỏi CSP. Các bản build Simple Mode luôn bỏ qua.                                                                     | `false`                                                        |
 | `SITE_URL`                           | URL công khai được ghi vào các liên kết canonical, hreflang và sitemap. Hãy giữ mặc định trừ khi bạn muốn công cụ tìm kiếm coi bản triển khai của bạn là một trang riêng.                 | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Với `SITE_URL` tùy chỉnh, mọi trang được đánh dấu `noindex` để bản của bạn không cạnh tranh với bentopdf.com trong kết quả tìm kiếm. Đặt `true` để cho phép công cụ tìm kiếm lập chỉ mục. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Bản nén sẵn lưu cạnh mỗi tệp: `o` không có, `g` `.gz` (do nginx trong image phục vụ), `b` `.br`, `all` cả hai. Nginx trong image không phục vụ được `.br`.                                | `o`                                                            |
 
 URL các module WASM đã được cấu hình sẵn với CDN mặc định, nên mọi tính năng nâng cao hoạt động ngay. Hãy ghi đè các URL này cho môi trường air-gapped hoặc tự lưu trữ.
 

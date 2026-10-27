@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | 페이지 로드 시 GitHub 스타 수 가져오기를 건너뛰고 CSP에서 `api.github.com`을 제거합니다. Simple Mode 빌드는 항상 건너뜁니다.                                                            | `false`                                                        |
 | `SITE_URL`                           | canonical, hreflang, 사이트맵 링크에 기록되는 공개 URL입니다. 검색 엔진이 사용자의 배포를 독립된 사이트로 취급하길 원하지 않는다면 기본값으로 두세요.                                   | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | 사용자 지정 `SITE_URL`을 사용하면 모든 페이지가 `noindex`로 표시되어 사용자의 사본이 검색 결과에서 bentopdf.com과 경쟁하지 않습니다. 검색 엔진이 색인하도록 하려면 `true`로 설정하세요. | `false`                                                        |
+| `COMPRESSION_MODE`                   | 각 파일 옆에 저장할 사전 압축 사본: `o` 없음, `g` `.gz` (이미지의 nginx가 제공), `b` `.br`, `all` 둘 다. 이미지의 nginx는 `.br`을 제공할 수 없습니다.                                   | `o`                                                            |
 
 WASM 모듈 URL에는 CDN 기본값이 미리 설정되어 있어 모든 고급 기능이 별도 설정 없이 작동합니다. 폐쇄망이나 직접 호스팅하는 배포에서는 이 값을 덮어쓰세요.
 

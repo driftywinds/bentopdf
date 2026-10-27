@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Pula a busca da contagem de estrelas do GitHub ao carregar a página e remove `api.github.com` da CSP. As versões Simple Mode sempre a dispensam.                                                                                  | `false`                                                        |
 | `SITE_URL`                           | URL pública gravada nos links canonical, hreflang e sitemap. Mantenha o padrão, a menos que queira que os mecanismos de busca tratem sua implantação como um site próprio.                                                        | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Com um `SITE_URL` personalizado, todas as páginas são marcadas como `noindex` para que sua cópia não concorra com o bentopdf.com nos resultados de busca. Defina como `true` para permitir a indexação pelos mecanismos de busca. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Cópias pré-comprimidas salvas ao lado de cada arquivo: `o` nenhuma, `g` `.gz` (servidas pelo nginx da imagem), `b` `.br`, `all` ambas. O nginx da imagem não consegue servir `.br`.                                               | `o`                                                            |
 
 As URLs dos módulos WASM vêm pré-configuradas com padrões de CDN, então todos os recursos avançados funcionam sem configuração. Substitua-as em implantações isoladas da internet (air-gapped) ou hospedadas por conta própria.
 

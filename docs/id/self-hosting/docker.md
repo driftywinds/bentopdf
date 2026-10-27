@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Lewati pengambilan jumlah bintang GitHub saat halaman dimuat dan hapus `api.github.com` dari CSP. Build Simple Mode selalu melewatinya.                                               | `false`                                                        |
 | `SITE_URL`                           | URL publik yang ditulis ke tautan canonical, hreflang, dan sitemap. Biarkan default kecuali Anda ingin mesin pencari memperlakukan deployment Anda sebagai situs tersendiri.          | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Dengan `SITE_URL` kustom, setiap halaman ditandai `noindex` agar salinan Anda tidak bersaing dengan bentopdf.com di hasil pencarian. Atur ke `true` agar mesin pencari mengindeksnya. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Salinan terkompresi: `o` tidak ada, `g` `.gz` (disajikan oleh nginx di image), `b` `.br`, `all` keduanya. Nginx di image tidak bisa menyajikan `.br`.                                 | `o`                                                            |
 
 URL modul WASM sudah dikonfigurasi dengan default CDN, sehingga semua fitur lanjutan langsung berfungsi. Timpa nilai ini untuk deployment air-gapped atau hosting mandiri.
 

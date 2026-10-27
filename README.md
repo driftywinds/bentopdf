@@ -432,32 +432,34 @@ npm run preview
 
 **Compression Modes:**
 
-BentoPDF supports different compression modes for optimized builds:
+By default the build saves no compressed copies, and your server or host compresses files as it sends them. If your server can send precompressed files (nginx `gzip_static` or `brotli_static`, Apache, Caddy `precompressed`), set `COMPRESSION_MODE` to save `.gz` and/or `.br` copies next to each text and WASM file. The originals are always kept.
+
+The prebuilt Docker images have no copies, and their nginx compresses with gzip on the fly. Build your own image with `COMPRESSION_MODE=g` to have it serve `.gz` copies instead. The image's nginx can't serve brotli, so for brotli put a proxy or CDN that compresses with brotli, such as Traefik or Cloudflare, in front of it.
 
 ```bash
-# Gzip only (smallest Docker image size)
-npm run build:gzip
-docker build --build-arg COMPRESSION_MODE=g -t bentopdf:gzip .
-
-# Brotli only (best compression ratio)
-npm run build:brotli
-docker build --build-arg COMPRESSION_MODE=b -t bentopdf:brotli .
-
-# No compression (fastest build time)
+# No copies (default)
 npm run build:original
 docker build --build-arg COMPRESSION_MODE=o -t bentopdf:original .
 
-# All formats (default, maximum browser compatibility)
+# Gzip copies
+npm run build:gzip
+docker build --build-arg COMPRESSION_MODE=g -t bentopdf:gzip .
+
+# Brotli copies
+npm run build:brotli
+docker build --build-arg COMPRESSION_MODE=b -t bentopdf:brotli .
+
+# Both
 npm run build:all
 docker build --build-arg COMPRESSION_MODE=all -t bentopdf:all .
 ```
 
-| Mode  | Files Kept  | Use Case                          |
-| ----- | ----------- | --------------------------------- |
-| `g`   | `.gz` only  | Standard nginx or minimal size    |
-| `b`   | `.br` only  | Modern CDN with Brotli support    |
-| `o`   | originals   | Development or custom compression |
-| `all` | all formats | Maximum compatibility (default)   |
+| Mode  | Copies made     | Use case                              |
+| ----- | --------------- | ------------------------------------- |
+| `o`   | none            | Default, server compresses on the fly |
+| `g`   | `.gz`           | nginx with `gzip_static`              |
+| `b`   | `.br`           | Servers with `brotli_static`          |
+| `all` | `.gz` and `.br` | Servers that serve both               |
 
 **CDN Optimization:**
 

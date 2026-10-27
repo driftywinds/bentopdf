@@ -6,11 +6,9 @@ import type { Connect, Plugin } from 'vite';
 // import basicSsl from '@vitejs/plugin-basic-ssl';
 import tailwindcss from '@tailwindcss/vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
-import viteCompression from 'vite-plugin-compression';
 import handlebars from 'vite-plugin-handlebars';
 import { resolve } from 'path';
 import fs from 'fs';
-import { constants as zlibConstants } from 'zlib';
 import { createHash } from 'crypto';
 
 function engineVersion(): string {
@@ -726,30 +724,6 @@ export default defineConfig(({ command }) => {
           global: false,
           process: true,
         },
-      }),
-      viteCompression({
-        algorithm: 'brotliCompress',
-        ext: '.br',
-        threshold: 1024,
-        filter: /\.(js|mjs|json|css|html|wasm|svg)$/i,
-        compressionOptions: {
-          params: {
-            [zlibConstants.BROTLI_PARAM_QUALITY]: 11,
-            [zlibConstants.BROTLI_PARAM_MODE]:
-              zlibConstants.BROTLI_MODE_GENERIC,
-          },
-        },
-        deleteOriginFile: false,
-      }),
-      viteCompression({
-        algorithm: 'gzip',
-        ext: '.gz',
-        threshold: 1024,
-        filter: /\.(js|mjs|json|css|html|wasm|svg)$/i,
-        compressionOptions: {
-          level: 9,
-        },
-        deleteOriginFile: false,
       }),
     ],
     define: {

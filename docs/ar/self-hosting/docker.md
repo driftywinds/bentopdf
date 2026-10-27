@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | تخطي جلب عدد نجوم GitHub عند تحميل الصفحة وحذف `api.github.com` من CSP. عمليات بناء Simple Mode تتخطاه دائمًا.                                       | `false`                                                        |
 | `SITE_URL`                           | العنوان العام المكتوب في روابط canonical وhreflang وخريطة الموقع. اتركه على الافتراضي ما لم تكن تريد أن تعامل محركات البحث نشرك كموقع مستقل.         | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | مع `SITE_URL` مخصص، توضع على كل صفحة علامة `noindex` لكي لا تنافس نسختك bentopdf.com في نتائج البحث. اضبطه على `true` للسماح لمحركات البحث بفهرستها. | `false`                                                        |
+| `COMPRESSION_MODE`                   | نسخ مضغوطة مسبقًا: `o` بلا نسخ، `g` `.gz` (يقدّمها nginx داخل الصورة)، `b` `.br`، `all` كلاهما. لا يستطيع nginx داخل الصورة تقديم `.br`.             | `o`                                                            |
 
 عناوين وحدات WASM مُعدّة مسبقًا بقيم CDN افتراضية، فتعمل جميع الميزات المتقدمة مباشرة. غيّرها في عمليات النشر المعزولة عن الإنترنت أو المستضافة ذاتيًا.
 

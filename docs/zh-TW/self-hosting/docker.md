@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | 頁面載入時略過擷取 GitHub 星星數，並從 CSP 移除 `api.github.com`。Simple Mode 建置一律略過。                                           | `false`                                                        |
 | `SITE_URL`                           | 寫入 canonical、hreflang 與 sitemap 連結的公開 URL。除非您希望搜尋引擎將您的部署視為獨立網站，否則請保留預設值。                       | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | 使用自訂 `SITE_URL` 時，每個頁面都會標記為 `noindex`，避免您的副本在搜尋結果中與 bentopdf.com 競爭。設為 `true` 可讓搜尋引擎建立索引。 | `false`                                                        |
+| `COMPRESSION_MODE`                   | 要儲存的預先壓縮副本：`o` 不儲存，`g` `.gz`（由映像檔內的 nginx 提供），`b` `.br`，`all` 兩者皆儲存。映像檔內的 nginx 無法提供 `.br`。 | `o`                                                            |
 
 WASM 模組 URL 已預先設定為 CDN 預設值，所有進階功能開箱即用。離線隔離或自行架設的部署可覆寫這些值。
 

@@ -111,10 +111,12 @@ build with a custom `SITE_URL` marks every page `noindex`.
 ### Stay invisible to search engines (no SEO competition either way)
 
 Set the runtime environment variable `ROBOTS_NOINDEX=true`. The container
-injects `<meta name="robots" content="noindex, follow">` into every served
-HTML file at startup. The canonical link still points at the official site
-by default, so when crawlers do follow internal links they still see
-bentopdf.com as the authoritative source.
+then sends an `X-Robots-Tag: noindex, follow` header with every response.
+The canonical link still points at the official site by default, so when
+crawlers do follow internal links they still see bentopdf.com as the
+authoritative source. `ROBOTS_NOINDEX` only works in the Docker image; if
+you serve the files yourself, build with your own `SITE_URL` instead (see
+above).
 
 ```sh
 docker run -d -p 8080:8080 -e ROBOTS_NOINDEX=true ghcr.io/alam00000/bentopdf:latest

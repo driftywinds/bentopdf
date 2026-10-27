@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | از دریافت تعداد ستاره‌های GitHub هنگام بارگذاری صفحه صرف‌نظر می‌کند و `api.github.com` را از CSP حذف می‌کند. ساخت‌های Simple Mode همیشه از آن صرف‌نظر می‌کنند.                      | `false`                                                        |
 | `SITE_URL`                           | URL عمومی که در پیوندهای canonical، hreflang و sitemap نوشته می‌شود. آن را روی پیش‌فرض نگه دارید، مگر اینکه بخواهید موتورهای جستجو استقرار شما را سایتی مستقل بدانند.               | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | با `SITE_URL` سفارشی، همهٔ صفحات `noindex` علامت‌گذاری می‌شوند تا نسخهٔ شما در نتایج جستجو با bentopdf.com رقابت نکند. برای اجازهٔ نمایه‌سازی به موتورهای جستجو، آن را `true` کنید. | `false`                                                        |
+| `COMPRESSION_MODE`                   | نسخه‌های ازپیش‌فشرده‌ای که کنار هر فایل ذخیره می‌شوند: `o` هیچ، `g` `.gz` (توسط nginx ایمیج ارائه می‌شود)، `b` `.br`، `all` هر دو. nginx ایمیج نمی‌تواند `.br` را ارائه کند.        | `o`                                                            |
 
 URLهای ماژول‌های WASM با پیش‌فرض‌های CDN از پیش پیکربندی شده‌اند؛ همهٔ قابلیت‌های پیشرفته بلافاصله کار می‌کنند. برای استقرارهای ایزوله یا میزبانی شخصی، این‌ها را بازنویسی کنید.
 

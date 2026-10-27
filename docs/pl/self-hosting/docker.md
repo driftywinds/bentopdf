@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Pomija pobieranie liczby gwiazdek GitHub przy ładowaniu strony i usuwa `api.github.com` z CSP. Buildy Simple Mode zawsze to pomijają.                                                               | `false`                                                        |
 | `SITE_URL`                           | Publiczny adres URL zapisywany w linkach canonical, hreflang i mapy witryny. Zostaw domyślny, chyba że chcesz, aby wyszukiwarki traktowały Twoje wdrożenie jako osobną witrynę.                     | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | Przy własnym `SITE_URL` każda strona jest oznaczana jako `noindex`, aby Twoja kopia nie konkurowała z bentopdf.com w wynikach wyszukiwania. Ustaw `true`, aby pozwolić wyszukiwarkom ją indeksować. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Wstępnie skompresowane kopie zapisywane obok każdego pliku: `o` brak, `g` `.gz` (serwowane przez nginx w obrazie), `b` `.br`, `all` obie. Nginx w obrazie nie obsługuje `.br`.                      | `o`                                                            |
 
 Adresy URL modułów WASM są wstępnie skonfigurowane z domyślnymi CDN, więc wszystkie zaawansowane funkcje działają od razu. Zmień je w środowiskach odciętych od sieci lub przy samodzielnym hostingu.
 

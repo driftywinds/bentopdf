@@ -77,14 +77,19 @@ podman-compose up -d
 # Dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV HUSKY=0
 COPY package*.json ./
+COPY vendor ./vendor
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=builder /app/security-headers-docs.conf /etc/nginx/security-headers-docs.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/tmp
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```
@@ -118,6 +123,7 @@ docker run -d -p 3000:8080 bentopdf:custom
 | `DISABLE_GITHUB_STARS`               | Skip the GitHub star-count fetch on page load and drop `api.github.com` from the CSP. Simple Mode builds always skip it.                                                 | `false`                                                        |
 | `SITE_URL`                           | Public URL written into canonical, hreflang and sitemap links. Leave it at the default unless you want search engines to treat your deployment as its own site.          | `https://www.bentopdf.com`                                     |
 | `ALLOW_INDEXING`                     | With a custom `SITE_URL`, every page is marked `noindex` so your copy doesn't compete with bentopdf.com in search results. Set to `true` to let search engines index it. | `false`                                                        |
+| `COMPRESSION_MODE`                   | Precompressed copies to add: `o` none, `g` `.gz` (served by the image's nginx), `b` `.br`, `all` both. The image's nginx can't serve `.br`.                              | `o`                                                            |
 
 WASM module URLs are pre-configured with CDN defaults — all advanced features work out of the box. Override these for air-gapped or self-hosted deployments.
 
