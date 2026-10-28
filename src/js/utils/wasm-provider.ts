@@ -59,8 +59,11 @@ const BUILTIN_TRUSTED_HOSTS = collectBuiltinTrustedHosts();
 
 function isOutdatedCdnPin(packageName: WasmPackage, url: string): boolean {
   const current = CDN_DEFAULTS[packageName];
-  const packagePrefix = current.slice(0, current.lastIndexOf('@') + 1);
-  return url !== current && url.startsWith(packagePrefix);
+  const packageUrl = current.slice(0, current.lastIndexOf('@'));
+  return (
+    url !== current &&
+    (url.startsWith(`${packageUrl}@`) || url.startsWith(`${packageUrl}/`))
+  );
 }
 
 function withTrailingSlash(url: string): string {
