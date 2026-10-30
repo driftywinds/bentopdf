@@ -6,6 +6,7 @@ import { makeUniqueFileKey } from '../utils/deduplicate-filename.js';
 import { batchDecryptIfNeeded } from '../utils/password-prompt.js';
 import { getEditorDisabledCategories } from '../utils/disabled-tools.js';
 import { editorFontFallback } from '../config/editor-fonts.js';
+import { viewerTheme } from '../config/viewer-theme.js';
 import { needsFontEmbedding } from '../utils/freetext-script.js';
 
 const embedPdfWasmUrl = new URL(
@@ -334,6 +335,7 @@ async function handleFiles(files: FileList) {
         worker: true,
         wasmUrl: embedPdfWasmUrl,
         fontFallback: editorFontFallback,
+        theme: viewerTheme,
         export: {
           defaultFileName: firstFile.name,
         },
