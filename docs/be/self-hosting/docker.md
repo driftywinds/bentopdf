@@ -272,7 +272,7 @@ services:
 
 **Панэль:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Інструменты:** `tools`, `pan`, `pointer`, `capture`
+**Інструменты:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Вылучэнне:** `selection`, `selection-copy`
 

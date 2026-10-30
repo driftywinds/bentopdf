@@ -272,7 +272,7 @@ services:
 
 **패널:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**도구:** `tools`, `pan`, `pointer`, `capture`
+**도구:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **선택:** `selection`, `selection-copy`
 

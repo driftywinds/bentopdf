@@ -272,7 +272,7 @@ Du kan också inaktivera specifika funktioner i PDF-redigeraren (t.ex. maskering
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Verktyg:** `tools`, `pan`, `pointer`, `capture`
+**Verktyg:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Markering:** `selection`, `selection-copy`
 

@@ -272,7 +272,7 @@ Możesz też wyłączyć wybrane funkcje wewnątrz edytora PDF (np. redagowanie,
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Narzędzia:** `tools`, `pan`, `pointer`, `capture`
+**Narzędzia:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Zaznaczenie:** `selection`, `selection-copy`
 

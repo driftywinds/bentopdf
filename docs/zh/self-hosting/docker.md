@@ -272,7 +272,7 @@ services:
 
 **面板：** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**工具：** `tools`, `pan`, `pointer`, `capture`
+**工具：** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **选择：** `selection`, `selection-copy`
 

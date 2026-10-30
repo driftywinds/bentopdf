@@ -312,16 +312,6 @@
     ],
     "pageCount": 1
   },
-  "0204255c22df": {
-    "text": "Click the scissors icon on a page to place a split marker after it; a dashed line shows where the document will be divided. Export then produces split-documents.zip containing document - 1.pdf, document - 2.pdf, and so on.",
-    "tags": [
-      "p"
-    ],
-    "pages": [
-      "pdf-multi-tool"
-    ],
-    "pageCount": 1
-  },
   "020e6e164ee4": {
     "text": "A scanned PDF stores each page as one large image, so you'll get one full-page picture per page rather than the individual photos or figures on it. Crop what you need from those page images afterward.",
     "tags": [
@@ -5776,6 +5766,16 @@
     ],
     "pages": [
       "word-to-pdf"
+    ],
+    "pageCount": 1
+  },
+  "21d9f5119b3f": {
+    "text": "Click Split and choose how to divide the document: by page ranges, odd and even pages, every page, bookmarks, every N pages, or file size. One part downloads as a PDF; several parts download together as a ZIP.",
+    "tags": [
+      "p"
+    ],
+    "pages": [
+      "pdf-multi-tool"
     ],
     "pageCount": 1
   },
@@ -27687,16 +27687,6 @@
     ],
     "pageCount": 1
   },
-  "a0db9fb53182": {
-    "text": "Drop JPG, PNG, WebP, HEIC, TIFF, BMP, GIF, or SVG files alongside your PDFs and each image becomes a page you can move, rotate, or delete like any other. Blank A4 pages can also be appended with the Add Blank Page button.",
-    "tags": [
-      "p"
-    ],
-    "pages": [
-      "pdf-multi-tool"
-    ],
-    "pageCount": 1
-  },
   "a0ddc60aede2": {
     "text": "What page size does the PDF get when I convert a BMP? <1/>",
     "tags": [
@@ -42330,6 +42320,16 @@
     ],
     "pages": [
       "pdf-converter"
+    ],
+    "pageCount": 1
+  },
+  "f82e523997cf": {
+    "text": "Drop JPG, PNG, WebP, HEIC, TIFF, BMP, GIF, or SVG files alongside your PDFs and each image becomes a page you can move, rotate, or delete like any other. Blank pages can also be added from the Insert menu.",
+    "tags": [
+      "p"
+    ],
+    "pages": [
+      "pdf-multi-tool"
     ],
     "pageCount": 1
   },

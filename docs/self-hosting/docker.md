@@ -272,7 +272,7 @@ You can also disable specific features inside the PDF Editor (e.g., redaction, a
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Tools:** `tools`, `pan`, `pointer`, `capture`
+**Tools:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Selection:** `selection`, `selection-copy`
 

@@ -272,7 +272,7 @@ Você também pode desativar recursos específicos dentro do Editor de PDF (p. e
 
 **Painel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Ferramentas:** `tools`, `pan`, `pointer`, `capture`
+**Ferramentas:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Seleção:** `selection`, `selection-copy`
 

@@ -272,7 +272,7 @@ Bạn cũng có thể tắt các tính năng cụ thể trong Trình chỉnh s�
 
 **Bảng điều khiển:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Công cụ:** `tools`, `pan`, `pointer`, `capture`
+**Công cụ:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Lựa chọn:** `selection`, `selection-copy`
 

@@ -272,7 +272,7 @@ També pots desactivar funcions concretes de l'editor de PDF (p. ex., censura, a
 
 **Tauler:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Eines:** `tools`, `pan`, `pointer`, `capture`
+**Eines:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Selecció:** `selection`, `selection-copy`
 

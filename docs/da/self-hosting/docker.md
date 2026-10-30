@@ -272,7 +272,7 @@ Du kan også deaktivere bestemte funktioner i PDF-editoren (f.eks. sortlægning,
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Værktøjer:** `tools`, `pan`, `pointer`, `capture`
+**Værktøjer:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Markering:** `selection`, `selection-copy`
 

@@ -1,48 +1,61 @@
 ---
 title: PDF-multiværktøj
-description: En alt-i-ét sideadministrator til at flette, opdele, rotere, duplikere, slette og omarrangere PDF-sider.
+description: En alt-i-ét sideorganisator til at flette, opdele, rotere, duplikere, slette, omarrangere og ændre størrelse på PDF-sider.
 ---
 
 # PDF-multiværktøj
 
-Et samlet arbejdsområde til alle sideoperationer i PDF. Upload en eller flere PDF-filer, og arbejd med alle deres sider i ét visuelt gitter. Roter, omarranger, duplikér, slet, indsæt nye PDF-filer, tilføj blanke sider og opdel resultatet, uden at forlade værktøjet.
+Et samlet arbejdsområde til alle sideoperationer i PDF. Upload en eller flere PDF-filer, og arbejd med alle deres sider i ét visuelt gitter. Roter, omarranger, duplikér og slet sider, indsæt PDF-filer, billeder og tomme sider, omnummerér, ændr størrelse og opdel resultatet, uden at forlade værktøjet.
 
 ## Sådan fungerer det
 
-1. Klik på **Upload PDF'er**, eller træk filer ind på uploadområdet. Flere filer understøttes.
-2. Alle sider fra hver uploadet fil vises i et rullbart gitter med miniaturer.
-3. Brug værktøjslinjen eller knapperne for hver side til at ændre siderne.
-4. Vælg sider med afkrydsningsfeltet på hvert kort, og anvend derefter masseoperationer.
-5. Marker opdelingspunkter med saksikonet for at dele outputtet i separate filer.
-6. Klik på **Eksportér PDF** for at downloade det endelige resultat. Hvis der er opdelingsmarkører, bliver outputtet en ZIP med flere PDF-filer.
+1. Klik på **Vælg filer**, eller træk filer ind på uploadområdet. Flere filer understøttes, og de flettes i den rækkefølge, de uploades.
+2. Alle sider vises i et rullbart gitter med miniaturer.
+3. Klik på en side for at vælge den. Brug Shift-klik til at vælge et interval og Cmd/Ctrl-klik til at tilføje eller fjerne enkelte sider fra valget.
+4. Brug organisatorens værktøjslinje, eller højreklik på en side for at få sidehandlingerne frem.
+5. Klik på **Eksportér PDF** for at downloade det endelige resultat.
 
 ## Funktioner
 
-- **Flet**: Upload flere PDF-filer, og de kombineres automatisk i ét arbejdsområde
-- **Omarranger**: Træk og slip sidekort for at ændre rækkefølgen
-- **Roter**: Rotation af enkelte sider eller i bulk i trin på 90 grader (venstre eller højre)
-- **Duplikér**: Kopiér en vilkårlig side med ét klik
-- **Slet**: Fjern enkelte sider, eller slet markerede sider i bulk
-- **Indsæt PDF**: Tilføj en ny PDF efter en bestemt side
-- **Tilføj tom side**: Tilføj en blank A4-side til sidst
-- **Opdel**: Placér opdelingsmarkører mellem sider, og eksportér derefter som en ZIP med separate PDF-filer
-- **Vælg alle / Fravælg alle**: Hurtig markering til masseoperationer
-- **Fortryd / Gentag**: Fuld historik for fortryd og gentag for hver operation
-- **Download valgte**: Eksportér kun de valgte sider som en selvstændig PDF
+- **Flet**: Upload flere PDF-filer og billeder, og de kombineres automatisk til ét dokument
+- **Omarranger**: Træk og slip sider for at ændre rækkefølgen, eller vend rækkefølgen i hele dokumentet om
+- **Roter**: Roter valgte sider til venstre eller højre i trin på 90 grader
+- **Duplikér**: Kopiér valgte sider, og placér kopierne lige efter dem
+- **Slet**: Fjern de valgte sider
+- **Indsæt**: Tilføj sider fra en anden PDF eller et billede, en tom side, sider fra udklipsholderen, eller flet siderne fra en anden PDF skiftevis ind mellem de nuværende
+- **Erstat**: Udskift en side med den første side i en anden PDF
+- **Klip, kopiér og indsæt**: Flyt eller kopiér sider inden for dokumentet
+- **Udtræk**: Download de valgte sider som en PDF eller som billeder
+- **Sidetal**: Angiv sideetiketter som i, ii, iii eller A-1, A-2 for et sideinterval
+- **Sidestørrelse**: Tilpas sider til et standardpapirformat eller en brugerdefineret størrelse
+- **Opdel**: Del dokumentet efter sideintervaller, ulige og lige sider, hver side, bogmærker, hver N. side eller filstørrelse
+- **Fortryd / Gentag**: Alle sideoperationer kan fortrydes og gentages
 - Reparerer automatisk beskadigede PDF-filer, før de indlæses
+
+## Tastaturgenveje
+
+| Handling                  | Genvej                        |
+| ------------------------- | ----------------------------- |
+| Roter til højre / venstre | R / Shift+R                   |
+| Vælg alle                 | Cmd/Ctrl+A                    |
+| Klip, kopiér, indsæt      | Cmd/Ctrl+X, C, V              |
+| Duplikér                  | Cmd/Ctrl+D                    |
+| Slet                      | Delete eller Backspace        |
+| Fortryd / Gentag          | Cmd/Ctrl+Z / Cmd/Ctrl+Shift+Z |
+| Flyt valget               | Piletaster, Home, End         |
 
 ## Anvendelser
 
 - Bygge et brugerdefineret dokument af sider fra flere kilde-PDF'er
 - Rydde op i et scannet dokument ved at slette blanke sider, rotere sidelæns scanninger og omarrangere afsnit
-- Opdele en stor PDF ved kapitelgrænser med visuelle opdelingsmarkører
+- Opdele en stor PDF ved kapitelgrænser ved hjælp af dens bogmærker
 - Hurtig redigering på sideniveau uden behov for en fuld PDF-editor
 
 ## Tips
 
-- Fortryd/gentag-systemet registrerer hver operation. Brug det frit, for du kan ikke ved et uheld ødelægge dit arbejde.
-- Opdelingsmarkører vises som stiplede blå linjer mellem siderne. Placér dem visuelt, hvor dokumentet skal deles, og eksportér derefter for at få en ZIP.
-- Til simple flet- eller opdelingsopgaver kan de dedikerede værktøjer [Flet PDF](./merge-pdf) eller [Opdel PDF](./split-pdf) være hurtigere. Multi-værktøjet er bedst, når du har brug for flere operationer i én session.
+- Historikken for fortryd/gentag registrerer hver sideoperation. Brug den frit, for du kan ikke ved et uheld ødelægge dit arbejde.
+- Brug **Insert > From File**, eller slip flere PDF-filer eller billeder på sidegitteret når som helst for at tilføje dem til dokumentet.
+- Til simple flet- eller opdelingsopgaver kan de dedikerede værktøjer [Flet PDF](./merge-pdf) eller [Opdel PDF](./split-pdf) være hurtigere. Multiværktøjet er bedst, når du har brug for flere operationer i én session.
 
 ## Relaterede værktøjer
 

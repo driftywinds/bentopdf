@@ -272,7 +272,7 @@ Puoi anche disattivare funzionalità specifiche all'interno dell'editor PDF (ad 
 
 **Pannelli:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Strumenti:** `tools`, `pan`, `pointer`, `capture`
+**Strumenti:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Selezione:** `selection`, `selection-copy`
 

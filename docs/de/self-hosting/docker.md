@@ -272,7 +272,7 @@ Sie können auch einzelne Funktionen im PDF-Editor (z. B. Schwärzen, Annotation
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Werkzeuge:** `tools`, `pan`, `pointer`, `capture`
+**Werkzeuge:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Auswahl:** `selection`, `selection-copy`
 

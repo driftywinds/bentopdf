@@ -272,7 +272,7 @@ PDF Düzenleyici içindeki belirli özellikleri (örn. karartma, ek açıklamala
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Araçlar:** `tools`, `pan`, `pointer`, `capture`
+**Araçlar:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Seçim:** `selection`, `selection-copy`
 

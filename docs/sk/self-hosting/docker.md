@@ -272,7 +272,7 @@ Môžete vypnúť aj konkrétne funkcie v PDF editore (napr. začiernenie, anot�
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Nástroje:** `tools`, `pan`, `pointer`, `capture`
+**Nástroje:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Výber:** `selection`, `selection-copy`
 

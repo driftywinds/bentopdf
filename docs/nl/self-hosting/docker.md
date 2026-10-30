@@ -272,7 +272,7 @@ Je kunt ook specifieke functies in de PDF-editor (bijv. redactie, annotaties, fo
 
 **Paneel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Tools:** `tools`, `pan`, `pointer`, `capture`
+**Tools:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Selectie:** `selection`, `selection-copy`
 

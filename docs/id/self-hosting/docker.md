@@ -272,7 +272,7 @@ Anda juga dapat menonaktifkan fitur tertentu di dalam Editor PDF (mis., redaksi,
 
 **Panel:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Alat:** `tools`, `pan`, `pointer`, `capture`
+**Alat:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Pilihan:** `selection`, `selection-copy`
 

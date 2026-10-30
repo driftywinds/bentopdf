@@ -272,7 +272,7 @@ services:
 
 **اللوحة:** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**الأدوات:** `tools`, `pan`, `pointer`, `capture`
+**الأدوات:** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **التحديد:** `selection`, `selection-copy`
 

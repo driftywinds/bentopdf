@@ -272,7 +272,7 @@ Vous pouvez aussi désactiver des fonctionnalités précises de l'éditeur PDF (
 
 **Panneau :** `panel`, `panel-sidebar`, `panel-search`, `panel-comment`
 
-**Outils :** `tools`, `pan`, `pointer`, `capture`
+**Outils :** `tools`, `pan`, `pointer`, `capture`, `organize`
 
 **Sélection :** `selection`, `selection-copy`
 
