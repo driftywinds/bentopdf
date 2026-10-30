@@ -260,6 +260,8 @@ services:
 
 **도형:** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**측정:** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **양식:** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **교정(Redaction):** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`

@@ -260,6 +260,8 @@ Du kan också inaktivera specifika funktioner i PDF-redigeraren (t.ex. maskering
 
 **Former:** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**Mätning:** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **Formulär:** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **Maskering:** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`

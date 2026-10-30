@@ -260,6 +260,8 @@ Możesz też wyłączyć wybrane funkcje wewnątrz edytora PDF (np. redagowanie,
 
 **Kształty:** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**Pomiary:** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **Formularze:** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **Redagowanie:** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`

@@ -260,6 +260,8 @@ Anda juga dapat menonaktifkan fitur tertentu di dalam Editor PDF (mis., redaksi,
 
 **Bentuk:** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**Pengukuran:** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **Formulir:** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **Redaksi:** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`

@@ -260,6 +260,8 @@ services:
 
 **Фігури:** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**Вимірювання:** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **Форми:** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **Приховування даних:** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`

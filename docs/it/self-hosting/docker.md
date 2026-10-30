@@ -260,6 +260,8 @@ Puoi anche disattivare funzionalità specifiche all'interno dell'editor PDF (ad 
 
 **Forme:** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**Misurazione:** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **Moduli:** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **Oscuramento:** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`

@@ -260,6 +260,8 @@ Bạn cũng có thể tắt các tính năng cụ thể trong Trình chỉnh s�
 
 **Hình dạng:** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**Đo lường:** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **Biểu mẫu:** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **Che thông tin:** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`

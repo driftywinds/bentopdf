@@ -260,6 +260,8 @@ services:
 
 **図形：** `annotation-shape`, `annotation-rectangle`, `annotation-circle`, `annotation-line`, `annotation-arrow`, `annotation-polygon`, `annotation-polyline`
 
+**計測：** `annotation-measurement`, `mode-measure`, `annotation-distance`, `annotation-perimeter`, `annotation-area`
+
 **フォーム：** `form`, `form-textfield`, `form-checkbox`, `form-radio`, `form-select`, `form-listbox`, `form-fill-mode`
 
 **墨消し：** `redaction`, `redaction-area`, `redaction-text`, `redaction-apply`, `redaction-clear`
