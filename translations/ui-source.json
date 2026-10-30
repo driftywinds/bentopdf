@@ -2629,12 +2629,6 @@
     ],
     "fileCount": 1
   },
-  "Downloaded {{length}} PDF files in a ZIP archive.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
-  },
   "Downloads started for all files.": {
     "files": [
       "logic/deskew-pdf-page.ts"
@@ -2895,7 +2889,7 @@
       "logic/add-attachments-page.ts",
       "logic/add-blank-page-page.ts"
     ],
-    "fileCount": 91
+    "fileCount": 90
   },
   "Error during execution": {
     "files": [
@@ -3292,12 +3286,6 @@
     ],
     "fileCount": 1
   },
-  "Failed to create PDF.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
-  },
   "Failed to create PNG blob": {
     "files": [
       "logic/bmp-to-pdf-page.ts"
@@ -3310,12 +3298,6 @@
       "utils/pdf-operations.ts"
     ],
     "fileCount": 2
-  },
-  "Failed to create split PDFs.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
   },
   "Failed to decode image: {{name}}": {
     "files": [
@@ -3431,12 +3413,6 @@
       "logic/cbz-to-pdf-page.ts"
     ],
     "fileCount": 2
-  },
-  "Failed to insert PDF. The file may be corrupted.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
   },
   "Failed to load Ghostscript from {{normalizedUrl}}: {{msg}}": {
     "files": [
@@ -5414,16 +5390,9 @@
   "No Pages": {
     "files": [
       "logic/delete-pages-page.ts",
-      "logic/extract-pages-page.ts",
-      "logic/pdf-multi-tool.ts"
+      "logic/extract-pages-page.ts"
     ],
-    "fileCount": 3
-  },
-  "No Selection": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
+    "fileCount": 2
   },
   "No Signatures Found": {
     "files": [
@@ -5934,12 +5903,6 @@
     ],
     "fileCount": 1
   },
-  "PDF downloaded successfully.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
-  },
   "PDF encrypted successfully with 256-bit AES!": {
     "files": [
       "logic/protect-pdf-page.ts"
@@ -6219,12 +6182,6 @@
   "Page {{num}} / {{numPages}}": {
     "files": [
       "logic/bookmark-pdf.ts"
-    ],
-    "fileCount": 1
-  },
-  "Page {{n}} ": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
     ],
     "fileCount": 1
   },
@@ -6745,26 +6702,7 @@
   },
   "Please select pages to delete.": {
     "files": [
-      "logic/delete-pages-page.ts",
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 2
-  },
-  "Please select pages to duplicate.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
-  },
-  "Please select pages to mark for splitting.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
-  },
-  "Please select pages to rotate.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
+      "logic/delete-pages-page.ts"
     ],
     "fileCount": 1
   },
@@ -6777,12 +6715,6 @@
   "Please upload PDF files.": {
     "files": [
       "logic/pdf-to-svg-page.ts"
-    ],
-    "fileCount": 1
-  },
-  "Please upload PDFs first.": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
     ],
     "fileCount": 1
   },
@@ -7693,12 +7625,6 @@
     ],
     "fileCount": 1
   },
-  "Repairing {{name}}...": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
-  },
   "Replaced \"{{beforeText}}\" with \"{{afterText}}\"": {
     "files": [
       "compare/worker-api.ts"
@@ -8394,7 +8320,7 @@
       "logic/add-blank-page-page.ts",
       "logic/add-watermark-page.ts"
     ],
-    "fileCount": 64
+    "fileCount": 63
   },
   "Success!": {
     "files": [
@@ -9960,12 +9886,6 @@
       "logic/rotate-pdf-page.ts"
     ],
     "fileCount": 2
-  },
-  "{{page}} {{n}}": {
-    "files": [
-      "logic/pdf-multi-tool.ts"
-    ],
-    "fileCount": 1
   },
   "{{progress}}%": {
     "files": [
